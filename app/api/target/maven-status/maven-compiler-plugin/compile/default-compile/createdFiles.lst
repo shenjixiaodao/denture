@@ -1,6 +1,0 @@
-com\yuzi\denture\api\vo\DeviceVo.class
-com\yuzi\denture\api\vo\base\ResponseCode.class
-com\yuzi\denture\api\controller\DeviceManageController.class
-com\yuzi\denture\api\vo\base\WebResult.class
-com\yuzi\denture\api\vo\ControlVo.class
-com\yuzi\denture\api\vo\GatewayVo.class
