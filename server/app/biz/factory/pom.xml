@@ -12,6 +12,13 @@
     <artifactId>biz-factory</artifactId>
     <version>1.0</version>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.yuzi</groupId>
+            <artifactId>domain-factory</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
