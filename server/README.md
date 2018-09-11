@@ -11,7 +11,7 @@
 1. **domain是核心领域层**，所有业务逻辑都应该定义在这里，包括model定义,service层提供的业务服务，repository持久化或者聚合查询的接口;
 
 
-2. api层定义了http接口相关(controller);biz层(service层)定义了service接口的实现逻辑，和应用模块之间的交互细节；data层定义了数据持久化、序列化、数据缓存等数据相关的实现细节。
+2. api层定义了http接口相关(controller);biz层(service层)定义了service接口的实现逻辑，和应用模块之间的交互细节；data层定义了数据持久化、序列化、数据缓存等数据相关的实现细节；assembly是将项目用Spring boot打出来的最终可运行的jar包。
 
 
 3. 在一个应用模块里(这里模块不是指maven的module，而是如factory模块和clinic模块的区分)，domain层作为应用的核心，所有其它层涉及业务相关逻辑，都是依赖只依赖domian层；例如biz、data、api之间绝对不相互依赖。**这样做的目的是为了聚合业务核心**。
