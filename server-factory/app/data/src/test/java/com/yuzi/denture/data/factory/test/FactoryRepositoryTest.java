@@ -22,8 +22,8 @@ public class FactoryRepositoryTest {
 
     @Test
     public void addDentureOrder(){
-        Denture denture = new Denture(new Date().getTime()+"", 111L);
+        /*Denture denture = new Denture(new Date().getTime()+"", 111L);
         denture.setId(new Date().getTime()+"");
-        repository.add(denture);
+        repository.add(denture);*/
     }
 }
