@@ -22,7 +22,7 @@ public class ProcedureGroup {
     //操作员(operator):
     private FactoryUser operator;
     //检查内容(inspectionContent):
-    private String inspectionContent
+    private String inspectionContent;
     //检查员(inspector):
     private FactoryUser inspector;
     //检查结果(inspectionResult):
