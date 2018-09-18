@@ -7,8 +7,8 @@ public class ProcedureGroup {
     
     //工序组操作编号(id):
     private Long id;
-    //工序组描述(describe):
-    private String describe;
+    //工序组:
+    private GroupType type;
     //产品编号(DentureId):
     private String dentureId;
     //辅料使用记录(usedIngredients):
@@ -27,5 +27,6 @@ public class ProcedureGroup {
     private FactoryUser inspector;
     //检查结果(inspectionResult):
     private InspectionResult inspectionResult;
+
 
 }

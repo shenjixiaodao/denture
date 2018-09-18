@@ -9,10 +9,20 @@ public class DeliveryInfo {
     //产品编号(dentureId):
     private String dentureId;
     //物流公司(company):
-    private String company;
+    private Company company;
     //快递单号(deliveryId):
     private String deliveryId;
     //发货时间(postDate):
     private Date postDate;
-    
+
+    public enum Company {
+        SF("顺丰"), EMS("邮政特快");
+        private String text;
+        Company(String text) {
+            this.text = text;
+        }
+        public String text() {
+            return this.text;
+        }
+    }
 }

@@ -8,5 +8,6 @@ public class Procedure {
     //工艺要求(specification): String
     //操作记录(operationRecord): String
     //备注(comment): String
-
+    //操作员(operator):
+    private FactoryUser operator;
 }
