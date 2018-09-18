@@ -13,4 +13,9 @@ public class FactoryServiceImpl implements FactoryService {
     public Denture inspectReviewAndStart(String dentureId, Long inspector, ReviewResult reviewResult) {
         return null;
     }
+
+    @Override
+    public Denture completeProcedure(Long pgId, Long operatorId, String procedureName) {
+        return null;
+    }
 }
