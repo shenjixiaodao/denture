@@ -54,7 +54,7 @@
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${springfox.version}</version>
             </dependency>
-            <dependency>
+            <!--<dependency>
                 <groupId>de.codecentric</groupId>
                 <artifactId>spring-boot-admin-server</artifactId>
                 <version>${spring-boot-admin.version}</version>
@@ -78,7 +78,7 @@
                 <groupId>de.codecentric</groupId>
                 <artifactId>spring-boot-admin-server-ui-login</artifactId>
                 <version>${spring-boot-admin.version}</version>
-            </dependency>
+            </dependency>-->
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
