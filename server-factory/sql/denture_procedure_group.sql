@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `procedure_group`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `procedure_group` (
   `id` bigint(20) NOT NULL,
-  `describe` varchar(45) DEFAULT NULL,
+  `type` varchar(45) DEFAULT NULL,
   `denture_id` varchar(45) DEFAULT NULL,
   `start_date` datetime DEFAULT NULL,
   `end_date` datetime DEFAULT NULL,
