@@ -47,7 +47,7 @@
                 <configuration>
                     <includeScope>compile</includeScope>
                     <includeScope>runtime</includeScope>
-                    <outputDirectory>../../../target/dependency</outputDirectory>
+                    <outputDirectory>../../target/dependency</outputDirectory>
                     <excludeTransitive>false</excludeTransitive>
                     <stripVersion>false</stripVersion>
                 </configuration>

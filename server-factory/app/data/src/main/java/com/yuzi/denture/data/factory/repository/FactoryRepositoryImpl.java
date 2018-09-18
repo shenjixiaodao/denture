@@ -10,7 +10,9 @@ import com.yuzi.denture.domain.factory.repository.FactoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class FactoryRepositoryImpl implements FactoryRepository {
@@ -18,19 +20,22 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     @Autowired
     private DentureMapper dentureMapper;
 
-    @Override
+    /*@Override
     public void add(Denture denture) {
         dentureMapper.save(denture);
-    }
+    }*/
 
     @Override
     public Denture findByDenture(String deliveryId, DeliveryInfo.Company company) {
-        return null;
+        Map<String, Object> paras = new HashMap<>();
+        paras.put("deliveryId", deliveryId);
+        paras.put("company", company);
+        return dentureMapper.findByDeliveryInfo(paras);
     }
 
     @Override
     public Denture findByDenture(String dentureId) {
-        return null;
+        return dentureMapper.findByDentureId(dentureId);
     }
 
     @Override

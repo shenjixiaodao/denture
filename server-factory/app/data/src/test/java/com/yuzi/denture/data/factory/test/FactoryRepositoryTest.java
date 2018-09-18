@@ -2,6 +2,7 @@ package com.yuzi.denture.data.factory.test;
 
 
 
+import com.yuzi.denture.domain.factory.DeliveryInfo;
 import com.yuzi.denture.domain.factory.Denture;
 import com.yuzi.denture.domain.factory.repository.FactoryRepository;
 import org.junit.Test;
@@ -25,5 +26,11 @@ public class FactoryRepositoryTest {
         /*Denture denture = new Denture(new Date().getTime()+"", 111L);
         denture.setId(new Date().getTime()+"");
         repository.add(denture);*/
+    }
+
+    @Test
+    public void findByDeliveryInfo() {
+        Denture denture = repository.findByDenture("123456", DeliveryInfo.Company.SF);
+        System.out.println(denture);
     }
 }

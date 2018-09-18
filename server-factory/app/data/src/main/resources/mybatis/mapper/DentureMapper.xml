@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yuzi.denture.data.factory.mapper.DentureMapper" >
 
-    <insert id="save" parameterType="com.yuzi.denture.domain.factory.Denture">
+    <!--<insert id="save" parameterType="com.yuzi.denture.domain.factory.Denture">
         INSERT INTO denture
         (
         `id`,
@@ -15,6 +15,40 @@
         #{orderId},
         #{factoryId}
         );
-    </insert>
+    </insert>-->
+    <resultMap id="baseRM" type="com.yuzi.denture.domain.factory.Denture">
+        <result column="id" property="id" />
+        <result column="type" property="type" />
+        <result column="specification" property="specification" />
+        <result column="clinic_id" property="clinic.id" />
+        <result column="factory_id" property="factory.id" />
+        <result column="number" property="number" />
+        <result column="color_no" property="colorNo" />
+        <result column="created_date" property="createdDate" />
+        <result column="model_inspector_id" property="modelInspector.id" />
+        <result column="model_inspection_date" property="modelInspectionDate" />
+        <result column="start_date" property="startDate" />
+        <result column="end_date" property="endDate" />
+        <result column="pro_review" property="proReview" />
+        <result column="pro_review_date" property="proReviewDate" />
+        <result column="qua_review" property="quaReview" />
+        <result column="qua_review_date" property="quaReviewDate" />
+    </resultMap>
 
+    <sql id="baseSQL">
+        d.id id, d.type type , d.specification specification, d.clinic_id clinic_id,
+        d.factory_id factory_id, d.number number, d.color_no color_no, d.created_date created_date,
+        d.model_inspector_id model_inspector_id, d.model_inspection_date model_inspection_date,
+        d.start_date start_date, d.end_date end_date, d.pro_review pro_review, d.pro_review_date pro_review_date,
+        d.qua_review qua_review, d.qua_review_date qua_review_date
+    </sql>
+
+    <select id="findByDeliveryInfo" parameterType="Map" resultMap="baseRM">
+        SELECT <include refid="baseSQL" /> FROM denture d
+        LEFT JOIN delivery_info di ON (delivery_id=#{deliveryId} AND company=#{company} AND d.id=di.denture_id)
+    </select>
+    <select id="findByDentureId" parameterType="Map" resultMap="baseRM">
+        SELECT <include refid="baseSQL" /> FROM denture d
+        WHERE d.id=#{dentureId}
+    </select>
 </mapper>

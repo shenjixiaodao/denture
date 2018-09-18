@@ -17,7 +17,8 @@ public class DentureOrder {
     private Date createdDate;
     //支付定金(payAmount):
     private BigDecimal payAmount;
-    //订单状态(status): Status
+    //订单状态(status):
+    private Status status;
     //牙模物流信息(modelDeliveryInfo):
     private DeliveryInfo modelDeliveryInfo;
     //义齿物流信息(dentureDeliveryInfo):
@@ -34,6 +35,28 @@ public class DentureOrder {
     private ClinicUser recorder;
     //备注(comment):
     private String comment;
+
+    public enum Status {
+        Created("创建"),
+        Paid("支付定金"),
+        Accepted("已接单"),
+        Rejected("已拒单"),
+        Making("制作中"),
+        Inspecting("检测中"),
+        PackAndClr("包装消毒"),
+        Released("出厂"),
+        Return("返厂"),
+        Remaking("重制"),
+        Installed("安装完成");
+        private String text;
+        Status(String text) {
+            this.text = text;
+        }
+        public String text() {
+            return this.text;
+        }
+
+    }
 
     public String getId() {
         return id;

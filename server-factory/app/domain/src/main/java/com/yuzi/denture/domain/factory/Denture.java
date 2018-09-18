@@ -16,11 +16,15 @@ public class Denture {
     private Factory factory;
     //数量(number):
     private Integer number;
+    /**
+     * 牙位号(position),
+     * 使用","分隔各个牙位号，个数等于 {@param number}；
+     * 牙位号格式: 半位[a|b|c|d]-编号[1-8], eg: a-2（表示左上半第2号）
+     */
+    private String positions;
     //义齿色号(colorNo): Enum
-    private ColorNo colorNo;
-    //牙位号(position): Enum
-    private Position position;
-    //接收日期(createdDate):
+    private String colorNo;
+    //创建日期(createdDate):
     private Date createdDate;
     //查验人(modelInspector):
     private FactoryUser modelInspector;
@@ -40,17 +44,10 @@ public class Denture {
     private Date quaReviewDate;
     //辅料申请记录(appliedIngredients): List
     private List<AppliedIngredient> appliedIngredients;
-    //工序组操作记录(precedureGroups): List
+    //工序组操作记录(precedureGroups):
+    private List<ProcedureGroup> procedureGroups;
 
 
-
-    public enum ColorNo {
-
-    }
-
-    public enum Position {
-
-    }
     public enum SpecType {
         GuGe("钴铬合金"),
         GuiJinShuDanGuan("贵金属单冠"),
@@ -81,6 +78,34 @@ public class Denture {
             return this.text;
         }
     }
+
+
+
     public Denture() {
+    }
+
+    @Override
+    public String toString() {
+        return "Denture{" +
+                "id='" + id + '\'' +
+                ", type=" + type +
+                ", specification=" + specification +
+                ", clinic=" + clinic +
+                ", factory=" + factory +
+                ", number=" + number +
+                ", positions='" + positions + '\'' +
+                ", colorNo='" + colorNo + '\'' +
+                ", createdDate=" + createdDate +
+                ", modelInspector=" + modelInspector +
+                ", modelInspectionDate=" + modelInspectionDate +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", proReview=" + proReview +
+                ", proReviewDate=" + proReviewDate +
+                ", quaReview=" + quaReview +
+                ", quaReviewDate=" + quaReviewDate +
+                ", appliedIngredients=" + appliedIngredients +
+                ", procedureGroups=" + procedureGroups +
+                '}';
     }
 }
