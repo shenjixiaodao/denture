@@ -12,6 +12,18 @@
     <artifactId>app-api</artifactId>
     <version>1.0</version>
 
+    <dependencies>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.yuzi</groupId>
+            <artifactId>app-domain</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -35,7 +47,7 @@
                 <configuration>
                     <includeScope>compile</includeScope>
                     <includeScope>runtime</includeScope>
-                    <outputDirectory>../../../target/dependency</outputDirectory>
+                    <outputDirectory>../../target/dependency</outputDirectory>
                     <excludeTransitive>false</excludeTransitive>
                     <stripVersion>false</stripVersion>
                 </configuration>

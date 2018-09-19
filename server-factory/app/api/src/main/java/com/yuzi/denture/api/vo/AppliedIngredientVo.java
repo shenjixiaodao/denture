@@ -1,29 +1,39 @@
-package com.yuzi.denture.domain;
+package com.yuzi.denture.api.vo;
+
+
+import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
 
-public class AppliedIngredient {
+public class AppliedIngredientVo {
     
     //ingredientId: Long
-    private Ingredient ingredient;
+    @ApiModelProperty(value="原料", dataType = "com.yuzi.denture.api.vo.IngredientVo")
+    private IngredientVo ingredient;
     //产品编号(DentureId):
+    @ApiModelProperty(value="义齿ID")
     private String dentureId;
     //序号(no):
+    @ApiModelProperty(value="序号")
     private Integer no;
     //领取量(appliedNumber):
+    @ApiModelProperty(value="原料用量")
     private Double appliedNumber;
     //领用人(applicant): User
-    private FactoryUser applicant;
+    @ApiModelProperty(value="领用人", dataType = "com.yuzi.denture.api.vo.FactoryUserVo")
+    private FactoryUserVo applicant;
     //领用日期(appliedDate):
+    @ApiModelProperty(value="领用日期")
     private Date appliedDate;
     //备注(comment):
+    @ApiModelProperty(value="备注")
     private String comment;
 
-    public Ingredient getIngredient() {
+    public IngredientVo getIngredient() {
         return ingredient;
     }
 
-    public void setIngredient(Ingredient ingredient) {
+    public void setIngredient(IngredientVo ingredient) {
         this.ingredient = ingredient;
     }
 
@@ -51,11 +61,11 @@ public class AppliedIngredient {
         this.appliedNumber = appliedNumber;
     }
 
-    public FactoryUser getApplicant() {
+    public FactoryUserVo getApplicant() {
         return applicant;
     }
 
-    public void setApplicant(FactoryUser applicant) {
+    public void setApplicant(FactoryUserVo applicant) {
         this.applicant = applicant;
     }
 
