@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS `procedure`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `procedure` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `pg_id` bigint(20) DEFAULT NULL,
   `name` varchar(45) DEFAULT NULL,
   `specification` varchar(45) DEFAULT NULL,

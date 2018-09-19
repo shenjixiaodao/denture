@@ -18,6 +18,12 @@
             <artifactId>app-domain</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.yuzi</groupId>
+            <artifactId>app-data</artifactId>
+            <version>1.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>

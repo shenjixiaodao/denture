@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yuzi.denture.data.factory.mapper.DentureMapper" >
+<mapper namespace="com.yuzi.denture.data.mapper.DentureMapper" >
 
-    <!--<insert id="save" parameterType="com.yuzi.denture.domain.factory.Denture">
+    <!--<insert id="save" parameterType="Denture">
         INSERT INTO denture
         (
         `id`,
@@ -16,7 +16,61 @@
         #{factoryId}
         );
     </insert>-->
-    <resultMap id="baseRM" type="com.yuzi.denture.domain.factory.Denture">
+    <update id="update" parameterType="com.yuzi.denture.domain.Denture">
+        UPDATE denture
+        SET
+        `id` = id
+        <if test="clinic!=null">
+            ,`clinic_id` = #{clinic.id}
+        </if>
+        <if test="type!=null">
+            ,`type` = #{type}
+        </if>
+        <if test="specification!=null">
+            ,`specification` = #{specification}
+        </if>
+        <if test="factory!=null">
+            ,`factory_id` = #{factory.id}
+        </if>
+        <if test="number!=null">
+            ,`number` = #{number}
+        </if>
+        <if test="colorNo!=null">
+            ,`color_no` = #{colorNo}
+        </if>
+        <if test="positions!=null">
+            `positions` = #{positions}
+        </if>
+        <if test="createdDate!=null">
+            ,`created_date` = #{createdDate}
+        </if>
+        <if test="modelInspector!=null">
+            ,`model_inspector_id` = #{modelInspector.id}
+        </if>
+        <if test="modelInspectionDate!=null">
+            ,`model_inspection_date` = #{modelInspectionDate}
+        </if>
+        <if test="startDate!=null">
+            ,`start_date` = #{startDate}
+        </if>
+        <if test="endDate!=null">
+            ,`end_date` = #{endDate}
+        </if>
+        <if test="proReview!=null">
+            ,`pro_review` = #{proReview}
+        </if>
+        <if test="proReviewDate!=null">
+            ,`pro_review_date` = #{proReviewDate}
+        </if>
+        <if test="quaReview!=null">
+            ,`qua_review` = #{quaReview}
+        </if>
+        <if test="quaReviewDate!=null">
+            ,`qua_review_date` = #{quaReviewDate}
+        </if>
+        WHERE `id` = #{id};
+    </update>
+    <resultMap id="baseRM" type="com.yuzi.denture.domain.Denture">
         <result column="id" property="id" />
         <result column="type" property="type" />
         <result column="specification" property="specification" />
@@ -47,8 +101,12 @@
         SELECT <include refid="baseSQL" /> FROM denture d
         LEFT JOIN delivery_info di ON (delivery_id=#{deliveryId} AND company=#{company} AND d.id=di.denture_id)
     </select>
-    <select id="findByDentureId" parameterType="Map" resultMap="baseRM">
+    <select id="findByDentureId" parameterType="String" resultMap="baseRM">
         SELECT <include refid="baseSQL" /> FROM denture d
         WHERE d.id=#{dentureId}
+    </select>
+    <select id="findDenturesByFactoryId" parameterType="Long" resultMap="baseRM">
+        SELECT <include refid="baseSQL" /> FROM denture d
+        WHERE d.factory_id=#{factoryId}
     </select>
 </mapper>

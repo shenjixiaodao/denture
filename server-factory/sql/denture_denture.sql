@@ -30,7 +30,7 @@ CREATE TABLE `denture` (
   `factory_id` bigint(20) DEFAULT NULL,
   `number` int(11) DEFAULT NULL,
   `color_no` varchar(45) DEFAULT NULL,
-  `position` varchar(45) DEFAULT NULL,
+  `positions` varchar(45) DEFAULT NULL COMMENT '牙位号',
   `created_date` datetime DEFAULT NULL,
   `model_inspector_id` bigint(20) DEFAULT NULL,
   `model_inspection_date` datetime DEFAULT NULL,
