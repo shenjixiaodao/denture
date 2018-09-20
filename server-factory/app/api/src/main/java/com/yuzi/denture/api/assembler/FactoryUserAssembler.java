@@ -14,7 +14,8 @@ public class FactoryUserAssembler {
             return null;
         FactoryUserVo vo = new FactoryUserVo();
         BeanUtils.copyProperties(user, vo);
-        vo.setGroupType(user.getGroupType().name());
+        if(user.getGroupType() != null)
+            vo.setGroupType(user.getGroupType().name());
         return vo;
     }
 }

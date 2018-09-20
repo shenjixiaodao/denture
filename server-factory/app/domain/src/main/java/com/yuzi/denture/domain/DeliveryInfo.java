@@ -24,5 +24,12 @@ public class DeliveryInfo {
         public String text() {
             return this.text;
         }
+        public static Company typeOf(String type) {
+            for(Company result : Company.values()){
+                if(result.name().toLowerCase().equals(type.toLowerCase()))
+                    return result;
+            }
+            throw new IllegalArgumentException("未知公司类型");
+        }
     }
 }

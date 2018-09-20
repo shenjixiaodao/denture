@@ -9,41 +9,42 @@ import io.swagger.annotations.ApiModelProperty;
 public class WebResult<T> {
 	//1表示成功，非1表示失败
 	@ApiModelProperty(position=1,required = true, value="0表示成功，非0表示失败")
-	private String resultCode;
+	private String code;
 	//消息描述
 	 @ApiModelProperty(position=2,value="消息描述")
 	private String message;
-	@ApiModelProperty(position=3,value="错误码")
-	private String errorCode;
 	private T data;
+
+	public WebResult() {
+		code = WebConstants.RESULT_SUCCESS_CODE;
+	}
 
 	public static WebResult successResult(){
 		WebResult result = new WebResult(){};
-		result.setResultCode(WebConstants.RESULT_SUCCESS_CODE);
+		result.setCode(WebConstants.RESULT_SUCCESS_CODE);
 		return result;
 	}
 
 	public static WebResult failureResult(String errorCode, String msg){
 		WebResult result = new WebResult(){};
-		result.setResultCode(WebConstants.RESULT_FAIL_CODE);
-		result.setErrorCode(errorCode);
+		result.setCode(errorCode);
 		result.setMessage(msg);
 		return result;
 	}
 
 	public static WebResult failureResult(String msg){
 		WebResult result = new WebResult(){};
-		result.setResultCode(WebConstants.RESULT_FAIL_CODE);
+		result.setCode(WebConstants.RESULT_FAIL_CODE);
 		result.setMessage(msg);
 		return result;
 	}
 
-	public String getResultCode() {
-		return resultCode;
+	public String getCode() {
+		return code;
 	}
 
-	public void setResultCode(String resultCode) {
-		this.resultCode = resultCode;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getMessage() {
@@ -52,14 +53,6 @@ public class WebResult<T> {
 
 	public void setMessage(String message) {
 		this.message = message;
-	}
-
-	public String getErrorCode() {
-		return errorCode;
-	}
-
-	public void setErrorCode(String errorCode) {
-		this.errorCode = errorCode;
 	}
 
 	public T getData() {

@@ -18,9 +18,9 @@ public class DentureAssembler {
         vo.setSpecification(denture.getSpecification().name());
         vo.setClinic(ClinicAssembler.toVo(denture.getClinic()));
         vo.setFactory(FactoryAssembler.toVo(denture.getFactory()));
-        vo.setModelInspector(FactoryUserAssembler
-                .toVo(denture.getModelInspector()));
-
+        vo.setModelInspector(FactoryUserAssembler.toVo(denture.getModelInspector()));
+        vo.setAppliedIngredients(AppliedIngredientAssembler.toVos(denture.getAppliedIngredients()));
+        vo.setProcedureGroups(ProcedureGroupAssembler.toVos(denture.getProcedureGroups()));
         return vo;
     }
 }

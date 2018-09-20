@@ -99,7 +99,7 @@
 
     <select id="findByDeliveryInfo" parameterType="Map" resultMap="baseRM">
         SELECT <include refid="baseSQL" /> FROM denture d
-        LEFT JOIN delivery_info di ON (delivery_id=#{deliveryId} AND company=#{company} AND d.id=di.denture_id)
+        INNER JOIN delivery_info di ON (delivery_id=#{deliveryId} AND company=#{company} AND d.id=di.denture_id)
     </select>
     <select id="findByDentureId" parameterType="String" resultMap="baseRM">
         SELECT <include refid="baseSQL" /> FROM denture d

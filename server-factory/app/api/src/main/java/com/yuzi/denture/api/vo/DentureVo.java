@@ -213,4 +213,20 @@ public class DentureVo {
     public void setQuaReviewDate(Date quaReviewDate) {
         this.quaReviewDate = quaReviewDate;
     }
+
+    public List<AppliedIngredientVo> getAppliedIngredients() {
+        return appliedIngredients;
+    }
+
+    public void setAppliedIngredients(List<AppliedIngredientVo> appliedIngredients) {
+        this.appliedIngredients = appliedIngredients;
+    }
+
+    public List<ProcedureGroupVo> getProcedureGroups() {
+        return procedureGroups;
+    }
+
+    public void setProcedureGroups(List<ProcedureGroupVo> procedureGroups) {
+        this.procedureGroups = procedureGroups;
+    }
 }
