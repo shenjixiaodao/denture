@@ -1,9 +1,6 @@
 package com.yuzi.denture.domain.repository;
 
-import com.yuzi.denture.domain.DeliveryInfo;
-import com.yuzi.denture.domain.Denture;
-import com.yuzi.denture.domain.DentureOrder;
-import com.yuzi.denture.domain.Procedure;
+import com.yuzi.denture.domain.*;
 
 import java.util.List;
 
@@ -13,6 +10,12 @@ public interface FactoryRepository {
 
     //procedure
     void add(Procedure procedure);
+
+    //user
+    void add(FactoryUser user);
+
+    FactoryUser findUser(String contact);
+    List<FactoryUser> findUsers(Long factoryId);
     /**
      * 牙摸初始入厂，工厂根据物流单号查询 Denture信息
      */

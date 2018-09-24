@@ -2,6 +2,7 @@ package com.yuzi.denture.domain.service;
 
 
 import com.yuzi.denture.domain.Denture;
+import com.yuzi.denture.domain.FactoryUser;
 import com.yuzi.denture.domain.Procedure;
 import com.yuzi.denture.domain.ReviewResult;
 
@@ -18,4 +19,7 @@ public interface FactoryService {
      * @param pgId 完成工序所属的工序组ID
      */
     Procedure completeProcedure(Long pgId, Long operatorId, String procedureName, String comment);
+
+    void addFactoryUser(FactoryUser user);
+    FactoryUser login(String contact, String encryptPWD);
 }

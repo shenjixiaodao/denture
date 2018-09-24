@@ -4,11 +4,9 @@ package com.yuzi.denture.data.repository;
 
 import com.yuzi.denture.data.mapper.DentureMapper;
 import com.yuzi.denture.data.mapper.DentureOrderMapper;
+import com.yuzi.denture.data.mapper.FactoryUserMapper;
 import com.yuzi.denture.data.mapper.ProcedureMapper;
-import com.yuzi.denture.domain.DeliveryInfo;
-import com.yuzi.denture.domain.Denture;
-import com.yuzi.denture.domain.DentureOrder;
-import com.yuzi.denture.domain.Procedure;
+import com.yuzi.denture.domain.*;
 import com.yuzi.denture.domain.repository.FactoryRepository;
 import org.apache.tomcat.jni.Proc;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +25,8 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     private DentureOrderMapper dentureOrderMapper;
     @Autowired
     private ProcedureMapper procedureMapper;
+    @Autowired
+    private FactoryUserMapper userMapper;
     /*@Override
     public void add(Denture denture) {
         dentureMapper.save(denture);
@@ -40,6 +40,21 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     @Override
     public void add(Procedure procedure) {
         procedureMapper.save(procedure);
+    }
+
+    @Override
+    public void add(FactoryUser user) {
+        userMapper.save(user);
+    }
+
+    @Override
+    public FactoryUser findUser(String contact) {
+        return userMapper.findUserByContact(contact);
+    }
+
+    @Override
+    public List<FactoryUser> findUsers(Long factoryId) {
+        return userMapper.findUsersByFactoryId(factoryId);
     }
 
     @Override

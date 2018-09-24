@@ -38,4 +38,18 @@ public class FactoryServiceImpl implements FactoryService {
         repository.add(procedure);
         return procedure;
     }
+
+    @Override
+    public void addFactoryUser(FactoryUser user) {
+        repository.add(user);
+    }
+
+    @Override
+    public FactoryUser login(String contact, String encryptPWD) {
+        FactoryUser user = repository.findUser(contact);
+        if(user == null)
+            throw new IllegalArgumentException("不存在用户");
+        user.checkPWD(encryptPWD);
+        return user;
+    }
 }
