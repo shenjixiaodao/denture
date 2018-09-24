@@ -5,6 +5,7 @@ import org.springframework.util.DigestUtils;
 
 import java.security.PrivateKey;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class FactoryUser {
@@ -13,18 +14,19 @@ public class FactoryUser {
     private final PrivateKey PriKey = RSAUtil.string2PrivateKey(PrivateKeyStr);
 
     //id:
-    private Long id;
+     Long id;
     //factoryId
-    private Long factoryId;
+     Long factoryId;
     //name:
-    private String name;
+     String name;
     //contact:
-    private String contact;
-    private String password;
+     String contact;
+     String password;
     //groupType:
-    private GroupType groupType;
+     GroupType groupType;
     //joinDate:
-    private Date joinDate;
+     Date joinDate;
+    List<FactoryRole> roles;
 
     public FactoryUser(Long factoryId, String name, String contact, GroupType groupType) {
         this.factoryId = factoryId;
@@ -36,16 +38,16 @@ public class FactoryUser {
     public static void main(String[] strs) {
         System.out.println(DigestUtils.md5DigestAsHex("123456".getBytes()));
     }
-    private static String DefaultPWD(String contact) {
+     static String DefaultPWD(String contact) {
         return contact.substring(contact.length() - 6);
     }
 
-    private static String hashPWD(byte[] pwd) {
+     static String hashPWD(byte[] pwd) {
         return DigestUtils.md5DigestAsHex(pwd);
     }
 
     public boolean checkPWD(String encryptPWD) {
-        byte[] pwd = RSAUtil.privateDecrypt(encryptPWD.getBytes(), this.PriKey);
+        byte[] pwd = RSAUtil.decrypt(encryptPWD.getBytes(), this.PriKey);
         String hashPwd = hashPWD(pwd);
         return Objects.equals(this.password, hashPwd);
     }
@@ -108,6 +110,14 @@ public class FactoryUser {
 
     public FactoryUser(Long id) {
         this.id = id;
+    }
+
+    public List<FactoryRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<FactoryRole> roles) {
+        this.roles = roles;
     }
 
     public FactoryUser() {

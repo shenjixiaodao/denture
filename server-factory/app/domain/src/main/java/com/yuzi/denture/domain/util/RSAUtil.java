@@ -55,7 +55,7 @@ public class RSAUtil {
     }
 
     //公钥加密
-    public static byte[] publicEncrypt(byte[] content, PublicKey publicKey) throws Exception{
+    public static byte[] encrypt(byte[] content, PublicKey publicKey) throws Exception{
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.ENCRYPT_MODE, publicKey);
         byte[] bytes = cipher.doFinal(content);
@@ -63,7 +63,7 @@ public class RSAUtil {
     }
 
     //私钥解密
-    public static byte[] privateDecrypt(byte[] content, PrivateKey privateKey) {
+    public static byte[] decrypt(byte[] content, PrivateKey privateKey) {
         try {
             Cipher cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
