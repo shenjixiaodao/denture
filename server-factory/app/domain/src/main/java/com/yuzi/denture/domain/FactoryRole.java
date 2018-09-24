@@ -34,6 +34,15 @@ public class FactoryRole {
         public String text() {
             return this.text;
         }
+        public GroupType group() {
+            for(GroupType type : GroupType.values()) {
+                if(this.name().toLowerCase()
+                        .contains(type.name().toLowerCase())) {
+                    return type;
+                }
+            }
+            return GroupType.Other;
+        }
         public static Role typeOf(String type) {
             for(Role result : Role.values()){
                 if(result.name().toLowerCase().equals(type.toLowerCase()))
