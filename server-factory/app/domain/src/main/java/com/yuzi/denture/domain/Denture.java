@@ -14,6 +14,8 @@ public class Denture {
     private Clinic clinic;
     //生产方(factory):
     private Factory factory;
+    //业务员
+    private FactoryUser salesman;
     //数量(number):
     private Integer number;
     /**
@@ -122,6 +124,14 @@ public class Denture {
 
     public void setFactory(Factory factory) {
         this.factory = factory;
+    }
+
+    public FactoryUser getSalesman() {
+        return salesman;
+    }
+
+    public void setSalesman(FactoryUser salesman) {
+        this.salesman = salesman;
     }
 
     public Integer getNumber() {

@@ -28,7 +28,7 @@ public class DentureOrder {
     //安装日期(InstalledDate): Date
     private Date installedDate;
     //医生(dentist):
-    private ClinicUser clinicUser;
+    private ClinicUser dentist;
     //患者(patient):
     private Patient patient;
     //记录人(recorder):
@@ -146,12 +146,12 @@ public class DentureOrder {
         this.installedDate = installedDate;
     }
 
-    public ClinicUser getClinicUser() {
-        return clinicUser;
+    public ClinicUser getDentist() {
+        return dentist;
     }
 
-    public void setClinicUser(ClinicUser clinicUser) {
-        this.clinicUser = clinicUser;
+    public void setDentist(ClinicUser dentist) {
+        this.dentist = dentist;
     }
 
     public Patient getPatient() {
@@ -192,7 +192,7 @@ public class DentureOrder {
                 ", dentureDeliveryInfo=" + dentureDeliveryInfo +
                 ", receivedDate=" + receivedDate +
                 ", installedDate=" + installedDate +
-                ", clinicUser=" + clinicUser +
+                ", dentist=" + dentist +
                 ", patient=" + patient +
                 ", recorder=" + recorder +
                 ", comment='" + comment + '\'' +
