@@ -81,8 +81,12 @@ public class RSAUtil {
     }
 
     //Base64编码转字节数组
-    public static byte[] base642Byte(String base64Key) throws IOException {
-        BASE64Decoder decoder = new BASE64Decoder();
-        return decoder.decodeBuffer(base64Key);
+    public static byte[] base642Byte(String base64Key) {
+        try {
+            BASE64Decoder decoder = new BASE64Decoder();
+            return decoder.decodeBuffer(base64Key);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

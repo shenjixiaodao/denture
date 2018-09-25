@@ -3,14 +3,38 @@ package com.yuzi.denture.domain;
 import com.yuzi.denture.domain.util.RSAUtil;
 import org.springframework.util.DigestUtils;
 
+import java.security.KeyPair;
 import java.security.PrivateKey;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 public class FactoryUser {
 
-    private static final String PrivateKeyStr = "";
+    private static final String PrivateKeyStr =
+            "MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC0n2obxuexYoKl4YdnCN7LvgL3\n" +
+            "coAcwwcXozAl2/Zy/QZdtGMurbXZlucDmyCoFvzmVnL7k6iQdWP3pgQQ8gicjD0qTmrDDNfiPnBl\n" +
+            "xAQp6We37/AoRDCDUVskWNRSnoUJ1gJWZ71FR8ejUbuw1Or0x/BVMeorsnj19DUVMkSr38NeLRqN\n" +
+            "0cJF245i01St9tgAbunyeBMmdsF92l9IBxPa001spDLbtyNhwSylSfyP9Yq0TwAvB5uW67USflVA\n" +
+            "Dr0LhxC+FVpEONvI5udpb/x5ZvfsD6OG/vAQOcDOyIVczVzVKZ9Fzt6gcc80AoGeHDWS3SEs0xXY\n" +
+            "ti4KCSBGb9XdAgMBAAECggEADIMumpYA3uzwGAWzl5Opu3uCQRoRfeyUxTJs13KRdA3LLxqb9FPc\n" +
+            "USJ/BmTssjhFdL9wX7Uu7DL1peY+Sd46cn3UjuW3x6NQIUAqESKvFygwIzHf9SokIjS0l6P/sWmB\n" +
+            "1diZeNre5bm/PrUex3U4gZSINZ6rljNa5c7xDnLZBv7vSsZ+gJeuQWWbmQSJaO5g+llHyvhcFUmo\n" +
+            "UTNX4Yj6c6Fo/L6mdqvLSuRH3sLZIlBG/qEf9/7tzcoV6AzdNevaoLYZ/X2aL4xp1I2dJImowhyT\n" +
+            "FQPy3v+IxuE9BrgFKynQNqQU7mTFEP7ttRnfNNTujCiN0jK7WIj2SGIqmOt5EQKBgQDyuvfeBseO\n" +
+            "Bjv4RfK2fc7+JW4x57uhtlCsGq0dGguzurwrxqmUP0sfm9+WCDAb+h2UxBLpnJ2+++OewNMx6rGb\n" +
+            "Vc2iA/QyKg82QBLDtuquD1cOP8hmx5tuaOgZqpzz9auEf+Tm/jtdQqjHLlw7hJkvdJtbE0VYveRj\n" +
+            "npPw1lMzMwKBgQC+fz6jNF1/S8+SlNzfShsczZFm1F6q3FCfQ2Su2HMkxW1Bx9T/TDlhc1qNpUsN\n" +
+            "oURgdcEEPTewIbEKsgxHfXOn4XCnI0JUskNIGh1ZCBJtjZ+/LgZI/JpT9Mt0ns+MtlufBIExCQCz\n" +
+            "ykaCuE8xpcvpaWp8pAK2YSyHWvecbjDSrwKBgE1mdVelTcjqEAFxPJ4YrAK6qNLdFCXS3xKiRwV6\n" +
+            "orSjHRHQfY66SBhCOh+7aKvjK7+ebnFz8ZFO/RxIXJAUSKJB0BqTrDC63LLt543lLBxo49e1Ww/7\n" +
+            "IoMojKpyjy3z7seHiNRnyUJJ2Uv6aorIE5jgVBHMqVZM5yElFgO8NDelAoGAGL0vpkRDrCdtQo0A\n" +
+            "jiLymG/95QvJa4kHE1fOOIK1mV3mTXelKq58eTJg3SpNL+z0k05XjbRhigcmFcx/mb0qCvBVD++d\n" +
+            "SqCH6lIx44EP25hb2ZkhidL8O9D7px6Et7Jq/aC5ImQX6kFnnMxQxJLSg3KEOMGX9JV0EfP3WiJZ\n" +
+            "RtMCgYBBDaNl6NOHTMEZYS7H+tr2A1b4TrtUOj/ZPTLJ3lDOzOqjPzfCkPt35oylkqqm7adGi+dD\n" +
+            "EN9zunETyxflqD4hySMre1WF616gyBRbwvnNgDewgcjkPnLxDsWC6wER3FBgseuoZIKus39QOlzQ\n" +
+            "Z1GvkGxVTdQGx5z1qeM4ag20Ww==";
     private final PrivateKey PriKey = RSAUtil.string2PrivateKey(PrivateKeyStr);
 
     //id:
@@ -28,15 +52,27 @@ public class FactoryUser {
      Date joinDate;
     List<FactoryRole> roles;
 
-    public FactoryUser(Long factoryId, String name, String contact, GroupType groupType) {
+    public FactoryUser(Long factoryId, String name, String contact, FactoryRole.Role role) {
         this.factoryId = factoryId;
         this.name = name;
         this.contact = contact;
         this.password = hashPWD(DefaultPWD(this.contact).getBytes());
-        this.groupType = groupType;
+        roles = new ArrayList<>();
+        roles.add(new FactoryRole(role));
+        this.groupType = role.group();
     }
-    public static void main(String[] strs) {
+    public static void main(String[] strs) throws Exception {
         System.out.println(DigestUtils.md5DigestAsHex("123456".getBytes()));
+        KeyPair keyPair = RSAUtil.getKeyPair();
+        String priKey = RSAUtil.getPrivateKey(keyPair);
+        System.out.println("private key : \n" + priKey);
+        String pubKey = RSAUtil.getPublicKey(keyPair);
+        System.out.println("public key : \n" + pubKey);
+        byte[] crypt = RSAUtil.encrypt("257503".getBytes(),RSAUtil.string2PublicKey(pubKey));
+        String cryptStr = RSAUtil.byte2Base64(crypt);
+        System.out.println("bas64密文:\n"+cryptStr);
+        byte[] content = RSAUtil.decrypt(RSAUtil.base642Byte(cryptStr), RSAUtil.string2PrivateKey(priKey));
+        System.out.println(new String(content));
     }
      static String DefaultPWD(String contact) {
         return contact.substring(contact.length() - 6);
@@ -47,7 +83,7 @@ public class FactoryUser {
     }
 
     public boolean checkPWD(String encryptPWD) {
-        byte[] pwd = RSAUtil.decrypt(encryptPWD.getBytes(), this.PriKey);
+        byte[] pwd = RSAUtil.decrypt(RSAUtil.base642Byte(encryptPWD), this.PriKey);
         String hashPwd = hashPWD(pwd);
         return Objects.equals(this.password, hashPwd);
     }
@@ -72,8 +108,9 @@ public class FactoryUser {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String encryptPwd) {
+        byte[] pwd = RSAUtil.decrypt(RSAUtil.base642Byte(encryptPwd), this.PriKey);
+        this.password = hashPWD(pwd);
     }
 
     public String getName() {

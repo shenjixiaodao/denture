@@ -2,11 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yuzi.denture.data.mapper.FactoryUserMapper" >
 
-    <insert id="save" parameterType="com.yuzi.denture.domain.FactoryUser">
-        INSERT INTO `denture`.`factory_user`
+    <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.yuzi.denture.domain.FactoryUser">
+        INSERT INTO factory_user
         (
         `name`,
         `contact`,
+        `password`,
         `group_type`,
         `join_date`,
         `factory_id`
@@ -15,9 +16,45 @@
         (
         #{name},
         #{contact},
+        #{password},
         #{groupType},
         #{joinDate},
         #{factoryId}
+        );
+    </insert>
+
+    <update id="update" parameterType="com.yuzi.denture.domain.FactoryUser">
+        UPDATE `liyou`.`factory_user`
+        SET
+        `id` = id
+        <if test="name!=null">
+            ,`name` = #{name}
+        </if>
+        <if test="contact!=null">
+            ,`contact` = #{contact}
+        </if>
+        <if test="groupType!=null">
+            ,`group_type` = #{groupType}
+        </if>
+        <if test="joinDate!=null">
+            ,`join_date` = #{joinDate}
+        </if>
+        <if test="password!=null">
+            ,`password` = #{password}
+        </if>
+        WHERE `id` = #{id};
+    </update>
+
+    <insert id="addRole" parameterType="com.yuzi.denture.domain.FactoryRole">
+        INSERT INTO factory_role
+        (
+        `factory_uid`,
+        `role`
+        )
+        VALUES
+        (
+        #{uid},
+        #{role}
         );
     </insert>
 
@@ -29,10 +66,21 @@
         <result column="password" property="password" />
         <result column="group_type" property="groupType" />
         <result column="join_date" property="joinDate" />
+        <collection property="roles" resultMap="baseRoleRM" />
     </resultMap>
+    <resultMap id="baseRoleRM" type="com.yuzi.denture.domain.FactoryRole">
+        <result column="id" property="uid" />
+        <result column="role" property="role" />
+    </resultMap>
+
     <select id="findUserByContact" resultMap="baseRM">
+        select fu.*, fr.role from factory_user fu
+        inner join factory_role fr
+        on (contact=#{contact} and fu.id=fr.factory_uid)
+    </select>
+    <select id="findUserById" resultMap="baseRM">
         SELECT * FROM factory_user
-        WHERE contact=#{contact}
+        WHERE id=#{id}
     </select>
     <select id="findUsersByFactoryId" resultMap="baseRM">
         SELECT * FROM factory_user

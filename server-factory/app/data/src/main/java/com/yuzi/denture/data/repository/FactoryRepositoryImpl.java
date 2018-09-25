@@ -48,8 +48,23 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     }
 
     @Override
+    public void addRole(FactoryRole role) {
+        userMapper.addRole(role);
+    }
+
+    @Override
+    public void update(FactoryUser user) {
+        userMapper.update(user);
+    }
+
+    @Override
     public FactoryUser findUser(String contact) {
         return userMapper.findUserByContact(contact);
+    }
+
+    @Override
+    public FactoryUser findUser(Long uid) {
+        return userMapper.findUserById(uid);
     }
 
     @Override

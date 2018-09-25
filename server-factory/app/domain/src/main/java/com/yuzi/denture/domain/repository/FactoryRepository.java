@@ -13,8 +13,11 @@ public interface FactoryRepository {
 
     //user
     void add(FactoryUser user);
+    void addRole(FactoryRole role);
+    void update(FactoryUser user);
 
     FactoryUser findUser(String contact);
+    FactoryUser findUser(Long uid);
     List<FactoryUser> findUsers(Long factoryId);
     /**
      * 牙摸初始入厂，工厂根据物流单号查询 Denture信息

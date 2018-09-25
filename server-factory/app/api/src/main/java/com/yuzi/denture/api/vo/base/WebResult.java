@@ -4,6 +4,7 @@
 package com.yuzi.denture.api.vo.base;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.slf4j.Logger;
 
 @ApiModel
 public class WebResult<T> {
@@ -19,24 +20,40 @@ public class WebResult<T> {
 		code = WebConstants.RESULT_SUCCESS_CODE;
 	}
 
-	public static WebResult successResult(){
+	public static WebResult success(){
 		WebResult result = new WebResult(){};
 		result.setCode(WebConstants.RESULT_SUCCESS_CODE);
 		return result;
 	}
 
-	public static WebResult failureResult(String errorCode, String msg){
+	public static WebResult failure(String errorCode, String msg){
 		WebResult result = new WebResult(){};
 		result.setCode(errorCode);
 		result.setMessage(msg);
 		return result;
 	}
 
-	public static WebResult failureResult(String msg){
+	public static WebResult failure(String msg){
 		WebResult result = new WebResult(){};
 		result.setCode(WebConstants.RESULT_FAIL_CODE);
 		result.setMessage(msg);
 		return result;
+	}
+
+	public static <T> WebResult<T> execute(Action function, String exceptionLog, Logger logger) {
+		WebResult<T> result = WebResult.success();
+		try {
+			function.doAction(result);
+		}  catch (Exception e) {
+			logger.warn(exceptionLog+": {}",e);
+			result.setCode(WebConstants.RESULT_FAIL_CODE);
+			result.setMessage(e.getMessage());
+		}
+		return result;
+	}
+
+	public interface Action {
+		void doAction(WebResult result);
 	}
 
 	public String getCode() {

@@ -8,6 +8,13 @@ public class FactoryRole {
     Long uid;
     Role role;
 
+    public FactoryRole(Role role) {
+        this.role = role;
+    }
+
+    public FactoryRole() {
+    }
+
     public enum Role {
         ShiGao("石膏技师"),
         ShiGaoLeader("石膏组长"),

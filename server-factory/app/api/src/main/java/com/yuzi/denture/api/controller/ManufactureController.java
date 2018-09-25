@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -42,7 +40,8 @@ public class ManufactureController {
     @ApiOperation(value = "根据快递单号查询义齿信息", response = DentureVo.class, httpMethod = "GET")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "deliveryId", dataType = "String", required = true, value = "快递单号"),
-            @ApiImplicitParam(paramType = "query", name = "company", dataType = "String", required = true, value = "快递公司[SF(\"顺丰\"), EMS(\"邮政特快\"), YT(\"圆通\"), ST(\"申通\"), ZT(\"中通\"), TT(\"天天\"), YD(\"韵达\")]")
+            @ApiImplicitParam(paramType = "query", name = "company", dataType = "String", required = true,
+                    value = "快递公司[SF(\"顺丰\"), EMS(\"邮政特快\"), YT(\"圆通\"), ST(\"申通\"), ZT(\"中通\"), TT(\"天天\"), YD(\"韵达\")]")
     })
     @ResponseBody
     @RequestMapping(value = "/queryByDeliveryId", method = GET)
@@ -56,7 +55,7 @@ public class ManufactureController {
             result.setData(vo);
         } catch (Exception ex) {
             logger.warn("查询义齿信息异常: {}", ex);
-            return WebResult.failureResult(ex.getMessage());
+            return WebResult.failure(ex.getMessage());
         }
         return result;
     }
@@ -84,14 +83,14 @@ public class ManufactureController {
             result.setData(vo);
         } catch (Exception ex) {
             logger.warn("审核义齿异常: {}", ex);
-            return WebResult.failureResult(ex.getMessage());
+            return WebResult.failure(ex.getMessage());
         }
         return result;
     }
 
     @ApiOperation(value = "查询义齿信息", response = DentureVo.class, httpMethod = "GET")
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "dentureId", dataType = "String", required = true, value = "快递单号")
+            @ApiImplicitParam(paramType = "query", name = "dentureId", dataType = "String", required = true, value = "义齿ID")
     })
     @ResponseBody
     @RequestMapping(value = "/queryByDentureId", method = GET)
@@ -105,7 +104,7 @@ public class ManufactureController {
             result.setData(vo);
         } catch (Exception ex) {
             logger.warn("查询义齿信息异常: {}", ex);
-            return WebResult.failureResult(ex.getMessage());
+            return WebResult.failure(ex.getMessage());
         }
         return result;
     }
@@ -132,7 +131,7 @@ public class ManufactureController {
             result.setData(vo);
         } catch (Exception ex) {
             logger.warn("提交一个工序异常: {}", ex);
-            return WebResult.failureResult(ex.getMessage());
+            return WebResult.failure(ex.getMessage());
         }
         return result;
     }

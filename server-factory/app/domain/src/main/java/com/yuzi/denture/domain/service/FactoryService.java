@@ -22,4 +22,5 @@ public interface FactoryService {
 
     void addFactoryUser(FactoryUser user);
     FactoryUser login(String contact, String encryptPWD);
+    void modifyPwd(Long uid, String srcPwd, String dstPwd);
 }

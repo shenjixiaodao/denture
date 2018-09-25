@@ -1,13 +1,11 @@
 package com.yuzi.denture.biz.service;
 
-import com.yuzi.denture.domain.Denture;
-import com.yuzi.denture.domain.FactoryUser;
-import com.yuzi.denture.domain.Procedure;
-import com.yuzi.denture.domain.ReviewResult;
+import com.yuzi.denture.domain.*;
 import com.yuzi.denture.domain.repository.FactoryRepository;
 import com.yuzi.denture.domain.service.FactoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -39,9 +37,13 @@ public class FactoryServiceImpl implements FactoryService {
         return procedure;
     }
 
+    @Transactional
     @Override
     public void addFactoryUser(FactoryUser user) {
         repository.add(user);
+        FactoryRole role = user.getRoles().get(0);
+        role.setUid(user.getId());
+        repository.addRole(role);
     }
 
     @Override
@@ -49,7 +51,19 @@ public class FactoryServiceImpl implements FactoryService {
         FactoryUser user = repository.findUser(contact);
         if(user == null)
             throw new IllegalArgumentException("不存在用户");
-        user.checkPWD(encryptPWD);
+        if(!user.checkPWD(encryptPWD))
+            throw new IllegalArgumentException("密码错误");
         return user;
+    }
+
+    @Override
+    public void modifyPwd(Long uid, String srcPwd, String dstPwd) {
+        FactoryUser user = repository.findUser(uid);
+        if(user == null)
+            throw new IllegalArgumentException("用户为空");
+        if(user.checkPWD(srcPwd))
+            throw new IllegalArgumentException("旧密码验证错误");
+        user.setPassword(dstPwd);
+        repository.update(user);
     }
 }

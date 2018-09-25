@@ -4,6 +4,7 @@ package com.yuzi.denture.api.vo;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
+import java.util.List;
 
 public class FactoryUserVo {
 
@@ -31,7 +32,7 @@ public class FactoryUserVo {
     //joinDate:
     @ApiModelProperty(value="加入公司时间")
     private Date joinDate;
-
+    private List<String> roles;
 
     public Long getId() {
         return id;
@@ -71,5 +72,13 @@ public class FactoryUserVo {
 
     public void setJoinDate(Date joinDate) {
         this.joinDate = joinDate;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 }

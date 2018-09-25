@@ -1,9 +1,11 @@
 package com.yuzi.denture.api.controller;
 
+import com.yuzi.denture.api.assembler.DentureAssembler;
+import com.yuzi.denture.api.assembler.FactoryUserAssembler;
+import com.yuzi.denture.api.vo.FactoryUserVo;
+import com.yuzi.denture.api.vo.base.DentureVo;
 import com.yuzi.denture.api.vo.base.WebResult;
-import com.yuzi.denture.domain.Factory;
-import com.yuzi.denture.domain.FactoryUser;
-import com.yuzi.denture.domain.GroupType;
+import com.yuzi.denture.domain.*;
 import com.yuzi.denture.domain.repository.FactoryRepository;
 import com.yuzi.denture.domain.service.FactoryService;
 import io.swagger.annotations.Api;
@@ -19,10 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -48,46 +47,90 @@ public class FactoryUserController {
                     required = true, value = "姓名"),
             @ApiImplicitParam(paramType = "form", name = "contact", dataType = "string",
                     required = true, value = "手机"),
-            @ApiImplicitParam(paramType = "form", name = "groupType", dataType = "string",
-                    required = true, value = "审核结果\n" +
-                    "   [ShiGao(\"石膏组\"),\n" +
-                    "    LaXing(\"蜡型组\"),\n" +
-                    "    CheJin(\"车金组\"),\n" +
-                    "    ChongJiao(\"充胶组\"),\n" +
-                    "    ShangCi(\"上瓷组\"),\n" +
-                    "    CheCi(\"车瓷组\"),\n" +
-                    "    Comprehensive(\"综合管理组\"),\n" +
-                    "    Market(\"销售组\"),\n" +
-                    "    Management(\"管理组\"),\n" +
-                    "    Other(\"其他\")]"),
+            @ApiImplicitParam(paramType = "form", name = "role", dataType = "string",
+                    required = true, value = "角色\n" +
+                    "       [ShiGao(\"石膏技师\"),\n" +
+                    "        ShiGaoLeader(\"石膏组长\"),\n" +
+                    "        LaXing(\"蜡型技师\"),\n" +
+                    "        LaXingLeader(\"蜡型组长\"),\n" +
+                    "        CheJin(\"车金技师\"),\n" +
+                    "        ChejinLeader(\"车金组长\"),\n" +
+                    "        ChongJiao(\"充胶技师\"),\n" +
+                    "        ChongjiaoLeader(\"充胶组长\"),\n" +
+                    "        ShangCi(\"上瓷技师\"),\n" +
+                    "        ShangCiLeader(\"上瓷组长\"),\n" +
+                    "        CheCi(\"车瓷\"),\n" +
+                    "        CheCiLeader(\"车瓷组长\"),\n" +
+                    "        Comprehensive(\"综合管理人员\"),\n" +
+                    "        ComprehensiveLeader(\"综合部主管\"),\n" +
+                    "        Market(\"市场人员\"),\n" +
+                    "        MarketLeader(\"市场主管\"),\n" +
+                    "        Management(\"管理层\")]"),
             @ApiImplicitParam(paramType = "form", name = "joinDate", dataType = "string",
                     value = "加入公司时间，格式=[YYYY-mm-dd]")
     })
     @ResponseBody
     @RequestMapping(value = "/add", method = POST)
-    public WebResult add(String name, String contact, String groupType, String joinDate) {
+    public WebResult add(String name, String contact, String role, String joinDate) {
         //todo 从session中获取用户factoryId
         Long factoryId = 1L;
-        logger.info("审核义齿:name={}, contact={}, groupType={}, joinDate={}",name, contact,
-                groupType, joinDate);
-
-        WebResult result = WebResult.successResult();
+        logger.info("审核义齿:name={}, contact={}, role={}, joinDate={}",name, contact,
+                role, joinDate);
+        WebResult result = WebResult.success();
         try {
-            FactoryUser user = new FactoryUser(factoryId, name, contact, GroupType.typeOf(groupType));
-            if(StringUtils.isEmpty(joinDate)) {
+            FactoryUser user = new FactoryUser(factoryId, name, contact, FactoryRole.Role.typeOf(role));
+            if(!StringUtils.isEmpty(joinDate)) {
                 DateFormatter formatter = new DateFormatter("yyyy-mm-dd");
                 user.setJoinDate(formatter.parse(joinDate, Locale.CHINA));
             }
             service.addFactoryUser(user);
         } catch (ParseException ex) {
           logger.warn("日期格式错误：{}", ex);
-            return WebResult.failureResult(ex.getMessage());
+            return WebResult.failure(ex.getMessage());
         } catch (Exception ex) {
             logger.warn("审核义齿异常: {}", ex);
-            return WebResult.failureResult(ex.getMessage());
+            return WebResult.failure(ex.getMessage());
         }
         return result;
     }
 
+    @ApiOperation(value = "登录", response = FactoryUserVo.class, httpMethod = "POST")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "form", name = "phone", dataType = "string",
+                    required = true, value = "手机"),
+            @ApiImplicitParam(paramType = "form", name = "password", dataType = "string",
+                    required = true, value = "密码")
+    })
+    @ResponseBody
+    @RequestMapping(value = "/login", method = POST)
+    public WebResult<FactoryUserVo> login(String phone, String password) {
+        logger.info("登录:phone={}, password={}",phone, password);
+        WebResult<FactoryUserVo> result = WebResult.execute(res -> {
+            FactoryUser user = service.login(phone, password);
+            FactoryUserVo vo = FactoryUserAssembler.toVo(user);
+            res.setData(vo);
+            logger.info("登录成功");
+        }, "登录错误", logger);
+        return result;
+    }
 
+    @ApiOperation(value = "修改密码", response = WebResult.class, httpMethod = "POST")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "form", name = "srcPwd", dataType = "string",
+                    required = true, value = "原始密码"),
+            @ApiImplicitParam(paramType = "form", name = "dstPwd", dataType = "string",
+                    required = true, value = "修改密码")
+    })
+    @ResponseBody
+    @RequestMapping(value = "/modifyPwd", method = POST)
+    public WebResult<FactoryUserVo> modifyPwd(String srcPwd, String dstPwd) {
+        logger.info("修改密码:srcPwd={}, dstPwd={}",srcPwd, dstPwd);
+        //todo 从session获取用户ID
+        Long uid = 1L;
+        WebResult result = WebResult.execute(res -> {
+            service.modifyPwd(uid, srcPwd, dstPwd);
+            logger.info("修改密码成功");
+        }, "修改密码错误", logger);
+        return result;
+    }
 }
