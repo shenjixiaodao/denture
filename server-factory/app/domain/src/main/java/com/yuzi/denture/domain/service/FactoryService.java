@@ -1,10 +1,7 @@
 package com.yuzi.denture.domain.service;
 
 
-import com.yuzi.denture.domain.Denture;
-import com.yuzi.denture.domain.FactoryUser;
-import com.yuzi.denture.domain.Procedure;
-import com.yuzi.denture.domain.ReviewResult;
+import com.yuzi.denture.domain.*;
 
 public interface FactoryService {
 
@@ -20,7 +17,10 @@ public interface FactoryService {
      */
     Procedure completeProcedure(Long pgId, Long operatorId, String procedureName, String comment);
 
+    //user
     void addFactoryUser(FactoryUser user);
     FactoryUser login(String contact, String encryptPWD);
     void modifyPwd(Long uid, String srcPwd, String dstPwd);
+    void addCustomer(Long factoryId, Long clinicId, Long salesmanId);
+    void modifyCustomer(Long customerId, Long clinicId, Long salesmanId);
 }

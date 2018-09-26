@@ -66,4 +66,22 @@ public class FactoryServiceImpl implements FactoryService {
         user.setPassword(dstPwd);
         repository.update(user);
     }
+
+    @Override
+    public void addCustomer(Long factoryId, Long clinicId, Long salesmanId) {
+        FactoryCustomer customer = new FactoryCustomer(factoryId, clinicId, salesmanId);
+        repository.addCustomer(customer);
+    }
+
+    @Override
+    public void modifyCustomer(Long customerId, Long clinicId, Long salesmanId) {
+        FactoryCustomer customer = repository.findCustomer(customerId);
+        if(clinicId!=null) {
+            customer.setClinic(new Clinic(clinicId));
+        }
+        if(salesmanId != null) {
+            customer.setSalesmanId(salesmanId);
+        }
+        repository.updateCustomer(customer);
+    }
 }

@@ -133,4 +133,23 @@ public class FactoryUserController {
         }, "修改密码错误", logger);
         return result;
     }
+
+    @ApiOperation(value = "添加客户", response = WebResult.class, httpMethod = "POST")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "form", name = "clinicId", dataType = "long",
+                    required = true, value = "诊所ID")
+    })
+    @ResponseBody
+    @RequestMapping(value = "/addCustomer", method = POST)
+    public WebResult<FactoryUserVo> addCustomer(Long clinicId) {
+        logger.info("添加客户:clinicId={}",clinicId);
+        //todo 从session获取uid和factoryId
+        Long uid = 1L;
+        Long factoryId = 1L;
+        WebResult result = WebResult.execute(res -> {
+            service.addCustomer(factoryId, clinicId, uid);
+            logger.info("添加客户成功");
+        }, "添加客户错误", logger);
+        return result;
+    }
 }
