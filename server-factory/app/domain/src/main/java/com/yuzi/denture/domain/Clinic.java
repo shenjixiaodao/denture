@@ -10,6 +10,13 @@ public class Clinic {
     //联系方式(contact):
     private String contact;
 
+    public Clinic(Long id) {
+        this.id = id;
+    }
+
+    public Clinic() {
+    }
+
     public Long getId() {
         return id;
     }

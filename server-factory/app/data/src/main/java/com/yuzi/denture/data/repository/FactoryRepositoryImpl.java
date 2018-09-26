@@ -8,7 +8,6 @@ import com.yuzi.denture.data.mapper.FactoryUserMapper;
 import com.yuzi.denture.data.mapper.ProcedureMapper;
 import com.yuzi.denture.domain.*;
 import com.yuzi.denture.domain.repository.FactoryRepository;
-import org.apache.tomcat.jni.Proc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -55,6 +54,32 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     @Override
     public void update(FactoryUser user) {
         userMapper.update(user);
+    }
+
+    @Override
+    public void addCustomer(FactoryCustomer customer) {
+        userMapper.addCustomer(customer);
+    }
+
+    @Override
+    public void updateCustomer(FactoryCustomer customer) {
+        userMapper.updateCustomer(customer);
+    }
+
+    @Override
+    public FactoryCustomer findCustomer(Long id) {
+        return userMapper.findCustomerById(id);
+    }
+
+    @Override
+    public List<FactoryCustomer> findCustomersByUid(Long uid) {
+        return userMapper.findCustomersByUid(uid);
+    }
+
+    @Override
+    public List<FactoryCustomer> findCustomersByFactoryId(Long factoryId) {
+        //todo
+        return null;
     }
 
     @Override

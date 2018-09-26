@@ -15,7 +15,11 @@ public interface FactoryRepository {
     void add(FactoryUser user);
     void addRole(FactoryRole role);
     void update(FactoryUser user);
-
+    void addCustomer(FactoryCustomer customer);
+    void updateCustomer(FactoryCustomer customer);
+    FactoryCustomer findCustomer(Long id);
+    List<FactoryCustomer> findCustomersByUid(Long uid);
+    List<FactoryCustomer> findCustomersByFactoryId(Long factoryId);
     FactoryUser findUser(String contact);
     FactoryUser findUser(Long uid);
     List<FactoryUser> findUsers(Long factoryId);
