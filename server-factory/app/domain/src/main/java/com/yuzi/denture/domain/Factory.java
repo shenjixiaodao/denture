@@ -11,6 +11,13 @@ public class Factory {
     //地址(address):
     private String address;
 
+    public Factory(Long id) {
+        this.id = id;
+    }
+
+    public Factory() {
+    }
+
     public Long getId() {
         return id;
     }

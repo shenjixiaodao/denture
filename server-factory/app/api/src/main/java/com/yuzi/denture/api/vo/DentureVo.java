@@ -33,6 +33,8 @@ public class DentureVo {
     //定制方(clinic):
     @ApiModelProperty(value="定制方", dataType = "com.yuzi.denture.api.vo.ClinicVo")
     private ClinicVo clinic;
+    @ApiModelProperty(value="医生备注")
+    private String comment;
     //生产方(factory):
     @ApiModelProperty(value="生产方", dataType = "com.yuzi.denture.api.vo.FactoryVo")
     private FactoryVo factory;
@@ -108,6 +110,14 @@ public class DentureVo {
 
     public void setClinic(ClinicVo clinic) {
         this.clinic = clinic;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public FactoryVo getFactory() {

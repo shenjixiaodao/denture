@@ -8,7 +8,7 @@ import java.util.Map;
 
 @Mapper
 public interface DentureMapper {
-    //void save(Denture denture);
+    void save(Denture denture);
     void update(Denture denture);
     Denture findByDeliveryInfo(Map paras);
     Denture findByDentureId(String dentureId);

@@ -21,12 +21,13 @@ public class FactoryRepositoryTest {
     @Autowired
     private FactoryRepository repository;
 
-    @Test
-    public void addDentureOrder(){
-        /*Denture denture = new Denture(new Date().getTime()+"", 111L);
-        denture.setId(new Date().getTime()+"");
-        repository.add(denture);*/
-    }
+    /*@Test
+    public void addDenture(){
+        Denture denture = new Denture(Denture.DentureType.Fixed, Denture.SpecType.ErYangHuaGao, 1L, "comment",
+                1L, "a-2", "A2");
+        denture.setId("456");
+        repository.add(denture);
+    }*/
 
     @Test
     public void findByDeliveryInfo() {

@@ -36,6 +36,20 @@ public class DentureOrder {
     //备注(comment):
     private String comment;
 
+    public DentureOrder(String dentureId, Long clinicId, Long factoryId,
+                        Long dentistId, String comment) {
+        this.dentureId = dentureId;
+        this.clinic = new Clinic(clinicId);
+        this.factory = new Factory(factoryId);
+        this.dentist = new ClinicUser(dentistId);
+        this.comment = comment;
+        this.status = Status.Created;
+        this.createdDate = new Date();
+    }
+
+    public DentureOrder() {
+    }
+
     public enum Status {
         Created("创建"),
         Paid("支付定金"),

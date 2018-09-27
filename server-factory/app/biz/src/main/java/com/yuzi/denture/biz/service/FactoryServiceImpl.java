@@ -1,5 +1,6 @@
 package com.yuzi.denture.biz.service;
 
+import com.yuzi.denture.biz.util.IdGenerator;
 import com.yuzi.denture.domain.*;
 import com.yuzi.denture.domain.repository.FactoryRepository;
 import com.yuzi.denture.domain.service.FactoryService;
@@ -14,6 +15,23 @@ public class FactoryServiceImpl implements FactoryService {
 
     @Autowired
     private FactoryRepository repository;
+
+    @Transactional
+    @Override
+    public Denture createOrderAndDenture(Long clinicId, Long dentistId, Long factoryId, String comment,
+                                         String positions, Denture.DentureType type, Denture.SpecType specification,
+                                         String colorNo) {
+        //1, create denture
+        Denture denture = new Denture(type, specification, clinicId, comment,
+                factoryId, positions, colorNo);
+        denture.setId(IdGenerator.generate(factoryId));
+        repository.add(denture);
+        //2, create order
+        DentureOrder order = new DentureOrder(denture.getId(), clinicId, factoryId, dentistId, comment);
+        order.setId(IdGenerator.generate(clinicId));
+        repository.add(order);
+        return denture;
+    }
 
     @Override
     public Denture inspectReviewAndStart(String dentureId, Long inspectorId, ReviewResult reviewResult) {

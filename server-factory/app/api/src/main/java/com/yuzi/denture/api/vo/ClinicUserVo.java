@@ -1,35 +1,17 @@
-package com.yuzi.denture.domain;
+package com.yuzi.denture.api.vo;
 
-public class ClinicUser {
 
+public class ClinicUserVo {
     //编号(id):
     private Long id;
     //诊所编号(clinicId):
     private Long clinicId;
     //角色(clinicRole):
-    private ClinicRole role;
+    private String role;
     //电话(contact):
     private String contact;
     //姓名(name):
     private String name;
-
-    public ClinicUser(Long id) {
-        this.id = id;
-    }
-
-    public ClinicUser() {
-    }
-
-    public enum  ClinicRole {
-        Dentist("医生"), Nurse("护士"), Other("其它");
-        private String text;
-        ClinicRole(String text) {
-            this.text = text;
-        }
-        public String text() {
-            return this.text;
-        }
-    }
 
     public Long getId() {
         return id;
@@ -47,11 +29,11 @@ public class ClinicUser {
         this.clinicId = clinicId;
     }
 
-    public ClinicRole getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(ClinicRole role) {
+    public void setRole(String role) {
         this.role = role;
     }
 

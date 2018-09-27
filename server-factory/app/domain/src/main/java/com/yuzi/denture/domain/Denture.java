@@ -1,9 +1,11 @@
 package com.yuzi.denture.domain;
 
+import org.springframework.util.StringUtils;
 import java.util.Date;
 import java.util.List;
 
 public class Denture {
+    private final static String PositionSeparator = ",";
     //产品编号(id): String
     private String id;
     //产品名称(type):
@@ -12,6 +14,8 @@ public class Denture {
     private SpecType specification;
     //定制方(clinic):
     private Clinic clinic;
+    //医生备注
+    private String comment;
     //生产方(factory):
     private Factory factory;
     //数量(number):
@@ -47,6 +51,22 @@ public class Denture {
     //工序组操作记录(precedureGroups):
     private List<ProcedureGroup> procedureGroups;
 
+    public Denture(DentureType type, SpecType specification, Long clinicId, String comment,
+                   Long factoryId, String positions, String colorNo) {
+        this.type = type;
+        this.specification = specification;
+        this.clinic = new Clinic(clinicId);
+        this.comment = comment;
+        this.factory = new Factory(factoryId);
+        this.positions = positions;
+        for(String pos : positions.split(PositionSeparator)) {
+            this.number = 0;
+            if(!StringUtils.isEmpty(pos))
+                this.number++;
+        }
+        this.colorNo = colorNo;
+        this.createdDate = new Date();
+    }
 
     public enum SpecType {
         GuGe("钴铬合金"),
@@ -67,6 +87,13 @@ public class Denture {
         public String text() {
             return this.text;
         }
+        public static SpecType typeOf(String type) {
+            for(SpecType result : SpecType.values()){
+                if(result.name().toLowerCase().equals(type.toLowerCase()))
+                    return result;
+            }
+            throw new IllegalArgumentException("未知义齿规格类型");
+        }
     }
     public enum  DentureType {
         Fixed("定制式固定义齿"), Mobilizable("定制式活动义齿");
@@ -76,6 +103,13 @@ public class Denture {
         }
         public String text() {
             return this.text;
+        }
+        public static DentureType typeOf(String type) {
+            for(DentureType result : DentureType.values()){
+                if(result.name().toLowerCase().equals(type.toLowerCase()))
+                    return result;
+            }
+            throw new IllegalArgumentException("未知义齿类型");
         }
     }
 
@@ -113,6 +147,14 @@ public class Denture {
 
     public void setClinic(Clinic clinic) {
         this.clinic = clinic;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public Factory getFactory() {

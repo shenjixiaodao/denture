@@ -24,7 +24,7 @@
     </insert>
 
     <update id="update" parameterType="com.yuzi.denture.domain.FactoryUser">
-        UPDATE `liyou`.`factory_user`
+        UPDATE factory_user
         SET
         `id` = id
         <if test="name!=null">
@@ -59,7 +59,7 @@
     </insert>
 
     <insert id="addCustomer" parameterType="com.yuzi.denture.domain.FactoryCustomer">
-        INSERT INTO `liyou`.`factory_customer`
+        INSERT INTO factory_customer
         (
         `factory_id`,
         `clinic_id`,
@@ -77,7 +77,7 @@
         );
     </insert>
     <update id="updateCustomer" parameterType="com.yuzi.denture.domain.FactoryCustomer">
-        UPDATE `liyou`.`factory_customer`
+        UPDATE factory_customer
         SET
         `id` = id
         <if test="factoryId!=null">
@@ -118,7 +118,7 @@
         <result column="salesman_id" property="salesmanId" />
         <result column="created_date" property="createdDate" />
         <result column="is_valid" property="isValid" />
-        <association property="clinic" jdbcType="com.yuzi.denture.domain.Clinic">
+        <association property="clinic" javaType="com.yuzi.denture.domain.Clinic">
             <result column="clinic_id" property="id" />
             <result column="clinic_name" property="name" />
             <result column="clinic_address" property="address" />

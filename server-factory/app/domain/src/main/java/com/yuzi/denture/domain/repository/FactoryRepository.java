@@ -5,7 +5,10 @@ import com.yuzi.denture.domain.*;
 import java.util.List;
 
 public interface FactoryRepository {
-    //void add(Denture denture);
+    //denture order, 业务经理通过传统线下方式录单
+    void add(DentureOrder order);
+    //denture
+    void add(Denture denture);
     void update(Denture denture);
 
     //procedure
@@ -40,5 +43,5 @@ public interface FactoryRepository {
      * 综合管理人员可以通过{@param factoryId} 查询所有工厂的订单
      */
     List<DentureOrder> findOrders(Long factoryId);
-    DentureOrder findOrder(String orderId);
+    DentureOrder findOrder(String dentureId);
 }

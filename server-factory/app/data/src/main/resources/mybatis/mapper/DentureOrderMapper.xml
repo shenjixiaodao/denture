@@ -2,6 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yuzi.denture.data.mapper.DentureOrderMapper" >
 
+    <insert id="save" parameterType="com.yuzi.denture.domain.DentureOrder">
+        INSERT INTO `liyou`.`denture_order`
+        (
+        `id`,
+        `clinic_id`,
+        `denture_id`,
+        `factory_id`,
+        `created_date`,
+        `status`,
+        `dentist_id`,
+        `comment`
+        )
+        VALUES
+        (
+        #{id},
+        #{clinic.id},
+        #{dentureId},
+        #{factory.id},
+        #{createdDate},
+        #{status},
+        #{dentist.id},
+        #{comment}
+        );
+    </insert>
 
     <resultMap id="baseRM" type="com.yuzi.denture.domain.DentureOrder">
         <result column="id" property="id" />
@@ -15,7 +39,7 @@
         <result column="denture_delivery_id" property="dentureDeliveryInfo.id" />
         <result column="received_date" property="receivedDate" />
         <result column="installed_date" property="installedDate" />
-        <result column="clinic_user" property="clinicUser.id" />
+        <result column="dentist_id" property="dentist.id" />
         <result column="patient_id" property="patient.id" />
         <result column="recorder_id" property="recorder.id" />
         <result column="comment" property="comment" />
@@ -23,7 +47,7 @@
 
     <select id="findOrderById" parameterType="String" resultMap="baseRM">
         SELECT * FROM denture_order do
-        WHERE do.id=#{orderId}
+        WHERE do.denture_id=#{dentureId}
     </select>
     <select id="findOrdersByFactoryId" parameterType="Long" resultMap="baseRM">
         SELECT * FROM denture_order do

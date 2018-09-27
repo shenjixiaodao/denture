@@ -1,7 +1,7 @@
-package com.yuzi.denture.domain;
+package com.yuzi.denture.api.vo;
 
-public class Patient {
-    
+public class PatientVo {
+
     //编号(id):
     private Long id;
     //诊所编号(clinicId):

@@ -26,10 +26,16 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     private ProcedureMapper procedureMapper;
     @Autowired
     private FactoryUserMapper userMapper;
-    /*@Override
+
+    @Override
+    public void add(DentureOrder order) {
+        dentureOrderMapper.save(order);
+    }
+
+    @Override
     public void add(Denture denture) {
         dentureMapper.save(denture);
-    }*/
+    }
 
     @Override
     public void update(Denture denture) {
@@ -121,7 +127,7 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     }
 
     @Override
-    public DentureOrder findOrder(String orderId) {
-        return dentureOrderMapper.findOrderById(orderId);
+    public DentureOrder findOrder(String dentureId) {
+        return dentureOrderMapper.findOrderByDentureId(dentureId);
     }
 }

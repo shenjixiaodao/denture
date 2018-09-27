@@ -1,14 +1,13 @@
 package com.yuzi.denture.api.controller;
 
 import com.yuzi.denture.api.assembler.DentureAssembler;
+import com.yuzi.denture.api.assembler.DentureOrderAssembler;
 import com.yuzi.denture.api.assembler.ProcedureAssembler;
+import com.yuzi.denture.api.vo.DentureOrderVo;
 import com.yuzi.denture.api.vo.ProcedureVo;
 import com.yuzi.denture.api.vo.base.DentureVo;
 import com.yuzi.denture.api.vo.base.WebResult;
-import com.yuzi.denture.domain.DeliveryInfo;
-import com.yuzi.denture.domain.Denture;
-import com.yuzi.denture.domain.Procedure;
-import com.yuzi.denture.domain.ReviewResult;
+import com.yuzi.denture.domain.*;
 import com.yuzi.denture.domain.repository.FactoryRepository;
 import com.yuzi.denture.domain.service.FactoryService;
 import io.swagger.annotations.*;
@@ -37,6 +36,93 @@ public class ManufactureController {
     @Autowired
     private FactoryRepository repository;
 
+    @ApiOperation(value = "查询义齿信息", response = DentureVo.class, httpMethod = "GET")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "dentureId", dataType = "String", required = true, value = "义齿ID")
+    })
+    @ResponseBody
+    @RequestMapping(value = "/queryByDentureId", method = GET)
+    public WebResult<DentureVo> queryByDentureId(String dentureId) {
+        logger.info("查询义齿信息息:dentureId={}", dentureId);
+
+        WebResult<DentureVo> result = new WebResult<>();
+        try {
+            Denture denture = repository.findDenture(dentureId);
+            DentureVo vo = DentureAssembler.toVo(denture);
+            result.setData(vo);
+        } catch (Exception ex) {
+            logger.warn("查询义齿信息异常: {}", ex);
+            return WebResult.failure(ex.getMessage());
+        }
+        return result;
+    }
+
+    //salesman user api
+    @ApiOperation(value = "业务人员录入订单", response = DentureVo.class, httpMethod = "POST")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "form", name = "clinicId", dataType = "long",
+                    required = true, value = "诊所ID"),
+            @ApiImplicitParam(paramType = "form", name = "dentistId", dataType = "long",
+                    required = true, value = "医生ID"),
+            @ApiImplicitParam(paramType = "form", name = "comment", dataType = "string",
+                    required = true, value = "医生备注"),
+            @ApiImplicitParam(paramType = "form", name = "positions", dataType = "string",
+                    required = true, value = "牙位[牙位号格式: 半位[a|b|c|d]-编号[1-8], eg: a-2（表示左上半第2号）;多个使用\",\"分隔各个牙位号]"),
+            @ApiImplicitParam(paramType = "form", name = "colorNo", dataType = "string",
+                    required = true, value = "色号"),
+            @ApiImplicitParam(paramType = "form", name = "type", dataType = "string",
+                    required = true, value = "义齿类型[Fixed(\"定制式固定义齿\"), Mobilizable(\"定制式活动义齿\")]"),
+            @ApiImplicitParam(paramType = "form", name = "specification", dataType = "string",
+                    required = true, value = "规格" +
+                    "       [GuGe(\"钴铬合金\"),\n" +
+                    "        GuiJinShuDanGuan(\"贵金属单冠\"),\n" +
+                    "        LianGuan(\"连冠（桥、嵌体、贴面）\"),\n" +
+                    "        ErYangHuaGao(\"二氧化锆\"),\n" +
+                    "        YangHuaGao(\"氧化锆\"),\n" +
+                    "        ErYangHuaGuiGuan(\"二氧化硅冠（桥、嵌体、贴面)\"),\n" +
+                    "        NieGeHeJinGuan(\"镍铬合金冠\"),\n" +
+                    "        NieGeHeJinQiao(\"镍铬合金桥\"),\n" +
+                    "        WanZhiZhiJiaKeZhai(\"弯制支架可摘局部义齿\"),\n" +
+                    "        ShuZhiJiTuoQuanKou(\"树脂基托全口义齿\"),\n" +
+                    "        Other(\"其他\")]")
+    })
+    @ResponseBody
+    @RequestMapping(value = "/recordOrder", method = POST)
+    public WebResult<DentureVo> recordOrder(Long clinicId, Long dentistId, String comment,
+                                            String positions, String type,
+                                            String specification, String colorNo) {
+        //todo 从session中获取factoryId
+        Long factoryId = 1L;
+        logger.info("录入订单:clinicId={}, dentistId={}, comment={}, positions={}, " +
+                        "type={}, specification={}, colorNo={} ",clinicId, dentistId, comment,
+                positions, type, specification, colorNo);
+        WebResult<DentureVo> result = WebResult.execute(res -> {
+            Denture denture = service.createOrderAndDenture(clinicId, dentistId, factoryId, comment, positions,
+                    Denture.DentureType.typeOf(type), Denture.SpecType.typeOf(specification), colorNo);
+            DentureVo vo = DentureAssembler.toVo(denture);
+            res.setData(vo);
+            logger.info("录入订单成功");
+        }, "录入订单错误", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "查询义齿订单信息", response = DentureOrderVo.class, httpMethod = "GET")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "dentureId", dataType = "String", required = true, value = "义齿编号")
+    })
+    @ResponseBody
+    @RequestMapping(value = "/queryOrderByDentureId", method = GET)
+    public WebResult<DentureOrderVo> queryOrderByDentureId(String dentureId) {
+        logger.info("查询订单:dentureId={}", dentureId);
+        WebResult<DentureOrderVo> result = WebResult.execute(res -> {
+            DentureOrder order = repository.findOrder(dentureId);
+            DentureOrderVo vo = DentureOrderAssembler.toVo(order);
+            res.setData(vo);
+        }, "录入订单错误", logger);
+        return result;
+    }
+
+    //comprehensive user api
     @ApiOperation(value = "根据快递单号查询义齿信息", response = DentureVo.class, httpMethod = "GET")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "deliveryId", dataType = "String", required = true, value = "快递单号"),
@@ -88,27 +174,7 @@ public class ManufactureController {
         return result;
     }
 
-    @ApiOperation(value = "查询义齿信息", response = DentureVo.class, httpMethod = "GET")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "dentureId", dataType = "String", required = true, value = "义齿ID")
-    })
-    @ResponseBody
-    @RequestMapping(value = "/queryByDentureId", method = GET)
-    public WebResult<DentureVo> queryByDentureId(String dentureId) {
-        logger.info("查询义齿信息息:dentureId={}", dentureId);
-
-        WebResult<DentureVo> result = new WebResult<>();
-        try {
-            Denture denture = repository.findDenture(dentureId);
-            DentureVo vo = DentureAssembler.toVo(denture);
-            result.setData(vo);
-        } catch (Exception ex) {
-            logger.warn("查询义齿信息异常: {}", ex);
-            return WebResult.failure(ex.getMessage());
-        }
-        return result;
-    }
-
+    //worker user api
     @ApiOperation(value = "完成一个工序", response = ProcedureVo.class, httpMethod = "POST")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "form", name = "pgId", dataType = "long",

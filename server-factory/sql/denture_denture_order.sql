@@ -34,9 +34,9 @@ CREATE TABLE `denture_order` (
   `denture_delivery_id` bigint(20) DEFAULT NULL,
   `received_date` datetime DEFAULT NULL,
   `Installed_date` datetime DEFAULT NULL,
-  `dentist` bigint(20) DEFAULT NULL,
-  `patient` bigint(20) DEFAULT NULL,
-  `recorder` bigint(20) DEFAULT NULL,
+  `dentist_id` bigint(20) DEFAULT NULL,
+  `patient_id` bigint(20) DEFAULT NULL,
+  `recorder_id` bigint(20) DEFAULT NULL,
   `comment` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
