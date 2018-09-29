@@ -82,10 +82,14 @@ public class FactoryUser {
         return DigestUtils.md5DigestAsHex(pwd);
     }
 
-    public boolean checkPWD(String encryptPWD) {
-        byte[] pwd = RSAUtil.decrypt(RSAUtil.base642Byte(encryptPWD), this.PriKey);
+    public boolean checkPWD(String pwd) {
+        return Objects.equals(this.password, pwd);
+    }
+
+    public String decryptAndHashPwd(String encryptPwd) {
+        byte[] pwd = RSAUtil.decrypt(RSAUtil.base642Byte(encryptPwd), this.PriKey);
         String hashPwd = hashPWD(pwd);
-        return Objects.equals(this.password, hashPwd);
+        return hashPwd;
     }
 
     public Long getId() {
@@ -108,9 +112,8 @@ public class FactoryUser {
         return password;
     }
 
-    public void setPassword(String encryptPwd) {
-        byte[] pwd = RSAUtil.decrypt(RSAUtil.base642Byte(encryptPwd), this.PriKey);
-        this.password = hashPWD(pwd);
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getName() {
