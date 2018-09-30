@@ -4,6 +4,9 @@ import com.yuzi.denture.api.vo.DentureOrderVo;
 import com.yuzi.denture.domain.DentureOrder;
 import org.springframework.beans.BeanUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DentureOrderAssembler {
     public static DentureOrderVo toVo(DentureOrder order) {
         if(order == null)
@@ -18,5 +21,16 @@ public class DentureOrderAssembler {
         vo.setPatient(PatientAssembler.toVo(order.getPatient()));
         vo.setRecorder(ClinicUserAssembler.toVo(order.getRecorder()));
         return vo;
+    }
+
+    public static List<DentureOrderVo> toVos(List<DentureOrder> orders) {
+        if(orders == null)
+            return null;
+        List<DentureOrderVo> vos = new ArrayList<>(orders.size());
+        for(DentureOrder order: orders) {
+            DentureOrderVo vo = toVo(order);
+            vos.add(vo);
+        }
+        return vos;
     }
 }

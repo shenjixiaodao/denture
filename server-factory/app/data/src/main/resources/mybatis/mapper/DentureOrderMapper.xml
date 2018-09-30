@@ -53,4 +53,8 @@
         SELECT * FROM denture_order do
         WHERE do.factory_id=#{factoryId}
     </select>
+    <select id="findOrdersByUid" parameterType="Long" resultMap="baseRM">
+        SELECT * FROM denture_order do
+        inner join factory_customer fc on (fc.salesman_id=#{uid} and do.clinic_id=fc.clinic_id)
+    </select>
 </mapper>

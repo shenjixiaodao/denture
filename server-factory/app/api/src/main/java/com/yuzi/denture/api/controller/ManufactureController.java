@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -106,6 +108,25 @@ public class ManufactureController {
         return result;
     }
 
+    @ApiOperation(value = "业务人员添加工厂客户", response = WebResult.class, httpMethod = "POST")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "form", name = "clinicId", dataType = "long",
+                    required = true, value = "诊所ID")
+    })
+    @ResponseBody
+    @RequestMapping(value = "/addCustomer", method = POST)
+    public WebResult addCustomer(Long clinicId) {
+        //todo 从session中获取factoryId and uid
+        Long factoryId = 1L;
+        Long uid = 1L;
+        logger.info("添加客户:clinicId={},factoryId={},uid={}  ",clinicId, factoryId, uid);
+        WebResult<DentureVo> result = WebResult.execute(res -> {
+            service.addCustomer(factoryId, clinicId, uid);
+            logger.info("添加客户成功");
+        }, "添加客户错误", logger);
+        return result;
+    }
+
     @ApiOperation(value = "查询义齿订单信息", response = DentureOrderVo.class, httpMethod = "GET")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "dentureId", dataType = "String", required = true, value = "义齿编号")
@@ -119,6 +140,21 @@ public class ManufactureController {
             DentureOrderVo vo = DentureOrderAssembler.toVo(order);
             res.setData(vo);
         }, "录入订单错误", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "业务员查询名下跟踪订单", response = DentureOrderVo.class, httpMethod = "GET")
+    @ResponseBody
+    @RequestMapping(value = "/salesmanQueryOrders", method = GET)
+    public WebResult<DentureOrderVo> salesmanQueryOrders() {
+        //todo 从session中获取用户ID
+        Long uid = 1L;
+        logger.info("查询订单:uid={}", uid);
+        WebResult<DentureOrderVo> result = WebResult.execute(res -> {
+            List<DentureOrder> orders = repository.findOrdersByUid(uid);
+            List<DentureOrderVo> vos = DentureOrderAssembler.toVos(orders);
+            res.setData(vos);
+        }, "查询订单错误", logger);
         return result;
     }
 

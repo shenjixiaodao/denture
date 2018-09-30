@@ -127,6 +127,11 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     }
 
     @Override
+    public List<DentureOrder> findOrdersByUid(Long uid) {
+        return dentureOrderMapper.findOrdersByUid(uid);
+    }
+
+    @Override
     public DentureOrder findOrder(String dentureId) {
         return dentureOrderMapper.findOrderByDentureId(dentureId);
     }

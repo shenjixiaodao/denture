@@ -43,5 +43,11 @@ public interface FactoryRepository {
      * 综合管理人员可以通过{@param factoryId} 查询所有工厂的订单
      */
     List<DentureOrder> findOrders(Long factoryId);
+
+    /**
+     * 业务经理查询看自己名下诊所下的订单
+     */
+    List<DentureOrder> findOrdersByUid(Long uid);
+
     DentureOrder findOrder(String dentureId);
 }
