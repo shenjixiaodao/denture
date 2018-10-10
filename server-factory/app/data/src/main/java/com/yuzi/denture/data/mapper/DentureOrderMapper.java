@@ -10,4 +10,5 @@ public interface DentureOrderMapper {
     void save(DentureOrder order);
     List<DentureOrder> findOrdersByFactoryId(Long factoryId);
     DentureOrder findOrderByDentureId(String dentureId);
+    List<DentureOrder> findOrdersByUid(Long uid);
 }

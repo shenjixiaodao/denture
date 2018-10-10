@@ -69,7 +69,8 @@ public class FactoryServiceImpl implements FactoryService {
         FactoryUser user = repository.findUser(contact);
         if(user == null)
             throw new IllegalArgumentException("不存在用户");
-        if(!user.checkPWD(encryptPWD))
+        String hashPwd = user.decryptAndHashPwd(encryptPWD);
+        if(!user.checkPWD(hashPwd))
             throw new IllegalArgumentException("密码错误");
         return user;
     }
@@ -79,9 +80,11 @@ public class FactoryServiceImpl implements FactoryService {
         FactoryUser user = repository.findUser(uid);
         if(user == null)
             throw new IllegalArgumentException("用户为空");
-        if(user.checkPWD(srcPwd))
+        String hashPwd = user.decryptAndHashPwd(srcPwd);
+        if(!user.checkPWD(hashPwd))
             throw new IllegalArgumentException("旧密码验证错误");
-        user.setPassword(dstPwd);
+        hashPwd = user.decryptAndHashPwd(dstPwd);
+        user.setPassword(hashPwd);
         repository.update(user);
     }
 

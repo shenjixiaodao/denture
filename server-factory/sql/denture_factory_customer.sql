@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS `factory_customer`;
 CREATE TABLE `factory_customer` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `factory_id` bigint(20) NOT NULL,
   `clinic_id` bigint(20) NOT NULL,
   `salesman_id` bigint(20) NOT NULL,
