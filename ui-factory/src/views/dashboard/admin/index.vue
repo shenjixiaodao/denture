@@ -1,8 +1,6 @@
 <template>
   <div class="dashboard-editor-container">
 
-    <github-corner style="position: absolute; top: 0px; border: 0; right: 0;"/>
-
     <!--<panel-group @handleSetLineChartData="handleSetLineChartData"/>
 
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
@@ -39,13 +37,13 @@
       </el-col>
     </el-row>-->
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <salesman-orders-table />
+      <component :is="showComponent" />
     </el-row>
   </div>
 </template>
 
 <script>
-import GithubCorner from '@/components/GithubCorner'
+/* import GithubCorner from '@/components/GithubCorner'
 import PanelGroup from './components/PanelGroup'
 import LineChart from './components/LineChart'
 import RaddarChart from './components/RaddarChart'
@@ -53,8 +51,9 @@ import PieChart from './components/PieChart'
 import BarChart from './components/BarChart'
 import TransactionTable from './components/TransactionTable'
 import TodoList from './components/TodoList'
-import BoxCard from './components/BoxCard'
+import BoxCard from './components/BoxCard' */
 import SalesmanOrdersTable from './components/SalesmanOrdersTable'
+import OrderDetail from './components/OrderDetail'
 
 const lineChartData = {
   newVisitis: {
@@ -78,7 +77,7 @@ const lineChartData = {
 export default {
   name: 'DashboardAdmin',
   components: {
-    GithubCorner,
+    /* GithubCorner,
     PanelGroup,
     LineChart,
     RaddarChart,
@@ -86,13 +85,22 @@ export default {
     BarChart,
     TransactionTable,
     TodoList,
-    BoxCard,
-    SalesmanOrdersTable
+    BoxCard, */
+    SalesmanOrdersTable,
+    OrderDetail
   },
   data() {
     return {
-      lineChartData: lineChartData.newVisitis
+      lineChartData: lineChartData.newVisitis,
+      showComponent: 'SalesmanOrdersTable'
     }
+  },
+  mounted() {
+    var _this = this
+    this.bus.$on('SwitchComponent', function(component) {
+      console.log('SwitchComponent ===>' + component)
+      _this.showComponent = component
+    })
   },
   methods: {
     handleSetLineChartData(type) {

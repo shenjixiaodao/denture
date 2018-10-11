@@ -30,7 +30,6 @@
     <resultMap id="baseRM" type="com.yuzi.denture.domain.DentureOrder">
         <result column="id" property="id" />
         <result column="denture_id" property="dentureId" />
-        <result column="clinic_id" property="clinic.id" />
         <result column="factory_id" property="factory.id" />
         <result column="created_date" property="createdDate" />
         <result column="pay_amount" property="payAmount" />
@@ -43,11 +42,21 @@
         <result column="patient_id" property="patient.id" />
         <result column="recorder_id" property="recorder.id" />
         <result column="comment" property="comment" />
+        <association property="clinic" javaType="com.yuzi.denture.domain.Clinic">
+            <result column="clinic_id" property="id" />
+            <result column="clinic_name" property="name" />
+            <result column="clinic_address" property="address" />
+            <result column="clinic_contact" property="contact" />
+        </association>
     </resultMap>
 
-    <select id="findOrderById" parameterType="String" resultMap="baseRM">
-        SELECT * FROM denture_order do
-        WHERE do.denture_id=#{dentureId}
+    <sql id="baseOrderSQL">
+        do.*,
+        c.name clinic_name, c.address clinic_address, c.contact clinic_contact
+    </sql>
+    <select id="findOrderByDentureId" parameterType="String" resultMap="baseRM">
+        SELECT <include refid="baseOrderSQL" /> FROM denture_order do
+        inner join clinic c on (do.denture_id=#{dentureId} and do.clinic_id=c.id)
     </select>
     <select id="findOrdersByFactoryId" parameterType="Long" resultMap="baseRM">
         SELECT * FROM denture_order do

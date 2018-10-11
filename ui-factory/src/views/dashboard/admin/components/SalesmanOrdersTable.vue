@@ -7,7 +7,7 @@
     </el-table-column>
     <el-table-column label="订单详情" width="195" align="center">
       <template slot-scope="scope">
-        {{ scope.row.id }}
+        <button @click="orderInfo(scope.row.dentureId)">详情</button>
       </template>
     </el-table-column>
     <el-table-column label="生产详情" width="100" align="center">
@@ -32,11 +32,16 @@ export default {
   },
   methods: {
     fetchData() {
-      queryOrders().then(response => {
-        var data = response.data.data
+      queryOrders().then(data => {
+        // var data = response.data.data
         console.log(data)
         this.list = data
       })
+    },
+    orderInfo(id) {
+      console.log(id)
+      sessionStorage.setItem('DentureId', id)
+      this.bus.$emit('SwitchComponent', 'OrderDetail')
     }
   }
 }

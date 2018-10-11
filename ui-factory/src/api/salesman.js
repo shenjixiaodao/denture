@@ -6,3 +6,11 @@ export function queryOrders() {
     method: 'get'
   })
 }
+
+export function queryOrder(dentureId) {
+  return request({
+    url: '/manufacture/salesmanQueryOrder',
+    method: 'get',
+    params: { dentureId: dentureId }
+  })
+}
