@@ -4,10 +4,25 @@ import com.yuzi.denture.api.vo.base.DentureVo;
 import com.yuzi.denture.domain.Denture;
 import org.springframework.beans.BeanUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by liyou on 2018/9/19.
  */
 public class DentureAssembler {
+
+    public static List<DentureVo> toVos(List<Denture> dentures) {
+        if(dentures == null)
+            return null;
+        List<DentureVo> vos = new ArrayList<>(dentures.size());
+        for(int index=0; index<dentures.size(); index++) {
+            DentureVo vo = toVo(dentures.get(index));
+            vo.setIndex(index);
+            vos.add(vo);
+        }
+        return vos;
+    }
 
     public static DentureVo toVo(Denture denture) {
         if(denture == null)

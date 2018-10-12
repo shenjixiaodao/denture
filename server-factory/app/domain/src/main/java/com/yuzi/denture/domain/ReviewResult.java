@@ -1,7 +1,6 @@
 package com.yuzi.denture.domain;
 
 public enum ReviewResult {
-
         Accept("同意"), Reject("拒绝");
         private String text;
         ReviewResult(String text) {

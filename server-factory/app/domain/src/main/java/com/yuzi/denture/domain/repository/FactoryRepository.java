@@ -40,6 +40,15 @@ public interface FactoryRepository {
     List<Denture> findDentures(Long factoryId);
 
     /**
+     * 查询
+     * 等待审核, 正在制作，已完成
+     * 的义齿
+     */
+    List<Denture> findWaitingDentures(Long factoryId);
+    List<Denture> findDoingDentures(Long factoryId);
+    List<Denture> findDoneDentures(Long factoryId);
+
+    /**
      * 综合管理人员可以通过{@param factoryId} 查询所有工厂的订单
      */
     List<DentureOrder> findOrders(Long factoryId);

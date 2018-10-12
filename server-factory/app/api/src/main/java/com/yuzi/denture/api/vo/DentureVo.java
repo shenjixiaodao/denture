@@ -10,6 +10,8 @@ import java.util.List;
  * Created by liyou on 2018/9/19.
  */
 public class DentureVo {
+    //序号
+    private int index;
     //产品编号(id): String
     @ApiModelProperty(value="义齿ID")
     private String id;
@@ -234,6 +236,14 @@ public class DentureVo {
 
     public List<ProcedureGroupVo> getProcedureGroups() {
         return procedureGroups;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     public void setProcedureGroups(List<ProcedureGroupVo> procedureGroups) {

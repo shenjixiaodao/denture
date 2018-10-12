@@ -139,7 +139,7 @@ public class ManufactureController {
             DentureOrder order = repository.findOrder(dentureId);
             DentureOrderVo vo = DentureOrderAssembler.toVo(order);
             res.setData(vo);
-        }, "录入订单错误", logger);
+        }, "查询订单错误", logger);
         return result;
     }
 
@@ -158,23 +158,22 @@ public class ManufactureController {
         return result;
     }
 
-    @ApiOperation(value = "业务员查询订单详情", response = DentureOrderVo.class, httpMethod = "GET")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "dentureId", dataType = "String", required = true, value = "义齿编号")
-    })
+    //comprehensive user api
+    @ApiOperation(value = "查询待审核义齿", response = DentureVo.class, httpMethod = "GET")
     @ResponseBody
-    @RequestMapping(value = "/salesmanQueryOrder", method = GET)
-    public WebResult<DentureOrderVo> salesmanQueryOrder(String dentureId) {
-        logger.info("查询订单:dentureId={}", dentureId);
-        WebResult<DentureOrderVo> result = WebResult.execute(res -> {
-            DentureOrder order = repository.findOrder(dentureId);
-            DentureOrderVo vo = DentureOrderAssembler.toVo(order);
-            res.setData(vo);
+    @RequestMapping(value = "/queryWaitingDentures", method = GET)
+    public WebResult<List<DentureVo>> queryWaitingDentures() {
+        //todo 从session中获取 factoryId
+        Long factoryId = 1L;
+        logger.info("查询订单:factoryId={}", factoryId);
+        WebResult<List<DentureVo>> result = WebResult.execute(res -> {
+            List<Denture> dentures = repository.findWaitingDentures(factoryId);
+            List<DentureVo> vos = DentureAssembler.toVos(dentures);
+            res.setData(vos);
         }, "查询订单错误", logger);
         return result;
     }
 
-    //comprehensive user api
     @ApiOperation(value = "根据快递单号查询义齿信息", response = DentureVo.class, httpMethod = "GET")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "deliveryId", dataType = "String", required = true, value = "快递单号"),
