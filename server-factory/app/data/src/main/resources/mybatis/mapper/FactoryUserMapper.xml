@@ -132,7 +132,7 @@
     </sql>
     <select id="findCustomerById" parameterType="Long" resultMap="baseCustomerRM">
         SELECT <include refid="baseCustomerSQL" /> FROM factory_customer fc
-        inner join clinic c on (fc.id=#{id} and fc.clinic=c.id)
+        inner join clinic c on (fc.id=#{id} and fc.clinic_id=c.id)
     </select>
     <select id="findCustomersByUid" parameterType="Long" resultMap="baseCustomerRM">
         SELECT <include refid="baseCustomerSQL" /> FROM factory_customer fc

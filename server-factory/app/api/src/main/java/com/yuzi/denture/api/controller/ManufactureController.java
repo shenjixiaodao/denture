@@ -146,14 +146,30 @@ public class ManufactureController {
     @ApiOperation(value = "业务员查询名下跟踪订单", response = DentureOrderVo.class, httpMethod = "GET")
     @ResponseBody
     @RequestMapping(value = "/salesmanQueryOrders", method = GET)
-    public WebResult<DentureOrderVo> salesmanQueryOrders() {
+    public WebResult<List<DentureOrderVo>> salesmanQueryOrders() {
         //todo 从session中获取用户ID
         Long uid = 1L;
         logger.info("查询订单:uid={}", uid);
-        WebResult<DentureOrderVo> result = WebResult.execute(res -> {
+        WebResult<List<DentureOrderVo>> result = WebResult.execute(res -> {
             List<DentureOrder> orders = repository.findOrdersByUid(uid);
             List<DentureOrderVo> vos = DentureOrderAssembler.toVos(orders);
             res.setData(vos);
+        }, "查询订单错误", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "业务员查询订单详情", response = DentureOrderVo.class, httpMethod = "GET")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "dentureId", dataType = "String", required = true, value = "义齿编号")
+    })
+    @ResponseBody
+    @RequestMapping(value = "/salesmanQueryOrder", method = GET)
+    public WebResult<DentureOrderVo> salesmanQueryOrder(String dentureId) {
+        logger.info("查询订单:dentureId={}", dentureId);
+        WebResult<DentureOrderVo> result = WebResult.execute(res -> {
+            DentureOrder order = repository.findOrder(dentureId);
+            DentureOrderVo vo = DentureOrderAssembler.toVo(order);
+            res.setData(vo);
         }, "查询订单错误", logger);
         return result;
     }

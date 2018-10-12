@@ -13,6 +13,7 @@ public class DentureOrderAssembler {
             return null;
         DentureOrderVo vo = new DentureOrderVo();
         BeanUtils.copyProperties(order, vo);
+        vo.setStatus(order.getStatus().name());
         vo.setClinic(ClinicAssembler.toVo(order.getClinic()));
         vo.setFactory(FactoryAssembler.toVo(order.getFactory()));
         vo.setModelDeliveryInfo(DeliveryInfoAssembler.toVo(order.getModelDeliveryInfo()));
