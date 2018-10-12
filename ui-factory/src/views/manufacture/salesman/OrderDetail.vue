@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { queryOrder } from '@/api/salesman'
+import { queryOrderByDentureId } from '@/api/salesman'
 
 export default {
   data() {
@@ -57,10 +57,10 @@ export default {
   },
   methods: {
     fetchData() {
-      var id = sessionStorage.getItem('DentureId')
+      const id = this.$route.params && this.$route.params.id
       console.log('order detail ==> ' + id)
-      queryOrder(id).then(data => {
-        // var data = response.data.data
+      queryOrderByDentureId(id).then(response => {
+        var data = response.data
         console.log('order detail ==> ' + data)
         this.orderInfo = data
       })

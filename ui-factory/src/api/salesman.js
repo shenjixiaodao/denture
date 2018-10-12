@@ -7,9 +7,9 @@ export function queryOrders() {
   })
 }
 
-export function queryOrder(dentureId) {
+export function queryOrderByDentureId(dentureId) {
   return request({
-    url: '/manufacture/salesmanQueryOrder',
+    url: '/manufacture/queryOrderByDentureId',
     method: 'get',
     params: { dentureId: dentureId }
   })

@@ -32,7 +32,7 @@ service.interceptors.request.use(
 
 // response interceptor
 service.interceptors.response.use(
-  response => response,
+  response => response.data,
   /* response => {
     console.log('response')
     const res = response.data

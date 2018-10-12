@@ -8,6 +8,7 @@ import Layout from '@/views/layout/Layout'
 
 /* Router Modules */
 import tableRouter from './modules/table'
+import comprehensiveRouter from './modules/comprehensive'
 
 /** note: Submenu only appear when children.length>=1
  *  detail see  https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -51,9 +52,23 @@ export const constantRouterMap = [
     children: [
       {
         path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
+        component: () => import('@/views/manufacture/salesman/index'),
         name: 'Dashboard',
-        meta: { title: 'dashboard', icon: 'dashboard', noCache: true }
+        meta: { title: 'Dashboard', icon: 'dashboard', noCache: true }
+      },
+      {
+        path: 'denture/:id(\\d+)',
+        component: () => import('@/views/manufacture/salesman/DentureDetail'),
+        name: 'DentureDetail',
+        meta: { title: 'DentureDetail', noCache: true },
+        hidden: true
+      },
+      {
+        path: 'order/:id(\\d+)',
+        component: () => import('@/views/manufacture/salesman/OrderDetail'),
+        name: 'OrderDetail',
+        meta: { title: 'OrderDetail', noCache: true },
+        hidden: true
       }
     ]
   },
@@ -71,6 +86,7 @@ export default new Router({
 })
 
 export const asyncRouterMap = [
+  comprehensiveRouter,
   {
     path: '/permission',
     component: Layout,

@@ -5,23 +5,31 @@
         {{ scope.row.createdDate }}
       </template>
     </el-table-column>
-    <el-table-column label="订单详情" width="195" align="center">
+    <el-table-column label="类型" min-width="200">
       <template slot-scope="scope">
-        <button @click="orderInfo(scope.row.dentureId)">详情</button>
+        {{ scope.row.type }}
       </template>
     </el-table-column>
-    <el-table-column label="生产详情" width="100" align="center">
+    <el-table-column label="规格" min-width="200">
       <template slot-scope="scope">
-        {{ scope.row.dentureId }}
+        {{ scope.row.specification }}
+      </template>
+    </el-table-column>
+    <el-table-column label="义齿详情" width="100" align="center">
+      <template slot-scope="scope">
+        <router-link :to="'denture/'+scope.row.id" class="link-type">
+          <span>详情</span>
+        </router-link>
       </template>
     </el-table-column>
   </el-table>
 </template>
 
 <script>
-import { queryOrders } from '@/api/salesman'
+import { queryWaitingDentures } from '@/api/comprehensive'
 
 export default {
+  name: 'ComprehensiveWait',
   data() {
     return {
       list: null
@@ -32,16 +40,11 @@ export default {
   },
   methods: {
     fetchData() {
-      queryOrders().then(data => {
-        // var data = response.data.data
+      queryWaitingDentures().then(response => {
+        var data = response.data
         console.log(data)
         this.list = data
       })
-    },
-    orderInfo(id) {
-      console.log(id)
-      sessionStorage.setItem('DentureId', id)
-      this.bus.$emit('SwitchComponent', 'OrderDetail')
     }
   }
 }
