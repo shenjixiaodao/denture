@@ -14,6 +14,8 @@ public interface FactoryRepository {
     //procedure
     void add(Procedure procedure);
 
+    List<Procedure> findProcedures(Long pgId);
+
     //user
     void add(FactoryUser user);
     void addRole(FactoryRole role);

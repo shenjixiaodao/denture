@@ -46,10 +46,13 @@ public class ManufactureController {
     @RequestMapping(value = "/queryByDentureId", method = GET)
     public WebResult<DentureVo> queryByDentureId(String dentureId) {
         logger.info("查询义齿信息息:dentureId={}", dentureId);
-
+        //todo 从session中获取 GroupType
+        GroupType group = GroupType.CheCi;
         WebResult<DentureVo> result = new WebResult<>();
         try {
             Denture denture = repository.findDenture(dentureId);
+            //filter procedure by group
+            denture.filterGroup(group);
             DentureVo vo = DentureAssembler.toVo(denture);
             result.setData(vo);
         } catch (Exception ex) {
@@ -230,26 +233,43 @@ public class ManufactureController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "form", name = "pgId", dataType = "long",
                     required = true, value = "工序所在操作组ID"),
-            @ApiImplicitParam(paramType = "form", name = "procedureName", dataType = "string",
+            @ApiImplicitParam(paramType = "form", name = "name", dataType = "string",
                     required = true, value = "工序名"),
             @ApiImplicitParam(paramType = "form", name = "comment", dataType = "string", value = "备注")
     })
     @ResponseBody
     @RequestMapping(value = "/completeProcedure", method = POST)
-    public WebResult<ProcedureVo> completeProcedure(Long pgId, String procedureName, String comment) {
+    public WebResult<ProcedureVo> completeProcedure(Long pgId, String name, String comment) {
         //todo 从session中获取用户ID
         Long operatorId = 1L;
-        logger.info("完成一个工序:operatorId={}, pgId={}, procedureName={}, comment={}",operatorId, pgId,
-                procedureName, comment);
+        logger.info("完成一个工序:operatorId={}, pgId={}, name={}, comment={}",operatorId, pgId,
+                name, comment);
         WebResult<ProcedureVo> result = new WebResult<>();
         try {
-            Procedure procedure = service.completeProcedure(pgId, operatorId, procedureName, comment);
+            Procedure procedure = service.completeProcedure(pgId, operatorId, name, comment);
             ProcedureVo vo = ProcedureAssembler.toVo(procedure);
             result.setData(vo);
         } catch (Exception ex) {
             logger.warn("提交一个工序异常: {}", ex);
             return WebResult.failure(ex.getMessage());
         }
+        return result;
+    }
+
+    @ApiOperation(value = "根据快递单号查询义齿信息", response = ProcedureVo.class, httpMethod = "GET")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "pgId", dataType = "Long", required = true, value = "工序组编号")
+    })
+    @ResponseBody
+    @RequestMapping(value = "/queryProcedures", method = GET)
+    public WebResult<List<ProcedureVo>> queryProcedures(Long pgId) {
+        logger.info("查询工序列表:pgId={}",pgId);
+
+        WebResult<List<ProcedureVo>> result = WebResult.execute(res -> {
+            List<Procedure> procedures = repository.findProcedures(pgId);
+            List<ProcedureVo> vos = ProcedureAssembler.toVos(procedures);
+            res.setData(vos);
+        }, "查询工序列表错误", logger);
         return result;
     }
 }

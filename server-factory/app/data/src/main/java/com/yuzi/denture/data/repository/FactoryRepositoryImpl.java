@@ -48,6 +48,12 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     }
 
     @Override
+    public List<Procedure> findProcedures(Long pgId) {
+        List<Procedure> procedures = procedureMapper.findProceduresByPgId(pgId);
+        return procedures;
+    }
+
+    @Override
     public void add(FactoryUser user) {
         userMapper.save(user);
     }
@@ -113,7 +119,8 @@ public class FactoryRepositoryImpl implements FactoryRepository {
 
     @Override
     public Denture findDenture(String dentureId) {
-        return dentureMapper.findByDentureId(dentureId);
+        Denture denture = dentureMapper.findByDentureId(dentureId);
+        return denture;
     }
 
     @Override

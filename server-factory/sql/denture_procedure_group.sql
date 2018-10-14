@@ -23,13 +23,15 @@ DROP TABLE IF EXISTS `procedure_group`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `procedure_group` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `type` varchar(45) DEFAULT NULL,
   `denture_id` varchar(45) DEFAULT NULL,
   `start_date` datetime DEFAULT NULL,
   `end_date` datetime DEFAULT NULL,
   `operator_id` bigint(20) DEFAULT NULL,
   `inspection_result` varchar(45) DEFAULT NULL,
+  `inspection_content` varchar(225) DEFAULT NULL,
+  `inspector_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

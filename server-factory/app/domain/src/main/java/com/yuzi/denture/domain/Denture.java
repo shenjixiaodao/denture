@@ -2,6 +2,7 @@ package com.yuzi.denture.domain;
 
 import org.springframework.util.StringUtils;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 public class Denture {
@@ -113,6 +114,15 @@ public class Denture {
         }
     }
 
+    public void filterGroup(GroupType type) {
+        if(procedureGroups == null)
+            return;
+        for(Iterator<ProcedureGroup> iterator = procedureGroups.iterator(); iterator.hasNext();) {
+            ProcedureGroup group = iterator.next();
+            if(group.getType() != type)
+                iterator.remove();
+        }
+    }
 
     public Denture() {
     }

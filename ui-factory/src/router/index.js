@@ -59,7 +59,7 @@ export const constantRouterMap = [
       {
         path: 'denture/:id(\\d+)',
         component: () => import('@/views/manufacture/salesman/DentureDetail'),
-        name: 'DentureDetail',
+        name: 'SalesmanDentureDetail',
         meta: { title: 'DentureDetail', noCache: true },
         hidden: true
       },
@@ -87,6 +87,18 @@ export default new Router({
 
 export const asyncRouterMap = [
   comprehensiveRouter,
+  {
+    path: '/worker',
+    component: Layout,
+    children: [
+      {
+        path: 'complete-procedure',
+        component: () => import('@/views/manufacture/worker/CompleteProcedure'),
+        name: 'CompleteProcedure',
+        meta: { title: 'CompleteProcedure', icon: 'international' }
+      }
+    ]
+  },
   {
     path: '/permission',
     component: Layout,

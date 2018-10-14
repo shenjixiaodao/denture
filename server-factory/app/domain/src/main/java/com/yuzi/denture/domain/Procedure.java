@@ -1,5 +1,7 @@
 package com.yuzi.denture.domain;
 
+import java.util.Date;
+
 public class Procedure {
     
     //编号(id):
@@ -16,11 +18,15 @@ public class Procedure {
     private String comment;
     //操作员(operator):
     private FactoryUser operator;
+    private Date completedDate;
+    private Date modifiedDate;
 
     public Procedure(Long pgId, String name, Long operatorId) {
         this.pgId = pgId;
         this.name = name;
         this.operator = new FactoryUser(operatorId);
+        this.completedDate = new Date();
+        this.modifiedDate = this.completedDate;
     }
 
     public Procedure() {
@@ -76,6 +82,22 @@ public class Procedure {
 
     public FactoryUser getOperator() {
         return operator;
+    }
+
+    public Date getCompletedDate() {
+        return completedDate;
+    }
+
+    public void setCompletedDate(Date completedDate) {
+        this.completedDate = completedDate;
+    }
+
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
     }
 
     public void setOperator(FactoryUser operator) {

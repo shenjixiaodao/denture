@@ -10,7 +10,9 @@
         `specification`,
         `operation_record`,
         `comment`,
-        `operator_id`
+        `operator_id`,
+        `completed_date`,
+        `modified_date`
         )
         VALUES
         (
@@ -19,8 +21,26 @@
         #{specification},
         #{operationRecord},
         #{comment},
-        #{operator.id}
+        #{operator.id},
+        #{completedDate},
+        #{modifiedDate}
         );
     </insert>
+
+    <resultMap id="baseRM" type="com.yuzi.denture.domain.Procedure">
+        <result column="id" property="id" />
+        <result column="pgId" property="pgId" />
+        <result column="name" property="name" />
+        <result column="specification" property="specification" />
+        <result column="operation_record" property="operationRecord" />
+        <result column="comment" property="comment" />
+        <result column="operator_id" property="operator.id" />
+        <result column="completed_date" property="completedDate" />
+        <result column="modified_date" property="modifiedDate" />
+    </resultMap>
+
+    <select id="findProceduresByPgId" resultMap="baseRM">
+        SELECT * FROM `procedure` WHERE pg_id=#{pgId}
+    </select>
 
 </mapper>

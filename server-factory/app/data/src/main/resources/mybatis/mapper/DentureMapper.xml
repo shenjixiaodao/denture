@@ -107,6 +107,17 @@
             <result column="clinic_address" property="address" />
             <result column="clinic_contact" property="contact" />
         </association>
+        <collection property="procedureGroups" ofType="com.yuzi.denture.domain.ProcedureGroup">
+            <result column="pg_id" property="id" />
+            <result column="pg_type" property="type" />
+            <result column="id" property="dentureId" />
+            <result column="pg_start_date" property="startDate" />
+            <result column="pg_end_date" property="endDate" />
+            <result column="pg_operator_id" property="operator.id" />
+            <result column="pg_inspector_id" property="inspector.id" />
+            <result column="pg_inspection_content" property="inspectionContent" />
+            <result column="pg_inspection_result" property="inspectionResult" />
+        </collection>
     </resultMap>
 
     <sql id="baseSQL">
@@ -124,9 +135,15 @@
     <sql id="clinicSQL">
         c.name clinic_name, c.address clinic_address, c.contact clinic_contact
     </sql>
+    <sql id="procedureGroupSQL">
+        pg.id pg_id, pg.type pg_type, pg.start_date pg_start_date, pg.end_date pg_end_date,
+        pg.operator_id pg_operator_id, pg.inspector_id pg_inspector_id, pg.inspection_content pg_inspection_content,
+        pg.inspection_result pg_inspection_result
+    </sql>
     <select id="findByDentureId" parameterType="String" resultMap="baseRM">
-        SELECT <include refid="baseSQL" />, <include refid="clinicSQL" />
+        SELECT <include refid="baseSQL" />, <include refid="clinicSQL" />, <include refid="procedureGroupSQL" />
         FROM denture d inner join clinic c on (d.id=#{dentureId} and d.clinic_id=c.id)
+        INNER JOIN procedure_group pg ON (pg.denture_id=#{dentureId} and d.id=pg.denture_id)
     </select>
 
     <select id="findDenturesByFactoryId" parameterType="Long" resultMap="baseRM">

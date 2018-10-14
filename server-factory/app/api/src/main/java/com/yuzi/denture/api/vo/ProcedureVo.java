@@ -1,6 +1,7 @@
 package com.yuzi.denture.api.vo;
 
-import com.yuzi.denture.domain.FactoryUser;
+
+import java.util.Date;
 
 public class ProcedureVo {
 
@@ -16,6 +17,8 @@ public class ProcedureVo {
     private String operationRecord;
     //备注(comment):
     private String comment;
+    private Date completedDate;
+    private Date modifiedDate;
     //操作员(operator):
     private FactoryUserVo operator;
 
@@ -73,5 +76,21 @@ public class ProcedureVo {
 
     public void setOperator(FactoryUserVo operator) {
         this.operator = operator;
+    }
+
+    public Date getCompletedDate() {
+        return completedDate;
+    }
+
+    public void setCompletedDate(Date completedDate) {
+        this.completedDate = completedDate;
+    }
+
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
     }
 }

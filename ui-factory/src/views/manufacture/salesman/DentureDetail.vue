@@ -2,33 +2,6 @@
   <div style="padding:5px;">
     <div class="panel panel-primary">
       <table class="table table-bordered table-striped text-center">
-        <!--
-        private DentureType type;
-    //规格(specification):
-    private SpecType specification;
-    //定制方(clinic):
-    private Clinic clinic;
-    //医生备注
-    private String comment;
-    //生产方(factory):
-    private Factory factory;
-    //数量(number):
-    private Integer number;
-    /**
-     * 牙位号(position),
-     * 使用","分隔各个牙位号，个数等于 {@param number}；
-     * 牙位号格式: 半位[a|b|c|d]-编号[1-8], eg: a-2（表示左上半第2号）
-     */
-    private String positions;
-    //义齿色号(colorNo): Enum
-    private String colorNo;
-    //创建日期(createdDate):
-    private Date createdDate;
-    //生产开始日期(startDate):
-    private Date startDate;
-    //生产截止日期(endDate):
-    private Date endDate;
-        -->
         <tbody>
           <tr>
             <td>类型</td><td>{{ denture.type }}</td>
