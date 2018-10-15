@@ -7,8 +7,8 @@ Vue.use(Router)
 import Layout from '@/views/layout/Layout'
 
 /* Router Modules */
-import tableRouter from './modules/table'
 import comprehensiveRouter from './modules/comprehensive'
+import salesmanRouter from './modules/salesman'
 
 /** note: Submenu only appear when children.length>=1
  *  detail see  https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -52,23 +52,9 @@ export const constantRouterMap = [
     children: [
       {
         path: 'dashboard',
-        component: () => import('@/views/manufacture/salesman/index'),
+        component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
         meta: { title: 'Dashboard', icon: 'dashboard', noCache: true }
-      },
-      {
-        path: 'denture/:id(\\d+)',
-        component: () => import('@/views/manufacture/salesman/DentureDetail'),
-        name: 'SalesmanDentureDetail',
-        meta: { title: 'DentureDetail', noCache: true },
-        hidden: true
-      },
-      {
-        path: 'order/:id(\\d+)',
-        component: () => import('@/views/manufacture/salesman/OrderDetail'),
-        name: 'OrderDetail',
-        meta: { title: 'OrderDetail', noCache: true },
-        hidden: true
       }
     ]
   },
@@ -86,6 +72,7 @@ export default new Router({
 })
 
 export const asyncRouterMap = [
+  salesmanRouter,
   comprehensiveRouter,
   {
     path: '/worker',
@@ -94,98 +81,8 @@ export const asyncRouterMap = [
       {
         path: 'complete-procedure',
         component: () => import('@/views/manufacture/worker/CompleteProcedure'),
-        name: 'CompleteProcedure',
-        meta: { title: 'CompleteProcedure', icon: 'international' }
-      }
-    ]
-  },
-  {
-    path: '/permission',
-    component: Layout,
-    redirect: '/permission/index',
-    alwaysShow: true, // will always show the root menu
-    meta: {
-      title: 'permission',
-      icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
-    },
-    children: [
-      {
-        path: 'page',
-        component: () => import('@/views/permission/page'),
-        name: 'PagePermission',
-        meta: {
-          title: 'pagePermission',
-          roles: ['admin'] // or you can only set roles in sub nav
-        }
-      },
-      {
-        path: 'directive',
-        component: () => import('@/views/permission/directive'),
-        name: 'DirectivePermission',
-        meta: {
-          title: 'directivePermission'
-          // if do not set roles, means: this page does not require permission
-        }
-      }
-    ]
-  },
-
-  tableRouter,
-
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/list',
-    name: 'Example',
-    meta: {
-      title: 'example',
-      icon: 'example'
-    },
-    children: [
-      {
-        path: 'create',
-        component: () => import('@/views/example/create'),
-        name: 'CreateArticle',
-        meta: { title: 'createArticle', icon: 'edit' }
-      },
-      {
-        path: 'edit/:id(\\d+)',
-        component: () => import('@/views/example/edit'),
-        name: 'EditArticle',
-        meta: { title: 'editArticle', noCache: true },
-        hidden: true
-      },
-      {
-        path: 'list',
-        component: () => import('@/views/example/list'),
-        name: 'ArticleList',
-        meta: { title: 'articleList', icon: 'list' }
-      }
-    ]
-  },
-
-  {
-    path: '/error',
-    component: Layout,
-    redirect: 'noredirect',
-    name: 'ErrorPages',
-    meta: {
-      title: 'errorPages',
-      icon: '404'
-    },
-    children: [
-      {
-        path: '401',
-        component: () => import('@/views/errorPage/401'),
-        name: 'Page401',
-        meta: { title: 'page401', noCache: true }
-      },
-      {
-        path: '404',
-        component: () => import('@/views/errorPage/404'),
-        name: 'Page404',
-        meta: { title: 'page404', noCache: true }
+        name: 'Complete-Procedure',
+        meta: { title: 'Complete-Procedure', icon: 'international' }
       }
     ]
   },
@@ -200,19 +97,6 @@ export const asyncRouterMap = [
         component: () => import('@/views/errorLog/index'),
         name: 'ErrorLog',
         meta: { title: 'errorLog', icon: 'bug' }
-      }
-    ]
-  },
-
-  {
-    path: '/i18n',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/i18n-demo/index'),
-        name: 'I18n',
-        meta: { title: 'i18n', icon: 'international' }
       }
     ]
   },

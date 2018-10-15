@@ -1,8 +1,9 @@
 import request from '@/utils/request'
 
-export function queryWaitingDentures() {
+export function queryDenturesByStatus(status) {
   return request({
-    url: '/manufacture/queryWaitingDentures',
-    method: 'get'
+    url: '/manufacture/queryDenturesByStatus',
+    method: 'get',
+    params: { status: status }
   })
 }
