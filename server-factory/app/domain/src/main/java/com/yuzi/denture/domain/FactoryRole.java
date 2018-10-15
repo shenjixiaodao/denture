@@ -16,6 +16,7 @@ public class FactoryRole {
     }
 
     public enum Role {
+        admin("超级管理员"),
         ShiGao("石膏技师"),
         ShiGaoLeader("石膏组长"),
         LaXing("蜡型技师"),

@@ -3,14 +3,18 @@ package com.yuzi.denture.api.vo;
 
 import io.swagger.annotations.ApiModelProperty;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class FactoryUserVo {
+public class FactoryUserVo implements Serializable{
 
     //id:
     @ApiModelProperty(value="用户ID")
     private Long id;
+    //factoryId
+    @ApiModelProperty(value="所在工厂ID")
+    Long factoryId;
     //name:
     @ApiModelProperty(value="用户姓名")
     private String name;
@@ -33,6 +37,8 @@ public class FactoryUserVo {
     @ApiModelProperty(value="加入公司时间")
     private Date joinDate;
     private List<String> roles;
+    @ApiModelProperty(value="登录成功后的token")
+    private String token;
 
     public Long getId() {
         return id;
@@ -40,6 +46,14 @@ public class FactoryUserVo {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getFactoryId() {
+        return factoryId;
+    }
+
+    public void setFactoryId(Long factoryId) {
+        this.factoryId = factoryId;
     }
 
     public String getName() {
@@ -80,5 +94,13 @@ public class FactoryUserVo {
 
     public void setRoles(List<String> roles) {
         this.roles = roles;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

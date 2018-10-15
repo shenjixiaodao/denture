@@ -1,9 +1,8 @@
 package com.yuzi.denture.api.controller;
 
-import com.yuzi.denture.api.assembler.DentureAssembler;
 import com.yuzi.denture.api.assembler.FactoryUserAssembler;
+import com.yuzi.denture.api.session.Cst;
 import com.yuzi.denture.api.vo.FactoryUserVo;
-import com.yuzi.denture.api.vo.base.DentureVo;
 import com.yuzi.denture.api.vo.base.WebResult;
 import com.yuzi.denture.domain.*;
 import com.yuzi.denture.domain.repository.FactoryRepository;
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.util.Locale;
 
@@ -103,11 +103,13 @@ public class FactoryUserController {
     })
     @ResponseBody
     @RequestMapping(value = "/login", method = POST)
-    public WebResult<FactoryUserVo> login(String phone, String password) {
+    public WebResult<FactoryUserVo> login(String phone, String password, HttpServletRequest request) {
         logger.info("登录:phone={}, password={}",phone, password);
         WebResult<FactoryUserVo> result = WebResult.execute(res -> {
             FactoryUser user = service.login(phone, password);
             FactoryUserVo vo = FactoryUserAssembler.toVo(user);
+            vo.setToken(user.token());
+            request.getSession().setAttribute(Cst.UserVoKey, vo);
             res.setData(vo);
             logger.info("登录成功");
         }, "登录错误", logger);

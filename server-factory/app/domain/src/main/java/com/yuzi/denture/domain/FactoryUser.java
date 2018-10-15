@@ -5,10 +5,7 @@ import org.springframework.util.DigestUtils;
 
 import java.security.KeyPair;
 import java.security.PrivateKey;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class FactoryUser {
 
@@ -90,6 +87,10 @@ public class FactoryUser {
         byte[] pwd = RSAUtil.decrypt(RSAUtil.base642Byte(encryptPwd), this.PriKey);
         String hashPwd = hashPWD(pwd);
         return hashPwd;
+    }
+
+    public String token() {
+        return UUID.randomUUID().toString();
     }
 
     public Long getId() {
