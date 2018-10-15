@@ -136,12 +136,14 @@ public class FactoryRepositoryImpl implements FactoryRepository {
 
     @Override
     public List<Denture> findDoingDentures(Long factoryId) {
-        return null;
+        List<Denture> dentures = dentureMapper.findDoingDentures(factoryId);
+        return dentures;
     }
 
     @Override
     public List<Denture> findDoneDentures(Long factoryId) {
-        return null;
+        List<Denture> dentures = dentureMapper.findDoneDentures(factoryId);
+        return dentures;
     }
 
     @Override

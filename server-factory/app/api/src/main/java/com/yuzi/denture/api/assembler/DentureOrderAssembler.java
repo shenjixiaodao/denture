@@ -5,6 +5,7 @@ import com.yuzi.denture.domain.DentureOrder;
 import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DentureOrderAssembler {
@@ -26,7 +27,7 @@ public class DentureOrderAssembler {
 
     public static List<DentureOrderVo> toVos(List<DentureOrder> orders) {
         if(orders == null)
-            return null;
+            return Collections.emptyList();
         List<DentureOrderVo> vos = new ArrayList<>(orders.size());
         for(DentureOrder order: orders) {
             DentureOrderVo vo = toVo(order);

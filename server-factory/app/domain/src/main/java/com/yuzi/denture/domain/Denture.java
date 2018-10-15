@@ -114,6 +114,24 @@ public class Denture {
         }
     }
 
+    public enum ComprehensiveStatus {
+        Waiting("待审核"), Doing("处理中"), Done("已结束");
+        private String text;
+        ComprehensiveStatus(String text) {
+            this.text = text;
+        }
+        public String text() {
+            return this.text;
+        }
+        public static ComprehensiveStatus typeOf(String type) {
+            for(ComprehensiveStatus result : ComprehensiveStatus.values()){
+                if(result.name().toLowerCase().equals(type.toLowerCase()))
+                    return result;
+            }
+            throw new IllegalArgumentException("未知管理状态");
+        }
+    }
+
     public void filterGroup(GroupType type) {
         if(procedureGroups == null)
             return;

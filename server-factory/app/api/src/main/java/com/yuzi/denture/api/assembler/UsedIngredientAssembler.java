@@ -5,6 +5,7 @@ import com.yuzi.denture.domain.UsedIngredient;
 import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ public class UsedIngredientAssembler {
     }
     public static List<UsedIngredientVo> toVos(List<UsedIngredient> ingredients) {
         if(ingredients == null)
-            return null;
+            return Collections.emptyList();
         List<UsedIngredientVo> vos = new ArrayList<>(ingredients.size());
         for(UsedIngredient ingredient:ingredients) {
             UsedIngredientVo vo = toVo(ingredient);

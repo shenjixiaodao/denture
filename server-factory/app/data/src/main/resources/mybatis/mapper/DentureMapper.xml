@@ -110,7 +110,7 @@
         <collection property="procedureGroups" ofType="com.yuzi.denture.domain.ProcedureGroup">
             <result column="pg_id" property="id" />
             <result column="pg_type" property="type" />
-            <result column="id" property="dentureId" />
+            <result column="pg_dentureId" property="dentureId" />
             <result column="pg_start_date" property="startDate" />
             <result column="pg_end_date" property="endDate" />
             <result column="pg_operator_id" property="operator.id" />
@@ -136,7 +136,7 @@
         c.name clinic_name, c.address clinic_address, c.contact clinic_contact
     </sql>
     <sql id="procedureGroupSQL">
-        pg.id pg_id, pg.type pg_type, pg.start_date pg_start_date, pg.end_date pg_end_date,
+        pg.id pg_id, pg.type pg_type, pg.denture_id pg_dentureId, pg.start_date pg_start_date, pg.end_date pg_end_date,
         pg.operator_id pg_operator_id, pg.inspector_id pg_inspector_id, pg.inspection_content pg_inspection_content,
         pg.inspection_result pg_inspection_result
     </sql>
@@ -156,6 +156,20 @@
         FROM denture d inner join denture_order do on (
           d.factory_id=#{factoryId} and do.factory_id=#{factoryId} and d.id=do.denture_id
           and do.status in('Created','Paid')
+        )
+    </select>
+    <select id="findDoingDentures" parameterType="Long" resultMap="baseRM">
+        SELECT <include refid="baseSQL" />
+        FROM denture d inner join denture_order do on (
+        d.factory_id=#{factoryId} and do.factory_id=#{factoryId} and d.id=do.denture_id
+        and do.status in('Accepted','Making','Inspecting','PackAndClr','Released','Return','Remaking')
+        )
+    </select>
+    <select id="findDoneDentures" parameterType="Long" resultMap="baseRM">
+        SELECT <include refid="baseSQL" />
+        FROM denture d inner join denture_order do on (
+        d.factory_id=#{factoryId} and do.factory_id=#{factoryId} and d.id=do.denture_id
+        and do.status in('Rejected','Installed')
         )
     </select>
 </mapper>

@@ -6,6 +6,7 @@ import com.yuzi.denture.domain.ProcedureGroup;
 import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -27,7 +28,7 @@ public class ProcedureGroupAssembler {
     }
     public static List<ProcedureGroupVo> toVos(List<ProcedureGroup> groups) {
         if(groups == null)
-            return null;
+            return Collections.emptyList();
         List<ProcedureGroupVo> vos = new ArrayList<>(groups.size());
         for(ProcedureGroup group : groups) {
             ProcedureGroupVo vo = toVo(group);

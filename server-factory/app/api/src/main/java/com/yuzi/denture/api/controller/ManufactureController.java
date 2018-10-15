@@ -162,15 +162,26 @@ public class ManufactureController {
     }
 
     //comprehensive user api
-    @ApiOperation(value = "查询待审核义齿", response = DentureVo.class, httpMethod = "GET")
+    @ApiOperation(value = "义齿综合管理查询", response = DentureVo.class, httpMethod = "GET")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "status", dataType = "String", required = true, value = "status=[Waiting(\"待审核\"), Doing(\"处理中\"), Done(\"已结束\")]")
+    })
     @ResponseBody
-    @RequestMapping(value = "/queryWaitingDentures", method = GET)
-    public WebResult<List<DentureVo>> queryWaitingDentures() {
+    @RequestMapping(value = "/queryDenturesByStatus", method = GET)
+    public WebResult<List<DentureVo>> queryDenturesByStatus(String status) {
         //todo 从session中获取 factoryId
         Long factoryId = 1L;
-        logger.info("查询订单:factoryId={}", factoryId);
+        logger.info("查询订单:factoryId={}, status={}", factoryId, status);
+        Denture.ComprehensiveStatus s = Denture.ComprehensiveStatus.typeOf(status);
         WebResult<List<DentureVo>> result = WebResult.execute(res -> {
-            List<Denture> dentures = repository.findWaitingDentures(factoryId);
+            List<Denture> dentures;
+            if(s==Denture.ComprehensiveStatus.Waiting) {
+                dentures = repository.findWaitingDentures(factoryId);
+            } else if(s==Denture.ComprehensiveStatus.Doing) {
+                dentures = repository.findDoingDentures(factoryId);
+            } else {
+                dentures = repository.findDoneDentures(factoryId);
+            }
             List<DentureVo> vos = DentureAssembler.toVos(dentures);
             res.setData(vos);
         }, "查询订单错误", logger);
@@ -256,7 +267,7 @@ public class ManufactureController {
         return result;
     }
 
-    @ApiOperation(value = "根据快递单号查询义齿信息", response = ProcedureVo.class, httpMethod = "GET")
+    @ApiOperation(value = "查询工序列表", response = ProcedureVo.class, httpMethod = "GET")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "pgId", dataType = "Long", required = true, value = "工序组编号")
     })

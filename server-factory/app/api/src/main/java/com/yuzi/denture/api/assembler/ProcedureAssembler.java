@@ -5,6 +5,7 @@ import com.yuzi.denture.domain.Procedure;
 import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,7 +23,7 @@ public class ProcedureAssembler {
 
     public static List<ProcedureVo> toVos(List<Procedure> procedures) {
         if(procedures == null)
-            return null;
+            return Collections.emptyList();
         List<ProcedureVo> vos = new ArrayList<>(procedures.size());
         for(Procedure procedure: procedures) {
             ProcedureVo vo = toVo(procedure);
