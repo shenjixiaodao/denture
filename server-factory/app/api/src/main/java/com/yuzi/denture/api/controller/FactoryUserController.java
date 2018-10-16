@@ -109,7 +109,7 @@ public class FactoryUserController {
             FactoryUser user = service.login(phone, password);
             FactoryUserVo vo = FactoryUserAssembler.toVo(user);
             vo.setToken(user.token());
-            request.getSession().setAttribute(Cst.UserVoKey, vo);
+            request.getSession().setAttribute(Cst.UserKey, user);
             res.setData(vo);
             logger.info("登录成功");
         }, "登录错误", logger);

@@ -58,6 +58,7 @@ const user = {
           } else {
             reject('getInfo: roles must be a non-null array !')
           }
+          commit('SET_INTRODUCTION', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif')
           resolve()
         }).catch(error => {
           reject(error)
