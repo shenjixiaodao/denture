@@ -7,3 +7,11 @@ export function queryDenturesByStatus(status) {
     params: { status: status }
   })
 }
+
+export function queryByDeliveryId(params) {
+  return request({
+    url: '/manufacture/queryByDeliveryId',
+    method: 'get',
+    params: params
+  })
+}

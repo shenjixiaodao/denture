@@ -52,3 +52,7 @@ export function isNotNull(object) {
 export function isNull(object) {
   return object === null || object === undefined
 }
+
+export function isStringNull(str) {
+  return isNull(str) || str.toString().trim() === ''
+}

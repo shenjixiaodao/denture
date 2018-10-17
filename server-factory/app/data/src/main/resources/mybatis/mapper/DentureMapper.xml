@@ -127,10 +127,6 @@
         d.start_date start_date, d.end_date end_date, d.pro_review pro_review, d.pro_review_date pro_review_date,
         d.qua_review qua_review, d.qua_review_date qua_review_date
     </sql>
-    <select id="findByDeliveryInfo" parameterType="Map" resultMap="baseRM">
-        SELECT <include refid="baseSQL" /> FROM denture d
-        INNER JOIN delivery_info di ON (delivery_id=#{deliveryId} AND company=#{company} AND d.id=di.denture_id)
-    </select>
 
     <sql id="clinicSQL">
         c.name clinic_name, c.address clinic_address, c.contact clinic_contact
@@ -158,6 +154,11 @@
           and do.status in('Created','Paid')
         )
     </select>
+    <select id="findByDeliveryInfo" parameterType="Map" resultMap="baseRM">
+        SELECT <include refid="baseSQL" /> FROM denture d
+        INNER JOIN delivery_info di ON (delivery_id=#{deliveryId} AND company=#{company} AND d.id=di.denture_id)
+    </select>
+
     <select id="findDoingDentures" parameterType="Long" resultMap="baseRM">
         SELECT <include refid="baseSQL" />
         FROM denture d inner join denture_order do on (
