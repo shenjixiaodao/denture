@@ -150,7 +150,8 @@ public class ManufactureController {
     @ResponseBody
     @RequestMapping(value = "/salesmanQueryOrders", method = GET)
     public WebResult<List<DentureOrderVo>> salesmanQueryOrders() {
-        //todo 从session中获取用户ID
+        //todo 从session中获取用户ID, factoryId
+        Long factorId = 1L; //对应工厂的订单
         Long uid = 1L;
         logger.info("查询订单:uid={}", uid);
         WebResult<List<DentureOrderVo>> result = WebResult.execute(res -> {

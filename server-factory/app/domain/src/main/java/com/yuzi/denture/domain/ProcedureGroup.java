@@ -28,6 +28,11 @@ public class ProcedureGroup {
     //检查结果(inspectionResult):
     private InspectionResult inspectionResult;
 
+    public ProcedureGroup(GroupType type, String dentureId) {
+        this.type = type;
+        this.dentureId = dentureId;
+    }
+
     public Long getId() {
         return id;
     }
@@ -114,5 +119,8 @@ public class ProcedureGroup {
 
     public void setInspectionResult(InspectionResult inspectionResult) {
         this.inspectionResult = inspectionResult;
+    }
+
+    public ProcedureGroup() {
     }
 }

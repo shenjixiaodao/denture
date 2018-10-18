@@ -2,10 +2,7 @@ package com.yuzi.denture.data.repository;
 
 
 
-import com.yuzi.denture.data.mapper.DentureMapper;
-import com.yuzi.denture.data.mapper.DentureOrderMapper;
-import com.yuzi.denture.data.mapper.FactoryUserMapper;
-import com.yuzi.denture.data.mapper.ProcedureMapper;
+import com.yuzi.denture.data.mapper.*;
 import com.yuzi.denture.domain.*;
 import com.yuzi.denture.domain.repository.FactoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +22,8 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     @Autowired
     private ProcedureMapper procedureMapper;
     @Autowired
+    private ProcedureGroupMapper procedureGroupMapper;
+    @Autowired
     private FactoryUserMapper userMapper;
 
     @Override
@@ -40,6 +39,11 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     @Override
     public void update(Denture denture) {
         dentureMapper.update(denture);
+    }
+
+    @Override
+    public void batchAddProcedureGroups(List<ProcedureGroup> groups) {
+        procedureGroupMapper.batchSave(groups);
     }
 
     @Override

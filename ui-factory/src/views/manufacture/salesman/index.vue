@@ -1,6 +1,11 @@
 <template>
   <div class="dashboard-container">
-    <salesman-orders-table />
+    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+      <el-button type="primary" @click="jump">新增</el-button>
+    </el-row>
+    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+      <salesman-orders-table />
+    </el-row>
   </div>
 </template>
 
@@ -11,6 +16,11 @@ export default {
   name: 'Salesman',
   components: {
     SalesmanOrdersTable
+  },
+  methods: {
+    jump() {
+      this.$router.push({ path: '/salesman/add-order' })
+    }
   }
 }
 </script>

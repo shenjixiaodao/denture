@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class FactoryServiceImpl implements FactoryService {
@@ -25,6 +26,8 @@ public class FactoryServiceImpl implements FactoryService {
         Denture denture = new Denture(type, specification, clinicId, comment,
                 factoryId, positions, colorNo);
         denture.setId(IdGenerator.generate(factoryId));
+        List<ProcedureGroup> groups = denture.generateProcedureGroups();
+        repository.batchAddProcedureGroups(groups);
         repository.add(denture);
         //2, create order
         DentureOrder order = new DentureOrder(denture.getId(), clinicId, factoryId, dentistId, comment);

@@ -31,6 +31,13 @@ const comprehensiveRouter = {
       name: 'OrderDetail',
       meta: { title: 'OrderDetail', noCache: true },
       hidden: true
+    },
+    {
+      path: 'add-order',
+      component: () => import('@/views/manufacture/salesman/components/AddOrder'),
+      name: 'AddOrder',
+      meta: { title: '录入订单' },
+      hidden: true
     }
   ]
 }

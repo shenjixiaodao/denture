@@ -14,3 +14,14 @@ export function queryOrderByDentureId(dentureId) {
     params: { dentureId: dentureId }
   })
 }
+
+export function addOrder(data) {
+  return request({
+    url: '/manufacture/recordOrder',
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data
+  })
+}

@@ -12,6 +12,7 @@ public interface FactoryRepository {
     void update(Denture denture);
 
     //procedure
+    void batchAddProcedureGroups(List<ProcedureGroup> groups);
     void add(Procedure procedure);
 
     List<Procedure> findProcedures(Long pgId);

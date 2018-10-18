@@ -1,6 +1,9 @@
 package com.yuzi.denture.domain;
 
+import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -130,6 +133,18 @@ public class Denture {
             }
             throw new IllegalArgumentException("未知管理状态");
         }
+    }
+
+    public List<ProcedureGroup> generateProcedureGroups() {
+        if(StringUtils.isEmpty(id)) {
+            throw new IllegalArgumentException("dentureId为空");
+        }
+        this.procedureGroups = new ArrayList<>(GroupType.values().length);
+        for(GroupType gt : GroupType.values()) {
+            ProcedureGroup group = new ProcedureGroup(gt, this.id);
+            procedureGroups.add(group);
+        }
+        return this.procedureGroups;
     }
 
     public void filterGroup(GroupType type) {
