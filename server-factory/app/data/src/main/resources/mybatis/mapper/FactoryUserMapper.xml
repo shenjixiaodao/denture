@@ -109,7 +109,7 @@
         <collection property="roles" resultMap="baseRoleRM" />
     </resultMap>
     <resultMap id="baseRoleRM" type="com.yuzi.denture.domain.FactoryRole">
-        <result column="id" property="uid" />
+        <result column="role_uid" property="uid" />
         <result column="role" property="role" />
     </resultMap>
     <resultMap id="baseCustomerRM" type="com.yuzi.denture.domain.FactoryCustomer">

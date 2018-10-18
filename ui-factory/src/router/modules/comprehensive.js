@@ -36,6 +36,19 @@ const comprehensiveRouter = {
       name: 'ComprehensiveDentureDetail',
       meta: { title: 'DentureDetail', noCache: true },
       hidden: true
+    },
+    {
+      path: 'users',
+      component: () => import('@/views/manufacture/comprehensive/user'),
+      name: 'User',
+      meta: { title: '用户管理' }
+    },
+    {
+      path: 'user/:id(\\d+)',
+      component: () => import('@/views/manufacture/comprehensive/components/UserDetail'),
+      name: 'ComprehensiveUserDetail',
+      meta: { title: '用户详情', noCache: true },
+      hidden: true
     }
   ]
 }

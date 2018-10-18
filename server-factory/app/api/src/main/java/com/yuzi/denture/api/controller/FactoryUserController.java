@@ -22,8 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
+import java.util.List;
 import java.util.Locale;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
@@ -152,6 +154,37 @@ public class FactoryUserController {
             service.addCustomer(factoryId, clinicId, uid);
             logger.info("添加客户成功");
         }, "添加客户错误", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "查询用户列表", response = FactoryUserVo.class, httpMethod = "GET")
+    @ResponseBody
+    @RequestMapping(value = "/users", method = GET)
+    public WebResult<FactoryUserVo> users() {
+        //todo 从session中获取 factoryId
+        Long factoryId = 1L;
+        WebResult<FactoryUserVo> result = WebResult.execute(res -> {
+            List<FactoryUser> users = repository.findUsers(factoryId);
+            List<FactoryUserVo> vos = FactoryUserAssembler.toVos(users);
+            res.setData(vos);
+            logger.info("查询用户列表成功");
+        }, "查询用户列表错误", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "查询用户信息", response = FactoryUserVo.class, httpMethod = "GET")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "uid", dataType = "Long", required = true, value = "用户ID")
+    })
+    @ResponseBody
+    @RequestMapping(value = "/user", method = GET)
+    public WebResult<FactoryUserVo> user(Long uid) {
+        WebResult<FactoryUserVo> result = WebResult.execute(res -> {
+            FactoryUser user = repository.findUser(uid);
+            FactoryUserVo vo = FactoryUserAssembler.toVo(user);
+            res.setData(vo);
+            logger.info("查询用户信息成功");
+        }, "查询用户信息错误", logger);
         return result;
     }
 }
