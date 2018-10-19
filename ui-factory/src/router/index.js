@@ -60,6 +60,19 @@ export const constantRouterMap = [
     ]
   },
   {
+    path: '/setting',
+    component: Layout,
+    redirect: '/setting/modify-pwd',
+    children: [
+      {
+        path: 'modify-pwd',
+        component: () => import('@/views/setting/index'),
+        name: 'ModifyPwd',
+        meta: { title: '设置', icon: 'guide', noCache: true }
+      }
+    ]
+  },
+  {
     path: '/auth-redirect',
     component: () => import('@/views/login/authredirect'),
     hidden: true
