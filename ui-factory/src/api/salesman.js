@@ -25,3 +25,21 @@ export function addOrder(data) {
     data
   })
 }
+
+export function customers() {
+  return request({
+    url: '/factoryUser/customers',
+    method: 'get'
+  })
+}
+
+export function addCustomer(data) {
+  return request({
+    url: '/factoryUser/addCustomer',
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data
+  })
+}
