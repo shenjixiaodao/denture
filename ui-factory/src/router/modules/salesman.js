@@ -16,20 +16,20 @@ const comprehensiveRouter = {
       path: 'order-list',
       component: () => import('@/views/manufacture/salesman/index'),
       name: 'Order-List',
-      meta: { title: 'Order-List', icon: 'dashboard', noCache: true }
+      meta: { title: '订单列表', noCache: true }
     },
     {
       path: 'denture/:id(\\d+)',
       component: () => import('@/views/manufacture/salesman/DentureDetail'),
       name: 'SalesmanDentureDetail',
-      meta: { title: 'DentureDetail', noCache: true },
+      meta: { title: '义齿详情', noCache: true },
       hidden: true
     },
     {
       path: 'order/:id(\\d+)',
       component: () => import('@/views/manufacture/salesman/OrderDetail'),
       name: 'OrderDetail',
-      meta: { title: 'OrderDetail', noCache: true },
+      meta: { title: '订单详情', noCache: true },
       hidden: true
     },
     {
@@ -38,6 +38,12 @@ const comprehensiveRouter = {
       name: 'AddOrder',
       meta: { title: '录入订单' },
       hidden: true
+    },
+    {
+      path: 'customers',
+      component: () => import('@/views/manufacture/salesman/customers'),
+      name: 'Customers',
+      meta: { title: '客户列表', noCache: true }
     }
   ]
 }
