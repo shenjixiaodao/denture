@@ -6,6 +6,7 @@ import com.yuzi.denture.domain.FactoryUser;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by liyou on 2018/9/21.
@@ -19,7 +20,7 @@ public interface FactoryUserMapper {
     void addCustomer(FactoryCustomer customer);
     void updateCustomer(FactoryCustomer customer);
     FactoryCustomer findCustomerById(Long id);
-    List<FactoryCustomer> findCustomersByUid(Long uid);
+    List<FactoryCustomer> findCustomersByUid(Map paras);
     FactoryUser findUserByContact(String contact);
     FactoryUser findUserById(Long id);
 

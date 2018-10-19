@@ -24,7 +24,7 @@ public interface FactoryRepository {
     void addCustomer(FactoryCustomer customer);
     void updateCustomer(FactoryCustomer customer);
     FactoryCustomer findCustomer(Long id);
-    List<FactoryCustomer> findCustomersByUid(Long uid);
+    List<FactoryCustomer> findCustomersByUid(Long factoryId, Long uid);
     List<FactoryCustomer> findCustomersByFactoryId(Long factoryId);
     FactoryUser findUser(String contact);
     FactoryUser findUser(Long uid);

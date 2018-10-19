@@ -88,8 +88,11 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     }
 
     @Override
-    public List<FactoryCustomer> findCustomersByUid(Long uid) {
-        return userMapper.findCustomersByUid(uid);
+    public List<FactoryCustomer> findCustomersByUid(Long factoryId, Long uid) {
+        Map<String, Object> paras = new HashMap<>();
+        paras.put("uid", uid);
+        paras.put("factoryId", factoryId);
+        return userMapper.findCustomersByUid(paras);
     }
 
     @Override

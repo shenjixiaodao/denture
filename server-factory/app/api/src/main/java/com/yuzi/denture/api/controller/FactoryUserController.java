@@ -1,7 +1,9 @@
 package com.yuzi.denture.api.controller;
 
+import com.yuzi.denture.api.assembler.FactoryCustomerAssembler;
 import com.yuzi.denture.api.assembler.FactoryUserAssembler;
 import com.yuzi.denture.api.session.Cst;
+import com.yuzi.denture.api.vo.FactoryCustomerVo;
 import com.yuzi.denture.api.vo.FactoryUserVo;
 import com.yuzi.denture.api.vo.base.WebResult;
 import com.yuzi.denture.domain.*;
@@ -154,6 +156,22 @@ public class FactoryUserController {
             service.addCustomer(factoryId, clinicId, uid);
             logger.info("添加客户成功");
         }, "添加客户错误", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "查询客户列表", response = FactoryCustomerVo.class, httpMethod = "GET")
+    @ResponseBody
+    @RequestMapping(value = "/customers", method = GET)
+    public WebResult<FactoryCustomerVo> customers() {
+        //todo 从session中获取 uid和factoryId
+        Long uid = 1L;
+        Long factoryId = 1L;
+        WebResult<FactoryCustomerVo> result = WebResult.execute(res -> {
+            List<FactoryCustomer> customers = repository.findCustomersByUid(factoryId, uid);
+            List<FactoryCustomerVo> vos = FactoryCustomerAssembler.toVos(customers);
+            res.setData(vos);
+            logger.info("查询客户列表成功");
+        }, "查询客户列表错误", logger);
         return result;
     }
 
