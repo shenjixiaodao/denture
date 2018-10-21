@@ -7,47 +7,50 @@
       <el-table :data="list" style="width: 100%;padding-top: 15px;">
         <el-table-column label="名称">
           <template slot-scope="scope">
-            {{ scope.row.clinic.name }}
+            {{ scope.row.name }}
           </template>
         </el-table-column>
-        <el-table-column label="地址" align="center">
+        <el-table-column label="库存" align="center">
           <template slot-scope="scope">
-            {{ scope.row.clinic.address }}
+            {{ scope.row.balance }}
           </template>
         </el-table-column>
-        <el-table-column label="联系方式" align="center">
+        <el-table-column label="详情" align="center">
           <template slot-scope="scope">
-            {{ scope.row.clinic.contact }}
+            <router-link :to="'ingredient/'+scope.row.id" class="link-type">
+              <span>详情</span>
+            </router-link>
           </template>
         </el-table-column>
       </el-table>
     </el-row>
 
-    <el-dialog :visible.sync="dialogSubmitVisible" title="添加客户">
+    <el-dialog :visible.sync="dialogAddVisible" title="添加新材料">
       <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="客户编号" prop="title">
-          <el-input v-model="clinicId"/>
+        <el-form-item label="物料名称" prop="title">
+          <el-input v-model="name"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogAddVisible = false">取消</el-button>
-        <el-button type="primary" @click="addCustomer">提交</el-button>
+        <el-button type="primary" @click="newIngredient">提交</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { customers, addCustomer } from '@/api/salesman'
+import { queryIngredients, newIngredient } from '@/api/comprehensive'
+import { isStringNull } from '@/utils/validate'
+import { Message } from 'element-ui'
 
 export default {
+  name: 'Ingredients',
   data() {
     return {
       list: null,
       dialogAddVisible: false,
-      customer: {
-        clinicId: null
-      }
+      name: null
     }
   },
   created() {
@@ -55,19 +58,28 @@ export default {
   },
   methods: {
     fetchData() {
-      customers().then(response => {
+      queryIngredients().then(response => {
         var data = response.data
         console.log(data)
         this.list = data
       })
     },
-    addCustomer() {
-      this.dialogAddVisible = false
-      addCustomer(this.customer).then(resp => {
-        customers().then(response => {
-          var data = response.data
-          this.list = data
+    newIngredient() {
+      if (isStringNull(this.name)) {
+        return Message({
+          message: '物料名称不能为空',
+          type: 'error',
+          duration: 1000
         })
+      }
+      newIngredient(this.name).then(response1 => {
+        this.dialogAddVisible = false
+        Message({
+          message: '新增成功',
+          type: 'success',
+          duration: 1000
+        })
+        this.fetchData()
       })
     }
   }

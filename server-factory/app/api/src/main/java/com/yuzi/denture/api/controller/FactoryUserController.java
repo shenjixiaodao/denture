@@ -165,9 +165,8 @@ public class FactoryUserController {
     public WebResult<FactoryCustomerVo> customers() {
         //todo 从session中获取 uid和factoryId
         Long uid = 1L;
-        Long factoryId = 1L;
         WebResult<FactoryCustomerVo> result = WebResult.execute(res -> {
-            List<FactoryCustomer> customers = repository.findCustomersByUid(factoryId, uid);
+            List<FactoryCustomer> customers = repository.findCustomersByUid(uid);
             List<FactoryCustomerVo> vos = FactoryCustomerAssembler.toVos(customers);
             res.setData(vos);
             logger.info("查询客户列表成功");

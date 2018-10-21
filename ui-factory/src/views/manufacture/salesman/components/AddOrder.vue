@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+    <el-row style="background:#fff;padding:16px 16px 0;">
       <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="诊所" prop="title">
           <el-input v-model="order.clinincId"/>
@@ -9,7 +9,21 @@
           <el-input v-model="order.clinicId"/>
         </el-form-item>
         <el-form-item label="牙位" prop="title">
-          <el-input v-model="order.positions"/>
+          <el-checkbox-group v-model="position_group">
+            <table class="answer-table">
+              <tbody>
+                <tr>
+                  <td><el-checkbox-button label="a8"/></td><td><el-checkbox-button label="a7" /></td><td><el-checkbox-button label="a6"/></td><td><el-checkbox-button label="a5"/></td><td><el-checkbox-button label="a4"/></td><td><el-checkbox-button label="a3"/></td><td><el-checkbox-button label="a2"/></td><td><el-checkbox-button label="a1"/></td>
+                  <td><el-checkbox-button label="b1"/></td><td><el-checkbox-button label="b2"/></td><td><el-checkbox-button label="b3"/></td><td><el-checkbox-button label="b4"/></td><td><el-checkbox-button label="b5"/></td><td><el-checkbox-button label="b6"/></td><td><el-checkbox-button label="b7"/></td><td><el-checkbox-button label="b8"/></td>
+                </tr>
+                <tr>
+                  <td><el-checkbox-button label="c8"/></td><td><el-checkbox-button label="c7"/></td><td><el-checkbox-button label="c6"/></td><td><el-checkbox-button label="c5"/></td><td><el-checkbox-button label="c4"/></td><td><el-checkbox-button label="c3"/></td><td><el-checkbox-button label="c2"/></td><td><el-checkbox-button label="c1"/></td>
+                  <td><el-checkbox-button label="d1"/></td><td><el-checkbox-button label="d2"/></td><td><el-checkbox-button label="d3"/></td><td><el-checkbox-button label="d4"/></td><td><el-checkbox-button label="d5"/></td><td><el-checkbox-button label="d6"/></td><td><el-checkbox-button label="d7"/></td><td><el-checkbox-button label="d8"/></td>
+                </tr>
+              </tbody>
+            </table>
+          </el-checkbox-group>
+          <!--<el-input v-model="order.positions"/>-->
         </el-form-item>
         <el-form-item label="种类名称" prop="title">
           <el-select v-model="order.type" placeholder="类型" clearable style="width: 90px" class="filter-item">
@@ -67,11 +81,14 @@ export default {
         specification: null,
         positions: null,
         comment: null
-      }
+      },
+      position_group: []
     }
   },
   methods: {
     addOrder() {
+      // todo check console.log(this.position_group.join(','))
+      this.order.positions = this.position_group.join(',')
       addOrder(this.order).then(response => {
         this.$router.push({ path: '/salesman/order-list' })
       })

@@ -1,10 +1,10 @@
 package com.yuzi.denture.api.controller;
 
-import com.yuzi.denture.api.assembler.DentureAssembler;
-import com.yuzi.denture.api.assembler.DentureOrderAssembler;
-import com.yuzi.denture.api.assembler.ProcedureAssembler;
+import com.yuzi.denture.api.assembler.*;
 import com.yuzi.denture.api.vo.DentureOrderVo;
+import com.yuzi.denture.api.vo.IngredientVo;
 import com.yuzi.denture.api.vo.ProcedureVo;
+import com.yuzi.denture.api.vo.SupplierVo;
 import com.yuzi.denture.api.vo.base.DentureVo;
 import com.yuzi.denture.api.vo.base.WebResult;
 import com.yuzi.denture.domain.*;
@@ -237,6 +237,125 @@ public class ManufactureController {
             logger.warn("审核义齿异常: {}", ex);
             return WebResult.failure(ex.getMessage());
         }
+        return result;
+    }
+
+    @ApiOperation(value = "新增物料", response = WebResult.class, httpMethod = "POST")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "form", name = "name", dataType = "string",
+                    required = true, value = "物料名称")
+    })
+    @ResponseBody
+    @RequestMapping(value = "/newIngredient", method = POST)
+    public WebResult newIngredient(String name) {
+        // todo session get factoryId
+        Long factoryId = 1L;
+        logger.info("新增物料:name={}", name);
+        WebResult result = new WebResult<>();
+        try {
+            service.newIngredient(name, factoryId);
+        } catch (Exception ex) {
+            logger.warn("审核义齿异常: {}", ex);
+            return WebResult.failure(ex.getMessage());
+        }
+        return result;
+    }
+
+    @ApiOperation(value = "记录新购入物料", response = WebResult.class, httpMethod = "POST")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "form", name = "ingredientId", dataType = "long",
+                    required = true, value = "物料Id"),
+            @ApiImplicitParam(paramType = "form", name = "supplierId", dataType = "long",
+                    required = true, value = "供应商ID"),
+            @ApiImplicitParam(paramType = "form", name = "number", dataType = "double",
+                    required = true, value = "购买量")
+    })
+    @ResponseBody
+    @RequestMapping(value = "/recordIngredientPurchase", method = POST)
+    public WebResult recordIngredientPurchase(Long ingredientId, Long supplierId, Double number) {
+        logger.info("记录新购入物料:ingredientId={}, supplierId={}, number={}", ingredientId, ingredientId, number);
+        WebResult result = new WebResult<>();
+        try {
+            service.newIngredientPurchaseRecord(ingredientId,supplierId, number);
+        } catch (Exception ex) {
+            logger.warn("记录新购入物料异常: {}", ex);
+            return WebResult.failure(ex.getMessage());
+        }
+        return result;
+    }
+
+    @ApiOperation(value = "查询物料列表", response = IngredientVo.class, httpMethod = "GET")
+    @ResponseBody
+    @RequestMapping(value = "/queryIngredients", method = GET)
+    public WebResult<List<IngredientVo>> queryIngredients() {
+        // todo session get factoryId
+        Long factoryId = 1L;
+        logger.info("查询物料列表:factoryId={}",factoryId);
+
+        WebResult<List<IngredientVo>> result = WebResult.execute(res -> {
+            List<Ingredient> ingredients = repository.findIngredients(factoryId);
+            List<IngredientVo> vos = IngredientAssembler.toVos(ingredients);
+            res.setData(vos);
+        }, "查询工序列表错误", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "查询物料详情", response = IngredientVo.class, httpMethod = "GET")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "id", dataType = "Long", required = true, value = "物料ID")
+    })
+    @ResponseBody
+    @RequestMapping(value = "/queryIngredientById", method = GET)
+    public WebResult<IngredientVo> queryIngredientById(Long id) {
+        logger.info("查询物料详情:id={}",id);
+
+        WebResult<IngredientVo> result = WebResult.execute(res -> {
+            Ingredient ingredient = repository.findIngredient(id);
+            IngredientVo vo = IngredientAssembler.toVo(ingredient);
+            res.setData(vo);
+        }, "查询物料详情错误", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "新增供应商", response = WebResult.class, httpMethod = "POST")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "form", name = "name", dataType = "String",
+                    required = true, value = "名称"),
+            @ApiImplicitParam(paramType = "form", name = "address", dataType = "String",
+                    required = true, value = "地址"),
+            @ApiImplicitParam(paramType = "form", name = "contact", dataType = "String",
+                    required = true, value = "联系方式")
+    })
+    @ResponseBody
+    @RequestMapping(value = "/newSupplier", method = POST)
+    public WebResult newSupplier(String name, String address, String contact) {
+        logger.info("新增供应商:name={}, name={}, contact={}", name, name, contact);
+        WebResult result = new WebResult<>();
+        try {
+            // todo session get factoryId
+            Long factoryId = 1L;
+            Supplier supplier = new Supplier(factoryId,name, address, contact);
+            repository.newSupplier(supplier);
+        } catch (Exception ex) {
+            logger.warn("新增供应商异常: {}", ex);
+            return WebResult.failure(ex.getMessage());
+        }
+        return result;
+    }
+
+    @ApiOperation(value = "查询供应商列表", response = SupplierVo.class, httpMethod = "GET")
+    @ResponseBody
+    @RequestMapping(value = "/querySuppliers", method = GET)
+    public WebResult<List<SupplierVo>> querySuppliers() {
+        // todo session get factoryId
+        Long factoryId = 1L;
+        logger.info("查询供应商列表:factoryId={}",factoryId);
+
+        WebResult<List<SupplierVo>> result = WebResult.execute(res -> {
+            List<Supplier> suppliers = repository.findSuppliers(factoryId);
+            List<SupplierVo> vos = SupplierAssembler.toVos(suppliers);
+            res.setData(vos);
+        }, "查询供应商列表错误", logger);
         return result;
     }
 

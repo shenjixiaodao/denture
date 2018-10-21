@@ -20,7 +20,7 @@ public interface FactoryUserMapper {
     void addCustomer(FactoryCustomer customer);
     void updateCustomer(FactoryCustomer customer);
     FactoryCustomer findCustomerById(Long id);
-    List<FactoryCustomer> findCustomersByUid(Map paras);
+    List<FactoryCustomer> findCustomersByUid(Long uid);
     FactoryUser findUserByContact(String contact);
     FactoryUser findUserById(Long id);
 

@@ -38,4 +38,8 @@ public interface FactoryService {
     void modifyPwd(Long uid, String srcPwd, String dstPwd);
     void addCustomer(Long factoryId, Long clinicId, Long salesmanId);
     void modifyCustomer(Long customerId, Long clinicId, Long salesmanId);
+
+    //ingredient
+    void newIngredient(String name, Long factoryId);
+    void newIngredientPurchaseRecord(Long ingredientId, Long supplierId, Double number);
 }

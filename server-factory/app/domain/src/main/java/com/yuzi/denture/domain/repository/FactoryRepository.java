@@ -24,7 +24,7 @@ public interface FactoryRepository {
     void addCustomer(FactoryCustomer customer);
     void updateCustomer(FactoryCustomer customer);
     FactoryCustomer findCustomer(Long id);
-    List<FactoryCustomer> findCustomersByUid(Long factoryId, Long uid);
+    List<FactoryCustomer> findCustomersByUid(Long uid);
     List<FactoryCustomer> findCustomersByFactoryId(Long factoryId);
     FactoryUser findUser(String contact);
     FactoryUser findUser(Long uid);
@@ -41,7 +41,6 @@ public interface FactoryRepository {
      * 综合管理员根据工厂ID，查询所有Denture信息
      */
     List<Denture> findDentures(Long factoryId);
-
     /**
      * 查询
      * 等待审核, 正在制作，已完成
@@ -60,6 +59,15 @@ public interface FactoryRepository {
      * 业务经理查询看自己名下诊所下的订单
      */
     List<DentureOrder> findOrdersByUid(Long uid);
-
     DentureOrder findOrder(String dentureId);
+
+    // ingredients
+    void newIngredient(Ingredient ingredient);
+    void updateIngredient(Ingredient ingredient);
+    void recordIngredientPurchase(IngredientPurchaseRecord record);
+    List<Ingredient> findIngredients(Long factoryId);
+    Ingredient findIngredient(Long id);
+
+    void newSupplier(Supplier supplier);
+    List<Supplier> findSuppliers(Long factoryId);
 }

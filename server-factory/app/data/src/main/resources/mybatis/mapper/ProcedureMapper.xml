@@ -39,7 +39,7 @@
         <result column="modified_date" property="modifiedDate" />
     </resultMap>
 
-    <select id="findProceduresByPgId" resultMap="baseRM">
+    <select id="findProceduresByPgId" parameterType="Long" resultMap="baseRM">
         SELECT * FROM `procedure` WHERE pg_id=#{pgId}
     </select>
 

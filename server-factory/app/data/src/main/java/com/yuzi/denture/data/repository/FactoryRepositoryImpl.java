@@ -27,6 +27,8 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     private FactoryUserMapper userMapper;
     @Autowired
     private ClinicMapper clinicMapper;
+    @Autowired
+    private IngredientMapper ingredientMapper;
 
     @Override
     public void add(DentureOrder order) {
@@ -94,11 +96,8 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     }
 
     @Override
-    public List<FactoryCustomer> findCustomersByUid(Long factoryId, Long uid) {
-        Map<String, Object> paras = new HashMap<>();
-        paras.put("uid", uid);
-        paras.put("factoryId", factoryId);
-        return userMapper.findCustomersByUid(paras);
+    public List<FactoryCustomer> findCustomersByUid(Long uid) {
+        return userMapper.findCustomersByUid(uid);
     }
 
     @Override
@@ -172,5 +171,42 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     @Override
     public DentureOrder findOrder(String dentureId) {
         return dentureOrderMapper.findOrderByDentureId(dentureId);
+    }
+
+    @Override
+    public void newIngredient(Ingredient ingredient) {
+        ingredientMapper.save(ingredient);
+    }
+
+    @Override
+    public void updateIngredient(Ingredient ingredient) {
+        ingredientMapper.update(ingredient);
+    }
+
+    @Override
+    public void recordIngredientPurchase(IngredientPurchaseRecord record) {
+        ingredientMapper.saveIngredientPurchaseRecord(record);
+    }
+
+    @Override
+    public List<Ingredient> findIngredients(Long factoryId) {
+        List<Ingredient> ingredients = ingredientMapper.findIngredients(factoryId);
+        return ingredients;
+    }
+
+    @Override
+    public Ingredient findIngredient(Long id) {
+        Ingredient ingredient = ingredientMapper.findIngredientById(id);
+        return ingredient;
+    }
+
+    @Override
+    public void newSupplier(Supplier supplier) {
+        ingredientMapper.saveSupplier(supplier);
+    }
+
+    @Override
+    public List<Supplier> findSuppliers(Long factoryId) {
+        return ingredientMapper.findSuppliers(factoryId);
     }
 }

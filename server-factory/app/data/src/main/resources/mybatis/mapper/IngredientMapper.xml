@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuzi.denture.data.mapper.IngredientMapper" >
+
+    <insert id="save" parameterType="com.yuzi.denture.domain.Ingredient">
+        INSERT INTO ingredient
+        (
+        `name`,
+        `balance`,
+        `factory_id`
+        )
+        VALUES
+        (
+        #{name},
+        #{balance},
+        #{factoryId}
+        );
+    </insert>
+
+    <insert id="saveIngredientPurchaseRecord" parameterType="com.yuzi.denture.domain.IngredientPurchaseRecord">
+        INSERT INTO ingredient_purchase_record
+        (
+        `ingredient_id`,
+        `number`,
+        `gmt_created`,
+        `gmt_modified`,
+        `supplier_id`
+        )
+        VALUES
+        (
+        #[ingredientId},
+        #[number},
+        #[gmtCreated},
+        #[gmtModified},
+        #[supplier_id}
+        );
+    </insert>
+
+    <update id="update" parameterType="com.yuzi.denture.domain.Ingredient">
+        UPDATE ingredient SET 1=1
+        <if test="name!=null">
+            name = #{name}
+        </if>
+        <if test="balance!=null">
+            balance = #{balance}
+        </if>
+    </update>
+
+    <insert id="saveSupplier" parameterType="com.yuzi.denture.domain.Supplier">
+        INSERT INTO `liyou`.`supplier`
+        (
+        `name`,
+        `address`,
+        `contact`,
+        `factory_id`
+        )
+        VALUES
+        (
+        #{name},
+        #{address},
+        #{contact},
+        #{factoryId}
+        );
+    </insert>
+
+    <resultMap id="baseSupplierRM" type="com.yuzi.denture.domain.Supplier">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="address" property="address" />
+        <result column="contact" property="contact" />
+        <result column="factory_id" property="factoryId" />
+    </resultMap>
+
+    <select id="findSuppliers" parameterType="Long" resultMap="baseSupplierRM">
+        SELECT * FROM `ingredient` WHERE factory_id=#{factoryId}
+    </select>
+
+    <resultMap id="baseRM" type="com.yuzi.denture.domain.Ingredient">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="balance" property="balance" />
+        <result column="factoryId" property="factoryId" />
+        <collection property="purchaseRecords" ofType="com.yuzi.denture.domain.IngredientPurchaseRecord">
+            <result column="pr_id" property="id" />
+            <result column="pr_ingredient_id" property="ingredientId" />
+            <result column="pr_supplier_id" property="supplierId" />
+            <result column="pr_number" property="number" />
+            <result column="pr_gmt_created" property="gmtCreated" />
+            <result column="pr_gmt_modified" property="gmtModified" />
+        </collection>
+    </resultMap>
+
+    <select id="findIngredients" parameterType="Long" resultMap="baseRM">
+        SELECT * FROM `ingredient` WHERE factory_id=#{factoryId}
+    </select>
+
+    <sql id="IngredientSQL">
+        i.*,
+        pr.id pr_id, pr.ingredient_id pr_ingredient_id, pr.supplier_id pr_supplier_id,
+        pr.number pr_number, pr.gmt_created pr_gmt_created, pr.gmt_modified pr_gmt_modified
+    </sql>
+    <select id="findIngredientById" parameterType="Long" resultMap="baseRM">
+        SELECT <include refid="IngredientSQL" /> FROM `ingredient` i
+        LEFT JOIN ingredient_purchase_record pr ON (i.id=#{id} AND i.id=pr.ingredient_id)
+    </select>
+
+</mapper>

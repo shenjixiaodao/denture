@@ -1,6 +1,6 @@
 <template>
-  <div style="padding:5px;">
-    <div class="panel panel-primary">
+  <div class="app-container">
+    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <table class="table table-bordered table-striped text-center">
         <tbody>
           <tr>
@@ -38,7 +38,52 @@
           </tr>
         </tbody>
       </table>
-    </div>
+    </el-row>
+
+    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+      <el-button type="primary" @click="dialogAddVisible = true">申请用料</el-button>
+      <el-table :data="appliedIngredients" style="width: 100%;padding-top: 15px;">
+        <el-table-column label="物料名" min-width="200">
+          <template slot-scope="scope">
+            {{ scope.row.name }}
+          </template>
+        </el-table-column>
+        <el-table-column label="申请数量" width="195" align="center">
+          <template slot-scope="scope">
+            {{ scope.row.number }}
+          </template>
+        </el-table-column>
+        <el-table-column label="备注" width="100" align="center">
+          <template slot-scope="scope">
+            {{ scope.row.comment }}
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-row>
+
+    <el-row v-if="isShow" style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+      <el-button @click="review('Reject')">拒绝生产</el-button>
+      <el-button type="primary" @click="review('Accept')">同意生产</el-button>
+    </el-row>
+
+    <el-dialog :visible.sync="dialogAddVisible" title="申请生产用料">
+      <el-form ref="dataForm" label-position="left" style="width: 400px; margin-left:50px;">
+        <el-select v-model="ingredient.ingredientId" placeholder="物料" clearable style="width: 90px" class="filter-item">
+          <el-option v-for="item in ingredients" :key="item.id" :label="item.name" :value="item.id"/>
+        </el-select>
+        <el-form-item label="数量" prop="title">
+          <el-input v-model="ingredient.number"/> <!-- 可用数量 -->
+        </el-form-item>
+        <el-form-item label="备注" prop="title">
+          <el-input v-model="ingredient.comment"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogAddVisible = false">取消</el-button>
+        <el-button type="primary" @click="submitProcedure">添加</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 
 </template>
@@ -49,7 +94,14 @@ import { queryByDentureId } from '@/api/common'
 export default {
   data() {
     return {
-      denture: null
+      ingredient: {
+        ingredient: null,
+        number: null,
+        comment: null
+      },
+      appliedIngredients: [],
+      isShow: false,
+      dialogAddVisible: false
     }
   },
   created() {
@@ -63,6 +115,12 @@ export default {
         var data = response.data
         this.denture = data
       })
+    },
+    review(result) {
+      console.log(result)
+    },
+    addIngredient() {
+
     }
   }
 }

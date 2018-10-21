@@ -8,7 +8,7 @@ const comprehensiveRouter = {
   redirect: '/comprehensive/wait',
   name: 'Comprehensive',
   meta: {
-    title: 'Comprehensive',
+    title: '综合人员管理',
     icon: 'table'
   },
   children: [
@@ -16,19 +16,19 @@ const comprehensiveRouter = {
       path: 'wait',
       component: () => import('@/views/manufacture/comprehensive/wait'),
       name: 'Wait',
-      meta: { title: 'Wait' }
+      meta: { title: '待审核义齿' }
     },
     {
       path: 'doing',
       component: () => import('@/views/manufacture/comprehensive/doing'),
       name: 'Doing',
-      meta: { title: 'Doing' }
+      meta: { title: '在加工义齿' }
     },
     {
       path: 'done',
       component: () => import('@/views/manufacture/comprehensive/done'),
       name: 'Done',
-      meta: { title: 'Done' }
+      meta: { title: '已完成义齿' }
     },
     {
       path: 'denture/:id(\\d+)',
@@ -48,6 +48,19 @@ const comprehensiveRouter = {
       component: () => import('@/views/manufacture/comprehensive/components/UserDetail'),
       name: 'ComprehensiveUserDetail',
       meta: { title: '用户详情', noCache: true },
+      hidden: true
+    },
+    {
+      path: 'ingredients',
+      component: () => import('@/views/manufacture/comprehensive/ingredients'),
+      name: 'Ingredients',
+      meta: { title: '物料管理' }
+    },
+    {
+      path: 'ingredient/:id(\\d+)',
+      component: () => import('@/views/manufacture/comprehensive/components/IngredientDetail'),
+      name: 'ComprehensiveIngredientDetail',
+      meta: { title: '物料详情', noCache: true },
       hidden: true
     }
   ]

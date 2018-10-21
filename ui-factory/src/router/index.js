@@ -68,7 +68,7 @@ export const constantRouterMap = [
         path: 'modify-pwd',
         component: () => import('@/views/setting/index'),
         name: 'ModifyPwd',
-        meta: { title: '设置', icon: 'guide', noCache: true }
+        meta: { title: '设置', icon: 'user', noCache: true }
       }
     ]
   },
@@ -96,7 +96,7 @@ export const asyncRouterMap = [
         path: 'complete-procedure',
         component: () => import('@/views/manufacture/worker/CompleteProcedure'),
         name: 'Complete-Procedure',
-        meta: { title: 'Complete-Procedure', icon: 'international' }
+        meta: { title: '生产人员管理', icon: 'international' }
       }
     ]
   },

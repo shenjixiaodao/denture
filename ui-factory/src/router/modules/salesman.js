@@ -8,7 +8,7 @@ const comprehensiveRouter = {
   redirect: '/salesman/order-list',
   name: 'Salesman',
   meta: {
-    title: 'Salesman',
+    title: '业务人员管理',
     icon: 'dashboard'
   },
   children: [

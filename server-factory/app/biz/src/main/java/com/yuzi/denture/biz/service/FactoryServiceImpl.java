@@ -109,4 +109,23 @@ public class FactoryServiceImpl implements FactoryService {
         }
         repository.updateCustomer(customer);
     }
+
+    @Override
+    public void newIngredient(String name, Long factoryId) {
+        Ingredient ingredient = new Ingredient(name, factoryId);
+        repository.newIngredient(ingredient);
+    }
+
+    @Transactional
+    @Override
+    public void newIngredientPurchaseRecord(Long ingredientId, Long supplierId, Double number) {
+        Ingredient ingredient = repository.findIngredient(ingredientId);
+        if(ingredient == null) {
+            throw new IllegalArgumentException("未知物料");
+        }
+        ingredient.addBalance(number);
+        repository.updateIngredient(ingredient);
+        IngredientPurchaseRecord record = new IngredientPurchaseRecord(ingredientId, supplierId, number);
+        repository.recordIngredientPurchase(record);
+    }
 }
