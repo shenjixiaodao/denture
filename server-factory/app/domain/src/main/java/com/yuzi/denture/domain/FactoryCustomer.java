@@ -15,15 +15,15 @@ public class FactoryCustomer {
     Long salesmanId;
     //createdDate: Date
     Date createdDate;
-    //isValid: Boolean
-    Boolean isValid;
+    // 0:发起请求\n1:  同意\n-1：拒绝
+    Byte isValid;
 
     public FactoryCustomer(Long factoryId, Long clinicId, Long salesmanId) {
         this.factoryId = factoryId;
         this.clinic = new Clinic(clinicId);
         this.salesmanId = salesmanId;
         this.createdDate = new Date();
-        this.isValid = Boolean.FALSE;
+        this.isValid = 0;
     }
 
     public FactoryCustomer() {
@@ -69,11 +69,11 @@ public class FactoryCustomer {
         this.createdDate = createdDate;
     }
 
-    public Boolean getValid() {
+    public Byte getValid() {
         return isValid;
     }
 
-    public void setValid(Boolean valid) {
+    public void setValid(Byte valid) {
         isValid = valid;
     }
 }

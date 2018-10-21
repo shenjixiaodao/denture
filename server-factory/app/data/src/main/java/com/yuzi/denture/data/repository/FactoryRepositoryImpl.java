@@ -25,6 +25,8 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     private ProcedureGroupMapper procedureGroupMapper;
     @Autowired
     private FactoryUserMapper userMapper;
+    @Autowired
+    private ClinicMapper clinicMapper;
 
     @Override
     public void add(DentureOrder order) {
@@ -74,6 +76,10 @@ public class FactoryRepositoryImpl implements FactoryRepository {
 
     @Override
     public void addCustomer(FactoryCustomer customer) {
+        Long clinicId = customer.getClinic().getId();
+        if(clinicMapper.findById(clinicId) == null) {
+            throw new IllegalArgumentException("编号：【"+clinicId+"】不存在");
+        }
         userMapper.addCustomer(customer);
     }
 

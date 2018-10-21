@@ -17,7 +17,7 @@ public class FactoryCustomerVo {
     //createdDate: Date
     Date createdDate;
     //isValid: Boolean
-    Boolean isValid;
+    Byte isValid;
 
     public FactoryCustomerVo() {
     }
@@ -62,11 +62,11 @@ public class FactoryCustomerVo {
         this.createdDate = createdDate;
     }
 
-    public Boolean getValid() {
+    public Byte getValid() {
         return isValid;
     }
 
-    public void setValid(Boolean valid) {
+    public void setValid(Byte valid) {
         isValid = valid;
     }
 }
