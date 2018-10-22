@@ -42,8 +42,10 @@
 
     <el-dialog :visible.sync="dialogAddIngredientVisible" title="添加新材料">
       <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="供应商编号" prop="title">
-          <el-input v-model="ingredient.supplierId"/>
+        <el-form-item label="供应商" prop="title">
+          <el-select v-model="ingredient.supplierId" placeholder="类型" clearable style="width: 90px" class="filter-item">
+            <el-option v-for="item in suppliers" :key="item.id" :label="item.name" :value="item.id"/>
+          </el-select>
         </el-form-item>
         <el-form-item label="购入数量" prop="title">
           <el-input v-model="ingredient.number"/>
@@ -76,8 +78,9 @@
 </template>
 
 <script>
-import { queryIngredientById, addIngredient, newSupplier } from '@/api/comprehensive'
+import { queryIngredientById, addIngredient, newSupplier, querySuppliers } from '@/api/comprehensive'
 import { Message } from 'element-ui'
+import { isNull } from '@/utils/validate'
 
 export default {
   data() {
@@ -95,7 +98,8 @@ export default {
         name: null,
         address: null,
         contact: null
-      }
+      },
+      suppliers: null
     }
   },
   created() {
@@ -112,6 +116,17 @@ export default {
       })
     },
     addIngredient() {
+      querySuppliers().then(response => {
+        var data = response.data
+        this.suppliers = data
+      })
+      if (isNull(this.suppliers)) {
+        return Message({
+          message: '请先添加供应商',
+          type: 'error',
+          duration: 1000
+        })
+      }
       addIngredient(this.ingredient).then(response => {
         this.dialogAddIngredientVisible = false
         Message({
