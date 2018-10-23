@@ -334,7 +334,7 @@ public class ManufactureController {
         try {
             // todo session get factoryId
             Long factoryId = 1L;
-            Supplier supplier = new Supplier(factoryId,name, address, contact);
+            Supplier supplier = new Supplier(factoryId, name, address, contact);
             repository.newSupplier(supplier);
         } catch (Exception ex) {
             logger.warn("新增供应商异常: {}", ex);

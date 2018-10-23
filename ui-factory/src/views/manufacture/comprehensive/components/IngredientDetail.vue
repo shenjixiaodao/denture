@@ -17,7 +17,7 @@
 
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <el-button type="primary" @click="dialogAddIngredientVisible = true">添加物料</el-button>
-      <el-button type="primary" @click="dialogAddVisible = true">添加供应商</el-button>
+      <el-button type="primary" @click="dialogAddSupplierVisible = true">添加供应商</el-button>
     </el-row>
 
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
@@ -43,7 +43,7 @@
     <el-dialog :visible.sync="dialogAddIngredientVisible" title="添加新材料">
       <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="供应商" prop="title">
-          <el-select v-model="ingredient.supplierId" placeholder="类型" clearable style="width: 90px" class="filter-item">
+          <el-select v-model="ingredient.supplierId" placeholder="请选择" clearable style="width: 90px" class="filter-item">
             <el-option v-for="item in suppliers" :key="item.id" :label="item.name" :value="item.id"/>
           </el-select>
         </el-form-item>
@@ -57,7 +57,7 @@
       </div>
     </el-dialog>
 
-    <el-dialog :visible.sync="dialogAddIngredientVisible" title="添加新供应商">
+    <el-dialog :visible.sync="dialogAddSupplierVisible" title="添加新供应商">
       <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="名称" prop="title">
           <el-input v-model="supplier.name"/>
@@ -71,7 +71,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogAddSupplierVisible = false">取消</el-button>
-        <el-button type="primary" @click="addIngredient">提交</el-button>
+        <el-button type="primary" @click="newSupplier">提交</el-button>
       </div>
     </el-dialog>
   </div>
@@ -114,12 +114,12 @@ export default {
         this.ingredientDetail = data
         this.purchaseRecords = this.ingredientDetail.records
       })
-    },
-    addIngredient() {
       querySuppliers().then(response => {
         var data = response.data
         this.suppliers = data
       })
+    },
+    addIngredient() {
       if (isNull(this.suppliers)) {
         return Message({
           message: '请先添加供应商',
@@ -144,6 +144,10 @@ export default {
           message: '添加成功',
           type: 'success',
           duration: 1000
+        })
+        querySuppliers().then(response => {
+          var data = response.data
+          this.suppliers = data
         })
       })
     }

@@ -41,7 +41,7 @@
     </el-row>
 
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <el-button type="primary" @click="dialogAddVisible = true">申请用料</el-button>
+      <el-button type="primary" @click="applyIngredient">申请用料</el-button>
       <el-table :data="appliedIngredients" style="width: 100%;padding-top: 15px;">
         <el-table-column label="物料名" min-width="200">
           <template slot-scope="scope">
@@ -90,6 +90,7 @@
 
 <script>
 import { queryByDentureId } from '@/api/common'
+import { queryIngredients } from '@/api/comprehensive'
 
 export default {
   data() {
@@ -99,6 +100,7 @@ export default {
         number: null,
         comment: null
       },
+      ingredients: null,
       appliedIngredients: [],
       isShow: false,
       dialogAddVisible: false
@@ -119,8 +121,12 @@ export default {
     review(result) {
       console.log(result)
     },
-    addIngredient() {
-
+    applyIngredient() {
+      this.dialogAddVisible = true
+      queryIngredients().then(response => {
+        var data = response.data
+        this.ingredients = data
+      })
     }
   }
 }
