@@ -4,7 +4,24 @@ import com.yuzi.denture.api.vo.ClinicUserVo;
 import com.yuzi.denture.domain.ClinicUser;
 import org.springframework.beans.BeanUtils;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class ClinicUserAssembler {
+
+    public static List<ClinicUserVo> toVos(List<ClinicUser> users) {
+        if(users == null) {
+            return Collections.emptyList();
+        }
+        List<ClinicUserVo> vos = new ArrayList<>(users.size());
+        for(ClinicUser user:users) {
+            ClinicUserVo vo = toVo(user);
+            vos.add(vo);
+        }
+        return vos;
+    }
+
     public static ClinicUserVo toVo(ClinicUser user){
         if(user == null)
             return null;
