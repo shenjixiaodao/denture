@@ -2,12 +2,12 @@
   <div class="app-container">
     <el-row style="background:#fff;padding:16px 16px 0;">
       <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="诊所" prop="title">
-          <el-input v-model="order.clinincId"/>
+        <el-form-item label="下单方" prop="title">
+          <el-cascader :options="clinics" v-model="selectedClinic" :props="props" placeholder="诊所/医生" @change="handleChange"/>
         </el-form-item>
-        <el-form-item label="医生" prop="title">
-          <el-input v-model="order.clinicId"/>
-        </el-form-item>
+        <!--<el-form-item label="医生" prop="title">
+          <el-input v-model="order.dentistId"/>
+        </el-form-item>-->
         <el-form-item label="牙位" prop="title">
           <el-checkbox-group v-model="position_group">
             <table class="answer-table">
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { addOrder } from '@/api/salesman'
+import { addOrder, queryClinics } from '@/api/salesman'
 
 export default {
   name: 'AddUser',
@@ -82,16 +82,37 @@ export default {
         positions: null,
         comment: null
       },
+      clinics: null,
+      selectedClinic: [],
+      props: {
+        value: 'id',
+        label: 'name',
+        children: 'users'
+      },
       position_group: []
     }
   },
+  created() {
+    this.fetchData()
+  },
   methods: {
+    fetchData() {
+      queryClinics().then(response => {
+        var data = response.data
+        console.log(data)
+        this.clinics = data
+      })
+    },
     addOrder() {
       // todo check console.log(this.position_group.join(','))
       this.order.positions = this.position_group.join(',')
       addOrder(this.order).then(response => {
         this.$router.push({ path: '/salesman/order-list' })
       })
+    },
+    handleChange(value) {
+      this.order.clinicId = value[0]
+      this.order.dentistId = value[1]
     }
   }
 }

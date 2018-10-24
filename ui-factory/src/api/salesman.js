@@ -43,3 +43,10 @@ export function addCustomer(data) {
     data
   })
 }
+
+export function queryClinics() {
+  return request({
+    url: '/info/queryClinics',
+    method: 'get'
+  })
+}
