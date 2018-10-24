@@ -1,6 +1,7 @@
 package com.yuzi.denture.api.vo;
 
 import io.swagger.annotations.ApiModelProperty;
+import java.util.List;
 
 /**
  * Created by liyou on 2018/9/19.
@@ -18,6 +19,7 @@ public class ClinicVo {
     //联系方式(contact):
     @ApiModelProperty(value="诊所联系方式")
     private String contact;
+    List<ClinicUserVo> users;
 
     public Long getId() {
         return id;
@@ -49,5 +51,13 @@ public class ClinicVo {
 
     public void setContact(String contact) {
         this.contact = contact;
+    }
+
+    public List<ClinicUserVo> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<ClinicUserVo> users) {
+        this.users = users;
     }
 }

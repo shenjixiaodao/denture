@@ -7,10 +7,27 @@
         <result column="name" property="name" />
         <result column="address" property="address" />
         <result column="contact" property="contact" />
+        <collection property="users" ofType="com.yuzi.denture.domain.ClinicUser">
+            <result column="cu_id" property="id" />
+            <result column="clinic_id" property="clinicId" />
+            <result column="cu_role" property="role" />
+            <result column="cu_contact" property="contact" />
+            <result column="cu_name" property="name" />
+        </collection>
     </resultMap>
 
-    <select id="findById" resultMap="baseRM">
+    <select id="findById" parameterType="Long" resultMap="baseRM">
         SELECT * FROM clinic WHERE id=#{id}
+    </select>
+
+    <sql id="BaseSQL">
+        c.*,
+        cu.id cu_id, cu.clinic_id cu_clinic_id, cu.role cu_role, cu.contact cu_contact, cu.name cu_name
+    </sql>
+    <select id="findByFactoryId" parameterType="Long" resultMap="baseRM">
+        select <include refid="BaseSQL" /> from clinic c
+        inner join factory_customer fc on (fc.factory_id=#{factoryId} and fc.salesman_id=#{uid} and c.id=fc.clinic_id)
+        inner join clinic_user cu on (c.id=cu.clinic_id)
     </select>
 
 </mapper>

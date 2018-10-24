@@ -1,5 +1,7 @@
 package com.yuzi.denture.domain;
 
+import java.util.List;
+
 public class Clinic {
     //id:
     private Long id;
@@ -9,6 +11,7 @@ public class Clinic {
     private String address;
     //联系方式(contact):
     private String contact;
+    List<ClinicUser> users;
 
     public Clinic(Long id) {
         this.id = id;
@@ -47,5 +50,13 @@ public class Clinic {
 
     public void setContact(String contact) {
         this.contact = contact;
+    }
+
+    public List<ClinicUser> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<ClinicUser> users) {
+        this.users = users;
     }
 }
