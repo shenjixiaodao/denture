@@ -2,17 +2,17 @@
   <div class="app-container">
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <el-table :data="list" style="width: 100%;padding-top: 15px;">
-        <el-table-column label="姓名" min-width="200">
+        <el-table-column label="姓名">
           <template slot-scope="scope">
             {{ scope.row.name }}
           </template>
         </el-table-column>
-        <el-table-column label="联系方式" min-width="200">
+        <el-table-column label="联系方式" >
           <template slot-scope="scope">
             {{ scope.row.contact }}
           </template>
         </el-table-column>
-        <el-table-column label="详情" min-width="200">
+        <el-table-column label="详情">
           <template slot-scope="scope">
             <router-link :to="'user/'+scope.row.id" class="link-type">
               <span>详情</span>

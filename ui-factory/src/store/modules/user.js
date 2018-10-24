@@ -53,6 +53,7 @@ const user = {
           console.log(response)
           commit('SET_TOKEN', data.token)
           setToken(data.token)
+          commit('SET_NAME', data.name)
           if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
             commit('SET_ROLES', data.roles)
           } else {

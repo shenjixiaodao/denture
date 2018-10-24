@@ -23,7 +23,7 @@
       </el-table>
     </el-row>
 
-    <el-dialog :visible.sync="dialogSubmitVisible" title="添加客户">
+    <el-dialog :visible.sync="dialogAddVisible" title="添加客户">
       <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="客户编号" prop="title">
           <el-input v-model="clinicId"/>

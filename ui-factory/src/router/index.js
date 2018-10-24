@@ -55,20 +55,7 @@ export const constantRouterMap = [
         path: 'welcome',
         component: () => import('@/views/welcome/index'),
         name: 'Welcome',
-        meta: { title: 'Welcome', icon: 'dashboard', noCache: true }
-      }
-    ]
-  },
-  {
-    path: '/setting',
-    component: Layout,
-    redirect: '/setting/modify-pwd',
-    children: [
-      {
-        path: 'modify-pwd',
-        component: () => import('@/views/setting/index'),
-        name: 'ModifyPwd',
-        meta: { title: '设置', icon: 'user', noCache: true }
+        meta: { title: '首页', icon: 'dashboard', noCache: true }
       }
     ]
   },
@@ -102,15 +89,15 @@ export const asyncRouterMap = [
   },
 
   {
-    path: '/error-log',
+    path: '/setting',
     component: Layout,
-    redirect: 'noredirect',
+    redirect: '/setting/modify-pwd',
     children: [
       {
-        path: 'log',
-        component: () => import('@/views/errorLog/index'),
-        name: 'ErrorLog',
-        meta: { title: 'errorLog', icon: 'bug' }
+        path: 'modify-pwd',
+        component: () => import('@/views/setting/index'),
+        name: 'ModifyPwd',
+        meta: { title: '设置', icon: 'user', noCache: true }
       }
     ]
   },

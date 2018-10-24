@@ -43,3 +43,6 @@ new Vue({
   i18n,
   render: h => h(App)
 })
+
+this.$i18n.locale = 'zh'
+this.$store.dispatch('setLanguage', 'zh')

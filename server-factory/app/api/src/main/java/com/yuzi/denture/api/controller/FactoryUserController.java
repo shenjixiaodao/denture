@@ -3,6 +3,7 @@ package com.yuzi.denture.api.controller;
 import com.yuzi.denture.api.assembler.FactoryCustomerAssembler;
 import com.yuzi.denture.api.assembler.FactoryUserAssembler;
 import com.yuzi.denture.api.session.Cst;
+import com.yuzi.denture.api.session.SessionManager;
 import com.yuzi.denture.api.vo.FactoryCustomerVo;
 import com.yuzi.denture.api.vo.FactoryUserVo;
 import com.yuzi.denture.api.vo.base.WebResult;
@@ -113,7 +114,7 @@ public class FactoryUserController {
             FactoryUser user = service.login(phone, password);
             FactoryUserVo vo = FactoryUserAssembler.toVo(user);
             vo.setToken(user.token());
-            request.getSession().setAttribute(Cst.UserKey, user);
+            SessionManager.cacheUser(user, request);
             res.setData(vo);
             logger.info("登录成功");
         }, "登录错误", logger);

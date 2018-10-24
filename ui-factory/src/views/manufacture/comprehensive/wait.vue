@@ -10,22 +10,22 @@
     </el-row>
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <el-table :data="list" style="width: 100%;padding-top: 15px;">
-        <el-table-column label="订单日期" min-width="200">
+        <el-table-column label="订单日期">
           <template slot-scope="scope">
             {{ scope.row.createdDate }}
           </template>
         </el-table-column>
-        <el-table-column label="类型" min-width="200">
+        <el-table-column label="类型">
           <template slot-scope="scope">
             {{ scope.row.type }}
           </template>
         </el-table-column>
-        <el-table-column label="规格" min-width="200">
+        <el-table-column label="规格">
           <template slot-scope="scope">
             {{ scope.row.specification }}
           </template>
         </el-table-column>
-        <el-table-column label="义齿详情" width="100" align="center">
+        <el-table-column label="义齿详情" align="center">
           <template slot-scope="scope">
             <router-link :to="'denture/'+scope.row.id" class="link-type">
               <span>详情</span>

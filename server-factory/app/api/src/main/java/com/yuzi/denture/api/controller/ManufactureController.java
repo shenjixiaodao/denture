@@ -1,6 +1,7 @@
 package com.yuzi.denture.api.controller;
 
 import com.yuzi.denture.api.assembler.*;
+import com.yuzi.denture.api.session.SessionManager;
 import com.yuzi.denture.api.vo.DentureOrderVo;
 import com.yuzi.denture.api.vo.IngredientVo;
 import com.yuzi.denture.api.vo.ProcedureVo;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -44,15 +46,18 @@ public class ManufactureController {
     })
     @ResponseBody
     @RequestMapping(value = "/queryByDentureId", method = GET)
-    public WebResult<DentureVo> queryByDentureId(String dentureId) {
+    public WebResult<DentureVo> queryByDentureId(String dentureId, HttpServletRequest request) {
         logger.info("查询义齿信息息:dentureId={}", dentureId);
         //todo 从session中获取 GroupType
-        GroupType group = GroupType.CheCi;
+        FactoryUser user = SessionManager.user(request);
+        GroupType group = user.getGroupType();
         WebResult<DentureVo> result = new WebResult<>();
         try {
             Denture denture = repository.findDenture(dentureId);
             //filter procedure by group
-            denture.filterGroup(group);
+            if(group!=GroupType.Comprehensive) {
+                denture.filterGroup(group);
+            }
             DentureVo vo = DentureAssembler.toVo(denture);
             result.setData(vo);
         } catch (Exception ex) {

@@ -43,17 +43,17 @@
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <el-button type="primary" @click="applyIngredient">申请用料</el-button>
       <el-table :data="appliedIngredients" style="width: 100%;padding-top: 15px;">
-        <el-table-column label="物料名" min-width="200">
+        <el-table-column label="物料名">
           <template slot-scope="scope">
             {{ scope.row.name }}
           </template>
         </el-table-column>
-        <el-table-column label="申请数量" width="195" align="center">
+        <el-table-column label="申请数量" align="center">
           <template slot-scope="scope">
             {{ scope.row.number }}
           </template>
         </el-table-column>
-        <el-table-column label="备注" width="100" align="center">
+        <el-table-column label="备注" align="center">
           <template slot-scope="scope">
             {{ scope.row.comment }}
           </template>
