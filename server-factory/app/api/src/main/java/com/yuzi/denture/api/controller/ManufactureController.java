@@ -48,7 +48,6 @@ public class ManufactureController {
     @RequestMapping(value = "/queryByDentureId", method = GET)
     public WebResult<DentureVo> queryByDentureId(String dentureId, HttpServletRequest request) {
         logger.info("查询义齿信息息:dentureId={}", dentureId);
-        //todo 从session中获取 GroupType
         FactoryUser user = SessionManager.user(request);
         GroupType group = user.getGroupType();
         WebResult<DentureVo> result = new WebResult<>();
@@ -100,9 +99,9 @@ public class ManufactureController {
     @RequestMapping(value = "/recordOrder", method = POST)
     public WebResult<DentureVo> recordOrder(Long clinicId, Long dentistId, String comment,
                                             String positions, String type,
-                                            String specification, String colorNo) {
-        //todo 从session中获取factoryId
-        Long factoryId = 1L;
+                                            String specification, String colorNo, HttpServletRequest request) {
+        FactoryUser user = SessionManager.user(request);
+        Long factoryId = user.getFactoryId();
         logger.info("录入订单:clinicId={}, dentistId={}, comment={}, positions={}, " +
                         "type={}, specification={}, colorNo={} ",clinicId, dentistId, comment,
                 positions, type, specification, colorNo);
@@ -123,10 +122,10 @@ public class ManufactureController {
     })
     @ResponseBody
     @RequestMapping(value = "/addCustomer", method = POST)
-    public WebResult addCustomer(Long clinicId) {
-        //todo 从session中获取factoryId and uid
-        Long factoryId = 1L;
-        Long uid = 1L;
+    public WebResult addCustomer(Long clinicId, HttpServletRequest request) {
+        FactoryUser user = SessionManager.user(request);
+        Long factoryId = user.getFactoryId();
+        Long uid = user.getId();
         logger.info("添加客户:clinicId={},factoryId={},uid={}  ",clinicId, factoryId, uid);
         WebResult<DentureVo> result = WebResult.execute(res -> {
             service.addCustomer(factoryId, clinicId, uid);
@@ -154,9 +153,9 @@ public class ManufactureController {
     @ApiOperation(value = "业务员查询名下跟踪订单", response = DentureOrderVo.class, httpMethod = "GET")
     @ResponseBody
     @RequestMapping(value = "/salesmanQueryOrders", method = GET)
-    public WebResult<List<DentureOrderVo>> salesmanQueryOrders() {
-        //todo 从session中获取用户ID, factoryId
-        Long factorId = 1L; //对应工厂的订单
+    public WebResult<List<DentureOrderVo>> salesmanQueryOrders(HttpServletRequest request) {
+        FactoryUser user = SessionManager.user(request);
+        Long factorId = user.getFactoryId(); //对应工厂的订单
         Long uid = 1L;
         logger.info("查询订单:uid={}", uid);
         WebResult<List<DentureOrderVo>> result = WebResult.execute(res -> {
@@ -174,9 +173,9 @@ public class ManufactureController {
     })
     @ResponseBody
     @RequestMapping(value = "/queryDenturesByStatus", method = GET)
-    public WebResult<List<DentureVo>> queryDenturesByStatus(String status) {
-        //todo 从session中获取 factoryId
-        Long factoryId = 1L;
+    public WebResult<List<DentureVo>> queryDenturesByStatus(String status, HttpServletRequest request) {
+        FactoryUser user = SessionManager.user(request);
+        Long factoryId = user.getFactoryId();
         logger.info("查询订单:factoryId={}, status={}", factoryId, status);
         Denture.ComprehensiveStatus s = Denture.ComprehensiveStatus.typeOf(status);
         WebResult<List<DentureVo>> result = WebResult.execute(res -> {
@@ -226,9 +225,9 @@ public class ManufactureController {
     })
     @ResponseBody
     @RequestMapping(value = "/review", method = POST)
-    public WebResult<DentureVo> review(String dentureId, String reviewResult) {
-        //todo 从session中获取用户ID
-        Long operatorId = 1L;
+    public WebResult<DentureVo> review(String dentureId, String reviewResult, HttpServletRequest request) {
+        FactoryUser user = SessionManager.user(request);
+        Long operatorId = user.getId();
         logger.info("审核义齿:operator={}, dentureId={}, reviewResult={}",operatorId, dentureId,
                     reviewResult);
 
@@ -252,9 +251,9 @@ public class ManufactureController {
     })
     @ResponseBody
     @RequestMapping(value = "/newIngredient", method = POST)
-    public WebResult newIngredient(String name) {
-        // todo session get factoryId
-        Long factoryId = 1L;
+    public WebResult newIngredient(String name, HttpServletRequest request) {
+        FactoryUser user = SessionManager.user(request);
+        Long factoryId = user.getFactoryId();
         logger.info("新增物料:name={}", name);
         WebResult result = new WebResult<>();
         try {
@@ -292,9 +291,9 @@ public class ManufactureController {
     @ApiOperation(value = "查询物料列表", response = IngredientVo.class, httpMethod = "GET")
     @ResponseBody
     @RequestMapping(value = "/queryIngredients", method = GET)
-    public WebResult<List<IngredientVo>> queryIngredients() {
-        // todo session get factoryId
-        Long factoryId = 1L;
+    public WebResult<List<IngredientVo>> queryIngredients(HttpServletRequest request) {
+        FactoryUser user = SessionManager.user(request);
+        Long factoryId = user.getFactoryId();
         logger.info("查询物料列表:factoryId={}",factoryId);
 
         WebResult<List<IngredientVo>> result = WebResult.execute(res -> {
@@ -333,12 +332,12 @@ public class ManufactureController {
     })
     @ResponseBody
     @RequestMapping(value = "/newSupplier", method = POST)
-    public WebResult newSupplier(String name, String address, String contact) {
+    public WebResult newSupplier(String name, String address, String contact, HttpServletRequest request) {
         logger.info("新增供应商:name={}, name={}, contact={}", name, name, contact);
         WebResult result = new WebResult<>();
         try {
-            // todo session get factoryId
-            Long factoryId = 1L;
+            FactoryUser user = SessionManager.user(request);
+            Long factoryId = user.getFactoryId();
             Supplier supplier = new Supplier(factoryId, name, address, contact);
             repository.newSupplier(supplier);
         } catch (Exception ex) {
@@ -351,9 +350,9 @@ public class ManufactureController {
     @ApiOperation(value = "查询供应商列表", response = SupplierVo.class, httpMethod = "GET")
     @ResponseBody
     @RequestMapping(value = "/querySuppliers", method = GET)
-    public WebResult<List<SupplierVo>> querySuppliers() {
-        // todo session get factoryId
-        Long factoryId = 1L;
+    public WebResult<List<SupplierVo>> querySuppliers(HttpServletRequest request) {
+        FactoryUser user = SessionManager.user(request);
+        Long factoryId = user.getFactoryId();
         logger.info("查询供应商列表:factoryId={}",factoryId);
 
         WebResult<List<SupplierVo>> result = WebResult.execute(res -> {
@@ -375,9 +374,9 @@ public class ManufactureController {
     })
     @ResponseBody
     @RequestMapping(value = "/completeProcedure", method = POST)
-    public WebResult<ProcedureVo> completeProcedure(Long pgId, String name, String comment) {
-        //todo 从session中获取用户ID
-        Long operatorId = 1L;
+    public WebResult<ProcedureVo> completeProcedure(Long pgId, String name, String comment, HttpServletRequest request) {
+        FactoryUser user = SessionManager.user(request);
+        Long operatorId = user.getId();
         logger.info("完成一个工序:operatorId={}, pgId={}, name={}, comment={}",operatorId, pgId,
                 name, comment);
         WebResult<ProcedureVo> result = new WebResult<>();

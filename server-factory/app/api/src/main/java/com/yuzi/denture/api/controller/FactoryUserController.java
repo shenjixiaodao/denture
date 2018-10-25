@@ -76,14 +76,14 @@ public class FactoryUserController {
     })
     @ResponseBody
     @RequestMapping(value = "/add", method = POST)
-    public WebResult add(String name, String contact, String role, String joinDate) {
-        //todo 从session中获取用户factoryId
-        Long factoryId = 1L;
+    public WebResult add(String name, String contact, String role, String joinDate, HttpServletRequest request) {
+        FactoryUser user = SessionManager.user(request);
+        Long factoryId = user.getFactoryId();
         logger.info("审核义齿:name={}, contact={}, role={}, joinDate={}",name, contact,
                 role, joinDate);
         WebResult result = WebResult.success();
         try {
-            FactoryUser user = new FactoryUser(factoryId, name, contact, FactoryRole.Role.typeOf(role));
+            user = new FactoryUser(factoryId, name, contact, FactoryRole.Role.typeOf(role));
             if(!StringUtils.isEmpty(joinDate)) {
                 DateFormatter formatter = new DateFormatter("yyyy-mm-dd");
                 user.setJoinDate(formatter.parse(joinDate, Locale.CHINA));
@@ -130,10 +130,10 @@ public class FactoryUserController {
     })
     @ResponseBody
     @RequestMapping(value = "/modifyPwd", method = POST)
-    public WebResult<FactoryUserVo> modifyPwd(String srcPwd, String dstPwd) {
+    public WebResult<FactoryUserVo> modifyPwd(String srcPwd, String dstPwd, HttpServletRequest request) {
         logger.info("修改密码:srcPwd={}, dstPwd={}",srcPwd, dstPwd);
-        //todo 从session获取用户ID
-        Long uid = 1L;
+        FactoryUser user = SessionManager.user(request);
+        Long uid = user.getId();
         WebResult result = WebResult.execute(res -> {
             service.modifyPwd(uid, srcPwd, dstPwd);
             logger.info("修改密码成功");
@@ -148,11 +148,11 @@ public class FactoryUserController {
     })
     @ResponseBody
     @RequestMapping(value = "/addCustomer", method = POST)
-    public WebResult<FactoryUserVo> addCustomer(Long clinicId) {
+    public WebResult<FactoryUserVo> addCustomer(Long clinicId, HttpServletRequest request) {
         logger.info("添加客户:clinicId={}",clinicId);
-        //todo 从session获取uid和factoryId
-        Long uid = 1L;
-        Long factoryId = 1L;
+        FactoryUser user = SessionManager.user(request);
+        Long uid = user.getId();
+        Long factoryId = user.getFactoryId();
         WebResult result = WebResult.execute(res -> {
             service.addCustomer(factoryId, clinicId, uid);
             logger.info("添加客户成功");
@@ -163,9 +163,9 @@ public class FactoryUserController {
     @ApiOperation(value = "查询客户列表", response = FactoryCustomerVo.class, httpMethod = "GET")
     @ResponseBody
     @RequestMapping(value = "/customers", method = GET)
-    public WebResult<FactoryCustomerVo> customers() {
-        //todo 从session中获取 uid和factoryId
-        Long uid = 1L;
+    public WebResult<FactoryCustomerVo> customers(HttpServletRequest request) {
+        FactoryUser user = SessionManager.user(request);
+        Long uid = user.getId();
         WebResult<FactoryCustomerVo> result = WebResult.execute(res -> {
             List<FactoryCustomer> customers = repository.findCustomersByUid(uid);
             List<FactoryCustomerVo> vos = FactoryCustomerAssembler.toVos(customers);
@@ -178,9 +178,9 @@ public class FactoryUserController {
     @ApiOperation(value = "查询用户列表", response = FactoryUserVo.class, httpMethod = "GET")
     @ResponseBody
     @RequestMapping(value = "/users", method = GET)
-    public WebResult<FactoryUserVo> users() {
-        //todo 从session中获取 factoryId
-        Long factoryId = 1L;
+    public WebResult<FactoryUserVo> users(HttpServletRequest request) {
+        FactoryUser user = SessionManager.user(request);
+        Long factoryId = user.getFactoryId();
         WebResult<FactoryUserVo> result = WebResult.execute(res -> {
             List<FactoryUser> users = repository.findUsers(factoryId);
             List<FactoryUserVo> vos = FactoryUserAssembler.toVos(users);
