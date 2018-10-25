@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuzi.denture.clinic.mapper.DentureMapper" >
+
+    <insert id="save" parameterType="com.yuzi.denture.clinic.domain.Denture">
+        INSERT INTO denture
+        (
+        `id`,
+        `clinic_id`,
+        `type`,
+        `specification`,
+        `factory_id`,
+        `number`,
+        `color_no`,
+        `positions`,
+        `created_date`,
+        `comment`,
+        `field_typ`,
+        `bite_level`,
+        `border_type`,
+        `neck_type`,
+        `inner_crown_type`,
+        `padding_type`,
+        `outer_crown_type`
+        )
+        VALUES
+        (
+        #{id},
+        #{clinic.id},
+        #{type},
+        #{specification},
+        #{factory.id},
+        #{number},
+        #{colorNo},
+        #{positions},
+        #{createdDate},
+        #{comment},
+        #{fieldTyp},
+        #{biteLevel},
+        #{borderType},
+        #{neckType},
+        #{innerCrownType},
+        #{paddingType},
+        #{outerCrownType}
+        );
+    </insert>
+
+
+</mapper>

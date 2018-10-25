@@ -11,4 +11,5 @@ public interface ClinicRepository {
     void add(Denture denture);
     void batchAddProcedureGroups(List<ProcedureGroup> groups);
 
+    List<DentureOrder> orders(Long clinicId);
 }

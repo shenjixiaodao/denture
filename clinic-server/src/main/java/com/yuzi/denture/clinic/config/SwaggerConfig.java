@@ -20,10 +20,19 @@ public class SwaggerConfig {
 
     @Bean
     public Docket api(){
+        ParameterBuilder headerParasBuilder = new ParameterBuilder();
+        headerParasBuilder
+                .parameterType("header") //参数类型支持header, cookie, body, query etc
+                .name("UnionID") //参数名
+                .description("从微信获取的UnionID")
+                .modelRef(new ModelRef("string"))//指定参数值的类型
+                .required(true).build(); //非必需，这里是全局配置
+        List<Parameter> headerParas = new ArrayList<>();
+        headerParas.add(headerParasBuilder.build());
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.yuzi.clinic.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.yuzi.denture.clinic.controller"))
                 .paths(PathSelectors.any())
-                .build();
+                .build().globalOperationParameters(headerParas);
     }
 }

@@ -1,7 +1,10 @@
 package com.yuzi.denture.clinic.controller;
 
 
+import com.yuzi.denture.clinic.controller.assembler.DentureOrderAssembler;
 import com.yuzi.denture.clinic.controller.base.WebResult;
+import com.yuzi.denture.clinic.domain.DentureOrder;
+import com.yuzi.denture.clinic.domain.type.*;
 import com.yuzi.denture.clinic.repository.ClinicRepository;
 import com.yuzi.denture.clinic.service.ClinicService;
 import com.yuzi.denture.clinic.controller.vo.DentureOrderVo;
@@ -39,10 +42,8 @@ public class OrderingController {
 
     @ApiOperation(value = "下单", response = WebResult.class, httpMethod = "POST")
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "form", name = "clinicId", dataType = "long",
-                    required = true, value = "诊所ID"),
-            @ApiImplicitParam(paramType = "form", name = "dentistId", dataType = "long",
-                    required = true, value = "医生ID"),
+            @ApiImplicitParam(paramType = "form", name = "factoryId", dataType = "long",
+                    required = true, value = "工厂ID"),
             @ApiImplicitParam(paramType = "form", name = "comment", dataType = "string",
                     required = true, value = "医生备注"),
             @ApiImplicitParam(paramType = "form", name = "positions", dataType = "string",
@@ -103,17 +104,23 @@ public class OrderingController {
     })
     @ResponseBody
     @RequestMapping(value = "/order", method = POST)
-    public WebResult order(Long clinicId, Long dentistId, String comment,
+    public WebResult order(Long factoryId, String comment,
                            String positions, String type, String specification, String colorNo,
                            String fieldType, String biteLevel, String borderType, String neckType,
                            String innerCrowType, String paddingType, String outerCrowType) {
-        //todo 从session中获取factoryId
-        Long factoryId = 1L;
+        //todo UnionID从db中获取
+        Long clinicId = 1L;
+        Long dentistId = 1L;
         logger.info("录入订单:clinicId={}, dentistId={}, comment={}, positions={}, " +
                         "type={}, specification={}, colorNo={} ",clinicId, dentistId, comment,
                 positions, type, specification, colorNo);
         WebResult result = WebResult.execute(res -> {
-           // todo
+            DentureOrder order = service.createOrderAndDenture(clinicId, dentistId, factoryId, comment, positions,
+                    DentureType.typeOf(type), SpecType.typeOf(specification), colorNo, FieldType.typeOf(fieldType),
+                    BiteLevel.typeOf(biteLevel), BorderType.typeOf(borderType), NeckType.typeOf(neckType),
+                    InnerCrowType.typeOf(innerCrowType), PaddingType.typeOf(paddingType), OuterCrowType.typeOf(outerCrowType));
+            DentureOrderVo vo = DentureOrderAssembler.toVo(order);
+            res.setData(vo);
             logger.info("录入订单成功");
         }, "录入订单错误", logger);
         return result;
@@ -133,16 +140,17 @@ public class OrderingController {
         return result;
     }
 
-    @ApiOperation(value = "查询订单", response = DentureOrderVo.class, httpMethod = "GET")
+    @ApiOperation(value = "查询订单列表", response = DentureOrderVo.class, httpMethod = "GET")
     @ResponseBody
     @RequestMapping(value = "/queryOrders", method = GET)
     public WebResult<List<DentureOrderVo>> queryOrders() {
-        //todo 从session中获取用户ID, factoryId
-        Long factorId = 1L; //对应工厂的订单
-        Long uid = 1L;
-        logger.info("查询订单:uid={}", uid);
+        //todo 从session中获取clinicId
+        Long clinicId = 1L;
+        logger.info("查询订单:clinicId={}", clinicId);
         WebResult<List<DentureOrderVo>> result = WebResult.execute(res -> {
-            // todo
+            List<DentureOrder> orders = repository.orders(clinicId);
+            List<DentureOrderVo> vos = DentureOrderAssembler.toVos(orders);
+            res.setData(vos);
         }, "查询订单错误", logger);
         return result;
     }
