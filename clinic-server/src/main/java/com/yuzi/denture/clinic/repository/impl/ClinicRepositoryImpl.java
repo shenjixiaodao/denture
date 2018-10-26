@@ -5,12 +5,15 @@ import com.yuzi.denture.clinic.domain.DentureOrder;
 import com.yuzi.denture.clinic.domain.ProcedureGroup;
 import com.yuzi.denture.clinic.mapper.DentureMapper;
 import com.yuzi.denture.clinic.mapper.DentureOrderMapper;
+import com.yuzi.denture.clinic.mapper.FactoryMapper;
 import com.yuzi.denture.clinic.mapper.ProcedureGroupMapper;
 import com.yuzi.denture.clinic.repository.ClinicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class ClinicRepositoryImpl implements ClinicRepository {
@@ -21,6 +24,8 @@ public class ClinicRepositoryImpl implements ClinicRepository {
     private DentureMapper dentureMapper;
     @Autowired
     private ProcedureGroupMapper procedureGroupMapper;
+    @Autowired
+    private FactoryMapper factoryMapper;
 
     @Override
     public void add(DentureOrder order) {
@@ -41,5 +46,19 @@ public class ClinicRepositoryImpl implements ClinicRepository {
     public List<DentureOrder> orders(Long clinicId) {
         List<DentureOrder> orders = orderMapper.findOrdersByClinicId(clinicId);
         return orders;
+    }
+
+    @Override
+    public DentureOrder order(Long id) {
+        return orderMapper.findOrderById(id);
+    }
+
+    @Override
+    public void updateCoRequest(Long clinicId, Long factoryId, Byte isValid) {
+        Map<String, Object> paras = new HashMap<>();
+        paras.put("clinicId", clinicId);
+        paras.put("factoryId", factoryId);
+        paras.put("isValid", isValid);
+        factoryMapper.updateCoRequest(paras);
     }
 }

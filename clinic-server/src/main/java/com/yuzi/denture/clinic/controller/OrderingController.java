@@ -29,7 +29,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
  */
 @RestController
 @RequestMapping(value = "/denture/clinic/ordering")
-@Api(value = "clinic", description = "下单相关接口")
+@Api(value = "ordering", description = "下单相关接口")
 public class OrderingController {
 
     private static Logger logger = LoggerFactory.getLogger(OrderingController.class);
@@ -45,7 +45,7 @@ public class OrderingController {
             @ApiImplicitParam(paramType = "form", name = "factoryId", dataType = "long",
                     required = true, value = "工厂ID"),
             @ApiImplicitParam(paramType = "form", name = "comment", dataType = "string",
-                    required = true, value = "医生备注"),
+                    value = "医生备注"),
             @ApiImplicitParam(paramType = "form", name = "positions", dataType = "string",
                     required = true, value = "牙位[牙位号格式: 半位[a|b|c|d]-编号[1-8], eg: a-2（表示左上半第2号）;多个使用\",\"分隔各个牙位号]"),
             @ApiImplicitParam(paramType = "form", name = "colorNo", dataType = "string",
@@ -66,36 +66,36 @@ public class OrderingController {
                     "        ShuZhiJiTuoQuanKou(\"树脂基托全口义齿\"),\n" +
                     "        Other(\"其他\")]"),
             @ApiImplicitParam(paramType = "form", name = "fieldType", dataType = "string",
-                    required = true, value = "缺牙区[DaMaAn(大马鞍)\n" +
+                    value = "缺牙区[DaMaAn(大马鞍)\n" +
                     "PianCe(偏侧型)\n" +
                     "ZiDan(子弹型)\n" +
                     "XiaoMaAn(小马鞍)\n" +
                     "WeiSheng(卫生型)\n" +
                     "ShenRu(深入型)]"),
             @ApiImplicitParam(paramType = "form", name = "biteLevel", dataType = "string",
-                    required = true, value = "咬合度[YaoMi(咬密)\n" +
+                    value = "咬合度[YaoMi(咬密)\n" +
                     "QingYao(轻咬)\n" +
                     "BuYao(不咬)]"),
             @ApiImplicitParam(paramType = "form", name = "borderType", dataType = "string",
-                    required = true, value = "邻接(BorderType)[Plan(面接)\n" +
+                    value = "邻接(BorderType)[Plan(面接)\n" +
                     "Point(点接)\n" +
                     "Normal(正常)]"),
             @ApiImplicitParam(paramType = "form", name = "neckType", dataType = "string",
-                    required = true, value = "颈缘(NeckType)[AnJianTai(按肩台)\n" +
+                    value = "颈缘(NeckType)[AnJianTai(按肩台)\n" +
                     "Top(龈上边缘)\n" +
                     "Below(龈下边缘)]"),
-            @ApiImplicitParam(paramType = "form", name = "innerCrowType", dataType = "string",
-                    required = true, value = "InnerCrowType(内冠)[Normal(正常)\n" +
+            @ApiImplicitParam(paramType = "form", name = "innerCrownType", dataType = "string",
+                    value = "InnerCrownType(内冠)[Normal(正常)\n" +
                     "Tight(紧)\n" +
                     "Loose(松)]"),
             @ApiImplicitParam(paramType = "form", name = "paddingType", dataType = "string",
-                    required = true, value = "PaddingType[PiDuiYao(批对咬)\n" +
+                    value = "PaddingType[PiDuiYao(批对咬)\n" +
                     "PiJiYa(批基牙)\n" +
                     "ZuoYaoJin(做咬金)\n" +
                     "LouDianJin(露点金)\n" +
                     "Unknown(待问)]"),
-            @ApiImplicitParam(paramType = "form", name = "outerCrowType", dataType = "string",
-                    required = true, value = "OuterCrowType(牙冠)[SheCe(舌侧)\n" +
+            @ApiImplicitParam(paramType = "form", name = "outerCrownType", dataType = "string",
+                    value = "OuterCrownType(牙冠)[SheCe(舌侧)\n" +
                     "JinTop(全金属边)\n" +
                     "ThreeQuarter(松)\n" +
                     "SC_TQ(舌侧金属3/4颌侧)\n" +
@@ -107,7 +107,7 @@ public class OrderingController {
     public WebResult order(Long factoryId, String comment,
                            String positions, String type, String specification, String colorNo,
                            String fieldType, String biteLevel, String borderType, String neckType,
-                           String innerCrowType, String paddingType, String outerCrowType) {
+                           String innerCrownType, String paddingType, String outerCrownType) {
         //todo UnionID从db中获取
         Long clinicId = 1L;
         Long dentistId = 1L;
@@ -118,7 +118,7 @@ public class OrderingController {
             DentureOrder order = service.createOrderAndDenture(clinicId, dentistId, factoryId, comment, positions,
                     DentureType.typeOf(type), SpecType.typeOf(specification), colorNo, FieldType.typeOf(fieldType),
                     BiteLevel.typeOf(biteLevel), BorderType.typeOf(borderType), NeckType.typeOf(neckType),
-                    InnerCrowType.typeOf(innerCrowType), PaddingType.typeOf(paddingType), OuterCrowType.typeOf(outerCrowType));
+                    InnerCrownType.typeOf(innerCrownType), PaddingType.typeOf(paddingType), OuterCrownType.typeOf(outerCrownType));
             DentureOrderVo vo = DentureOrderAssembler.toVo(order);
             res.setData(vo);
             logger.info("录入订单成功");
@@ -128,14 +128,16 @@ public class OrderingController {
 
     @ApiOperation(value = "查询义齿订单信息", response = DentureOrderVo.class, httpMethod = "GET")
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "id", dataType = "String", required = true, value = "订单编号")
+            @ApiImplicitParam(paramType = "query", name = "id", dataType = "Long", required = true, value = "订单编号")
     })
     @ResponseBody
     @RequestMapping(value = "/queryOrderById", method = GET)
-    public WebResult<DentureOrderVo> queryOrderById(String id) {
+    public WebResult<DentureOrderVo> queryOrderById(Long id) {
         logger.info("查询订单:id={}", id);
         WebResult<DentureOrderVo> result = WebResult.execute(res -> {
-            // todo
+            DentureOrder order = repository.order(id);
+            DentureOrderVo vo = DentureOrderAssembler.toVo(order);
+            res.setData(vo);
         }, "查询订单错误", logger);
         return result;
     }

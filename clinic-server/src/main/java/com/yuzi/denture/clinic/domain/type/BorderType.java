@@ -1,5 +1,7 @@
 package com.yuzi.denture.clinic.domain.type;
 
+import org.springframework.util.StringUtils;
+
 public enum BorderType {
     Plan("面接"),
     Point("点接"),
@@ -12,6 +14,8 @@ public enum BorderType {
         return this.text;
     }
     public static BorderType typeOf(String type) {
+        if(StringUtils.isEmpty(type))
+            return null;
         for(BorderType result : BorderType.values()){
             if(result.name().toLowerCase().equals(type.toLowerCase()))
                 return result;

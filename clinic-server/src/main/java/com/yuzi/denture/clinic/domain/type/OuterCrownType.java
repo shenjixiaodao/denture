@@ -1,6 +1,8 @@
 package com.yuzi.denture.clinic.domain.type;
 
-public enum OuterCrowType {
+import org.springframework.util.StringUtils;
+
+public enum OuterCrownType {
     SheCe("舌侧"),
     JinTop("全金属边"),
     ThreeQuarter("松"),
@@ -9,14 +11,16 @@ public enum OuterCrowType {
     AllCi("舌侧全瓷边");
 
     private String text;
-    OuterCrowType(String text) {
+    OuterCrownType(String text) {
         this.text = text;
     }
     public String text() {
         return this.text;
     }
-    public static OuterCrowType typeOf(String type) {
-        for(OuterCrowType result : OuterCrowType.values()){
+    public static OuterCrownType typeOf(String type) {
+        if(StringUtils.isEmpty(type))
+            return null;
+        for(OuterCrownType result : OuterCrownType.values()){
             if(result.name().toLowerCase().equals(type.toLowerCase()))
                 return result;
         }

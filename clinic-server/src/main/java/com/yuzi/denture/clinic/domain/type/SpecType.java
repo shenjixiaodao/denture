@@ -1,5 +1,7 @@
 package com.yuzi.denture.clinic.domain.type;
 
+import org.springframework.util.StringUtils;
+
 public enum SpecType {
     GuGe("钴铬合金"),
     GuiJinShuDanGuan("贵金属单冠"),
@@ -20,6 +22,8 @@ public enum SpecType {
         return this.text;
     }
     public static SpecType typeOf(String type) {
+        if(StringUtils.isEmpty(type))
+            return null;
         for(SpecType result : SpecType.values()){
             if(result.name().toLowerCase().equals(type.toLowerCase()))
                 return result;

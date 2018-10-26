@@ -1,5 +1,7 @@
 package com.yuzi.denture.clinic.domain.type;
 
+import org.springframework.util.StringUtils;
+
 public enum PaddingType {
     PiDuiYao("批对咬"),
     PiJiYa("批基牙"),
@@ -15,6 +17,8 @@ public enum PaddingType {
         return this.text;
     }
     public static PaddingType typeOf(String type) {
+        if(StringUtils.isEmpty(type))
+            return null;
         for(PaddingType result : PaddingType.values()){
             if(result.name().toLowerCase().equals(type.toLowerCase()))
                 return result;

@@ -1,5 +1,7 @@
 package com.yuzi.denture.clinic.domain.type;
 
+import org.springframework.util.StringUtils;
+
 public enum NeckType {
     AnJianTai("按肩台"),
     Top("龈上边缘"),
@@ -12,6 +14,8 @@ public enum NeckType {
         return this.text;
     }
     public static NeckType typeOf(String type) {
+        if(StringUtils.isEmpty(type))
+            return null;
         for(NeckType result : NeckType.values()){
             if(result.name().toLowerCase().equals(type.toLowerCase()))
                 return result;

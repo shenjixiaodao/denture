@@ -1,5 +1,7 @@
 package com.yuzi.denture.clinic.domain.type;
 
+import org.springframework.util.StringUtils;
+
 public enum FieldType {
     DaMaAn("大马鞍"),
     PianCe("偏侧型"),
@@ -15,6 +17,8 @@ public enum FieldType {
         return this.text;
     }
     public static FieldType typeOf(String type) {
+        if(StringUtils.isEmpty(type))
+            return null;
         for(FieldType result : FieldType.values()){
             if(result.name().toLowerCase().equals(type.toLowerCase()))
                 return result;

@@ -55,4 +55,9 @@
         WHERE do.clinic_id=#{clinicId}
     </select>
 
+    <select id="findOrderById" parameterType="Long" resultMap="baseRM">
+        SELECT * FROM denture_order do
+        WHERE do.id=#{id}
+    </select>
+
 </mapper>

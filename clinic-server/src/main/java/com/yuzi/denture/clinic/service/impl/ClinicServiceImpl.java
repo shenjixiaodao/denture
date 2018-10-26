@@ -10,7 +10,9 @@ import com.yuzi.denture.clinic.util.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ClinicServiceImpl implements ClinicService {
@@ -22,8 +24,8 @@ public class ClinicServiceImpl implements ClinicService {
     public DentureOrder createOrderAndDenture(Long clinicId, Long dentistId, Long factoryId, String comment,
                                               String positions, DentureType type, SpecType specification,
                                               String colorNo, FieldType fieldType, BiteLevel biteLevel,
-                                              BorderType borderType, NeckType neckType, InnerCrowType innerCrowType,
-                                              PaddingType paddingType, OuterCrowType outerCrowType) {
+                                              BorderType borderType, NeckType neckType, InnerCrownType innerCrowType,
+                                              PaddingType paddingType, OuterCrownType outerCrowType) {
         //1, create denture
         Denture denture = new Denture(type, specification, clinicId, comment,
                 factoryId, positions, colorNo);
@@ -32,9 +34,9 @@ public class ClinicServiceImpl implements ClinicService {
         denture.setBiteLevel(biteLevel);
         denture.setBorderType(borderType);
         denture.setNeckType(neckType);
-        denture.setInnerCrowType(innerCrowType);
+        denture.setInnerCrownType(innerCrowType);
         denture.setPaddingType(paddingType);
-        denture.setOuterCrowType(outerCrowType);
+        denture.setOuterCrownType(outerCrowType);
         //初始创建denture时，生成加工所需要的所有工序
         List<ProcedureGroup> groups = denture.generateProcedureGroups();
         repository.batchAddProcedureGroups(groups);
@@ -44,5 +46,10 @@ public class ClinicServiceImpl implements ClinicService {
         order.setId(IdGenerator.generate(clinicId));
         repository.add(order);
         return order;
+    }
+
+    @Override
+    public void coRequest(Long clinicId, Long factoryId, Byte isValid) {
+        repository.updateCoRequest(clinicId, factoryId, isValid);
     }
 }

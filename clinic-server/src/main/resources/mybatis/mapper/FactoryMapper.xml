@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuzi.denture.clinic.mapper.FactoryMapper" >
+
+    <resultMap id="baseRM" type="com.yuzi.denture.clinic.domain.Factory">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="contact" property="contact" />
+        <result column="address" property="address" />
+    </resultMap>
+    
+    <select id="findFactories" parameterType="Long" resultMap="baseRM">
+        select * from factory f
+        inner join factory_customer fc on (
+          fc.clinic_id=#{clinicId} and
+          fc.is_valid=#{isValid}
+          f.id=fc.factory_id
+        )
+    </select>
+
+    <update id="updateCoRequest" parameterType="Map">
+        update factory_customer
+        set is_valid = #{isValid}
+        where factory_id=#{factoryId} and clinic_id=#{clinicId}
+    </update>
+</mapper>

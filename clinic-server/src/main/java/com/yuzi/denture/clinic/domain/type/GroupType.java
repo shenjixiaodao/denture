@@ -1,5 +1,7 @@
 package com.yuzi.denture.clinic.domain.type;
 
+import org.springframework.util.StringUtils;
+
 public enum  GroupType {
     ShiGao("石膏组"),
     LaXing("蜡型组"),
@@ -19,6 +21,8 @@ public enum  GroupType {
         return this.text;
     }
     public static GroupType typeOf(String type) {
+        if(StringUtils.isEmpty(type))
+            return null;
         for(GroupType result : GroupType.values()){
             if(result.name().toLowerCase().equals(type.toLowerCase()))
                 return result;

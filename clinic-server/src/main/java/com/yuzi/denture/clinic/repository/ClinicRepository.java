@@ -5,6 +5,7 @@ import com.yuzi.denture.clinic.domain.DentureOrder;
 import com.yuzi.denture.clinic.domain.ProcedureGroup;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ClinicRepository {
     void add(DentureOrder order);
@@ -12,4 +13,6 @@ public interface ClinicRepository {
     void batchAddProcedureGroups(List<ProcedureGroup> groups);
 
     List<DentureOrder> orders(Long clinicId);
+    DentureOrder order(Long id);
+    void updateCoRequest(Long clinicId, Long factoryId, Byte isValid);
 }

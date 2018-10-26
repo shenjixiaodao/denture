@@ -1,5 +1,7 @@
 package com.yuzi.denture.clinic.domain.type;
 
+import org.springframework.util.StringUtils;
+
 public enum BiteLevel {
     YaoMi("咬密"),
     QingYao("轻咬"),
@@ -13,6 +15,8 @@ public enum BiteLevel {
         return this.text;
     }
     public static BiteLevel typeOf(String type) {
+        if(StringUtils.isEmpty(type))
+            return null;
         for(BiteLevel result : BiteLevel.values()){
             if(result.name().toLowerCase().equals(type.toLowerCase()))
                 return result;

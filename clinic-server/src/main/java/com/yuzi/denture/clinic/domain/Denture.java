@@ -38,9 +38,9 @@ public class Denture {
     private BiteLevel biteLevel;
     BorderType borderType;
     FieldType fieldType;
-    InnerCrowType innerCrowType;
+    InnerCrownType innerCrownType;
     NeckType neckType;
-    OuterCrowType outerCrowType;
+    OuterCrownType outerCrownType;
     PaddingType paddingType;
 
     public Denture(DentureType type, SpecType specification, Long clinicId, String comment,
@@ -183,12 +183,12 @@ public class Denture {
         this.fieldType = fieldType;
     }
 
-    public InnerCrowType getInnerCrowType() {
-        return innerCrowType;
+    public InnerCrownType getInnerCrownType() {
+        return innerCrownType;
     }
 
-    public void setInnerCrowType(InnerCrowType innerCrowType) {
-        this.innerCrowType = innerCrowType;
+    public void setInnerCrownType(InnerCrownType innerCrownType) {
+        this.innerCrownType = innerCrownType;
     }
 
     public NeckType getNeckType() {
@@ -207,12 +207,12 @@ public class Denture {
         this.procedureGroups = procedureGroups;
     }
 
-    public OuterCrowType getOuterCrowType() {
-        return outerCrowType;
+    public OuterCrownType getOuterCrownType() {
+        return outerCrownType;
     }
 
-    public void setOuterCrowType(OuterCrowType outerCrowType) {
-        this.outerCrowType = outerCrowType;
+    public void setOuterCrownType(OuterCrownType outerCrownType) {
+        this.outerCrownType = outerCrownType;
     }
 
     public PaddingType getPaddingType() {

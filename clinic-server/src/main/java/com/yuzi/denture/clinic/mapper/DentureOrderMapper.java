@@ -10,4 +10,5 @@ import java.util.List;
 public interface DentureOrderMapper {
     void save(DentureOrder order);
     List<DentureOrder> findOrdersByClinicId(Long clinicId);
+    DentureOrder findOrderById(Long id);
 }
