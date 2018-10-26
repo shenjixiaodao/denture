@@ -9,11 +9,11 @@
         <result column="address" property="address" />
     </resultMap>
     
-    <select id="findFactories" parameterType="Long" resultMap="baseRM">
+    <select id="findFactories" parameterType="Map" resultMap="baseRM">
         select * from factory f
         inner join factory_customer fc on (
           fc.clinic_id=#{clinicId} and
-          fc.is_valid=#{isValid}
+          fc.is_valid=#{isValid} and
           f.id=fc.factory_id
         )
     </select>
