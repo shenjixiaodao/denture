@@ -1,7 +1,5 @@
 import Vue from 'vue'
 
-import Cookies from 'js-cookie'
-
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
 import Element from 'element-ui'
@@ -25,7 +23,7 @@ import bus from '@/utils/eventBus'
 Vue.prototype.bus = bus
 
 Vue.use(Element, {
-  size: Cookies.get('size') || 'medium', // set element-ui default size
+  size: 'mini', // set element-ui default size
   i18n: (key, value) => i18n.t(key, value)
 })
 
@@ -44,5 +42,3 @@ new Vue({
   render: h => h(App)
 })
 
-this.$i18n.locale = 'zh'
-this.$store.dispatch('setLanguage', 'zh')

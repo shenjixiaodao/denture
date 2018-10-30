@@ -20,13 +20,28 @@
             {{ scope.row.clinic.contact }}
           </template>
         </el-table-column>
+        <el-table-column label="客户详情" align="center">
+          <template slot-scope="scope">
+            <router-link :to="'customer/'+scope.row.id" class="link-type">
+              <span>详情</span>
+            </router-link>
+          </template>
+        </el-table-column>
       </el-table>
     </el-row>
-
     <el-dialog :visible.sync="dialogAddVisible" title="添加客户">
-      <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="客户编号" prop="title">
-          <el-input v-model="clinicId"/>
+      <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 100%;">
+        <el-form-item label="诊所名" prop="title">
+          <el-input v-model="customer.name" style="width: 70%;"/>
+        </el-form-item>
+        <el-form-item label="诊所地址" prop="title">
+          <el-input v-model="customer.address" style="width: 70%;"/>
+        </el-form-item>
+        <el-form-item label="联系方式" prop="title">
+          <el-input v-model="customer.contact" style="width: 70%;"/>
+        </el-form-item>
+        <el-form-item label="医生名" prop="title">
+          <el-input v-model="customer.dentistName" style="width: 70%;"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -38,7 +53,7 @@
 </template>
 
 <script>
-import { customers, addCustomer } from '@/api/salesman'
+import { customers, recordCustomer } from '@/api/salesman'
 
 export default {
   data() {
@@ -46,7 +61,10 @@ export default {
       list: null,
       dialogAddVisible: false,
       customer: {
-        clinicId: null
+        name: null,
+        address: null,
+        contact: null,
+        dentistName: null
       }
     }
   },
@@ -63,7 +81,7 @@ export default {
     },
     addCustomer() {
       this.dialogAddVisible = false
-      addCustomer(this.customer).then(resp => {
+      recordCustomer(this.customer).then(resp => {
         customers().then(response => {
           var data = response.data
           this.list = data

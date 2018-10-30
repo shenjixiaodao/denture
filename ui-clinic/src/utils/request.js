@@ -1,12 +1,11 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
-import store from '@/store'
-import { getToken } from '@/utils/auth'
+import store from 'src/store'
 import * as QS from 'qs'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: process.env.BASE_API, // api 的 base_url
+  baseURL: 'http://localhost:8080/denture/clinic', // process.env.BASE_API, // api 的 base_url
   timeout: 5000, // request timeout
   withCredentials: true
 })
@@ -15,9 +14,9 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // Do something before request is sent
-    if (store.getters.token) {
-      config.headers['X-Token'] = getToken()
-    }
+    /* if (store.getters.token) {
+      config.headers['X-Token'] = store.getters.token
+    } */
     if (config.headers['Content-Type'] === 'application/x-www-form-urlencoded') {
       config.data = QS.stringify(config.data)
     }

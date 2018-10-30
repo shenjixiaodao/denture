@@ -67,7 +67,7 @@ const user = {
       })
     },
 
-    // 获取用户信息
+    /* // 获取用户信息
     GetUserInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
         getUserInfo(state.token).then(response => {
@@ -90,7 +90,7 @@ const user = {
           reject(error)
         })
       })
-    },
+    }, */
 
     // 第三方验证登录
     // LoginByThirdparty({ commit, state }, code) {

@@ -1,12 +1,14 @@
 <template>
   <div class="app-container">
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <el-form ref="pwd" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+      <el-form ref="pwd" label-position="left" label-width="70px" style="width: 400px;">
         <el-form-item label="旧密码" prop="title">
-          <el-input v-model="srcPwd" type="password" />
+          <!--<el-input v-model="srcPwd" type="password" />-->
+          <el-input v-model="srcPwd" style="width: 70%;" class="filter-item" />
         </el-form-item>
         <el-form-item label="新密码" prop="title">
-          <el-input v-model="dstPwd" type="password" />
+          <!--<el-input v-model="dstPwd" type="password" />-->
+          <el-input v-model="dstPwd" style="width: 70%;" class="filter-item" />
         </el-form-item>
       </el-form>
     </el-row>

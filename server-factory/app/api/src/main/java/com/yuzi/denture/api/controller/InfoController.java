@@ -6,6 +6,8 @@ import com.yuzi.denture.api.vo.base.WebResult;
 import com.yuzi.denture.domain.Clinic;
 import com.yuzi.denture.domain.repository.InfoRepository;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +41,23 @@ public class InfoController {
         WebResult<List<ClinicVo>> result = WebResult.execute(res -> {
             List<Clinic> clinics = infoRepository.findCustomerClinics(factoryId, uid);
             List<ClinicVo> vos = ClinicAssembler.toVos(clinics);
+            res.setData(vos);
+        }, "查询诊所列表错误", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "查询诊所详情", response = ClinicVo.class, httpMethod = "GET")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "form", name = "id", dataType = "long",
+                    required = true, value = "诊所ID")
+    })
+    @ResponseBody
+    @RequestMapping(value = "/queryClinic", method = GET)
+    public WebResult<ClinicVo> clinic(Long id) {
+        logger.info("查询诊所详情:id={}",id);
+        WebResult<ClinicVo> result = WebResult.execute(res -> {
+            Clinic clinic = infoRepository.findCustomerClinic(id);
+            ClinicVo vos = ClinicAssembler.toVo(clinic);
             res.setData(vos);
         }, "查询诊所列表错误", logger);
         return result;

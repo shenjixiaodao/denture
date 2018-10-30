@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface InfoRepository {
     List<Clinic> findCustomerClinics(Long factoryId, Long uid);
+
+    Clinic findCustomerClinic(Long id);
 }

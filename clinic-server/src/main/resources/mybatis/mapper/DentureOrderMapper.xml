@@ -30,7 +30,6 @@
     <resultMap id="baseRM" type="com.yuzi.denture.clinic.domain.DentureOrder">
         <result column="id" property="id" />
         <result column="denture_id" property="dentureId" />
-        <result column="factory_id" property="factory.id" />
         <result column="created_date" property="createdDate" />
         <result column="pay_amount" property="payAmount" />
         <result column="status" property="status" />
@@ -38,26 +37,46 @@
         <result column="denture_delivery_id" property="dentureDeliveryInfo.id" />
         <result column="received_date" property="receivedDate" />
         <result column="installed_date" property="installedDate" />
-        <result column="dentist_id" property="dentist.id" />
         <result column="patient_id" property="patient.id" />
         <result column="recorder_id" property="recorder.id" />
         <result column="comment" property="comment" />
+        <association property="factory" javaType="com.yuzi.denture.clinic.domain.Factory">
+            <result column="factory_id" property="id" />
+            <result column="f_name" property="name" />
+            <result column="f_address" property="address" />
+            <result column="f_contact" property="contact" />
+        </association>
+        <association property="dentist" javaType="com.yuzi.denture.clinic.domain.ClinicUser">
+            <result column="dentist_id" property="id" />
+            <result column="d_clinic_id" property="clinicId" />
+            <result column="d_role" property="role" />
+            <result column="d_contact" property="contact" />
+            <result column="d_name" property="name" />
+        </association>
         <association property="clinic" javaType="com.yuzi.denture.clinic.domain.Clinic">
             <result column="clinic_id" property="id" />
-            <result column="clinic_name" property="name" />
-            <result column="clinic_address" property="address" />
-            <result column="clinic_contact" property="contact" />
+            <result column="c_name" property="name" />
+            <result column="c_address" property="address" />
+            <result column="c_contact" property="contact" />
         </association>
     </resultMap>
 
+    <sql id="OrderDetailRM">
+        do.*,
+        f.name f_name, f.address f_address, f.contact f_contact,
+        d.clinic_id d_clinic_id, d.role d_role, d.contact d_contact, d.name d_name,
+        c.name c_name, c.address c_address, c.contact c_contact
+    </sql>
     <select id="findOrdersByClinicId" parameterType="Long" resultMap="baseRM">
         SELECT * FROM denture_order do
         WHERE do.clinic_id=#{clinicId}
     </select>
 
     <select id="findOrderById" parameterType="Long" resultMap="baseRM">
-        SELECT * FROM denture_order do
-        WHERE do.id=#{id}
+        SELECT <include refid="OrderDetailRM" /> FROM denture_order do
+        INNER JOIN factory f on (do.id=#{id} and do.factory_id=f.id)
+        INNER JOIN clinic c on (do.clinic_id=c.id)
+        INNER JOIN clinic_user d ON (do.dentist_id=d.id)
     </select>
 
 </mapper>

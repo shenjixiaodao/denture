@@ -11,13 +11,18 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "js-cookie": "2.2.0",
+    "jsencrypt": "^3.0.0-rc.1",
     "better-scroll": "^0.1.15",
     "fastclick": "^1.0.6",
     "iscroll": "^5.2.0",
     "showdown": "^1.6.4",
     "vue": "^2.1.0",
     "vue-router": "^2.1.1",
-    "vuex": "^2.0.0"
+    "vuex": "^2.0.0",
+    "axios": "0.18.0",
+    "element-ui": "2.4.6",
+    "qs": "^6.5.2"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",

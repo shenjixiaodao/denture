@@ -1,5 +1,6 @@
 package com.yuzi.denture.clinic.service.impl;
 
+import com.yuzi.denture.clinic.domain.ClinicUser;
 import com.yuzi.denture.clinic.domain.Denture;
 import com.yuzi.denture.clinic.domain.DentureOrder;
 import com.yuzi.denture.clinic.domain.ProcedureGroup;
@@ -19,6 +20,17 @@ public class ClinicServiceImpl implements ClinicService {
 
     @Autowired
     private ClinicRepository repository;
+
+    @Override
+    public ClinicUser login(String contact, String encryptPWD) {
+        ClinicUser user = repository.findUser(contact);
+        if(user == null)
+            throw new IllegalArgumentException("不存在用户");
+        String hashPwd = user.decryptAndHashPwd(encryptPWD);
+        if(!user.checkPWD(hashPwd))
+            throw new IllegalArgumentException("密码错误");
+        return user;
+    }
 
     @Override
     public DentureOrder createOrderAndDenture(Long clinicId, Long dentistId, Long factoryId, String comment,

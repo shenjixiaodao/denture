@@ -31,6 +31,7 @@ public class ClinicUserAssembler {
         if(user.getRole() != null) {
             vo.setRole(user.getRole().name());
         }
+        vo.setClinic(ClinicAssembler.toVo(user.getClinic()));
         return vo;
     }
 }

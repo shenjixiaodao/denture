@@ -2,7 +2,7 @@
 
 import Layout from '@/views/layout/Layout'
 
-const comprehensiveRouter = {
+const salesmanRouter = {
   path: '/salesman',
   component: Layout,
   redirect: '/salesman/order-list',
@@ -44,7 +44,14 @@ const comprehensiveRouter = {
       component: () => import('@/views/manufacture/salesman/customers'),
       name: 'Customers',
       meta: { title: '客户列表', noCache: true }
+    },
+    {
+      path: 'customer/:id(\\d+)',
+      component: () => import('@/views/manufacture/salesman/components/CustomerDetail'),
+      name: 'CustomerDetail',
+      meta: { title: '客户详情' },
+      hidden: true
     }
   ]
 }
-export default comprehensiveRouter
+export default salesmanRouter

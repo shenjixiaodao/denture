@@ -77,7 +77,7 @@ public class FactoryUserController {
     @ResponseBody
     @RequestMapping(value = "/add", method = POST)
     public WebResult add(String name, String contact, String role, String joinDate, HttpServletRequest request) {
-        FactoryUser user = SessionManager.user(request);
+        FactoryUser user = SessionManager.Instance().user(request);
         Long factoryId = user.getFactoryId();
         logger.info("审核义齿:name={}, contact={}, role={}, joinDate={}",name, contact,
                 role, joinDate);
@@ -108,13 +108,14 @@ public class FactoryUserController {
     })
     @ResponseBody
     @RequestMapping(value = "/login", method = POST)
-    public WebResult<FactoryUserVo> login(String phone, String password, HttpServletRequest request) {
+    public WebResult<FactoryUserVo> login(String phone, String password) {
         logger.info("登录:phone={}, password={}",phone, password);
         WebResult<FactoryUserVo> result = WebResult.execute(res -> {
             FactoryUser user = service.login(phone, password);
             FactoryUserVo vo = FactoryUserAssembler.toVo(user);
-            vo.setToken(user.token());
-            SessionManager.cacheUser(user, request);
+            String token = user.token();
+            vo.setToken(token);
+            SessionManager.Instance().cacheUser(token, user);
             res.setData(vo);
             logger.info("登录成功");
         }, "登录错误", logger);
@@ -132,7 +133,7 @@ public class FactoryUserController {
     @RequestMapping(value = "/modifyPwd", method = POST)
     public WebResult<FactoryUserVo> modifyPwd(String srcPwd, String dstPwd, HttpServletRequest request) {
         logger.info("修改密码:srcPwd={}, dstPwd={}",srcPwd, dstPwd);
-        FactoryUser user = SessionManager.user(request);
+        FactoryUser user = SessionManager.Instance().user(request);
         Long uid = user.getId();
         WebResult result = WebResult.execute(res -> {
             service.modifyPwd(uid, srcPwd, dstPwd);
@@ -150,7 +151,7 @@ public class FactoryUserController {
     @RequestMapping(value = "/addCustomer", method = POST)
     public WebResult<FactoryUserVo> addCustomer(Long clinicId, HttpServletRequest request) {
         logger.info("添加客户:clinicId={}",clinicId);
-        FactoryUser user = SessionManager.user(request);
+        FactoryUser user = SessionManager.Instance().user(request);
         Long uid = user.getId();
         Long factoryId = user.getFactoryId();
         WebResult result = WebResult.execute(res -> {
@@ -164,7 +165,7 @@ public class FactoryUserController {
     @ResponseBody
     @RequestMapping(value = "/customers", method = GET)
     public WebResult<FactoryCustomerVo> customers(HttpServletRequest request) {
-        FactoryUser user = SessionManager.user(request);
+        FactoryUser user = SessionManager.Instance().user(request);
         Long uid = user.getId();
         WebResult<FactoryCustomerVo> result = WebResult.execute(res -> {
             List<FactoryCustomer> customers = repository.findCustomersByUid(uid);
@@ -179,7 +180,7 @@ public class FactoryUserController {
     @ResponseBody
     @RequestMapping(value = "/users", method = GET)
     public WebResult<FactoryUserVo> users(HttpServletRequest request) {
-        FactoryUser user = SessionManager.user(request);
+        FactoryUser user = SessionManager.Instance().user(request);
         Long factoryId = user.getFactoryId();
         WebResult<FactoryUserVo> result = WebResult.execute(res -> {
             List<FactoryUser> users = repository.findUsers(factoryId);

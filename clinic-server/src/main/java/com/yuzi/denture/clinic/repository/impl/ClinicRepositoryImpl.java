@@ -1,16 +1,13 @@
 package com.yuzi.denture.clinic.repository.impl;
 
+import com.yuzi.denture.clinic.domain.ClinicUser;
 import com.yuzi.denture.clinic.domain.Denture;
 import com.yuzi.denture.clinic.domain.DentureOrder;
 import com.yuzi.denture.clinic.domain.ProcedureGroup;
-import com.yuzi.denture.clinic.mapper.DentureMapper;
-import com.yuzi.denture.clinic.mapper.DentureOrderMapper;
-import com.yuzi.denture.clinic.mapper.FactoryMapper;
-import com.yuzi.denture.clinic.mapper.ProcedureGroupMapper;
+import com.yuzi.denture.clinic.mapper.*;
 import com.yuzi.denture.clinic.repository.ClinicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +23,8 @@ public class ClinicRepositoryImpl implements ClinicRepository {
     private ProcedureGroupMapper procedureGroupMapper;
     @Autowired
     private FactoryMapper factoryMapper;
+    @Autowired
+    private ClinicUserMapper userMapper;
 
     @Override
     public void add(DentureOrder order) {
@@ -60,5 +59,10 @@ public class ClinicRepositoryImpl implements ClinicRepository {
         paras.put("factoryId", factoryId);
         paras.put("isValid", isValid);
         factoryMapper.updateCoRequest(paras);
+    }
+
+    @Override
+    public ClinicUser findUser(String contact) {
+        return userMapper.findUserByContact(contact);
     }
 }

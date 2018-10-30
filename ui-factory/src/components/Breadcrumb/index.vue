@@ -32,7 +32,7 @@ export default {
       let matched = this.$route.matched.filter(item => item.name)
       const first = matched[0]
       if (first && first.name.trim().toLocaleLowerCase() !== 'Welcome'.toLocaleLowerCase()) {
-        matched = [{ path: '/welcome', meta: { title: 'welcome' }}].concat(matched)
+        matched = [{ path: '/welcome', meta: { title: '首页' }}].concat(matched)
       }
       this.levelList = matched
     }

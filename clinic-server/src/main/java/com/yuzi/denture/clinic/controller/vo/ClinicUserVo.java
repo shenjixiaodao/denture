@@ -5,13 +5,14 @@ public class ClinicUserVo {
     //编号(id):
     private Long id;
     //诊所编号(clinicId):
-    private Long clinicId;
+    private ClinicVo clinic;
     //角色(clinicRole):
     private String role;
     //电话(contact):
     private String contact;
     //姓名(name):
     private String name;
+    String token;
 
     public Long getId() {
         return id;
@@ -21,12 +22,12 @@ public class ClinicUserVo {
         this.id = id;
     }
 
-    public Long getClinicId() {
-        return clinicId;
+    public ClinicVo getClinic() {
+        return clinic;
     }
 
-    public void setClinicId(Long clinicId) {
-        this.clinicId = clinicId;
+    public void setClinic(ClinicVo clinic) {
+        this.clinic = clinic;
     }
 
     public String getRole() {
@@ -51,5 +52,13 @@ public class ClinicUserVo {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

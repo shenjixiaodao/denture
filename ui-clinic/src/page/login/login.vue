@@ -55,6 +55,7 @@ import alertTip from '../../components/common/alertTip'
 import {localapi, proapi, imgBaseUrl} from 'src/config/env'
 import {mapState, mapMutations} from 'vuex'
 import {mobileCode, checkExsis, sendLogin, getcaptchas, accountLogin} from '../../service/getData'
+import store from 'src/store'
 
 export default {
     data(){
@@ -164,17 +165,19 @@ export default {
                     return
                 }
                 //用户名登录
-                this.userInfo = await accountLogin(this.userAccount, this.passWord, this.codeNumber);
+                // this.userInfo = await accountLogin(this.userAccount, this.passWord, this.codeNumber);
+                this.$store.dispatch('LoginByUsername', { username: '15280257503', password: '257503' }).then(() => {
+                  // todo 如果是初始登录，根据角色选择跳转到指定页面
+                  console.log('登录成功')
+                })
             }
             //如果返回的值不正确，则弹出提示框，返回的值正确则返回上一页
-            if (!this.userInfo.user_id) {
+            if (store.getters.token) {
                 this.showAlert = true;
                 this.alertText = this.userInfo.message;
                 if (!this.loginWay) this.getCaptchaCode();
             }else{
-                this.RECORD_USERINFO(this.userInfo);
                 this.$router.go(-1);
-
             }
         },
         closeTip(){

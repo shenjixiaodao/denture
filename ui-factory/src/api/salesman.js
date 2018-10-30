@@ -44,9 +44,28 @@ export function addCustomer(data) {
   })
 }
 
+export function recordCustomer(data) {
+  return request({
+    url: '/manufacture/recordCustomer',
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data
+  })
+}
+
 export function queryClinics() {
   return request({
     url: '/info/queryClinics',
     method: 'get'
+  })
+}
+
+export function queryClinic(id) {
+  return request({
+    url: '/info/queryClinic',
+    method: 'get',
+    params: { id: id }
   })
 }

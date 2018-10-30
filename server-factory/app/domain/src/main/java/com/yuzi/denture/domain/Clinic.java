@@ -13,6 +13,12 @@ public class Clinic {
     private String contact;
     List<ClinicUser> users;
 
+    public Clinic(String name, String address, String contact) {
+        this.name = name;
+        this.address = address;
+        this.contact = contact;
+    }
+
     public Clinic(Long id) {
         this.id = id;
     }

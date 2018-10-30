@@ -1,7 +1,7 @@
 <template>
-  <div class="app-container">
+  <div class="dashboard-container" style="overflow:auto;">
     <el-row style="background:#fff;padding:16px 16px 0;">
-      <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+      <el-form ref="dataForm" label-position="left" label-width="20%">
         <el-form-item label="下单方" prop="title">
           <el-cascader :options="clinics" v-model="selectedClinic" :props="props" placeholder="诊所/医生" @change="handleChange"/>
         </el-form-item>

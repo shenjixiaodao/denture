@@ -1,4 +1,4 @@
-package com.yuzi.denture.api.session;
+package com.yuzi.denture.clinic.session;
 
 /**
  * Created by liyou on 2018/10/15.

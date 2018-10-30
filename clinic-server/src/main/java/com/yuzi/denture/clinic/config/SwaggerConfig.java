@@ -20,7 +20,7 @@ public class SwaggerConfig {
 
     @Bean
     public Docket api(){
-        ParameterBuilder headerParasBuilder = new ParameterBuilder();
+        /*ParameterBuilder headerParasBuilder = new ParameterBuilder();
         headerParasBuilder
                 .parameterType("header") //参数类型支持header, cookie, body, query etc
                 .name("UnionID") //参数名
@@ -33,6 +33,11 @@ public class SwaggerConfig {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.yuzi.denture.clinic.controller"))
                 .paths(PathSelectors.any())
-                .build().globalOperationParameters(headerParas);
+                .build().globalOperationParameters(headerParas);*/
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.yuzi.denture.clinic.controller"))
+                .paths(PathSelectors.any())
+                .build();
     }
 }

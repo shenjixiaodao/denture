@@ -37,6 +37,7 @@ public interface FactoryService {
     FactoryUser login(String contact, String encryptPWD);
     void modifyPwd(Long uid, String srcPwd, String dstPwd);
     void addCustomer(Long factoryId, Long clinicId, Long salesmanId);
+    void addCustomer(Long factoryId, Long salesmanId, String name, String contact, String address, String dentistName);
     void modifyCustomer(Long customerId, Long clinicId, Long salesmanId);
 
     //ingredient

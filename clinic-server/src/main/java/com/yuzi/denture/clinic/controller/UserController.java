@@ -1,11 +1,15 @@
 package com.yuzi.denture.clinic.controller;
 
+import com.yuzi.denture.clinic.controller.assembler.ClinicUserAssembler;
 import com.yuzi.denture.clinic.controller.assembler.FactoryAssembler;
 import com.yuzi.denture.clinic.controller.base.WebResult;
+import com.yuzi.denture.clinic.controller.vo.ClinicUserVo;
 import com.yuzi.denture.clinic.controller.vo.FactoryVo;
+import com.yuzi.denture.clinic.domain.ClinicUser;
 import com.yuzi.denture.clinic.domain.Factory;
 import com.yuzi.denture.clinic.repository.InfoRepository;
 import com.yuzi.denture.clinic.service.ClinicService;
+import com.yuzi.denture.clinic.session.SessionManager;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -35,6 +39,29 @@ public class UserController {
     private ClinicService service;
 
     private static Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    @ApiOperation(value = "登录", response = ClinicUserVo.class, httpMethod = "POST")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "form", name = "phone", dataType = "string",
+                    required = true, value = "手机"),
+            @ApiImplicitParam(paramType = "form", name = "password", dataType = "string",
+                    required = true, value = "密码")
+    })
+    @ResponseBody
+    @RequestMapping(value = "/login", method = POST)
+    public WebResult<ClinicUserVo> login(String phone, String password) {
+        logger.info("登录:phone={}, password={}",phone, password);
+        WebResult<ClinicUserVo> result = WebResult.execute(res -> {
+            ClinicUser user = service.login(phone, password);
+            ClinicUserVo vo = ClinicUserAssembler.toVo(user);
+            String token = user.token();
+            vo.setToken(token);
+            SessionManager.Instance().cacheUser(token, user);
+            res.setData(vo);
+            logger.info("登录成功");
+        }, "登录错误", logger);
+        return result;
+    }
 
     @ApiOperation(value = "回应合作申请", response = WebResult.class, httpMethod = "POST")
     @ApiImplicitParams({

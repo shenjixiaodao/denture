@@ -2,6 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yuzi.denture.data.mapper.ClinicMapper" >
 
+    <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.yuzi.denture.domain.Clinic">
+        INSERT INTO `clinic`
+        (
+        `name`,
+        `address`,
+        `contact`
+        )
+        VALUES
+        (
+        #{name},
+        #{address},
+        #{contact}
+        );
+    </insert>
+
+    <insert id="saveClinicUser" useGeneratedKeys="true" keyProperty="id" parameterType="com.yuzi.denture.domain.ClinicUser">
+        INSERT INTO `clinic_user`
+        (
+        `clinic_id`,
+        `name`,
+        `contact`,
+        `role`)
+        VALUES
+        (
+        #{clinicId},
+        #{name},
+        #{contact},
+        #{role}
+        );
+    </insert>
+
     <resultMap id="baseRM" type="com.yuzi.denture.domain.Clinic">
         <result column="id" property="id" />
         <result column="name" property="name" />
@@ -16,14 +47,16 @@
         </collection>
     </resultMap>
 
-    <select id="findById" parameterType="Long" resultMap="baseRM">
-        SELECT * FROM clinic WHERE id=#{id}
-    </select>
-
     <sql id="BaseSQL">
         c.*,
         cu.id cu_id, cu.clinic_id cu_clinic_id, cu.role cu_role, cu.contact cu_contact, cu.name cu_name
     </sql>
+
+    <select id="findById" parameterType="Long" resultMap="baseRM">
+        SELECT <include refid="BaseSQL" /> FROM clinic c
+        inner join clinic_user cu on (c.id=#{clinidId} and c.id=cu.clinic_id)
+    </select>
+
     <select id="findByFactoryId" parameterType="Long" resultMap="baseRM">
         select <include refid="BaseSQL" /> from clinic c
         inner join factory_customer fc on (fc.factory_id=#{factoryId} and fc.salesman_id=#{uid} and c.id=fc.clinic_id)

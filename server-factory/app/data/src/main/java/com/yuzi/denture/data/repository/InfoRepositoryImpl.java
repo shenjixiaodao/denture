@@ -24,4 +24,9 @@ public class InfoRepositoryImpl implements InfoRepository {
         List<Clinic> clinics = clinicMapper.findByFactoryId(paras);
         return clinics;
     }
+
+    @Override
+    public Clinic findCustomerClinic(Long id) {
+        return clinicMapper.findById(id);
+    }
 }

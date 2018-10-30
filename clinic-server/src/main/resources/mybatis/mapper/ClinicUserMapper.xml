@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuzi.denture.clinic.mapper.ClinicUserMapper" >
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.yuzi.denture.clinic.domain.ClinicUser">
+        INSERT INTO factory_user
+        (
+        `name`,
+        `contact`,
+        `password`,
+        `role`,
+        `clinic_id`
+        )
+        VALUES
+        (
+        #{name},
+        #{contact},
+        #{password},
+        #{role},
+        #{clinic.id}
+        );
+    </insert>
+
+    <resultMap id="baseRM" type="com.yuzi.denture.clinic.domain.ClinicUser">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="contact" property="contact" />
+        <result column="password" property="password" />
+        <result column="role" property="role" />
+        <association property="clinic" javaType="com.yuzi.denture.clinic.domain.Clinic">
+            <result column="clinic_id" property="id" />
+            <result column="clinic_name" property="name" />
+            <result column="clinic_address" property="address" />
+            <result column="clinic_contact" property="contact" />
+        </association>
+    </resultMap>
+    <sql id="baseUserSQL">
+        cu.id id, cu.name name, cu.contact contact, cu.password password, cu.role role,
+        c.id clinic_id, c.name clinic_name, c.address clinic_address, c.contact clinic_contact
+    </sql>
+    <select id="findUserByContact" parameterType="String" resultMap="baseRM">
+        select <include refid="baseUserSQL" /> from clinic_user cu
+        inner join clinic c on (cu.contact=#{contact} and cu.clinic_id=c.id)
+    </select>
+
+</mapper>

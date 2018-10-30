@@ -2,6 +2,7 @@ package com.yuzi.denture.biz.service;
 
 import com.yuzi.denture.biz.util.IdGenerator;
 import com.yuzi.denture.domain.*;
+import com.yuzi.denture.domain.repository.ClinicRepository;
 import com.yuzi.denture.domain.repository.FactoryRepository;
 import com.yuzi.denture.domain.service.FactoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ public class FactoryServiceImpl implements FactoryService {
 
     @Autowired
     private FactoryRepository repository;
+    @Autowired
+    private ClinicRepository clinicRepository;
 
     @Transactional
     @Override
@@ -96,6 +99,17 @@ public class FactoryServiceImpl implements FactoryService {
     public void addCustomer(Long factoryId, Long clinicId, Long salesmanId) {
         FactoryCustomer customer = new FactoryCustomer(factoryId, clinicId, salesmanId);
         repository.addCustomer(customer);
+    }
+
+    @Transactional
+    @Override
+    public void addCustomer(Long factoryId, Long salesmanId, String name, String contact, String address, String dentistName) {
+        Clinic clinic = new Clinic(name, address, contact);
+        clinicRepository.add(clinic);
+        ClinicUser user = new ClinicUser(contact, dentistName);
+        user.setClinicId(clinic.getId());
+        clinicRepository.addUser(user);
+        this.addCustomer(factoryId, clinic.getId(), salesmanId);
     }
 
     @Override

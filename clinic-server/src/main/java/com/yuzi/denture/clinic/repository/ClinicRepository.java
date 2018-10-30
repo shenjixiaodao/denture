@@ -1,5 +1,6 @@
 package com.yuzi.denture.clinic.repository;
 
+import com.yuzi.denture.clinic.domain.ClinicUser;
 import com.yuzi.denture.clinic.domain.Denture;
 import com.yuzi.denture.clinic.domain.DentureOrder;
 import com.yuzi.denture.clinic.domain.ProcedureGroup;
@@ -15,4 +16,6 @@ public interface ClinicRepository {
     List<DentureOrder> orders(Long clinicId);
     DentureOrder order(Long id);
     void updateCoRequest(Long clinicId, Long factoryId, Byte isValid);
+
+    ClinicUser findUser(String contact);
 }

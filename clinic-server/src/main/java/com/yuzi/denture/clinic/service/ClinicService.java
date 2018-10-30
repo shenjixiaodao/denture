@@ -1,10 +1,13 @@
 package com.yuzi.denture.clinic.service;
 
 
+import com.yuzi.denture.clinic.domain.ClinicUser;
 import com.yuzi.denture.clinic.domain.DentureOrder;
 import com.yuzi.denture.clinic.domain.type.*;
 
 public interface ClinicService {
+
+    ClinicUser login(String contact, String encryptPWD);
 
     DentureOrder createOrderAndDenture(Long clinicId, Long dentistId, Long factoryId, String comment,
                                        String positions, DentureType type, SpecType specification, String colorNo,

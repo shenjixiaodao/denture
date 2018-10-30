@@ -1,6 +1,7 @@
-package com.yuzi.denture.api.session;
+package com.yuzi.denture.clinic.session;
 
-import com.yuzi.denture.domain.FactoryUser;
+
+import com.yuzi.denture.clinic.domain.ClinicUser;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -43,14 +44,14 @@ public class SessionManager {
     }
 
 
-    public void cacheUser(String token, FactoryUser user) {
+    public void cacheUser(String token, ClinicUser user) {
         Session.put(token, new CacheObject(user));
     }
 
-    public FactoryUser user(HttpServletRequest request) {
+    public ClinicUser user(HttpServletRequest request) {
         String token = request.getHeader(Cst.TokenKey);
         CacheObject object = Session.get(token);
-        return  object.value==null? null : (FactoryUser) object.value;
+        return  object.value==null? null : (ClinicUser) object.value;
     }
 
     private Runnable cleanJob = new Runnable() {

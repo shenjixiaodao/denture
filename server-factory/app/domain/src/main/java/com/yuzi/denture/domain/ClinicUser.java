@@ -17,6 +17,12 @@ public class ClinicUser {
         this.id = id;
     }
 
+    public ClinicUser(String contact, String name) {
+        this.role = ClinicRole.Dentist;
+        this.contact = contact;
+        this.name = name;
+    }
+
     public ClinicUser() {
     }
 
