@@ -15,11 +15,11 @@
         </form>
         <form class="loginForm" v-else>
             <section class="input_container">
-                <input type="text" placeholder="账号" v-model.lazy="userAccount">
+                <input type="text" placeholder="账号" v-model.lazy="user.username">
             </section>
             <section class="input_container">
-                <input v-if="!showPassword" type="password" placeholder="密码"  v-model="passWord">
-                <input v-else type="text" placeholder="密码"  v-model="passWord">
+                <input v-if="!showPassword" type="password" placeholder="密码"  v-model="user.password">
+                <input v-else type="text" placeholder="密码"  v-model="user.password">
                 <div class="button_switch" :class="{change_to_text: showPassword}">
                     <div class="circle_button" :class="{trans_to_right: showPassword}" @click="changePassWordType"></div>
                     <span>abc</span>
@@ -53,26 +53,26 @@
 import headTop from '../../components/header/head'
 import alertTip from '../../components/common/alertTip'
 import {localapi, proapi, imgBaseUrl} from 'src/config/env'
-import {mapState, mapMutations} from 'vuex'
-import {mobileCode, checkExsis, sendLogin, getcaptchas, accountLogin} from '../../service/getData'
+import {mobileCode, checkExsis, sendLogin, getcaptchas} from '../../service/getData'
 import store from 'src/store'
 
 export default {
     data(){
         return {
-            loginWay: false, //登录方式，默认短信登录
-            showPassword: false, // 是否显示密码
-            phoneNumber: null, //电话号码
-            mobileCode: null, //短信验证码
-            validate_token: null, //获取短信时返回的验证值，登录时需要
-            computedTime: 0, //倒数记时
-            userInfo: null, //获取到的用户信息
-            userAccount: null, //用户名
-            passWord: null, //密码
-            captchaCodeImg: null, //验证码地址
-            codeNumber: null, //验证码
-            showAlert: false, //显示提示组件
-            alertText: null, //提示的内容
+          loginWay: false, //登录方式，默认短信登录
+          user: {
+            username: '15280257503',
+            password: '257503'
+          },
+          showPassword: false, // 是否显示密码
+          phoneNumber: null, //电话号码
+          mobileCode: null, //短信验证码
+          validate_token: null, //获取短信时返回的验证值，登录时需要
+          computedTime: 0, //倒数记时
+          captchaCodeImg: null, //验证码地址
+          codeNumber: null, //验证码
+          showAlert: false, //显示提示组件
+          alertText: null, //提示的内容
         }
     },
     created(){
@@ -89,9 +89,6 @@ export default {
         }
     },
     methods: {
-        ...mapMutations([
-            'RECORD_USERINFO',
-        ]),
         //改变登录方式
         changeLoginWay(){
             this.loginWay = !this.loginWay;
@@ -149,7 +146,7 @@ export default {
                     return
                 }
                 //手机号登录
-                this.userInfo = await sendLogin(this.mobileCode, this.phoneNumber, this.validate_token);
+                await sendLogin(this.mobileCode, this.phoneNumber, this.validate_token);
             }else{
                 if (!this.userAccount) {
                     this.showAlert = true;
@@ -165,19 +162,13 @@ export default {
                     return
                 }
                 //用户名登录
-                // this.userInfo = await accountLogin(this.userAccount, this.passWord, this.codeNumber);
-                this.$store.dispatch('LoginByUsername', { username: '15280257503', password: '257503' }).then(() => {
-                  // todo 如果是初始登录，根据角色选择跳转到指定页面
+                this.$store.dispatch('LoginByUsername', this.user).then(() => {
                   console.log('登录成功')
                 })
             }
             //如果返回的值不正确，则弹出提示框，返回的值正确则返回上一页
             if (store.getters.token) {
-                this.showAlert = true;
-                this.alertText = this.userInfo.message;
-                if (!this.loginWay) this.getCaptchaCode();
-            }else{
-                this.$router.go(-1);
+              this.$router.go(-1);
             }
         },
         closeTip(){

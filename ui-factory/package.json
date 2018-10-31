@@ -1,8 +1,8 @@
 {
-  "name": "vue-element-admin",
+  "name": "denture-factory",
   "version": "3.9.0",
-  "description": "A magical vue admin. Typical templates for enterprise applications. Newest development stack of vue. Lots of awesome features",
-  "author": "Pan <panfree23@gmail.com>",
+  "description": "factory",
+  "author": "You.Lee<972249598@qq.com>",
   "license": "MIT",
   "scripts": {
     "dev": "cross-env BABEL_ENV=development webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",

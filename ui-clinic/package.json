@@ -1,8 +1,8 @@
 {
-  "name": "elm",
+  "name": "denture-clinic",
   "version": "2.0.1",
-  "description": "vue2-elm",
-  "author": "cangdu <1264889788@qq.com>",
+  "description": "clinic",
+  "author": "You.Lee<972249598@qq.com>",
   "private": true,
   "license": "GPL",
   "scripts": {
