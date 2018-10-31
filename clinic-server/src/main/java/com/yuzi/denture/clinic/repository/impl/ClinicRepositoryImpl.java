@@ -62,6 +62,11 @@ public class ClinicRepositoryImpl implements ClinicRepository {
     }
 
     @Override
+    public void addUser(ClinicUser user) {
+
+    }
+
+    @Override
     public ClinicUser findUser(String contact) {
         return userMapper.findUserByContact(contact);
     }

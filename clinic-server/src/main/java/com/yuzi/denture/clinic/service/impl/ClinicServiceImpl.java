@@ -64,4 +64,11 @@ public class ClinicServiceImpl implements ClinicService {
     public void coRequest(Long clinicId, Long factoryId, Byte isValid) {
         repository.updateCoRequest(clinicId, factoryId, isValid);
     }
+
+    @Override
+    public ClinicUser register(String phone, String encryptPwd, ClinicUser.ClinicRole role) {
+        ClinicUser user = new ClinicUser(role, phone, encryptPwd);
+        repository.addUser(user);
+        return user;
+    }
 }

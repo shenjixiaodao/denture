@@ -17,5 +17,6 @@ public interface ClinicRepository {
     DentureOrder order(Long id);
     void updateCoRequest(Long clinicId, Long factoryId, Byte isValid);
 
+    void addUser(ClinicUser user);
     ClinicUser findUser(String contact);
 }

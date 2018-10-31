@@ -20,4 +20,6 @@ public interface ClinicService {
      * @param isValid  0:发起请求 1:  同意 -1：拒绝
      */
     void coRequest(Long clinicId, Long factoryId, Byte isValid);
+
+    ClinicUser register(String phone, String encryptPwd, ClinicUser.ClinicRole role);
 }

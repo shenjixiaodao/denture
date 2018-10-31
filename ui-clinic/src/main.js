@@ -5,13 +5,15 @@ import store from './store/'
 import {routerMode} from './config/env'
 import './config/rem'
 import FastClick from 'fastclick'
+import Element from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 
 if ('addEventListener' in document) {
     document.addEventListener('DOMContentLoaded', function() {
         FastClick.attach(document.body);
     }, false);
 }
-
+Vue.use(Element, {size: 'mini'})
 Vue.use(VueRouter)
 const router = new VueRouter({
 	routes,

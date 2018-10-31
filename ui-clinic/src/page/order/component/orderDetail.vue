@@ -4,14 +4,14 @@
         <section v-if="!showLoading" id="scroll_section" class="scroll_container">
             <section class="scroll_insert">
                 <section class="order_titel">
-                    <img src="?" class="restaurant_image">
+                    <img src="http://img.jituwang.com/uploads/allimg/130614/260169-1306140J93521.jpg" class="restaurant_image">
                     <p>{{orderData.status}}</p>
                     <router-link class="order_again" :to="'/shop/'+orderData.factory.id">再来一单</router-link>
                 </section>
                 <section class="food_list">
                     <router-link class="food_list_header" :to="'/shop/'+orderData.factory.id">
                         <div class="shop_name">
-                            <img src="?">
+                            <img src="http://img.jituwang.com/uploads/allimg/130614/260169-1306140J93521.jpg">
                             <span>{{orderData.factory.name}}</span>
                         </div>
                         <svg fill="#333" class="arrow_right">

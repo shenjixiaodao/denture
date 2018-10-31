@@ -4,12 +4,13 @@ var path = require('path')
 module.exports = {
     build: {
         env: {
-            NODE_ENV: '"production"'
+          NODE_ENV: '"production"',
+          BASE_API: '"http://10.0.188.7/denture/clinic"'
         },
         index: path.resolve(__dirname, '../clinic/index.html'),
         assetsRoot: path.resolve(__dirname, '../clinic'),
         assetsSubDirectory: 'static',
-        assetsPublicPath: '/clinic/',
+        assetsPublicPath: '/',
         productionSourceMap: true,
         // Surge or Netlify already gzip all static assets for you.
         // Before setting to `true`, make sure to:
@@ -19,7 +20,8 @@ module.exports = {
     },
     dev: {
         env: {
-            NODE_ENV: '"development"'
+          NODE_ENV: '"development"',
+          BASE_API: '"http://localhost:8081/denture/clinic"'
         },
         port: 8000,
         assetsSubDirectory: 'static',
@@ -39,7 +41,6 @@ module.exports = {
             '/img',
         ],
         proxypath: 'http://cangdu.org:8001',
-        BASE_API: '"http://localhost:8080/denture/clinic"',
         // CSS Sourcemaps off by default because relative paths are "buggy"
         // with this option, according to the CSS-Loader README
         // (https://github.com/webpack/css-loader#sourcemaps)

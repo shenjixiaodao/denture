@@ -1,9 +1,14 @@
 package com.yuzi.denture.clinic.domain;
 
 import com.yuzi.denture.clinic.util.RSAUtil;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.util.DigestUtils;
+import org.springframework.util.StringUtils;
 
 import java.security.PrivateKey;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -34,6 +39,14 @@ public class ClinicUser {
                     "Z1GvkGxVTdQGx5z1qeM4ag20Ww==";
     private final PrivateKey PriKey = RSAUtil.string2PrivateKey(PrivateKeyStr);
 
+    public ClinicUser(ClinicRole role, String contact, String encryptPwd) {
+        this.role = role;
+        this.contact = contact;
+        DateFormat formatter = new SimpleDateFormat("MMdd");
+        this.name = String.format("yuzi_" + formatter.format(new Date()));
+        this.password = decryptAndHashPwd(password);
+    }
+
     //编号(id):
     private Long id;
     //诊所编号(clinicId):
@@ -61,6 +74,13 @@ public class ClinicUser {
         }
         public String text() {
             return this.text;
+        }
+        public static ClinicRole typeOf(String type) {
+            for(ClinicRole result : ClinicRole.values()){
+                if(result.name().toLowerCase().equals(type.toLowerCase()))
+                    return result;
+            }
+            throw new IllegalArgumentException("未知职称");
         }
     }
 

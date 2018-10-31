@@ -27,7 +27,7 @@
 
     <ul class="order_list_ul" v-load-more="loaderMore">
       <li class="order_list_li" v-for="item in orderList" :key="item.id">
-        <img :src="imgBaseUrl + item.restaurant_image_url" class="restaurant_image">
+        <img src="http://img.jituwang.com/uploads/allimg/130614/260169-1306140J93521.jpg" class="restaurant_image">
         <section class="order_item_right">
           <section @click="showDetail(item)">
             <header class="order_item_right_header">

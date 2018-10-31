@@ -16,3 +16,19 @@ export function loginByUsername(username, password) {
   })
 }
 
+export function register(username, password, role, code) {
+  const data = {
+    phone: username,
+    password: encryptPwd(password),
+    role: role,
+    code: code
+  }
+  return request({
+    url: '/user/register',
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data
+  })
+}

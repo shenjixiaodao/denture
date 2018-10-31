@@ -1,8 +1,25 @@
 <template>
     <div class="loginContainer">
-        <head-top :head-title="loginWay? '登录':'密码登录'" goBack="true">
-            <!-- <div slot="changeLogin" class="change_login" @click="changeLoginWay">{{loginWay? "密码登录":"短信登录"}}</div> -->
-        </head-top>
+      <header id='head_top'>
+        <slot name='logo'></slot>
+        <slot name='search'></slot>
+        <section class="head_goback" @click="$router.go(-1)">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" version="1.1">
+            <polyline points="12,18 4,9 12,0" style="fill:none;stroke:rgb(255,255,255);stroke-width:2"/>
+          </svg>
+        </section>
+        <router-link :to="'/register'" class="head_login">
+          <span class="login_span">注册</span>
+        </router-link>
+        <section class="title_head ellipsis">
+          <span class="title_text">{{ loginWay? '登录':'密码登录' }}</span>
+        </section>
+        <slot name="edit"></slot>
+        <slot name="msite-title"></slot>
+        <slot name="changecity"></slot>
+        <slot name="changeLogin"></slot>
+      </header>
+
         <form class="loginForm" v-if="loginWay">
             <section class="input_container phone_number">
                 <input type="text" placeholder="账号密码随便输入" name="phone" maxlength="11" v-model="phoneNumber">
@@ -148,11 +165,11 @@ export default {
                 //手机号登录
                 await sendLogin(this.mobileCode, this.phoneNumber, this.validate_token);
             }else{
-                if (!this.userAccount) {
+                if (!this.user.username) {
                     this.showAlert = true;
                     this.alertText = '请输入手机号/邮箱/用户名';
                     return
-                }else if(!this.passWord){
+                }else if(!this.user.password){
                     this.showAlert = true;
                     this.alertText = '请输入密码';
                     return
@@ -302,5 +319,43 @@ export default {
         float: right;
         @include sc(.6rem, #3b95e9);
         margin-right: .3rem;
+    }
+
+    #head_top{
+      background-color: $blue;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      @include wh(100%, 1.95rem);
+    }
+    .head_goback{
+      left: 0.4rem;
+      @include wh(0.6rem, 1rem);
+      line-height: 2.2rem;
+      margin-left: .4rem;
+    }
+    .head_login{
+      right: 0.55rem;
+      @include sc(0.65rem, #fff);
+      @include ct;
+      .login_span{
+        color: #fff;
+      }
+      .user_avatar{
+        fill: #fff;
+        @include wh(.8rem, .8rem);
+      }
+    }
+    .title_head{
+      @include center;
+      width: 50%;
+      color: #fff;
+      text-align: center;
+      .title_text{
+        @include sc(0.8rem, #fff);
+        text-align: center;
+        font-weight: bold;
+      }
     }
 </style>

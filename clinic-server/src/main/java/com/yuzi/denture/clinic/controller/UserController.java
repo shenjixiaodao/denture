@@ -96,4 +96,27 @@ public class UserController {
         }, "查询订单错误", logger);
         return result;
     }
+
+    @ApiOperation(value = "添加员工", response = WebResult.class, httpMethod = "POST")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "form", name = "phone", dataType = "string",
+                    required = true, value = "用户名"),
+            @ApiImplicitParam(paramType = "form", name = "password", dataType = "string",
+                    required = true, value = "手机"),
+            @ApiImplicitParam(paramType = "form", name = "role", dataType = "string",
+                    required = true, value = "职称"),
+            @ApiImplicitParam(paramType = "form", name = "code", dataType = "string",
+                    required = true, value = "姓名")
+    })
+    @ResponseBody
+    @RequestMapping(value = "/register", method = POST)
+    public WebResult register(String phone, String password, String role, String code) {
+        logger.info("审核义齿:phone={}, password={}, code={}",phone, password, code);
+        WebResult<FactoryVo> result = WebResult.execute(res -> {
+            ClinicUser user = service.register(phone, password, ClinicUser.ClinicRole.typeOf(role));
+            ClinicUserVo vo = ClinicUserAssembler.toVo(user);
+            res.setData(vo);
+        }, "查询订单错误", logger);
+        return result;
+    }
 }

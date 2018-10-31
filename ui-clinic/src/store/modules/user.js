@@ -1,5 +1,5 @@
 import { setToken } from 'src/utils/auth'
-import { loginByUsername } from 'src/api/login'
+import { loginByUsername } from 'src/api/user'
 
 const user = {
   state: {

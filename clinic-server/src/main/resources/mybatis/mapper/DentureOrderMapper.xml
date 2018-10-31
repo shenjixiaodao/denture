@@ -48,7 +48,7 @@
         </association>
         <association property="dentist" javaType="com.yuzi.denture.clinic.domain.ClinicUser">
             <result column="dentist_id" property="id" />
-            <result column="d_clinic_id" property="clinicId" />
+            <result column="d_clinic_id" property="clinic.id" />
             <result column="d_role" property="role" />
             <result column="d_contact" property="contact" />
             <result column="d_name" property="name" />

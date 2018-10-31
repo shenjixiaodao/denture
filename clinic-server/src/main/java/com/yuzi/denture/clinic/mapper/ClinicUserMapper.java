@@ -11,7 +11,6 @@ import java.util.List;
 @Mapper
 public interface ClinicUserMapper {
 
-
-
+    void save(ClinicUser user);
     ClinicUser findUserByContact(String contact);
 }
