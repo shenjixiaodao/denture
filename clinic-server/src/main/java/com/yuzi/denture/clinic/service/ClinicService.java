@@ -1,6 +1,7 @@
 package com.yuzi.denture.clinic.service;
 
 
+import com.yuzi.denture.clinic.domain.Clinic;
 import com.yuzi.denture.clinic.domain.ClinicUser;
 import com.yuzi.denture.clinic.domain.DentureOrder;
 import com.yuzi.denture.clinic.domain.type.*;
@@ -21,5 +22,6 @@ public interface ClinicService {
      */
     void coRequest(Long clinicId, Long factoryId, Byte isValid);
 
-    ClinicUser register(String phone, String encryptPwd, ClinicUser.ClinicRole role);
+    ClinicUser register(String phone, String encryptPwd, ClinicUser.ClinicRole role,
+                        Long clinicId, String clinicName, String clinicAddress);
 }

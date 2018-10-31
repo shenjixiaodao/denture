@@ -3,7 +3,7 @@
 <mapper namespace="com.yuzi.denture.clinic.mapper.ClinicUserMapper" >
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.yuzi.denture.clinic.domain.ClinicUser">
-        INSERT INTO factory_user
+        INSERT INTO clinic_user
         (
         `name`,
         `contact`,
@@ -18,6 +18,21 @@
         #{password},
         #{role},
         #{clinic.id}
+        );
+    </insert>
+
+    <insert id="saveClinic" useGeneratedKeys="true" keyProperty="id" parameterType="com.yuzi.denture.clinic.domain.Clinic">
+        INSERT INTO `clinic`
+        (
+        `name`,
+        `address`,
+        `contact`
+        )
+        VALUES
+        (
+        #{name},
+        #{address},
+        #{contact}
         );
     </insert>
 

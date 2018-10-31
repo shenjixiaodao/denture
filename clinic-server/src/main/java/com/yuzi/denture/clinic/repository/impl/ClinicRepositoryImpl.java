@@ -1,9 +1,6 @@
 package com.yuzi.denture.clinic.repository.impl;
 
-import com.yuzi.denture.clinic.domain.ClinicUser;
-import com.yuzi.denture.clinic.domain.Denture;
-import com.yuzi.denture.clinic.domain.DentureOrder;
-import com.yuzi.denture.clinic.domain.ProcedureGroup;
+import com.yuzi.denture.clinic.domain.*;
 import com.yuzi.denture.clinic.mapper.*;
 import com.yuzi.denture.clinic.repository.ClinicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +22,11 @@ public class ClinicRepositoryImpl implements ClinicRepository {
     private FactoryMapper factoryMapper;
     @Autowired
     private ClinicUserMapper userMapper;
+
+    @Override
+    public void add(Clinic clinic) {
+        userMapper.saveClinic(clinic);
+    }
 
     @Override
     public void add(DentureOrder order) {
@@ -63,7 +65,7 @@ public class ClinicRepositoryImpl implements ClinicRepository {
 
     @Override
     public void addUser(ClinicUser user) {
-
+        userMapper.save(user);
     }
 
     @Override

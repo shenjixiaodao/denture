@@ -1,15 +1,13 @@
 package com.yuzi.denture.clinic.service.impl;
 
-import com.yuzi.denture.clinic.domain.ClinicUser;
-import com.yuzi.denture.clinic.domain.Denture;
-import com.yuzi.denture.clinic.domain.DentureOrder;
-import com.yuzi.denture.clinic.domain.ProcedureGroup;
+import com.yuzi.denture.clinic.domain.*;
 import com.yuzi.denture.clinic.domain.type.*;
 import com.yuzi.denture.clinic.repository.ClinicRepository;
 import com.yuzi.denture.clinic.service.ClinicService;
 import com.yuzi.denture.clinic.util.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -65,10 +63,20 @@ public class ClinicServiceImpl implements ClinicService {
         repository.updateCoRequest(clinicId, factoryId, isValid);
     }
 
+    @Transactional
     @Override
-    public ClinicUser register(String phone, String encryptPwd, ClinicUser.ClinicRole role) {
+    public ClinicUser register(String phone, String encryptPwd, ClinicUser.ClinicRole role,
+                               Long clinicId, String clinicName, String clinicAddress) {
+        if(clinicId == null) {
+            Clinic clinic = new Clinic(clinicName, clinicAddress, phone);
+            repository.add(clinic);
+            clinicId = clinic.getId();
+        }
         ClinicUser user = new ClinicUser(role, phone, encryptPwd);
+        user.setClinic(new Clinic(clinicId));
         repository.addUser(user);
+        // 登录成功返回
+        user = repository.findUser(phone);
         return user;
     }
 }

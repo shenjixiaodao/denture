@@ -44,7 +44,7 @@ public class ClinicUser {
         this.contact = contact;
         DateFormat formatter = new SimpleDateFormat("MMdd");
         this.name = String.format("yuzi_" + formatter.format(new Date()));
-        this.password = decryptAndHashPwd(password);
+        this.password = decryptAndHashPwd(encryptPwd);
     }
 
     //编号(id):

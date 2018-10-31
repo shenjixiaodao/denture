@@ -100,21 +100,32 @@ public class UserController {
     @ApiOperation(value = "添加员工", response = WebResult.class, httpMethod = "POST")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "form", name = "phone", dataType = "string",
-                    required = true, value = "用户名"),
-            @ApiImplicitParam(paramType = "form", name = "password", dataType = "string",
                     required = true, value = "手机"),
+            @ApiImplicitParam(paramType = "form", name = "password", dataType = "string",
+                    required = true, value = "密码"),
+            @ApiImplicitParam(paramType = "form", name = "clinicId", dataType = "long",
+                    required = true, value = "诊所编号"),
+            @ApiImplicitParam(paramType = "form", name = "clinicName", dataType = "string",
+                    required = true, value = "诊所名"),
+            @ApiImplicitParam(paramType = "form", name = "clinicAddress", dataType = "string",
+                    required = true, value = "诊所地址"),
             @ApiImplicitParam(paramType = "form", name = "role", dataType = "string",
                     required = true, value = "职称"),
             @ApiImplicitParam(paramType = "form", name = "code", dataType = "string",
-                    required = true, value = "姓名")
+                    required = true, value = "验证码")
     })
     @ResponseBody
     @RequestMapping(value = "/register", method = POST)
-    public WebResult register(String phone, String password, String role, String code) {
+    public WebResult register(String phone, String password, String role, String code,
+                              Long clinicId, String clinicName, String clinicAddress) {
         logger.info("审核义齿:phone={}, password={}, code={}",phone, password, code);
         WebResult<FactoryVo> result = WebResult.execute(res -> {
-            ClinicUser user = service.register(phone, password, ClinicUser.ClinicRole.typeOf(role));
+            ClinicUser user = service.register(phone, password, ClinicUser.ClinicRole.typeOf(role),
+                    clinicId, clinicName, clinicAddress);
             ClinicUserVo vo = ClinicUserAssembler.toVo(user);
+            String token = user.token();
+            vo.setToken(token);
+            SessionManager.Instance().cacheUser(token, user);
             res.setData(vo);
         }, "查询订单错误", logger);
         return result;

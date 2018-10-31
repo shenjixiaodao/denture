@@ -1,5 +1,5 @@
 import { setToken } from 'src/utils/auth'
-import { loginByUsername } from 'src/api/user'
+import { loginByUsername, register } from 'src/api/user'
 
 const user = {
   state: {
@@ -30,6 +30,24 @@ const user = {
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
         loginByUsername(username, userInfo.password).then(response => {
+          const data = response.data
+          console.log(response)
+          commit('SET_TOKEN', data.token)
+          setToken(data.token)
+          commit('SET_USER', data)
+          commit("SET_CLINIC", data.clinic)
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+    // 用户名注册
+    Register({ commit }, userInfo) {
+      const username = userInfo.username.trim()
+      return new Promise((resolve, reject) => {
+        register(userInfo.username, userInfo.password, userInfo.clinic, userInfo.role,
+          userInfo.code).then(response => {
           const data = response.data
           console.log(response)
           commit('SET_TOKEN', data.token)

@@ -1,14 +1,12 @@
 package com.yuzi.denture.clinic.repository;
 
-import com.yuzi.denture.clinic.domain.ClinicUser;
-import com.yuzi.denture.clinic.domain.Denture;
-import com.yuzi.denture.clinic.domain.DentureOrder;
-import com.yuzi.denture.clinic.domain.ProcedureGroup;
+import com.yuzi.denture.clinic.domain.*;
 
 import java.util.List;
 import java.util.Map;
 
 public interface ClinicRepository {
+    void add(Clinic clinic);
     void add(DentureOrder order);
     void add(Denture denture);
     void batchAddProcedureGroups(List<ProcedureGroup> groups);
