@@ -10,4 +10,5 @@ import java.util.Map;
 public interface FactoryMapper {
     List<Factory> findFactories(Map paras);
     void updateCoRequest(Map paras);
+    Integer countFactory(Map paras);
 }

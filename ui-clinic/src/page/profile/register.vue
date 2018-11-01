@@ -8,6 +8,9 @@
           <button  @click.prevent v-show="computedTime">已发送({{computedTime}}s)</button> -->
       </section>
       <section class="input_container">
+        <input type="text" placeholder="请输入姓名" v-model="user.name">
+      </section>
+      <section class="input_container">
           <input type="password" placeholder="请输入密码" v-model="user.password">
       </section>
       <section class="input_container">
@@ -64,6 +67,7 @@ export default {
         return {
           user: {
             username: null,
+            name: null,
             password: null,
             clinic: {
               id: null,

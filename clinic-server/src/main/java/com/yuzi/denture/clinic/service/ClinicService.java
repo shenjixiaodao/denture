@@ -22,6 +22,6 @@ public interface ClinicService {
      */
     void coRequest(Long clinicId, Long factoryId, Byte isValid);
 
-    ClinicUser register(String phone, String encryptPwd, ClinicUser.ClinicRole role,
+    ClinicUser register(String phone, String name, String encryptPwd, ClinicUser.ClinicRole role,
                         Long clinicId, String clinicName, String clinicAddress);
 }

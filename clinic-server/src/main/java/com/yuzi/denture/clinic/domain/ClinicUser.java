@@ -39,11 +39,12 @@ public class ClinicUser {
                     "Z1GvkGxVTdQGx5z1qeM4ag20Ww==";
     private final PrivateKey PriKey = RSAUtil.string2PrivateKey(PrivateKeyStr);
 
-    public ClinicUser(ClinicRole role, String contact, String encryptPwd) {
+    public ClinicUser(String name, ClinicRole role, String contact, String encryptPwd) {
+        this.name = name;
         this.role = role;
         this.contact = contact;
-        DateFormat formatter = new SimpleDateFormat("MMdd");
-        this.name = String.format("yuzi_" + formatter.format(new Date()));
+        /*DateFormat formatter = new SimpleDateFormat("MMdd");
+        this.name = String.format("yuzi_" + formatter.format(new Date()));*/
         this.password = decryptAndHashPwd(encryptPwd);
     }
 

@@ -15,13 +15,6 @@ export function queryOrder(id) {
   })
 }
 
-export function queryFactories() {
-  return request({
-    url: '/info/queryFactories',
-    method: 'get'
-  })
-}
-
 export function addOrder(data) {
   return request({
     url: '/ordering/order',

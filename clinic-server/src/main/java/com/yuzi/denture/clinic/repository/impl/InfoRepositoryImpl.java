@@ -24,4 +24,12 @@ public class InfoRepositoryImpl implements InfoRepository {
         List<Factory> factories = factoryMapper.findFactories(paras);
         return factories;
     }
+
+    @Override
+    public Integer countFactory(Long clinicId, Byte isValid) {
+        Map<String, Object> paras = new HashMap<>();
+        paras.put("clinicId", clinicId);
+        paras.put("isValid", isValid);
+        return factoryMapper.countFactory(paras);
+    }
 }

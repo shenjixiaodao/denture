@@ -46,7 +46,7 @@ const user = {
     Register({ commit }, userInfo) {
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
-        register(userInfo.username, userInfo.password, userInfo.clinic, userInfo.role,
+        register(userInfo.username, userInfo.name, userInfo.password, userInfo.clinic, userInfo.role,
           userInfo.code).then(response => {
           const data = response.data
           console.log(response)

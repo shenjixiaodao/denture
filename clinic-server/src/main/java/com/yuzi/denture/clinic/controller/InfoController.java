@@ -5,6 +5,7 @@ import com.yuzi.denture.clinic.controller.assembler.FactoryAssembler;
 import com.yuzi.denture.clinic.controller.base.WebResult;
 import com.yuzi.denture.clinic.controller.vo.DentureOrderVo;
 import com.yuzi.denture.clinic.controller.vo.FactoryVo;
+import com.yuzi.denture.clinic.controller.vo.StatisticVo;
 import com.yuzi.denture.clinic.domain.Factory;
 import com.yuzi.denture.clinic.repository.InfoRepository;
 import io.swagger.annotations.Api;
@@ -35,7 +36,23 @@ public class InfoController {
     @Autowired
     private InfoRepository repository;
 
-
+    @ApiOperation(value = "查询合作工厂数量", response = StatisticVo.class, httpMethod = "GET")
+    @ResponseBody
+    @RequestMapping(value = "/statistic", method = GET)
+    public WebResult<StatisticVo> statistic() {
+        //logger.info("查询合作工厂:id={}", id);
+        //TODO UnionID
+        Long clinicId = 1L;
+        WebResult<StatisticVo> result = WebResult.execute(res -> {
+            StatisticVo vo = new StatisticVo();
+            Integer partnerNumber = repository.countFactory(clinicId, new Byte("1"));
+            vo.setPartnerNumber(partnerNumber);
+            Integer applicantsNumber = repository.countFactory(clinicId, new Byte("0"));
+            vo.setApplicantNumber(applicantsNumber);
+            res.setData(vo);
+        }, "查询订单错误", logger);
+        return result;
+    }
 
     @ApiOperation(value = "查询合作工厂信息", response = FactoryVo.class, httpMethod = "GET")
     @ResponseBody

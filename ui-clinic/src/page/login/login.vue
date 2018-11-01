@@ -181,11 +181,11 @@ export default {
                 //用户名登录
                 this.$store.dispatch('LoginByUsername', this.user).then(() => {
                   console.log('登录成功')
+                  //如果返回的值不正确，则弹出提示框，返回的值正确则返回上一页
+                  if (store.getters.token) {
+                    this.$router.go(-1);
+                  }
                 })
-            }
-            //如果返回的值不正确，则弹出提示框，返回的值正确则返回上一页
-            if (store.getters.token) {
-              this.$router.go(-1);
             }
         },
         closeTip(){

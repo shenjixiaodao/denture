@@ -16,9 +16,10 @@ export function loginByUsername(username, password) {
   })
 }
 
-export function register(username, password, clinic, role, code) {
+export function register(username, name, password, clinic, role, code) {
   const data = {
     phone: username,
+    name: name,
     password: encryptPwd(password),
     clinicId: clinic.id,
     clinicName: clinic.name,

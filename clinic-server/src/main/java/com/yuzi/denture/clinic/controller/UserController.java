@@ -101,6 +101,8 @@ public class UserController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "form", name = "phone", dataType = "string",
                     required = true, value = "手机"),
+            @ApiImplicitParam(paramType = "form", name = "name", dataType = "string",
+                    required = true, value = "姓名"),
             @ApiImplicitParam(paramType = "form", name = "password", dataType = "string",
                     required = true, value = "密码"),
             @ApiImplicitParam(paramType = "form", name = "clinicId", dataType = "long",
@@ -116,11 +118,11 @@ public class UserController {
     })
     @ResponseBody
     @RequestMapping(value = "/register", method = POST)
-    public WebResult register(String phone, String password, String role, String code,
+    public WebResult register(String phone, String name, String password, String role, String code,
                               Long clinicId, String clinicName, String clinicAddress) {
         logger.info("审核义齿:phone={}, password={}, code={}",phone, password, code);
         WebResult<FactoryVo> result = WebResult.execute(res -> {
-            ClinicUser user = service.register(phone, password, ClinicUser.ClinicRole.typeOf(role),
+            ClinicUser user = service.register(phone, name, password, ClinicUser.ClinicRole.typeOf(role),
                     clinicId, clinicName, clinicAddress);
             ClinicUserVo vo = ClinicUserAssembler.toVo(user);
             String token = user.token();

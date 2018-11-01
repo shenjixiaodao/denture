@@ -18,6 +18,14 @@
         )
     </select>
 
+    <select id="countFactory" parameterType="Map" resultType="Integer">
+        select count(id) from  factory_customer fc
+        where fc.clinic_id=#{clinicId}
+        <if test="isValid!=null">
+            and fc.is_valid=#{isValid}
+        </if>
+    </select>
+
     <update id="updateCoRequest" parameterType="Map">
         update factory_customer
         set is_valid = #{isValid}

@@ -65,14 +65,14 @@ public class ClinicServiceImpl implements ClinicService {
 
     @Transactional
     @Override
-    public ClinicUser register(String phone, String encryptPwd, ClinicUser.ClinicRole role,
+    public ClinicUser register(String phone, String name, String encryptPwd, ClinicUser.ClinicRole role,
                                Long clinicId, String clinicName, String clinicAddress) {
         if(clinicId == null) {
             Clinic clinic = new Clinic(clinicName, clinicAddress, phone);
             repository.add(clinic);
             clinicId = clinic.getId();
         }
-        ClinicUser user = new ClinicUser(role, phone, encryptPwd);
+        ClinicUser user = new ClinicUser(name, role, phone, encryptPwd);
         user.setClinic(new Clinic(clinicId));
         repository.addUser(user);
         // 登录成功返回

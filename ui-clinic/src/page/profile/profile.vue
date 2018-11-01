@@ -34,13 +34,13 @@
                         <span class="info-data-top"><b>{{parseInt(balance).toFixed(2)}}</b>元</span>
                         <span class="info-data-bottom">我的余额</span>
                     </router-link>
-                    <router-link to="/benefit" tag="li" class="info-data-link">
-                        <span class="info-data-top"><b>{{count}}</b>个</span>
-                        <span class="info-data-bottom">我的优惠</span>
+                    <router-link to="/partners" tag="li" class="info-data-link">
+                        <span class="info-data-top"><b>{{ statistic.partnerNumber }}</b>个</span>
+                        <span class="info-data-bottom">合作工厂</span>
                     </router-link>
-                    <router-link to="/points" tag="li" class="info-data-link">
-                        <span class="info-data-top"><b>{{pointNumber}}</b>分</span>
-                        <span class="info-data-bottom">我的积分</span>
+                    <router-link to="/applicants" tag="li" class="info-data-link">
+                        <span class="info-data-top"><b>{{ statistic.applicantNumber }}</b>个</span>
+                        <span class="info-data-bottom">合作申请</span>
                     </router-link>
                 </ul>
             </section>
@@ -107,10 +107,10 @@
 <script>
 import headTop from 'src/components/header/head'
 import footGuide from 'src/components/footer/footGuide'
-import {mapState, mapMutations} from 'vuex'
 import {imgBaseUrl} from 'src/config/env'
 import {getImgPath} from 'src/components/common/mixin'
 import store from 'src/store'
+import { statistic } from 'src/api/info'
 
 export default {
     data(){
@@ -125,8 +125,10 @@ export default {
             name: ''
           },
           balance: 0,            //我的余额
-          count : 0,             //优惠券个数
-          pointNumber : 0,       //积分数
+          statistic: {
+            partnerNumber: '?',             //合作工厂数
+            applicantNumber: '?'       //积分数
+          },
           imgBaseUrl,
         }
     },
@@ -158,6 +160,10 @@ export default {
                 // todo set login success data
               this.user = store.getters.user
               this.clinic = store.getters.clinic
+              statistic().then(response => {
+                var data = response.data
+                this.statistic = data
+              })
             } else{
               this.user.name = '登录/注册';
               this.clinic.name = '暂无绑定诊所';
