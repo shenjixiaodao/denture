@@ -16,7 +16,7 @@ public class FactoryVo {
     //地址(address):
     @ApiModelProperty(value="工厂地址")
     private String address;
-
+    private Byte isValid;
     public Long getId() {
         return id;
     }
@@ -47,5 +47,13 @@ public class FactoryVo {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Byte getIsValid() {
+        return isValid;
+    }
+
+    public void setIsValid(Byte isValid) {
+        this.isValid = isValid;
     }
 }

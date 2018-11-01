@@ -10,18 +10,16 @@
 						<h4 :class="item.is_premium? 'premium': ''" class="shop_title ellipsis">{{item.name}}</h4>
 						<ul class="shop_detail_ul">
 							<!--<li v-for="item in item.supports" :key="item.id" class="supports">{{item.icon_name}}</li>-->
-              <li class="supports">{{ item.contact }}</li>
+              <div class="order_again">
+                <button v-if="item.isValid===0" class="confirm" @click="" >同意</button>
+                <button class="reject" v-else>拒绝</button>
+              </div>
 						</ul>
 					</header>
 					<h5 class="fee_distance">
 						<p class="fee">{{ item.address }}</p>
 					</h5>
-          <!--评价信息-->
-          <h5 class="rating_order_num">
-            <section class="rating_order_num_right">
-                <span class="delivery_style delivery_right" v-if="zhunshi(item.supports)">准时达</span>
-            </section>
-          </h5>
+
 				</hgroup>
 			</router-link>
 		</ul>
@@ -49,7 +47,7 @@ import {imgBaseUrl} from 'src/config/env'
 import {showBack, animate} from 'src/config/mUtils'
 import {loadMore, getImgPath} from './mixin'
 import loading from './loading'
-import { queryFactories } from 'src/api/info'
+import { applicants } from 'src/api/user'
 
 export default {
 	data(){
@@ -74,7 +72,7 @@ export default {
 	methods: {
 		async initData(){
 			//获取数据
-      queryFactories().then(response => {
+      applicants().then(response => {
         var data = response.data
         this.factories = data
         if (this.factories.length < 20) {
@@ -87,6 +85,9 @@ export default {
         })
       })
 		},
+    reply() {
+
+    },
 		//到达底部加载更多数据
 		async loaderMore(){
 			if (this.touchend) {
@@ -271,4 +272,21 @@ export default {
 	.loading-enter, .loading-leave-active {
 		opacity: 0
 	}
+
+  .order_again{
+    text-align: right;
+    line-height: 1.6rem;
+  .confirm{
+  @include sc(.55rem, #3190e8);
+    border: 0.025rem solid #3190e8;
+    padding: .1rem .2rem;
+    border-radius: .15rem;
+  }
+  .reject{
+  @include sc(.55rem, #E5E5E5);
+    border: 0.025rem solid #E5E5E5;
+    padding: .1rem .2rem;
+    border-radius: .15rem;
+  }
+  }
 </style>

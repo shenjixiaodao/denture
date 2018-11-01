@@ -15,6 +15,7 @@ const addDetail = r => require.ensure([], () => r(require('../page/profile/child
 const balance = r => require.ensure([], () => r(require('../page/balance/balance')), 'balance')
 const balanceDetail = r => require.ensure([], () => r(require('../page/balance/children/detail')), 'balanceDetail')
 const partners = r => require.ensure([], () => r(require('../page/factory/partners')), 'partners')
+const applicants = r => require.ensure([], () => r(require('../page/factory/applicants')), 'applicants')
 const points = r => require.ensure([], () => r(require('../page/points/points')), 'points')
 const pointsDetail = r => require.ensure([], () => r(require('../page/points/children/detail')), 'pointsDetail')
 const service = r => require.ensure([], () => r(require('../page/service/service')), 'service')
@@ -120,8 +121,12 @@ export default [{
       },
       //我的工厂列
       {
-          path: 'partners',
-          component: partners
+        path: 'partners',
+        component: partners
+      },
+      {
+        path: 'applicants',
+        component: applicants
       },
       //我的积分页
       {

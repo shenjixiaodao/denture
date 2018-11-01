@@ -90,7 +90,7 @@ public class UserController {
         //TODO UnionID
         Long clinicId = 1L;
         WebResult<FactoryVo> result = WebResult.execute(res -> {
-            List<Factory> factories = repository.findFactories(clinicId, new Byte("0"));
+            List<Factory> factories = repository.findApplicants(clinicId);
             List<FactoryVo> vos = FactoryAssembler.toVos(factories);
             res.setData(vos);
         }, "查询订单错误", logger);

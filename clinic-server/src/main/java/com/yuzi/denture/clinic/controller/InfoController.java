@@ -54,15 +54,18 @@ public class InfoController {
         return result;
     }
 
-    @ApiOperation(value = "查询合作工厂信息", response = FactoryVo.class, httpMethod = "GET")
+    @ApiOperation(value = "查询工厂信息", response = FactoryVo.class, httpMethod = "GET")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "type", dataType = "String", required = true, value = "类型[-1,0,1]")
+    })
     @ResponseBody
     @RequestMapping(value = "/queryFactories", method = GET)
-    public WebResult<FactoryVo> factories() {
+    public WebResult<FactoryVo> factories(String type) {
         //logger.info("查询合作工厂:id={}", id);
         //TODO UnionID
         Long clinicId = 1L;
         WebResult<FactoryVo> result = WebResult.execute(res -> {
-            List<Factory> factories = repository.findFactories(clinicId, new Byte("1"));
+            List<Factory> factories = repository.findFactories(clinicId, new Byte(type));
             List<FactoryVo> vos = FactoryAssembler.toVos(factories);
             res.setData(vos);
         }, "查询订单错误", logger);

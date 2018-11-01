@@ -9,14 +9,14 @@
 	    		</svg>
 	    		<span class="shop_header_title">合作工厂</span>
 	    	</header>
-	    	<shop-list></shop-list>
+	    	<applicant-list></applicant-list>
     	</div>
     </div>
 </template>
 
 <script>
 import headTop from 'src/components/header/head'
-import shopList from 'src/components/common/partnerList'
+import applicantList from 'src/components/common/applicantList'
 import 'src/plugins/swiper.min.js'
 import 'src/style/swiper.min.css'
 
@@ -25,12 +25,12 @@ export default {
         return {
           title: '合作工厂',
           foodTypes: [], // 食品分类列表
-          imgBaseUrl: 'https://fuss10.elemecdn.com', //图片域名地址
+          imgBaseUrl: 'https://fuss10.elemecdn.com' //图片域名地址
         }
     },
     components: {
     	headTop,
-    	shopList
+      applicantList
     },
     methods: {
 

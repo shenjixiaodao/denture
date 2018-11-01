@@ -7,14 +7,24 @@
         <result column="name" property="name" />
         <result column="contact" property="contact" />
         <result column="address" property="address" />
+        <result column="is_valid" property="isValid" />
     </resultMap>
     
     <select id="findFactories" parameterType="Map" resultMap="baseRM">
-        select * from factory f
+        select f.*, fc.is_valid from factory f
         inner join factory_customer fc on (
           fc.clinic_id=#{clinicId} and
           fc.is_valid=#{isValid} and
           f.id=fc.factory_id
+        )
+    </select>
+
+    <select id="findApplicants" parameterType="Long" resultMap="baseRM">
+        select f.*, fc.is_valid from factory f
+        inner join factory_customer fc on (
+            fc.clinic_id=#{clinicId} and
+            (fc.is_valid=0 or fc.is_valid=-1) and
+            f.id=fc.factory_id
         )
     </select>
 

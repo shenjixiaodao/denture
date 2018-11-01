@@ -9,7 +9,7 @@
 	    		</svg>
 	    		<span class="shop_header_title">合作工厂</span>
 	    	</header>
-	    	<shop-list></shop-list>
+	    	<partner-list></partner-list>
     	</div>
     </div>
 </template>
@@ -30,7 +30,7 @@ export default {
     },
     components: {
     	headTop,
-    	shopList: partnerList
+      partnerList: partnerList
     },
     methods: {
 

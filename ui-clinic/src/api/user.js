@@ -36,3 +36,10 @@ export function register(username, name, password, clinic, role, code) {
     data
   })
 }
+
+export function applicants() {
+  return request({
+    url: '/user/applicants',
+    method: 'get'
+  })
+}

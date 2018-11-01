@@ -32,4 +32,9 @@ public class InfoRepositoryImpl implements InfoRepository {
         paras.put("isValid", isValid);
         return factoryMapper.countFactory(paras);
     }
+
+    @Override
+    public List<Factory> findApplicants(Long clinicId) {
+        return factoryMapper.findApplicants(clinicId);
+    }
 }

@@ -84,7 +84,7 @@ export default {
 	methods: {
 		async initData(){
 			//获取数据
-      queryFactories().then(response => {
+      queryFactories('1').then(response => {
         var data = response.data
         this.factories = data
         if (this.factories.length < 20) {

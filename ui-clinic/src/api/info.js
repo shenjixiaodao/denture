@@ -1,9 +1,10 @@
 import request from 'src/utils/request'
 
-export function queryFactories() {
+export function queryFactories(type) {
   return request({
     url: '/info/queryFactories',
-    method: 'get'
+    method: 'get',
+    params: { type: type }
   })
 }
 
