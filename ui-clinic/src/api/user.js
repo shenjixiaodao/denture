@@ -43,3 +43,18 @@ export function applicants() {
     method: 'get'
   })
 }
+
+export function replyCo(factoryId, isAccepted) {
+  const data = {
+    factoryId: factoryId,
+    isValid: isAccepted
+  }
+  return request({
+    url: '/user/replyCo',
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data
+  })
+}

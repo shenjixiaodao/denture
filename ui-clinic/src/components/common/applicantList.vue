@@ -11,8 +11,8 @@
 						<ul class="shop_detail_ul">
 							<!--<li v-for="item in item.supports" :key="item.id" class="supports">{{item.icon_name}}</li>-->
               <div class="order_again">
-                <button v-if="item.isValid===0" class="confirm" @click="" >同意</button>
-                <button class="reject" v-else>拒绝</button>
+                <button v-if="item.isValid===0" class="confirm" @click="reply(item, true)" >同意</button>
+                <button class="reject" @click="reply(item, false)" v-else>拒绝</button>
               </div>
 						</ul>
 					</header>
@@ -47,7 +47,7 @@ import {imgBaseUrl} from 'src/config/env'
 import {showBack, animate} from 'src/config/mUtils'
 import {loadMore, getImgPath} from './mixin'
 import loading from './loading'
-import { applicants } from 'src/api/user'
+import { applicants, replyCo } from 'src/api/user'
 
 export default {
 	data(){
@@ -85,8 +85,11 @@ export default {
         })
       })
 		},
-    reply() {
-
+    reply(factory, isAccepted) {
+		  replyCo(factory.id, isAccepted).then(response => {
+        var data = response.data
+        this.$router.go(0)
+      })
     },
 		//到达底部加载更多数据
 		async loaderMore(){
