@@ -1,5 +1,5 @@
 import { loginByUsername, logout, getUserInfo } from '@/api/login'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, getName, setName, removeToken } from '@/utils/auth'
 
 const user = {
   state: {
@@ -7,7 +7,7 @@ const user = {
     status: '',
     code: '',
     token: getToken(),
-    name: '',
+    name: getName(),
     avatar: '',
     introduction: '',
     roles: [],
@@ -21,6 +21,7 @@ const user = {
       state.code = code
     },
     SET_TOKEN: (state, token) => {
+      setToken(token)
       state.token = token
     },
     SET_INTRODUCTION: (state, introduction) => {
@@ -33,6 +34,7 @@ const user = {
       state.status = status
     },
     SET_NAME: (state, name) => {
+      setName(name)
       state.name = name
     },
     SET_AVATAR: (state, avatar) => {
@@ -52,7 +54,7 @@ const user = {
           const data = response.data
           console.log(response)
           commit('SET_TOKEN', data.token)
-          setToken(data.token)
+          // setToken(data.token)
           commit('SET_NAME', data.name)
           if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
             commit('SET_ROLES', data.roles)
