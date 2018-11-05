@@ -24,7 +24,7 @@
       <el-table :data="purchaseRecords" style="width: 100%;padding-top: 15px;">
         <el-table-column label="入库时间">
           <template slot-scope="scope">
-            {{ scope.row.gmtCreated }}
+            {{ scope.row.gmtCreated.split(' ',2)[0] }}
           </template>
         </el-table-column>
         <el-table-column label="库存" align="center">
@@ -41,14 +41,14 @@
     </el-row>
 
     <el-dialog :visible.sync="dialogAddIngredientVisible" title="添加新材料">
-      <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+      <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 100%;">
         <el-form-item label="供应商" prop="title">
           <el-select v-model="ingredient.supplierId" placeholder="请选择" clearable style="width: 90px" class="filter-item">
             <el-option v-for="item in suppliers" :key="item.id" :label="item.name" :value="item.id"/>
           </el-select>
         </el-form-item>
         <el-form-item label="购入数量" prop="title">
-          <el-input v-model="ingredient.number"/>
+          <el-input v-model="ingredient.number" style="width: 70%;"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -58,15 +58,15 @@
     </el-dialog>
 
     <el-dialog :visible.sync="dialogAddSupplierVisible" title="添加新供应商">
-      <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+      <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 100%;">
         <el-form-item label="名称" prop="title">
-          <el-input v-model="supplier.name"/>
+          <el-input v-model="supplier.name" style="width: 70%;"/>
         </el-form-item>
         <el-form-item label="地址" prop="title">
-          <el-input v-model="supplier.address"/>
+          <el-input v-model="supplier.address" style="width: 70%;"/>
         </el-form-item>
         <el-form-item label="联系方式" prop="title">
-          <el-input v-model="supplier.contact"/>
+          <el-input v-model="supplier.contact" style="width: 70%;"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -113,6 +113,7 @@ export default {
         var data = response.data
         this.ingredientDetail = data
         this.purchaseRecords = this.ingredientDetail.records
+        this.ingredient.ingredientId = data.id
       })
       querySuppliers().then(response => {
         var data = response.data

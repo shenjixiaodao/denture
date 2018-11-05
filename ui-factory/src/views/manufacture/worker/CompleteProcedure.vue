@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <el-input v-model="dentureId" placeholder="产品编号" style="width: 200px;" class="filter-item" />
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" >扫描</el-button>
+      <!--<el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" >扫描</el-button>-->
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="search()" >搜索</el-button>
     </el-row>
     <el-row v-if="isShow" style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">

@@ -327,7 +327,7 @@ public class ManufactureController {
     @ResponseBody
     @RequestMapping(value = "/recordIngredientPurchase", method = POST)
     public WebResult recordIngredientPurchase(Long ingredientId, Long supplierId, Double number) {
-        logger.info("记录新购入物料:ingredientId={}, supplierId={}, number={}", ingredientId, ingredientId, number);
+        logger.info("记录新购入物料:ingredientId={}, supplierId={}, number={}", ingredientId, supplierId, number);
         WebResult result = new WebResult<>();
         try {
             service.newIngredientPurchaseRecord(ingredientId,supplierId, number);

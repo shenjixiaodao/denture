@@ -26,9 +26,9 @@
     </el-row>
 
     <el-dialog :visible.sync="dialogAddVisible" title="添加新材料">
-      <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+      <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 100%;">
         <el-form-item label="物料名称" prop="title">
-          <el-input v-model="name"/>
+          <el-input v-model="name" style="width: 70%;"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

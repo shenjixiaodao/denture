@@ -28,16 +28,16 @@
         )
         VALUES
         (
-        #[ingredientId},
-        #[number},
-        #[gmtCreated},
-        #[gmtModified},
-        #[supplier_id}
+        #{ingredientId},
+        #{number},
+        #{gmtCreated},
+        #{gmtModified},
+        #{supplierId}
         );
     </insert>
 
     <update id="update" parameterType="com.yuzi.denture.domain.Ingredient">
-        UPDATE ingredient SET 1=1
+        UPDATE ingredient SET id=id
         <if test="name!=null">
             , name = #{name}
         </if>
@@ -102,7 +102,8 @@
     </sql>
     <select id="findIngredientById" parameterType="Long" resultMap="baseRM">
         SELECT <include refid="IngredientSQL" /> FROM `ingredient` i
-        LEFT JOIN ingredient_purchase_record pr ON (i.id=#{id} AND i.id=pr.ingredient_id)
+        LEFT JOIN ingredient_purchase_record pr ON i.id=pr.ingredient_id
+        where i.id=#{id}
     </select>
 
 </mapper>
