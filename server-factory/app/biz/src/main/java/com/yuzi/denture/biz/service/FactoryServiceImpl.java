@@ -5,6 +5,7 @@ import com.yuzi.denture.domain.*;
 import com.yuzi.denture.domain.repository.ClinicRepository;
 import com.yuzi.denture.domain.repository.FactoryRepository;
 import com.yuzi.denture.domain.service.FactoryService;
+import com.yuzi.denture.domain.type.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,11 +25,20 @@ public class FactoryServiceImpl implements FactoryService {
     @Override
     public Denture createOrderAndDenture(Long clinicId, Long dentistId, Long factoryId, String comment,
                                          String positions, Denture.DentureType type, Denture.SpecType specification,
-                                         String colorNo) {
+                                         String colorNo, FieldType fieldType, BiteLevel biteLevel,
+                                         BorderType borderType, NeckType neckType, InnerCrownType innerCrowType,
+                                         PaddingType paddingType, OuterCrownType outerCrowType) {
         //1, create denture
         Denture denture = new Denture(type, specification, clinicId, comment,
                 factoryId, positions, colorNo);
         denture.setId(IdGenerator.generate(factoryId));
+        denture.setFieldType(fieldType);
+        denture.setBiteLevel(biteLevel);
+        denture.setBorderType(borderType);
+        denture.setNeckType(neckType);
+        denture.setInnerCrownType(innerCrowType);
+        denture.setPaddingType(paddingType);
+        denture.setOuterCrownType(outerCrowType);
         //初始创建denture时，生成加工所需要的所有工序
         List<ProcedureGroup> groups = denture.generateProcedureGroups();
         repository.batchAddProcedureGroups(groups);
