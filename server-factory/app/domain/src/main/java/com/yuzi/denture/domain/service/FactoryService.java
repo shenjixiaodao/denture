@@ -2,6 +2,7 @@ package com.yuzi.denture.domain.service;
 
 
 import com.yuzi.denture.domain.*;
+import com.yuzi.denture.domain.type.*;
 
 public interface FactoryService {
 
@@ -19,7 +20,10 @@ public interface FactoryService {
      * @return denture
      */
     Denture createOrderAndDenture(Long clinicId, Long dentistId, Long factoryId, String comment,
-                                  String positions, Denture.DentureType type, Denture.SpecType specification, String colorNo);
+                                  String positions, Denture.DentureType type, Denture.SpecType specification,
+                                  String colorNo, FieldType fieldType, BiteLevel biteLevel,
+                                  BorderType borderType, NeckType neckType, InnerCrownType innerCrowType,
+                                  PaddingType paddingType, OuterCrownType outerCrowType);
     /**
      * 牙模查验, {@param inspector}
      * 生产部和质量部负负责人review，后台自动根据根据工厂信息指派负责人

@@ -9,8 +9,10 @@ import com.yuzi.denture.api.vo.SupplierVo;
 import com.yuzi.denture.api.vo.base.DentureVo;
 import com.yuzi.denture.api.vo.base.WebResult;
 import com.yuzi.denture.domain.*;
+import com.yuzi.denture.domain.GroupType;
 import com.yuzi.denture.domain.repository.FactoryRepository;
 import com.yuzi.denture.domain.service.FactoryService;
+import com.yuzi.denture.domain.type.*;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,13 +95,51 @@ public class ManufactureController {
                     "        NieGeHeJinQiao(\"镍铬合金桥\"),\n" +
                     "        WanZhiZhiJiaKeZhai(\"弯制支架可摘局部义齿\"),\n" +
                     "        ShuZhiJiTuoQuanKou(\"树脂基托全口义齿\"),\n" +
-                    "        Other(\"其他\")]")
+                    "        Other(\"其他\")]"),
+            @ApiImplicitParam(paramType = "form", name = "fieldType", dataType = "string",
+                    value = "缺牙区[DaMaAn(大马鞍)\n" +
+                            "PianCe(偏侧型)\n" +
+                            "ZiDan(子弹型)\n" +
+                            "XiaoMaAn(小马鞍)\n" +
+                            "WeiSheng(卫生型)\n" +
+                            "ShenRu(深入型)]"),
+            @ApiImplicitParam(paramType = "form", name = "biteLevel", dataType = "string",
+                    value = "咬合度[YaoMi(咬密)\n" +
+                            "QingYao(轻咬)\n" +
+                            "BuYao(不咬)]"),
+            @ApiImplicitParam(paramType = "form", name = "borderType", dataType = "string",
+                    value = "邻接(BorderType)[Plan(面接)\n" +
+                            "Point(点接)\n" +
+                            "Normal(正常)]"),
+            @ApiImplicitParam(paramType = "form", name = "neckType", dataType = "string",
+                    value = "颈缘(NeckType)[AnJianTai(按肩台)\n" +
+                            "Top(龈上边缘)\n" +
+                            "Below(龈下边缘)]"),
+            @ApiImplicitParam(paramType = "form", name = "innerCrownType", dataType = "string",
+                    value = "InnerCrownType(内冠)[Normal(正常)\n" +
+                            "Tight(紧)\n" +
+                            "Loose(松)]"),
+            @ApiImplicitParam(paramType = "form", name = "paddingType", dataType = "string",
+                    value = "PaddingType[PiDuiYao(批对咬)\n" +
+                            "PiJiYa(批基牙)\n" +
+                            "ZuoYaoJin(做咬金)\n" +
+                            "LouDianJin(露点金)\n" +
+                            "Unknown(待问)]"),
+            @ApiImplicitParam(paramType = "form", name = "outerCrownType", dataType = "string",
+                    value = "OuterCrownType(牙冠)[SheCe(舌侧)\n" +
+                            "JinTop(全金属边)\n" +
+                            "ThreeQuarter(松)\n" +
+                            "SC_TQ(舌侧金属3/4颌侧)\n" +
+                            "JinBelow(金属颌侧)\n" +
+                            "AllCi(舌侧全瓷边)\n")
     })
     @ResponseBody
     @RequestMapping(value = "/recordOrder", method = POST)
     public WebResult<DentureVo> recordOrder(Long clinicId, Long dentistId, String comment,
-                                            String positions, String type,
-                                            String specification, String colorNo, HttpServletRequest request) {
+                                            String positions, String type, String specification,
+                                            String colorNo, String fieldType, String biteLevel, String borderType,
+                                            String neckType, String innerCrownType, String paddingType,
+                                            String outerCrownType, HttpServletRequest request) {
         FactoryUser user = SessionManager.Instance().user(request);
         Long factoryId = user.getFactoryId();
         logger.info("录入订单:clinicId={}, dentistId={}, comment={}, positions={}, " +
@@ -107,7 +147,10 @@ public class ManufactureController {
                 positions, type, specification, colorNo);
         WebResult<DentureVo> result = WebResult.execute(res -> {
             Denture denture = service.createOrderAndDenture(clinicId, dentistId, factoryId, comment, positions,
-                    Denture.DentureType.typeOf(type), Denture.SpecType.typeOf(specification), colorNo);
+                    Denture.DentureType.typeOf(type), Denture.SpecType.typeOf(specification), colorNo,
+                    FieldType.typeOf(fieldType), BiteLevel.typeOf(biteLevel), BorderType.typeOf(borderType),
+                    NeckType.typeOf(neckType), InnerCrownType.typeOf(innerCrownType), PaddingType.typeOf(paddingType),
+                    OuterCrownType.typeOf(outerCrownType));
             DentureVo vo = DentureAssembler.toVo(denture);
             res.setData(vo);
             logger.info("录入订单成功");

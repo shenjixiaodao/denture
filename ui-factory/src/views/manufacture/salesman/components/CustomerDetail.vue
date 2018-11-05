@@ -1,16 +1,16 @@
 <template>
   <div class="app-container">
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <table class="table table-bordered table-striped text-center">
+      <table style="text-align: right">
         <tbody>
           <tr>
-            <td>名称</td><td>{{ customer.name }}</td>
+            <td class="td_title_prop">名称:</td><td class="td_content_prop">{{ customer.name }}</td>
           </tr>
           <tr>
-            <td>地址</td><td>{{ customer.address }}</td>
+            <td class="td_title_prop">地址:</td><td class="td_content_prop">{{ customer.address }}</td>
           </tr>
           <tr>
-            <td>联系方式</td><td>{{ customer.contact }}</td>
+            <td class="td_title_prop">联系方式:</td><td class="td_content_prop">{{ customer.contact }}</td>
           </tr>
         </tbody>
       </table>
@@ -119,3 +119,6 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+  @import "@/styles/common.scss";
+</style>

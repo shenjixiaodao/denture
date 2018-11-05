@@ -14,7 +14,14 @@
         `color_no`,
         `positions`,
         `created_date`,
-        `comment`
+        `comment`,
+        `field_typ`,
+        `bite_level`,
+        `border_type`,
+        `neck_type`,
+        `inner_crown_type`,
+        `padding_type`,
+        `outer_crown_type`
         )
         VALUES
         (
@@ -27,7 +34,14 @@
         #{colorNo},
         #{positions},
         #{createdDate},
-        #{comment}
+        #{comment},
+        #{fieldType},
+        #{biteLevel},
+        #{borderType},
+        #{neckType},
+        #{innerCrownType},
+        #{paddingType},
+        #{outerCrownType}
         );
     </insert>
     <update id="update" parameterType="com.yuzi.denture.domain.Denture">

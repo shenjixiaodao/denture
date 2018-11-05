@@ -88,7 +88,10 @@ export default {
     reply(factory, isAccepted) {
 		  replyCo(factory.id, isAccepted).then(response => {
         var data = response.data
-        this.$router.go(0)
+        applicants().then(response => {
+          var data = response.data
+          this.factories = data
+        })
       })
     },
 		//到达底部加载更多数据

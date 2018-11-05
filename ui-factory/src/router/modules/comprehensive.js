@@ -34,7 +34,7 @@ const comprehensiveRouter = {
       path: 'denture/:id(\\d+)',
       component: () => import('@/views/manufacture/comprehensive/components/DentureDetail'),
       name: 'ComprehensiveDentureDetail',
-      meta: { title: 'DentureDetail', noCache: true },
+      meta: { title: '义齿详情', noCache: true },
       hidden: true
     },
     {

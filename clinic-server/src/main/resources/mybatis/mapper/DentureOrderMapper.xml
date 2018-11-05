@@ -61,19 +61,22 @@
         </association>
     </resultMap>
 
-    <sql id="OrderDetailRM">
+    <sql id="BaseSQL">
+        do.*,
+        f.name f_name, f.address f_address, f.contact f_contact
+    </sql>
+    <select id="findOrdersByClinicId" parameterType="Long" resultMap="baseRM">
+        SELECT <include refid="BaseSQL" /> FROM denture_order do
+        INNER JOIN factory f on (do.clinic_id=#{clinicId} and do.factory_id=f.id)
+    </select>
+    <sql id="OrderDetailSQL">
         do.*,
         f.name f_name, f.address f_address, f.contact f_contact,
         d.clinic_id d_clinic_id, d.role d_role, d.contact d_contact, d.name d_name,
         c.name c_name, c.address c_address, c.contact c_contact
     </sql>
-    <select id="findOrdersByClinicId" parameterType="Long" resultMap="baseRM">
-        SELECT * FROM denture_order do
-        WHERE do.clinic_id=#{clinicId}
-    </select>
-
     <select id="findOrderById" parameterType="Long" resultMap="baseRM">
-        SELECT <include refid="OrderDetailRM" /> FROM denture_order do
+        SELECT <include refid="OrderDetailSQL" /> FROM denture_order do
         INNER JOIN factory f on (do.id=#{id} and do.factory_id=f.id)
         INNER JOIN clinic c on (do.clinic_id=c.id)
         INNER JOIN clinic_user d ON (do.dentist_id=d.id)

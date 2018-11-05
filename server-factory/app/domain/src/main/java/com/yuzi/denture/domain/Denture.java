@@ -1,5 +1,6 @@
 package com.yuzi.denture.domain;
 
+import com.yuzi.denture.domain.type.*;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
@@ -54,6 +55,13 @@ public class Denture {
     private List<AppliedIngredient> appliedIngredients;
     //工序组操作记录(precedureGroups):
     private List<ProcedureGroup> procedureGroups;
+    BiteLevel biteLevel;
+    BorderType borderType;
+    FieldType fieldType;
+    InnerCrownType innerCrownType;
+    NeckType neckType;
+    OuterCrownType outerCrownType;
+    PaddingType paddingType;
 
     public Denture(DentureType type, SpecType specification, Long clinicId, String comment,
                    Long factoryId, String positions, String colorNo) {
@@ -158,6 +166,62 @@ public class Denture {
     }
 
     public Denture() {
+    }
+
+    public BiteLevel getBiteLevel() {
+        return biteLevel;
+    }
+
+    public void setBiteLevel(BiteLevel biteLevel) {
+        this.biteLevel = biteLevel;
+    }
+
+    public BorderType getBorderType() {
+        return borderType;
+    }
+
+    public void setBorderType(BorderType borderType) {
+        this.borderType = borderType;
+    }
+
+    public FieldType getFieldType() {
+        return fieldType;
+    }
+
+    public void setFieldType(FieldType fieldType) {
+        this.fieldType = fieldType;
+    }
+
+    public InnerCrownType getInnerCrownType() {
+        return innerCrownType;
+    }
+
+    public void setInnerCrownType(InnerCrownType innerCrownType) {
+        this.innerCrownType = innerCrownType;
+    }
+
+    public NeckType getNeckType() {
+        return neckType;
+    }
+
+    public void setNeckType(NeckType neckType) {
+        this.neckType = neckType;
+    }
+
+    public OuterCrownType getOuterCrownType() {
+        return outerCrownType;
+    }
+
+    public void setOuterCrownType(OuterCrownType outerCrownType) {
+        this.outerCrownType = outerCrownType;
+    }
+
+    public PaddingType getPaddingType() {
+        return paddingType;
+    }
+
+    public void setPaddingType(PaddingType paddingType) {
+        this.paddingType = paddingType;
     }
 
     public String getId() {

@@ -1,41 +1,29 @@
 <template>
   <div style="padding:5px;">
     <div class="panel panel-primary">
-      <table class="table table-bordered table-striped text-center">
-        <!--<thead>
-          <tr>
-            <th>序号</th>
-            <th>用户名</th>
-            <th>年龄</th>
-            <th>毕业学校</th>
-            <th>操作</th>
-          </tr>
-        </thead>-->
+      <table style="text-align: right">
         <tbody>
           <tr>
-            <td>订单号</td><td>{{ orderInfo.id }}</td>
+            <td class="td_title_prop">订单号:</td><td class="td_content_prop">{{ orderInfo.id }}</td>
           </tr>
           <tr>
-            <td>订单状态</td><td>{{ orderInfo.status }}</td>
+            <td class="td_title_prop">订单状态:</td><td class="td_content_prop">{{ orderInfo.status }}</td>
           </tr>
           <tr>
-            <td>定制方</td><td>{{ orderInfo.clinic.name }}</td>
+            <td class="td_title_prop">定制方:</td><td class="td_content_prop">{{ orderInfo.clinic.name }}</td>
           </tr>
           <tr>
-            <td>联系方式</td><td>{{ orderInfo.clinic.contact }}</td>
+            <td class="td_title_prop">联系方式:</td><td class="td_content_prop">{{ orderInfo.clinic.contact }}</td>
           </tr>
           <tr>
-            <td>下单时间</td><td>{{ orderInfo.createdDate }}</td>
+            <td class="td_title_prop">下单时间:</td>
+            <td class="td_content_prop">
+              <span v-if="orderInfo.createdDate">{{ orderInfo.createdDate.split(' ',2)[0] }}</span>
+            </td>
           </tr>
           <tr>
-            <td>支付定金</td><td>{{ orderInfo.payAmount }}</td>
+            <td class="td_title_prop">支付定金:</td><td class="td_content_prop">{{ orderInfo.payAmount }}</td>
           </tr>
-          <!--<tr>
-            <td>医生</td><td>{{orderInfo.dentist}}</td>
-          </tr>
-          <tr>
-            <td>患者</td><td>{{orderInfo.name}}</td>
-          </tr>-->
         </tbody>
       </table>
     </div>
@@ -68,3 +56,6 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+  @import "@/styles/common.scss";
+</style>

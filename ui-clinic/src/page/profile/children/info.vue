@@ -19,19 +19,6 @@
                     </span>
                 </div>
             </section>
-            <router-link to="/profile/info/setusername" class="info-router">
-                <section class="headportrait headportraitwo">
-                    <h2>用户名</h2>
-                    <div class="headportrait-div">
-                        <p>{{username}}</p>
-                        <span class="headportrait-div-bottom">
-                            <svg fill="#d8d8d8">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-right"></use>
-                            </svg>
-                        </span>
-                    </div>
-                </section>
-            </router-link>
             <router-link to="/profile/info/address" class="info-router">
                 <section class="headportrait headportraitwo headportraithree">
                         <h2>收货地址</h2>
@@ -44,22 +31,6 @@
                         </div>
                 </section>
             </router-link>
-            <section class="bind-phone">
-                账号绑定
-            </section>
-            <section class="info-router" @click="changePhone">
-                <section class="headportrait headportraitwo headportraithree">
-                        <h2><img src="../../../images/bindphone.png" style="display:inline-block;margin-right:.4rem;" alt="">手机</h2>
-                        <div class="headportrait-div">
-                            <p>{{infotel}}</p>
-                            <span class="headportrait-div-bottom">
-                                <svg fill="#d8d8d8">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-right"></use>
-                                </svg>
-                            </span>
-                        </div>
-                </section>
-            </section>
             <section class="bind-phone">
                 安全设置
             </section>

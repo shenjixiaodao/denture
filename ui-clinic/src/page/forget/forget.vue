@@ -2,14 +2,6 @@
     <div class="restContainer">
         <head-top head-title="重置密码" goBack="true"></head-top>
         <form class="restForm">
-            <section class="input_container phone_number">
-                <input type="text" placeholder="账号" name="phone" maxlength="11" v-model="phoneNumber" @input="inputPhone">
-                <!-- <button @click.prevent="getVerifyCode" :class="{right_phone_number:rightPhoneNumber}" v-show="!computedTime">获取验证码</button>
-                <button  @click.prevent v-show="computedTime">已发送({{computedTime}}s)</button> -->
-            </section>
-             <section class="input_container">
-                <input type="text" placeholder="旧密码" name="oldPassWord" v-model="oldPassWord">
-            </section>
             <section class="input_container">
                 <input type="text" placeholder="请输入新密码" name="newPassWord" v-model="newPassWord">
             </section>
@@ -148,7 +140,7 @@
             },
             closeTip(){
                 this.showAlert = false;
-            }   
+            }
         }
     }
 

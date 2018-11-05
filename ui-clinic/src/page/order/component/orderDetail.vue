@@ -5,8 +5,8 @@
             <section class="scroll_insert">
                 <section class="order_titel">
                     <img src="http://img.jituwang.com/uploads/allimg/130614/260169-1306140J93521.jpg" class="restaurant_image">
-                    <p>{{orderData.status}}</p>
-                    <router-link class="order_again" :to="'/shop/'+orderData.factory.id">再来一单</router-link>
+                    <p>{{ status[orderData.status] }}</p>
+                    <router-link class="order_again" :to="'/orders/addOrder/'+orderData.factory.id">再来一单</router-link>
                 </section>
                 <section class="food_list">
                     <router-link class="food_list_header" :to="'/shop/'+orderData.factory.id">
@@ -118,6 +118,19 @@ export default {
         return{
             showLoading: true, //显示加载动画
             orderData: null,
+            status: {
+              'Created': '创建',
+              'Paid': '支付定金',
+              'Accepted': '已接单',
+              'Rejected': '已拒单',
+              'Making': '制作中',
+              'Inspecting': '检测中',
+              'PackAndClr': '包装消毒',
+              'Released': '出厂',
+              'Return': '返厂',
+              'Remaking': '重制',
+              'Installed': '安装完成'
+            },
             imgBaseUrl
         }
     },

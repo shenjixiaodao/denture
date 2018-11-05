@@ -10,11 +10,8 @@
           <polyline points="0,12 12,12" style="fill:none;stroke:rgb(255,255,255);stroke-width:2"/>
         </svg>
       </section>
-      <router-link :to="userInfo? '/profile':'/login'" v-if='false' class="head_login">
-        <svg class="user_avatar" v-if="userInfo">
-          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
-        </svg>
-        <span class="login_span" v-else>登录|注册</span>
+      <router-link v-if="!token" :to="'/login'" class="head_login">
+        <span class="login_span">登录|注册</span>
       </router-link>
       <section class="title_head ellipsis">
         <span class="title_text">订单列表</span>
@@ -33,7 +30,7 @@
             <header class="order_item_right_header">
               <section class="order_header">
                 <h4 >
-                  <span class="ellipsis">{{item.factory.id}} </span>
+                  <span class="ellipsis">{{item.factory.name}} </span>
                   <svg fill="#333" class="arrow_right">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-right"></use>
                   </svg>
@@ -41,7 +38,7 @@
                 <p class="order_time">{{item.createdDate}}</p>
               </section>
               <p class="order_status">
-                {{item.status}}
+                {{ status[item.status] }}
               </p>
             </header>
             <section class="order_basket">
@@ -72,14 +69,29 @@ import footGuide from 'src/components/footer/footGuide'
 import {loadMore} from 'src/components/common/mixin'
 import {imgBaseUrl} from 'src/config/env'
 import { queryOrders } from 'src/api/order'
+import store from 'src/store'
 
 export default {
   data(){
     return{
+      token: store.getters.token,
       orderList: null, //订单列表
       offset: 0,
       preventRepeat: false,  //防止重复获取
       showLoading: true, //显示加载动画
+      status: {
+        'Created': '创建',
+        'Paid': '支付定金',
+        'Accepted': '已接单',
+        'Rejected': '已拒单',
+        'Making': '制作中',
+        'Inspecting': '检测中',
+        'PackAndClr': '包装消毒',
+        'Released': '出厂',
+        'Return': '返厂',
+        'Remaking': '重制',
+        'Installed': '安装完成'
+      },
       imgBaseUrl
     }
   },
@@ -136,7 +148,7 @@ export default {
     //下单
     addOrder(){
       this.preventRepeat = false;
-      this.$router.push('/orders/addOrder')
+      this.$router.push('/orders/addOrder/')
     },
     //生产环境与发布环境隐藏loading方式不同
     hideLoading(){

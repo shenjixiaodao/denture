@@ -1,19 +1,19 @@
 <template>
   <div style="padding:5px;">
     <div class="panel panel-primary">
-      <table class="table table-bordered table-striped text-center">
+      <table style="text-align: right">
         <tbody>
           <tr>
-            <td>姓名</td><td>{{ user.name }}</td>
+            <td class="td_title_prop">姓名:</td><td class="td_content_prop">{{ user.name }}</td>
           </tr>
           <tr>
-            <td>联系方式</td><td>{{ user.contact }}</td>
+            <td class="td_title_prop">联系方式:</td><td class="td_content_prop">{{ user.contact }}</td>
           </tr>
           <tr>
-            <td>所在组</td><td>{{ user.groupType }}</td>
+            <td class="td_title_prop">所在组:</td><td class="td_content_prop">{{ user.groupType }}</td>
           </tr>
           <tr>
-            <td>入职时间</td><td>{{ user.joinDate }}</td>
+            <td class="td_title_prop">入职时间:</td><td class="td_content_prop">{{ user.joinDate }}</td>
           </tr>
         </tbody>
       </table>
@@ -46,3 +46,6 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+  @import "@/styles/common.scss";
+</style>

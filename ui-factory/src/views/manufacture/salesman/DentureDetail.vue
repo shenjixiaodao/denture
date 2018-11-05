@@ -1,40 +1,40 @@
 <template>
   <div style="padding:5px;">
     <div class="panel panel-primary">
-      <table class="table table-bordered table-striped text-center">
+      <table style="text-align: right">
         <tbody>
           <tr>
-            <td>类型</td><td>{{ denture.type }}</td>
+            <td class="td_title_prop">类型:</td><td class="td_content_prop">{{ denture.type }}</td>
           </tr>
           <tr>
-            <td>规格</td><td>{{ denture.specification }}</td>
+            <td class="td_title_prop">规格:</td><td class="td_content_prop">{{ denture.specification }}</td>
           </tr>
           <tr>
-            <td>定制方</td><td>{{ denture.clinic.name }}</td>
+            <td class="td_title_prop">定制方:</td><td class="td_content_prop">{{ denture.clinic.name }}</td>
           </tr>
           <tr>
-            <td>联系方式</td><td>{{ denture.clinic.contact }}</td>
+            <td class="td_title_prop">联系方式:</td><td class="td_content_prop">{{ denture.clinic.contact }}</td>
           </tr>
           <tr>
-            <td>医生备注</td><td>{{ denture.comment }}</td>
+            <td class="td_title_prop">备注:</td><td class="td_content_prop">{{ denture.comment }}</td>
           </tr>
           <tr>
-            <td>数量</td><td>{{ denture.number }}</td>
+            <td class="td_title_prop">数量:</td><td class="td_content_prop">{{ denture.number }}</td>
           </tr>
           <tr>
-            <td>牙位</td><td>{{ denture.positions }}</td>
+            <td class="td_title_prop">牙位:</td><td class="td_content_prop">{{ denture.positions }}</td>
           </tr>
           <tr>
-            <td>色号</td><td>{{ denture.colorNo }}</td>
+            <td class="td_title_prop">色号:</td><td class="td_content_prop">{{ denture.colorNo }}</td>
           </tr>
           <tr>
-            <td>创建日期</td><td>{{ denture.createdDate }}</td>
+            <td class="td_title_prop">创建日期:</td><td class="td_content_prop"><span v-if="denture.createdDate">{{ denture.createdDate.split(' ',2)[0] }}</span></td>
           </tr>
           <tr>
-            <td>生产开始日期</td><td>{{ denture.startDate }}</td>
+            <td class="td_title_prop">生产开始日期:</td><td class="td_content_prop"><span v-if="denture.startDate">{{ denture.startDate.split(' ',2)[0] }}</span></td>
           </tr>
           <tr>
-            <td>生产结束日期</td><td>{{ denture.endDate }}</td>
+            <td class="td_title_prop">生产结束日期:</td><td class="td_content_prop"><span v-if="denture.endDate">{{ denture.endDate.split(' ',2)[0] }}</span></td>
           </tr>
         </tbody>
       </table>
@@ -68,3 +68,6 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+  @import "@/styles/common.scss";
+</style>

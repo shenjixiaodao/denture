@@ -44,7 +44,7 @@ export default [{
               component: orderDetail,
             },
             {
-              path: 'addOrder', //下单
+              path: 'addOrder/:id(\\d*)', //下单
               component: addOrder,
             }
           ]

@@ -116,7 +116,7 @@
         </section>
 
         <section class="order_detail_style">
-          <header>牙位</header>
+          <header>咬合</header>
           <section class="item_style">
             <p class="guide_item">
               <input type="radio" v-model="order.biteLevel" value="YaoMi" id="YaoMi"/>
@@ -290,7 +290,8 @@ import {getImgPath} from 'src/components/common/mixin'
 import loading from 'src/components/common/loading'
 import BScroll from 'better-scroll'
 import {imgBaseUrl} from 'src/config/env'
-import { addOrder, queryFactories } from 'src//api/order'
+import { addOrder } from 'src//api/order'
+import { queryFactories } from 'src//api/info'
 
 
   export default {
@@ -385,10 +386,22 @@ import { addOrder, queryFactories } from 'src//api/order'
     },
     methods: {
       async initData(){
-        queryFactories().then(response => {
+        const factoryId = this.$route.params && this.$route.params.id
+        var _this = this
+        queryFactories(1).then(response => {
           var data = response.data
           console.log(data)
           this.factories = data
+          if (factoryId) {
+            this.factories.forEach(function (value,i) {
+              console.log(value)
+              if(value.id==factoryId) {
+                console.log(factoryId)
+                _this.selectedFactory = value
+                return
+              }
+            })
+          }
           this.showLoading = false
           this.$nextTick(() => {
             new BScroll('#scroll_section', {
