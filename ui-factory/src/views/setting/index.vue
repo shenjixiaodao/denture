@@ -1,6 +1,21 @@
 <template>
   <div class="app-container">
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+      <pan-thumb :image="image"/>
+
+      <el-button type="primary" icon="upload" style="position: absolute;bottom: 15px;margin-left: 40px;" @click="imagecropperShow=true">Change Avatar
+      </el-button>
+      <image-cropper
+        v-show="imagecropperShow"
+        :width="300"
+        :height="300"
+        :key="imagecropperKey"
+        url="https://httpbin.org/post"
+        lang-type="en"
+        @close="close"
+        @crop-upload-success="cropSuccess"/>
+    </el-row>
+    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <el-form ref="pwd" label-position="left" label-width="70px" style="width: 400px;">
         <el-form-item label="旧密码" prop="title">
           <!--<el-input v-model="srcPwd" type="password" />-->
@@ -19,16 +34,22 @@
 </template>
 
 <script>
+import ImageCropper from '@/components/ImageCropper'
+import PanThumb from '@/components/PanThumb'
 import { modifyPwd } from '@/api/common'
 import { isStringNull } from '@/utils/validate'
 import { Message } from 'element-ui'
 
 export default {
   name: 'Setting',
+  components: { ImageCropper, PanThumb },
   data() {
     return {
       srcPwd: null,
-      dstPwd: null
+      dstPwd: null,
+      imagecropperShow: false,
+      imagecropperKey: 0,
+      image: 'http://dpic.tiankong.com/1d/0k/QJ6497550542.jpg?x-oss-process=style/shows'
     }
   },
   methods: {
@@ -43,7 +64,23 @@ export default {
       modifyPwd(this.srcPwd, this.dstPwd).then(response => {
         this.$router.push({ path: '/login' })
       })
+    },
+    cropSuccess(resData) {
+      this.imagecropperShow = false
+      this.imagecropperKey = this.imagecropperKey + 1
+      this.image = resData.files.avatar
+    },
+    close() {
+      this.imagecropperShow = false
     }
   }
 }
 </script>
+
+<style scoped>
+  .avatar{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+  }
+</style>

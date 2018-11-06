@@ -6,7 +6,8 @@ const addOrder = r => require.ensure([], () => r(require('../page/order/componen
 const login = r => require.ensure([], () => r(require('../page/login/login')), 'login')
 const profile = r => require.ensure([], () => r(require('../page/profile/profile')), 'profile')
 const register = r => require.ensure([], () => r(require('../page/profile/register')), 'register')
-const forget = r => require.ensure([], () => r(require('../page/forget/forget')), 'forget')
+const forget = r => require.ensure([], () => r(require('../page/password/forget')), 'forget')
+const reset = r => require.ensure([], () => r(require('../page/password/reset')), 'reset')
 const info = r => require.ensure([], () => r(require('../page/profile/children/info')), 'info')
 const setusername = r => require.ensure([], () => r(require('../page/profile/children/children/setusername')), 'setusername')
 const address = r => require.ensure([], () => r(require('../page/profile/children/children/address')), 'address')
@@ -91,10 +92,15 @@ export default [{
         path: 'register', //注册
         component: register,
       },
-      //修改密码页
+      //忘记密码页
       {
           path: '/forget',
           component: forget
+      },
+      //重置密码页
+      {
+        path: '/reset',
+        component: reset
       },
       //发现页
       {

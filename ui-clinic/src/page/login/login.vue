@@ -55,13 +55,10 @@
             </section>
         </form>
         <p class="login_tips">
-            温馨提示：未注册过的账号，登录时将自动注册
-        </p>
-        <p class="login_tips">
-            注册过的用户可凭账号密码登录
+            温馨提示：账号 15280257503，注册密码 123456
         </p>
         <div class="login_container" @click="mobileLogin">登录</div>
-        <router-link to="/forget" class="to_forget" v-if="!loginWay">重置密码？</router-link>
+        <router-link to="/forget" class="to_forget" v-if="!loginWay">忘记密码？</router-link>
         <alert-tip v-if="showAlert" :showHide="showAlert" @closeTip="closeTip" :alertText="alertText"></alert-tip>
     </div>
 </template>
