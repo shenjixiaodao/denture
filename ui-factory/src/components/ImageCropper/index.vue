@@ -826,6 +826,9 @@ export default {
       request({
         url,
         method: 'post',
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
         data: fmData
       }).then(resData => {
         that.loading = 2

@@ -17,13 +17,18 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Locale;
@@ -41,6 +46,8 @@ public class FactoryUserController {
 
     private static Logger logger = LoggerFactory.getLogger(FactoryUserController.class);
 
+    @Value("${upload.location}")
+    private String UploadLocation;
     @Autowired
     private FactoryService service;
     @Autowired
@@ -204,6 +211,31 @@ public class FactoryUserController {
             res.setData(vo);
             logger.info("查询用户信息成功");
         }, "查询用户信息错误", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "修改Logo", response = String.class, httpMethod = "POST")
+    @ResponseBody
+    @RequestMapping(value = "/changeAvatar", method = POST)
+    public WebResult<String> changeAvatar(@RequestPart MultipartFile avatar, HttpServletRequest request) {
+        logger.info("修改Logo");
+        FactoryUser user = SessionManager.Instance().user(request);
+        Long factoryId = user.getFactoryId();
+        WebResult<String> result = WebResult.execute(res -> {
+            String filename = avatar.getOriginalFilename();
+            filename = factoryId + filename.substring(filename.lastIndexOf("."));
+            File destFile = new File(UploadLocation + File.separator + filename);
+            try {
+                avatar.transferTo(destFile);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            if(!destFile.exists()) {
+                throw new RuntimeException("文件上传失败");
+            }
+            res.setData(filename);
+            logger.info("添加客户成功");
+        }, "添加客户错误", logger);
         return result;
     }
 }

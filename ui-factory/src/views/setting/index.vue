@@ -3,15 +3,14 @@
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <pan-thumb :image="image"/>
 
-      <el-button type="primary" icon="upload" style="position: absolute;bottom: 15px;margin-left: 40px;" @click="imagecropperShow=true">Change Avatar
-      </el-button>
+      <el-button type="primary" icon="upload" style="position: absolute;bottom: 15px;margin-left: 40px;" @click="imagecropperShow=true">更换Logo</el-button>
       <image-cropper
         v-show="imagecropperShow"
         :width="300"
         :height="300"
         :key="imagecropperKey"
-        url="https://httpbin.org/post"
-        lang-type="en"
+        :url="uploadAvatar"
+        lang-type="zh"
         @close="close"
         @crop-upload-success="cropSuccess"/>
     </el-row>
@@ -49,6 +48,7 @@ export default {
       dstPwd: null,
       imagecropperShow: false,
       imagecropperKey: 0,
+      uploadAvatar: '/factoryUser/changeAvatar',
       image: 'http://dpic.tiankong.com/1d/0k/QJ6497550542.jpg?x-oss-process=style/shows'
     }
   },
@@ -68,7 +68,8 @@ export default {
     cropSuccess(resData) {
       this.imagecropperShow = false
       this.imagecropperKey = this.imagecropperKey + 1
-      this.image = resData.files.avatar
+      this.image = process.env.BASE_API + '/info/avatar/' + resData.split('.', 2)[1]
+      console.info(this.image)
     },
     close() {
       this.imagecropperShow = false
