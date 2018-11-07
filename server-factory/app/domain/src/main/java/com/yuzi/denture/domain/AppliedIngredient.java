@@ -19,6 +19,20 @@ public class AppliedIngredient {
     //备注(comment):
     private String comment;
 
+    public AppliedIngredient(Long ingredientId, String dentureId, Double appliedNumber,
+                             Long applicantId, String comment) {
+        this.ingredient = new Ingredient(ingredientId);
+        this.dentureId = dentureId;
+        this.no = no;
+        this.appliedNumber = appliedNumber;
+        this.applicant = new FactoryUser(applicantId);
+        this.appliedDate = new Date();
+        this.comment = comment;
+    }
+
+    public AppliedIngredient() {
+    }
+
     public Ingredient getIngredient() {
         return ingredient;
     }

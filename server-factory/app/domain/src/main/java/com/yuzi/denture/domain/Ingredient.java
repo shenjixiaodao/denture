@@ -16,11 +16,21 @@ public class Ingredient {
         this.factoryId = factoryId;
     }
 
+    public Ingredient(Long id) {
+        this.id = id;
+    }
+
     public Ingredient() {
     }
 
     public void addBalance(Double number) {
         this.balance += number;
+    }
+
+    public void subBalance(Double number) {
+        if(balance < number)
+            throw new IllegalArgumentException("物料【"+name+"】库存不足");
+        this.balance -= number;
     }
 
     public Long getId() {

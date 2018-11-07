@@ -338,6 +338,34 @@ public class ManufactureController {
         return result;
     }
 
+    @ApiOperation(value = "申请物料", response = WebResult.class, httpMethod = "POST")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "form", name = "dentureId", dataType = "string",
+                    required = true, value = "义齿ID"),
+            @ApiImplicitParam(paramType = "form", name = "ingredientId", dataType = "long",
+                    required = true, value = "物料Id"),
+            @ApiImplicitParam(paramType = "form", name = "number", dataType = "double",
+                    required = true, value = "申请量"),
+            @ApiImplicitParam(paramType = "form", name = "comment", dataType = "string",
+                    required = true, value = "备注")
+    })
+    @ResponseBody
+    @RequestMapping(value = "/applyIngredient", method = POST)
+    public WebResult applyIngredient(String dentureId, Long ingredientId, Double number, String comment,
+                                     HttpServletRequest request) {
+        FactoryUser user = SessionManager.Instance().user(request);
+        Long applicantId = user.getId();
+        logger.info("申请物料:ingredientId={}, comment={}, number={}", ingredientId, comment, number);
+        WebResult result = new WebResult<>();
+        try {
+            service.applyIngredient(applicantId, dentureId, ingredientId, number, comment);
+        } catch (Exception ex) {
+            logger.warn("申请物料异常: {}", ex);
+            return WebResult.failure(ex.getMessage());
+        }
+        return result;
+    }
+
     @ApiOperation(value = "查询物料列表", response = IngredientVo.class, httpMethod = "GET")
     @ResponseBody
     @RequestMapping(value = "/queryIngredients", method = GET)

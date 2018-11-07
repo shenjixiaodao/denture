@@ -3,6 +3,7 @@ import { Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 import * as QS from 'qs'
+import router from '@/router'
 
 // create an axios instance
 const service = axios.create({
@@ -40,6 +41,18 @@ service.interceptors.response.use(
         duration: 2 * 1000
       })
       return Promise.reject('error')
+    }
+    if (res.code === '2') {
+      store.dispatch('LogOut').then(() => {
+        Message({
+          message: '登录过期，请重新登录',
+          type: 'error',
+          duration: 3 * 1000
+        })
+        console.log(window.location.hash)
+        router.push(`/login?redirect=` + window.location.hash.substring(1))
+      })
+      return
     }
     return res
   },

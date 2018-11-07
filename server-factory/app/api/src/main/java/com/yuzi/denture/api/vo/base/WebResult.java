@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 @ApiModel
 public class WebResult<T> {
 	//1表示成功，非1表示失败
-	@ApiModelProperty(position=1,required = true, value="0表示成功，非0表示失败")
+	@ApiModelProperty(position=1,required = true, value="0表示成功,2表示登录过期，非0表示失败")
 	private String code;
 	//消息描述
 	 @ApiModelProperty(position=2,value="消息描述")
@@ -17,13 +17,24 @@ public class WebResult<T> {
 	private T data;
 
 	public WebResult() {
-		code = WebConstants.RESULT_SUCCESS_CODE;
+		this(ResponseCode.SUCCESS);
+	}
+
+	public WebResult(ResponseCode responseCode) {
+		code = responseCode.code();
+		message = responseCode.msg();
 	}
 
 	public static WebResult success(){
-		WebResult result = new WebResult(){};
-		result.setCode(WebConstants.RESULT_SUCCESS_CODE);
-		return result;
+		return new WebResult(ResponseCode.SUCCESS);
+	}
+
+	public static WebResult expired() {
+		return new WebResult(ResponseCode.TOKEN_EXPIRED);
+	}
+
+	public static WebResult failure() {
+		return new WebResult(ResponseCode.FAILURE);
 	}
 
 	public static WebResult failure(String errorCode, String msg){
@@ -35,7 +46,7 @@ public class WebResult<T> {
 
 	public static WebResult failure(String msg){
 		WebResult result = new WebResult(){};
-		result.setCode(WebConstants.RESULT_FAIL_CODE);
+		result.setCode(ResponseCode.FAILURE.code());
 		result.setMessage(msg);
 		return result;
 	}
@@ -46,7 +57,7 @@ public class WebResult<T> {
 			function.doAction(result);
 		}  catch (Exception e) {
 			logger.warn(exceptionLog+": {}",e);
-			result.setCode(WebConstants.RESULT_FAIL_CODE);
+			result.setCode(ResponseCode.FAILURE.code());
 			result.setMessage(e.getMessage());
 		}
 		return result;

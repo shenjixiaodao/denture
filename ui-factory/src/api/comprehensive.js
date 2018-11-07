@@ -65,6 +65,17 @@ export function addIngredient(data) {
   })
 }
 
+export function applyIngredient(data) {
+  return request({
+    url: '/manufacture/applyIngredient',
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data
+  })
+}
+
 export function queryIngredients() {
   return request({
     url: '/manufacture/queryIngredients',

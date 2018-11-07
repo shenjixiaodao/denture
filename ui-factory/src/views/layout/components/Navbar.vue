@@ -19,7 +19,7 @@
 
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
         <div class="avatar-wrapper">
-          <img src="http://dpic.tiankong.com/1d/0k/QJ6497550542.jpg?x-oss-process=style/shows" class="user-avatar">
+          <img :src="avatar" class="user-avatar">
           <i class="el-icon-caret-bottom"/>
         </div>
         <el-dropdown-menu slot="dropdown">
@@ -44,6 +44,7 @@ import Hamburger from '@/components/Hamburger'
 import ErrorLog from '@/components/ErrorLog'
 import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
+import store from '@/store'
 
 export default {
   components: {
@@ -53,11 +54,15 @@ export default {
     Screenfull,
     SizeSelect
   },
+  data() {
+    return {
+      avatar: store.getters.avatar
+    }
+  },
   computed: {
     ...mapGetters([
       'sidebar',
       'name',
-      'avatar',
       'device'
     ])
   },

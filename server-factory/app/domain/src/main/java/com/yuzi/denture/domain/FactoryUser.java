@@ -48,6 +48,7 @@ public class FactoryUser {
     //joinDate:
      Date joinDate;
     List<FactoryRole> roles;
+    String avatar;
 
     public FactoryUser(Long factoryId, String name, String contact, FactoryRole.Role role) {
         this.factoryId = factoryId;
@@ -159,6 +160,14 @@ public class FactoryUser {
 
     public void setRoles(List<FactoryRole> roles) {
         this.roles = roles;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public FactoryUser() {

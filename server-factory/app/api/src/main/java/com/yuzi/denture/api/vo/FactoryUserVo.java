@@ -39,7 +39,7 @@ public class FactoryUserVo implements Serializable{
     private List<String> roles;
     @ApiModelProperty(value="登录成功后的token")
     private String token;
-
+    String avatar;
     public Long getId() {
         return id;
     }
@@ -102,5 +102,13 @@ public class FactoryUserVo implements Serializable{
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

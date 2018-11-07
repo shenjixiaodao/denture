@@ -19,5 +19,7 @@ logging:
     com.yuzi.denture: DEBUG
   file: log/denture.log
 
-upload:
-  location: D:\r_workspace\project\test_dir
+avatar:
+  location: D:\r_workspace\test_dir\avatar
+logo:
+  location: D:\r_workspace\test_dir\logo

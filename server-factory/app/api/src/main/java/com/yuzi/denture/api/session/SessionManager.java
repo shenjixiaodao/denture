@@ -1,6 +1,7 @@
 package com.yuzi.denture.api.session;
 
 import com.yuzi.denture.domain.FactoryUser;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -20,7 +21,7 @@ public class SessionManager {
     private final ScheduledExecutorService validationService;
 
     private static class SingletonHolder {
-        private static SessionManager INSTANCE = new SessionManager();
+        static SessionManager INSTANCE = new SessionManager();
     }
 
     public static SessionManager Instance(){
@@ -42,6 +43,14 @@ public class SessionManager {
                 this.expiredTime, TimeUnit.MILLISECONDS);
     }
 
+    public boolean exist(HttpServletRequest request) {
+        String token = request.getHeader(Cst.TokenKey);
+        if(StringUtils.isEmpty(token)) {
+            return false;
+        }
+        CacheObject object = Session.get(token);
+        return object != null;
+    }
 
     public void cacheUser(String token, FactoryUser user) {
         Session.put(token, new CacheObject(user));

@@ -5,7 +5,6 @@
 
       <div class="title-container">
         <h3 class="title">{{ $t('login.title') }}</h3>
-        <lang-select class="set-language"/>
       </div>
 
       <el-form-item prop="username">
@@ -126,10 +125,12 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
+          this.$store.dispatch('LoginByUsername', this.loginForm).then((resolve, reject) => {
             this.loading = false
-            // todo 如果是初始登录，根据角色选择跳转到指定页面
-            this.$router.push({ path: this.redirect || '/' })
+            if (!reject) {
+              // todo 如果是初始登录，根据角色选择跳转到指定页面
+              this.$router.push({ path: this.redirect || '/' })
+            }
           }).catch(() => {
             this.loading = false
           })

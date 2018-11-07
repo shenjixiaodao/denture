@@ -37,18 +37,18 @@ public class InfoController {
 
     private static Logger logger = LoggerFactory.getLogger(InfoController.class);
 
-    @Value("${upload.location}")
-    private String UploadLocation;
+    @Value("${avatar.location}")
+    private String AvatarLocation;
     @Autowired
     private InfoRepository infoRepository;
 
     @ApiOperation(value = "查询诊所列表", response = ClinicVo.class, httpMethod = "GET")
     @ResponseBody
     @RequestMapping(value = "/queryClinics", method = GET)
-    public WebResult<List<ClinicVo>> clinics() {
-        // todo session get factoryId and uid
-        Long factoryId = 1L;
-        Long uid = 1L;
+    public WebResult<List<ClinicVo>> clinics(HttpServletRequest request) {
+        FactoryUser user = SessionManager.Instance().user(request);
+        Long uid = user.getId();
+        Long factoryId = user.getFactoryId();
         logger.info("查询诊所列表:factoryId={}",factoryId);
         WebResult<List<ClinicVo>> result = WebResult.execute(res -> {
             List<Clinic> clinics = infoRepository.findCustomerClinics(factoryId, uid);
@@ -75,11 +75,9 @@ public class InfoController {
         return result;
     }
 
-    @RequestMapping("/avatar/{suffix}")
-    @ApiOperation(value = "工厂Logo", response = String.class, httpMethod = "GET")
-    public void avatar(@PathVariable String suffix, HttpServletRequest request, HttpServletResponse resp) {
-        //FactoryUser user = SessionManager.Instance().user(request);
-        Long factoryId = 1L;//user.getFactoryId();
+    @RequestMapping("/avatar/{uid}/{suffix}")
+    @ApiOperation(value = "用户头像", response = String.class, httpMethod = "GET")
+    public void avatar(@PathVariable Long uid, @PathVariable String suffix, HttpServletResponse resp) {
         // 禁止图像缓存。
         resp.setHeader("Pragma", "no-cache");
         resp.setHeader("Cache-Control", "no-cache");
@@ -87,9 +85,9 @@ public class InfoController {
         resp.setContentType("image/"+suffix);
         try {
             //检查图片是否存在
-            File imageFile = new File(UploadLocation + File.separator + factoryId+"."+suffix);
+            File imageFile = new File(AvatarLocation + File.separator + uid+"."+suffix);
             if(!imageFile.exists()) {
-                throw new RuntimeException(factoryId+" : 图片不存在");
+                throw new RuntimeException(uid+" : 图片不存在");
             }
             // 将图像输出到Servlet输出流中
             ServletOutputStream sos = resp.getOutputStream();
@@ -98,5 +96,12 @@ public class InfoController {
         } catch (IOException e) {
             logger.warn("获取图片异常:{}", e);
         }
+    }
+
+    @ApiOperation(value = "登录过期", response = ClinicVo.class, httpMethod = "GET")
+    @ResponseBody
+    @RequestMapping(value = "/expired", method = GET)
+    public WebResult expired() {
+        return WebResult.expired();
     }
 }

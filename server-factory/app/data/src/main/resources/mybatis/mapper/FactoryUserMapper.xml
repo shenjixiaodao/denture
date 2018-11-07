@@ -10,7 +10,8 @@
         `password`,
         `group_type`,
         `join_date`,
-        `factory_id`
+        `factory_id`,
+        'avatar'
         )
         VALUES
         (
@@ -19,7 +20,8 @@
         #{password},
         #{groupType},
         #{joinDate},
-        #{factoryId}
+        #{factoryId},
+        #{avatar}
         );
     </insert>
 
@@ -41,6 +43,9 @@
         </if>
         <if test="password!=null">
             ,`password` = #{password}
+        </if>
+        <if test="avatar!=null">
+            ,`avatar` = #{avatar}
         </if>
         WHERE `id` = #{id};
     </update>
@@ -106,6 +111,7 @@
         <result column="password" property="password" />
         <result column="group_type" property="groupType" />
         <result column="join_date" property="joinDate" />
+        <result column="avatar" property="avatar" />
         <collection property="roles" resultMap="baseRoleRM" />
     </resultMap>
     <resultMap id="baseRoleRM" type="com.yuzi.denture.domain.FactoryRole">

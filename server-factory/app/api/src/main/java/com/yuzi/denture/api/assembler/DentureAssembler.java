@@ -30,8 +30,8 @@ public class DentureAssembler {
             return null;
         DentureVo vo = new DentureVo();
         BeanUtils.copyProperties(denture, vo);
-        vo.setType(denture.getType().name());
-        vo.setSpecification(denture.getSpecification().name());
+        vo.setType(denture.getType().text());
+        vo.setSpecification(denture.getSpecification().text());
         vo.setClinic(ClinicAssembler.toVo(denture.getClinic()));
         vo.setFactory(FactoryAssembler.toVo(denture.getFactory()));
         vo.setModelInspector(FactoryUserAssembler.toVo(denture.getModelInspector()));

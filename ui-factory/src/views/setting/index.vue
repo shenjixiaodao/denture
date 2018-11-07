@@ -1,9 +1,9 @@
 <template>
   <div class="app-container">
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <pan-thumb :image="image"/>
+      <pan-thumb :image="avatar"/>
 
-      <el-button type="primary" icon="upload" style="position: absolute;bottom: 15px;margin-left: 40px;" @click="imagecropperShow=true">更换Logo</el-button>
+      <el-button type="primary" icon="upload" style="position: absolute;bottom: 15px;margin-left: 40px;" @click="imagecropperShow=true">更换头像</el-button>
       <image-cropper
         v-show="imagecropperShow"
         :width="300"
@@ -38,6 +38,7 @@ import PanThumb from '@/components/PanThumb'
 import { modifyPwd } from '@/api/common'
 import { isStringNull } from '@/utils/validate'
 import { Message } from 'element-ui'
+import store from '@/store'
 
 export default {
   name: 'Setting',
@@ -49,7 +50,7 @@ export default {
       imagecropperShow: false,
       imagecropperKey: 0,
       uploadAvatar: '/factoryUser/changeAvatar',
-      image: 'http://dpic.tiankong.com/1d/0k/QJ6497550542.jpg?x-oss-process=style/shows'
+      avatar: store.getters.avatar
     }
   },
   methods: {
@@ -68,8 +69,9 @@ export default {
     cropSuccess(resData) {
       this.imagecropperShow = false
       this.imagecropperKey = this.imagecropperKey + 1
-      this.image = process.env.BASE_API + '/info/avatar/' + resData.split('.', 2)[1]
-      console.info(this.image)
+      const tmp = resData.split('.', 2)
+      this.avatar = process.env.BASE_API + '/info/avatar/' + tmp[0] + '/' + tmp[1]
+      console.info(this.avatar)
     },
     close() {
       this.imagecropperShow = false

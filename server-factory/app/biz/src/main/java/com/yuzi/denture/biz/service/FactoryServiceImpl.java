@@ -82,6 +82,11 @@ public class FactoryServiceImpl implements FactoryService {
     }
 
     @Override
+    public void modifyUser(FactoryUser user) {
+        repository.update(user);
+    }
+
+    @Override
     public FactoryUser login(String contact, String encryptPWD) {
         FactoryUser user = repository.findUser(contact);
         if(user == null)
@@ -151,5 +156,18 @@ public class FactoryServiceImpl implements FactoryService {
         repository.updateIngredient(ingredient);
         IngredientPurchaseRecord record = new IngredientPurchaseRecord(ingredientId, supplierId, number);
         repository.recordIngredientPurchase(record);
+    }
+
+    @Override
+    @Transactional
+    public void applyIngredient(Long uid, String dentureId, Long ingredientId, Double number, String comment) {
+        Ingredient ingredient = repository.findIngredient(ingredientId);
+        if(ingredient == null) {
+            throw new IllegalArgumentException("未知物料");
+        }
+        ingredient.subBalance(number);
+        repository.updateIngredient(ingredient);
+        AppliedIngredient appliedIngredient = new AppliedIngredient(ingredientId, dentureId, number, uid, comment);
+        repository.applyIngredient(appliedIngredient);
     }
 }

@@ -2,7 +2,6 @@ package com.yuzi.denture.api.controller;
 
 import com.yuzi.denture.api.assembler.FactoryCustomerAssembler;
 import com.yuzi.denture.api.assembler.FactoryUserAssembler;
-import com.yuzi.denture.api.session.Cst;
 import com.yuzi.denture.api.session.SessionManager;
 import com.yuzi.denture.api.vo.FactoryCustomerVo;
 import com.yuzi.denture.api.vo.FactoryUserVo;
@@ -46,8 +45,8 @@ public class FactoryUserController {
 
     private static Logger logger = LoggerFactory.getLogger(FactoryUserController.class);
 
-    @Value("${upload.location}")
-    private String UploadLocation;
+    @Value("${avatar.location}")
+    private String AvatarLocation;
     @Autowired
     private FactoryService service;
     @Autowired
@@ -214,17 +213,17 @@ public class FactoryUserController {
         return result;
     }
 
-    @ApiOperation(value = "修改Logo", response = String.class, httpMethod = "POST")
+    @ApiOperation(value = "修改头像", response = String.class, httpMethod = "POST")
     @ResponseBody
     @RequestMapping(value = "/changeAvatar", method = POST)
     public WebResult<String> changeAvatar(@RequestPart MultipartFile avatar, HttpServletRequest request) {
-        logger.info("修改Logo");
+        logger.info("修改头像");
         FactoryUser user = SessionManager.Instance().user(request);
-        Long factoryId = user.getFactoryId();
+        Long uid = user.getId();
         WebResult<String> result = WebResult.execute(res -> {
             String filename = avatar.getOriginalFilename();
-            filename = factoryId + filename.substring(filename.lastIndexOf("."));
-            File destFile = new File(UploadLocation + File.separator + filename);
+            filename = uid + filename.substring(filename.lastIndexOf("."));
+            File destFile = new File(AvatarLocation + File.separator + filename);
             try {
                 avatar.transferTo(destFile);
             } catch (IOException e) {
@@ -233,6 +232,8 @@ public class FactoryUserController {
             if(!destFile.exists()) {
                 throw new RuntimeException("文件上传失败");
             }
+            user.setAvatar(filename);
+            service.modifyUser(user);
             res.setData(filename);
             logger.info("添加客户成功");
         }, "添加客户错误", logger);

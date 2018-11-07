@@ -45,12 +45,12 @@
       <el-table :data="appliedIngredients" style="width: 100%;padding-top: 15px;">
         <el-table-column label="物料名">
           <template slot-scope="scope">
-            {{ scope.row.name }}
+            {{ scope.row.ingredient.name }}
           </template>
         </el-table-column>
         <el-table-column label="申请数量" align="center">
           <template slot-scope="scope">
-            {{ scope.row.number }}
+            {{ scope.row.appliedNumber }}
           </template>
         </el-table-column>
         <el-table-column label="备注" align="center">
@@ -82,7 +82,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogAddVisible = false">取消</el-button>
-        <el-button type="primary" @click="submitProcedure">添加</el-button>
+        <el-button type="primary" @click="addIngredient">添加</el-button>
       </div>
     </el-dialog>
 
@@ -92,13 +92,14 @@
 
 <script>
 import { queryByDentureId } from '@/api/common'
-import { queryIngredients } from '@/api/comprehensive'
+import { queryIngredients, applyIngredient } from '@/api/comprehensive'
 
 export default {
   data() {
     return {
       ingredient: {
-        ingredient: null,
+        dentureId: null,
+        ingredientId: null,
         number: null,
         comment: null
       },
@@ -119,6 +120,7 @@ export default {
       queryByDentureId(id).then(response => {
         var data = response.data
         this.denture = data
+        this.appliedIngredients = this.denture.appliedIngredients
       })
     },
     review(result) {
@@ -129,6 +131,15 @@ export default {
       queryIngredients().then(response => {
         var data = response.data
         this.ingredients = data
+      })
+    },
+    addIngredient() {
+      this.ingredient.dentureId = this.denture.id
+      applyIngredient(this.ingredient).then(response => {
+        var data = response.data
+        this.ingredients = data
+        this.fetchData()
+        this.dialogAddVisible = false
       })
     }
   }

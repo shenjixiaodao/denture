@@ -36,6 +36,27 @@
         );
     </insert>
 
+    <insert id="saveAppliedIngredient" parameterType="com.yuzi.denture.domain.AppliedIngredient">
+        INSERT INTO `liyou`.`applied_ingredient`
+        (
+        `denture_id`,
+        `no`,
+        `applied_number`,
+        `applicant_id`,
+        `applied_date`,
+        `comment`,
+        `ingredient_id`)
+        VALUES
+        (
+        #{dentureId},
+        #{no},
+        #{appliedNumber},
+        #{applicant.id},
+        #{appliedDate},
+        #{comment},
+        #{ingredient.id});
+    </insert>
+
     <update id="update" parameterType="com.yuzi.denture.domain.Ingredient">
         UPDATE ingredient SET id=id
         <if test="name!=null">

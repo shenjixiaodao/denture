@@ -38,6 +38,7 @@ public interface FactoryService {
 
     //user
     void addFactoryUser(FactoryUser user);
+    void modifyUser(FactoryUser user);
     FactoryUser login(String contact, String encryptPWD);
     void modifyPwd(Long uid, String srcPwd, String dstPwd);
     void addCustomer(Long factoryId, Long clinicId, Long salesmanId);
@@ -47,4 +48,5 @@ public interface FactoryService {
     //ingredient
     void newIngredient(String name, Long factoryId);
     void newIngredientPurchaseRecord(Long ingredientId, Long supplierId, Double number);
+    void applyIngredient(Long uid, String dentureId, Long ingredientId, Double number, String comment);
 }
