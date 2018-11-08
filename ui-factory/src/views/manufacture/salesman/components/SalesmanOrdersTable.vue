@@ -5,6 +5,11 @@
         {{ scope.row.createdDate }}
       </template>
     </el-table-column>
+    <el-table-column label="定制方">
+      <template slot-scope="scope">
+        {{ scope.row.clinic.name }}
+      </template>
+    </el-table-column>
     <el-table-column label="订单详情" align="center">
       <template slot-scope="scope">
         <router-link :to="'order/'+scope.row.dentureId" class="link-type">
