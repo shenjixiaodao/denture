@@ -235,8 +235,8 @@ public class FactoryUserController {
             user.setAvatar(filename);
             service.modifyUser(user);
             res.setData(filename);
-            logger.info("添加客户成功");
-        }, "添加客户错误", logger);
+            logger.info("修改头像成功");
+        }, "修改头像错误", logger);
         return result;
     }
 }
