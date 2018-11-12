@@ -3,6 +3,8 @@ package com.yuzi.denture.api.vo.base;
 
 import com.yuzi.denture.api.vo.*;
 import io.swagger.annotations.ApiModelProperty;
+
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -19,18 +21,7 @@ public class DentureVo {
     @ApiModelProperty(value="义齿类型")
     private String type;
     //规格(specification):
-    @ApiModelProperty(value="义齿规格\n" +
-            "       [GuGe(\"钴铬合金\"),\n" +
-            "        GuiJinShuDanGuan(\"贵金属单冠\"),\n" +
-            "        LianGuan(\"连冠（桥、嵌体、贴面）\"),\n" +
-            "        ErYangHuaGao(\"二氧化锆\"),\n" +
-            "        YangHuaGao(\"氧化锆\"),\n" +
-            "        ErYangHuaGuiGuan(\"二氧化硅冠（桥、嵌体、贴面)\"),\n" +
-            "        NieGeHeJinGuan(\"镍铬合金冠\"),\n" +
-            "        NieGeHeJinQiao(\"镍铬合金桥\"),\n" +
-            "        WanZhiZhiJiaKeZhai(\"弯制支架可摘局部义齿\"),\n" +
-            "        ShuZhiJiTuoQuanKou(\"树脂基托全口义齿\"),\n" +
-            "        Other(\"其他\")]")
+    @ApiModelProperty(value="义齿规格")
     private String specification;
     //定制方(clinic):
     @ApiModelProperty(value="定制方", dataType = "com.yuzi.denture.api.vo.ClinicVo")
@@ -81,6 +72,41 @@ public class DentureVo {
     //工序组操作记录(precedureGroups):
     @ApiModelProperty(value="precedureGroups", dataType = "com.yuzi.denture.api.vo.ProcedureGroupVo")
     private List<ProcedureGroupVo> procedureGroups;
+    String biteLevel;
+    String borderType;
+    String fieldType;
+    String innerCrownType;
+    String neckType;
+    String outerCrownType;
+    String paddingType;
+    String requirement;
+    BigDecimal basePrice;
+    BigDecimal factoryPrice;
+    Date estimatedDuration;
+
+    public Date getEstimatedDuration() {
+        return estimatedDuration;
+    }
+
+    public void setEstimatedDuration(Date estimatedDuration) {
+        this.estimatedDuration = estimatedDuration;
+    }
+
+    public BigDecimal getBasePrice() {
+        return basePrice;
+    }
+
+    public void setBasePrice(BigDecimal basePrice) {
+        this.basePrice = basePrice;
+    }
+
+    public BigDecimal getFactoryPrice() {
+        return factoryPrice;
+    }
+
+    public void setFactoryPrice(BigDecimal factoryPrice) {
+        this.factoryPrice = factoryPrice;
+    }
 
     public String getId() {
         return id;
@@ -248,5 +274,69 @@ public class DentureVo {
 
     public void setProcedureGroups(List<ProcedureGroupVo> procedureGroups) {
         this.procedureGroups = procedureGroups;
+    }
+
+    public String getBiteLevel() {
+        return biteLevel;
+    }
+
+    public void setBiteLevel(String biteLevel) {
+        this.biteLevel = biteLevel;
+    }
+
+    public String getBorderType() {
+        return borderType;
+    }
+
+    public void setBorderType(String borderType) {
+        this.borderType = borderType;
+    }
+
+    public String getFieldType() {
+        return fieldType;
+    }
+
+    public void setFieldType(String fieldType) {
+        this.fieldType = fieldType;
+    }
+
+    public String getInnerCrownType() {
+        return innerCrownType;
+    }
+
+    public void setInnerCrownType(String innerCrownType) {
+        this.innerCrownType = innerCrownType;
+    }
+
+    public String getNeckType() {
+        return neckType;
+    }
+
+    public void setNeckType(String neckType) {
+        this.neckType = neckType;
+    }
+
+    public String getOuterCrownType() {
+        return outerCrownType;
+    }
+
+    public void setOuterCrownType(String outerCrownType) {
+        this.outerCrownType = outerCrownType;
+    }
+
+    public String getPaddingType() {
+        return paddingType;
+    }
+
+    public void setPaddingType(String paddingType) {
+        this.paddingType = paddingType;
+    }
+
+    public String getRequirement() {
+        return requirement;
+    }
+
+    public void setRequirement(String requirement) {
+        this.requirement = requirement;
     }
 }

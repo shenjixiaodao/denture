@@ -15,6 +15,8 @@ public class FactoryCustomer {
     Long salesmanId;
     //createdDate: Date
     Date createdDate;
+    Integer fixedGuarantee;
+    Integer mobilizableGuarantee;
     // 0:发起请求\n1:  同意\n-1：拒绝
     Byte isValid;
 
@@ -28,7 +30,21 @@ public class FactoryCustomer {
 
     public FactoryCustomer() {
     }
+    public Integer getFixedGuarantee() {
+        return fixedGuarantee;
+    }
 
+    public void setFixedGuarantee(Integer fixedGuarantee) {
+        this.fixedGuarantee = fixedGuarantee;
+    }
+
+    public Integer getMobilizableGuarantee() {
+        return mobilizableGuarantee;
+    }
+
+    public void setMobilizableGuarantee(Integer mobilizableGuarantee) {
+        this.mobilizableGuarantee = mobilizableGuarantee;
+    }
     public Long getId() {
         return id;
     }

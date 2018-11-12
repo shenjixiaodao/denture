@@ -18,6 +18,8 @@ public class FactoryCustomerVo {
     Date createdDate;
     //isValid: Boolean
     Byte isValid;
+    Integer mobilizableGuarantee;
+    Integer fixedGuarantee;
 
     public FactoryCustomerVo() {
     }
@@ -68,5 +70,21 @@ public class FactoryCustomerVo {
 
     public void setValid(Byte valid) {
         isValid = valid;
+    }
+
+    public Integer getMobilizableGuarantee() {
+        return mobilizableGuarantee;
+    }
+
+    public void setMobilizableGuarantee(Integer mobilizableGuarantee) {
+        this.mobilizableGuarantee = mobilizableGuarantee;
+    }
+
+    public Integer getFixedGuarantee() {
+        return fixedGuarantee;
+    }
+
+    public void setFixedGuarantee(Integer fixedGuarantee) {
+        this.fixedGuarantee = fixedGuarantee;
     }
 }

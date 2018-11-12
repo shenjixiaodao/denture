@@ -70,7 +70,9 @@
         `clinic_id`,
         `salesman_id`,
         `is_valid`,
-        `created_date`
+        `created_date`,
+        `fixed_guarantee`,
+        `mobilizable_guarantee`
         )
         VALUES
         (
@@ -78,7 +80,9 @@
         #{clinic.id},
         #{salesmanId},
         #{isValid},
-        #{createdDate}
+        #{createdDate},
+        #{fixedGuarantee},
+        #{mobilizableGuarantee}
         );
     </insert>
     <update id="updateCustomer" parameterType="com.yuzi.denture.domain.FactoryCustomer">
@@ -99,6 +103,12 @@
         </if>
         <if test="createdDate!=null">
             ,`created_date` = #{createdDate}
+        </if>
+        <if test="fixedGuarantee!=null">
+            ,`fixed_guarantee` = #{fixedGuarantee}
+        </if>
+        <if test="mobilizableGuarantee!=null">
+            ,`mobilizable_guarantee` = #{mobilizableGuarantee}
         </if>
         WHERE `id` = #{id};
     </update>
@@ -124,21 +134,38 @@
         <result column="salesman_id" property="salesmanId" />
         <result column="created_date" property="createdDate" />
         <result column="is_valid" property="isValid" />
+        <result column="fixed_guarantee" property="fixedGuarantee" />
+        <result column="mobilizable_guarantee" property="mobilizableGuarantee" />
         <association property="clinic" javaType="com.yuzi.denture.domain.Clinic">
             <result column="clinic_id" property="id" />
             <result column="clinic_name" property="name" />
             <result column="clinic_address" property="address" />
             <result column="clinic_contact" property="contact" />
+            <collection property="users" ofType="com.yuzi.denture.domain.ClinicUser">
+                <result column="cu_id" property="id" />
+                <result column="clinic_id" property="clinicId" />
+                <result column="cu_role" property="role" />
+                <result column="cu_contact" property="contact" />
+                <result column="cu_name" property="name" />
+            </collection>
         </association>
     </resultMap>
 
     <sql id="baseCustomerSQL">
-        fc.id id, fc.factory_id factory_id, salesman_id, fc.created_date created_date, is_valid,
+        fc.*,
         c.id clinic_id, c.name clinic_name, c.address clinic_address, c.contact clinic_contact
     </sql>
     <select id="findCustomerById" parameterType="Long" resultMap="baseCustomerRM">
         SELECT <include refid="baseCustomerSQL" /> FROM factory_customer fc
         inner join clinic c on (fc.id=#{id} and fc.clinic_id=c.id)
+    </select>
+    <sql id="clinicUserSQL">
+        cu.id cu_id, cu.clinic_id cu_clinic_id, cu.role cu_role, cu.contact cu_contact, cu.name cu_name
+    </sql>
+    <select id="findCustomerDetailById" parameterType="Long" resultMap="baseCustomerRM">
+        SELECT <include refid="baseCustomerSQL" />, <include refid="clinicUserSQL" /> FROM factory_customer fc
+        inner join clinic c on (fc.id=#{id} and fc.clinic_id=c.id)
+        inner join clinic_user cu on c.id=cu.clinic_id
     </select>
     <select id="findCustomersByUid" parameterType="Long" resultMap="baseCustomerRM">
         SELECT <include refid="baseCustomerSQL" /> FROM factory_customer fc

@@ -21,7 +21,11 @@
         `neck_type`,
         `inner_crown_type`,
         `padding_type`,
-        `outer_crown_type`
+        `outer_crown_type`,
+        `requirement`,
+        `base_price`,
+        `facotry_price`,
+        `estimated_duration`
         )
         VALUES
         (
@@ -41,7 +45,11 @@
         #{neckType},
         #{innerCrownType},
         #{paddingType},
-        #{outerCrownType}
+        #{outerCrownType},
+        #{requirement},
+        #{basePrice},
+        #{factoryPrice},
+        #{estimatedDuration}
         );
     </insert>
     <update id="update" parameterType="com.yuzi.denture.domain.Denture">
@@ -96,6 +104,18 @@
         <if test="quaReviewDate!=null">
             ,`qua_review_date` = #{quaReviewDate}
         </if>
+        <if test="requirement!=null">
+            ,`requirement` = #{requirement}
+        </if>
+        <if test="basePrice!=null">
+            ,`base_price` = #{basePrice}
+        </if>
+        <if test="factoryPrice!=null">
+            ,`factory_price` = #{factoryPrice}
+        </if>
+        <if test="estimatedDuration!=null">
+            ,`estimated_duration` = #{estimatedDuration}
+        </if>
         WHERE `id` = #{id};
     </update>
     <resultMap id="baseRM" type="com.yuzi.denture.domain.Denture">
@@ -115,9 +135,14 @@
         <result column="pro_review_date" property="proReviewDate" />
         <result column="qua_review" property="quaReview" />
         <result column="qua_review_date" property="quaReviewDate" />
+        <result column="requirement" property="requirement" />
+        <result column="base_price" property="basePrice" />
+        <result column="factory_price" property="factoryPrice" />
+        <result column="estimated_duration" property="estimatedDuration" />
         <association property="clinic" javaType="com.yuzi.denture.domain.Clinic">
             <result column="clinic_id" property="id" />
             <result column="clinic_name" property="name" />
+            <result column="clinic_region" property="region" />
             <result column="clinic_address" property="address" />
             <result column="clinic_contact" property="contact" />
         </association>
@@ -144,16 +169,19 @@
         </collection>
     </resultMap>
 
-    <sql id="baseSQL">
+    <!--<sql id="baseSQL">
         d.id id, d.type type , d.specification specification, d.clinic_id clinic_id,
         d.factory_id factory_id, d.number number, d.positions positions, d.color_no color_no, d.created_date created_date,
         d.model_inspector_id model_inspector_id, d.model_inspection_date model_inspection_date,
         d.start_date start_date, d.end_date end_date, d.pro_review pro_review, d.pro_review_date pro_review_date,
         d.qua_review qua_review, d.qua_review_date qua_review_date
+    </sql>-->
+    <sql id="baseSQL">
+        d.*
     </sql>
 
     <sql id="clinicSQL">
-        c.name clinic_name, c.address clinic_address, c.contact clinic_contact
+        c.name clinic_name, c.region clinic_region, c.address clinic_address, c.contact clinic_contact
     </sql>
     <sql id="procedureGroupSQL">
         pg.id pg_id, pg.type pg_type, pg.denture_id pg_dentureId, pg.start_date pg_start_date, pg.end_date pg_end_date,
@@ -164,6 +192,25 @@
         ai.ingredient_id ai_ingredient_id, aii.name aii_name, ai.denture_id ai_denture_id, ai.no ai_no, ai.applied_number ai_applied_number,
         ai.applicant_id ai_applicant_id, ai.applied_date ai_applied_date, ai.comment ai_comment
     </sql>
+    <sql id="criteriaWhere">
+        where 1=1
+        <if test="dentureId!=null">
+            and d.id=#{dentureId}
+        </if>
+        <if test="createdDate">
+            and d.createdDate=#{createdDate}
+        </if>
+        <if test="patientName!=null">
+            and patient.name=#{patientName}
+        </if>
+        <if test="region!=null">
+            and c.region=#{region}
+        </if>
+        <if test="clinicName!=null">
+            and c.name=#{clinicName}
+        </if>
+    </sql>
+
     <select id="findByDentureId" parameterType="String" resultMap="baseRM">
         SELECT <include refid="baseSQL" />, <include refid="clinicSQL" />,
         <include refid="procedureGroupSQL" />, <include refid="appliedIngredientSQL" />
@@ -196,6 +243,7 @@
         d.factory_id=#{factoryId} and do.factory_id=#{factoryId} and d.id=do.denture_id
         and do.status in('Accepted','Making','Inspecting','PackAndClr','Released','Return','Remaking')
         )
+        <include refid="criteriaWhere" />
     </select>
     <select id="findDoneDentures" parameterType="Long" resultMap="baseRM">
         SELECT <include refid="baseSQL" />

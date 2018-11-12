@@ -22,10 +22,40 @@
             <td class="td_title_prop">数量:</td><td class="td_content_prop">{{ denture.number }}</td>
           </tr>
           <tr>
+            <td class="td_title_prop">应收单价:</td><td class="td_content_prop">{{ denture.basePrice }}</td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">出货单价:</td><td class="td_content_prop">{{ denture.factoryPrice }}</td>
+          </tr>
+          <tr>
             <td class="td_title_prop">牙位:</td><td class="td_content_prop">{{ denture.positions }}</td>
           </tr>
           <tr>
             <td class="td_title_prop">色号:</td><td class="td_content_prop">{{ denture.colorNo }}</td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">制作要求:</td><td class="td_content_prop">{{ denture.requirement }}</td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">咬合:</td><td class="td_content_prop">{{ denture.biteLevel }}</td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">领接:</td><td class="td_content_prop">{{ denture.borderType }}</td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">缺牙区:</td><td class="td_content_prop">{{ denture.fieldType }}</td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">内冠:</td><td class="td_content_prop">{{ denture.innerCrownType }}</td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">颈缘:</td><td class="td_content_prop">{{ denture.neckType }}</td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">牙冠:</td><td class="td_content_prop">{{ denture.outerCrownType }}</td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">如空间不够:</td><td class="td_content_prop">{{ denture.paddingType }}</td>
           </tr>
           <tr>
             <td class="td_title_prop">创建日期:</td><td class="td_content_prop"><span v-if="denture.createdDate">{{ denture.createdDate.split(' ',2)[0] }}</span></td>

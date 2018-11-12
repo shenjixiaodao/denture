@@ -7,14 +7,16 @@ public class Clinic {
     private Long id;
     //名称(name):
     private String name;
+    String region;
     //地址(address):
     private String address;
     //联系方式(contact):
     private String contact;
     List<ClinicUser> users;
 
-    public Clinic(String name, String address, String contact) {
+    public Clinic(String name, String region, String address, String contact) {
         this.name = name;
+        this.region = region;
         this.address = address;
         this.contact = contact;
     }

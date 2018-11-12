@@ -34,7 +34,10 @@
         <el-form-item label="诊所名" prop="title">
           <el-input v-model="customer.name" style="width: 70%;"/>
         </el-form-item>
-        <el-form-item label="诊所地址" prop="title">
+        <el-form-item label="所在城市" prop="title">
+          <el-cascader :options="cities" v-model="customer.region" :props="props" placeholder="省/市/县" @change="handleChange"/>
+        </el-form-item>
+        <el-form-item label="具体地址" prop="title">
           <el-input v-model="customer.address" style="width: 70%;"/>
         </el-form-item>
         <el-form-item label="联系方式" prop="title">
@@ -54,6 +57,7 @@
 
 <script>
 import { customers, recordCustomer } from '@/api/salesman'
+import { cities } from '@/utils/allCities'
 
 export default {
   data() {
@@ -62,14 +66,23 @@ export default {
       dialogAddVisible: false,
       customer: {
         name: null,
+        region: null,
         address: null,
         contact: null,
         dentistName: null
-      }
+      },
+      cities: cities,
+      props: {
+        value: 'name',
+        label: 'name',
+        children: 'sub'
+      },
+      selectedCity: []
     }
   },
   created() {
     this.fetchData()
+    console.log(this.cities)
   },
   methods: {
     fetchData() {
@@ -81,6 +94,7 @@ export default {
     },
     addCustomer() {
       this.dialogAddVisible = false
+      this.customer.region = this.selectedCity.join('-')
       recordCustomer(this.customer).then(resp => {
         customers().then(response => {
           var data = response.data

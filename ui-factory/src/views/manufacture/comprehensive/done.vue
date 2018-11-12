@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { queryDenturesByStatus } from '@/api/comprehensive'
+import { queryDenturesByCriteria } from '@/api/comprehensive'
 import { queryByDentureId } from '@/api/common'
 import { isvalidDentureId, isNull } from '@/utils/validate'
 import { Message } from 'element-ui'
@@ -53,7 +53,7 @@ export default {
   },
   methods: {
     fetchData() {
-      queryDenturesByStatus('Done').then(response => {
+      queryDenturesByCriteria('Done').then(response => {
         var data = response.data
         console.log(data)
         this.list = data

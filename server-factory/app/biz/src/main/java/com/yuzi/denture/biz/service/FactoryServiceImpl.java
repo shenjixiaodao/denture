@@ -24,10 +24,10 @@ public class FactoryServiceImpl implements FactoryService {
     @Transactional
     @Override
     public Denture createOrderAndDenture(Long clinicId, Long dentistId, Long factoryId, String comment,
-                                         String positions, Denture.DentureType type, Denture.SpecType specification,
+                                         String positions, Denture.DentureType type, String specification,
                                          String colorNo, FieldType fieldType, BiteLevel biteLevel,
                                          BorderType borderType, NeckType neckType, InnerCrownType innerCrowType,
-                                         PaddingType paddingType, OuterCrownType outerCrowType) {
+                                         PaddingType paddingType, OuterCrownType outerCrowType, String requirement) {
         //1, create denture
         Denture denture = new Denture(type, specification, clinicId, comment,
                 factoryId, positions, colorNo);
@@ -39,6 +39,7 @@ public class FactoryServiceImpl implements FactoryService {
         denture.setInnerCrownType(innerCrowType);
         denture.setPaddingType(paddingType);
         denture.setOuterCrownType(outerCrowType);
+        denture.setRequirement(requirement);
         //初始创建denture时，生成加工所需要的所有工序
         List<ProcedureGroup> groups = denture.generateProcedureGroups();
         repository.batchAddProcedureGroups(groups);
@@ -118,8 +119,9 @@ public class FactoryServiceImpl implements FactoryService {
 
     @Transactional
     @Override
-    public void addCustomer(Long factoryId, Long salesmanId, String name, String contact, String address, String dentistName) {
-        Clinic clinic = new Clinic(name, address, contact);
+    public void addCustomer(Long factoryId, Long salesmanId, String name, String contact, String region,
+                            String address, String dentistName) {
+        Clinic clinic = new Clinic(name, region, address, contact);
         clinicRepository.add(clinic);
         ClinicUser user = new ClinicUser(contact, dentistName);
         user.setClinicId(clinic.getId());

@@ -6,12 +6,14 @@
         INSERT INTO `clinic`
         (
         `name`,
+        `region`,
         `address`,
         `contact`
         )
         VALUES
         (
         #{name},
+        #{region},
         #{address},
         #{contact}
         );
@@ -36,6 +38,7 @@
     <resultMap id="baseRM" type="com.yuzi.denture.domain.Clinic">
         <result column="id" property="id" />
         <result column="name" property="name" />
+        <result column="region" property="region" />
         <result column="address" property="address" />
         <result column="contact" property="contact" />
         <collection property="users" ofType="com.yuzi.denture.domain.ClinicUser">

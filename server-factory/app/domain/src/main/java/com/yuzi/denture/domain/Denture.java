@@ -1,9 +1,9 @@
 package com.yuzi.denture.domain;
 
 import com.yuzi.denture.domain.type.*;
-import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -16,7 +16,7 @@ public class Denture {
     //产品名称(type):
     private DentureType type;
     //规格(specification):
-    private SpecType specification;
+    private String specification;
     //定制方(clinic):
     private Clinic clinic;
     //医生备注
@@ -62,8 +62,12 @@ public class Denture {
     NeckType neckType;
     OuterCrownType outerCrownType;
     PaddingType paddingType;
+    String requirement;
+    BigDecimal basePrice;
+    BigDecimal factoryPrice;
+    Date estimatedDuration;
 
-    public Denture(DentureType type, SpecType specification, Long clinicId, String comment,
+    public Denture(DentureType type, String specification, Long clinicId, String comment,
                    Long factoryId, String positions, String colorNo) {
         this.type = type;
         this.specification = specification;
@@ -80,7 +84,7 @@ public class Denture {
         this.createdDate = new Date();
     }
 
-    public enum SpecType {
+    /*public enum SpecType {
         GuGe("钴铬合金"),
         GuiJinShuDanGuan("贵金属单冠"),
         LianGuan("连冠（桥、嵌体、贴面）"),
@@ -106,7 +110,7 @@ public class Denture {
             }
             throw new IllegalArgumentException("未知义齿规格类型");
         }
-    }
+    }*/
     public enum  DentureType {
         Fixed("定制式固定义齿"), Mobilizable("定制式活动义齿");
         private String text;
@@ -166,6 +170,30 @@ public class Denture {
     }
 
     public Denture() {
+    }
+
+    public BigDecimal getBasePrice() {
+        return basePrice;
+    }
+
+    public void setBasePrice(BigDecimal basePrice) {
+        this.basePrice = basePrice;
+    }
+
+    public BigDecimal getFactoryPrice() {
+        return factoryPrice;
+    }
+
+    public void setFactoryPrice(BigDecimal factoryPrice) {
+        this.factoryPrice = factoryPrice;
+    }
+
+    public Date getEstimatedDuration() {
+        return estimatedDuration;
+    }
+
+    public void setEstimatedDuration(Date estimatedDuration) {
+        this.estimatedDuration = estimatedDuration;
     }
 
     public BiteLevel getBiteLevel() {
@@ -240,11 +268,11 @@ public class Denture {
         this.type = type;
     }
 
-    public SpecType getSpecification() {
+    public String getSpecification() {
         return specification;
     }
 
-    public void setSpecification(SpecType specification) {
+    public void setSpecification(String specification) {
         this.specification = specification;
     }
 
@@ -382,6 +410,14 @@ public class Denture {
 
     public void setProcedureGroups(List<ProcedureGroup> procedureGroups) {
         this.procedureGroups = procedureGroups;
+    }
+
+    public String getRequirement() {
+        return requirement;
+    }
+
+    public void setRequirement(String requirement) {
+        this.requirement = requirement;
     }
 
     @Override

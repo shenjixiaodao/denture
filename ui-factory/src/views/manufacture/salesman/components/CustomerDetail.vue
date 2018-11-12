@@ -4,13 +4,20 @@
       <table style="text-align: right">
         <tbody>
           <tr>
-            <td class="td_title_prop">名称:</td><td class="td_content_prop">{{ customer.name }}</td>
+            <td class="td_title_prop">名称:</td><td class="td_content_prop">{{ customer.clinic.name }}</td>
           </tr>
           <tr>
-            <td class="td_title_prop">地址:</td><td class="td_content_prop">{{ customer.address }}</td>
+            <td class="td_title_prop">地址:</td><td class="td_content_prop">{{ customer.clinic.address }}</td>
           </tr>
           <tr>
-            <td class="td_title_prop">联系方式:</td><td class="td_content_prop">{{ customer.contact }}</td>
+            <td class="td_title_prop">联系方式:</td><td class="td_content_prop">{{ customer.clinic.contact }}</td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">保修:</td>
+            <td class="td_content_prop">
+              <label style="font-size: 10px;">固定类:</label><el-input v-model="customer.fixedGuarantee" style="width: 40px;"/>年&nbsp;&nbsp;
+              <label style="font-size: 10px;">活动类:</label><el-input v-model="customer.mobilizableGuarantee" style="width: 40px;"/>年
+            </td>
           </tr>
         </tbody>
       </table>
@@ -21,7 +28,7 @@
     </el-row>
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <!--<el-button type="primary" @click="dialogAddVisible = true">添加成员</el-button>-->
-      <el-table :data="customer.users" style="width: 100%;padding-top: 15px;">
+      <el-table :data="customer.clinic.users" style="width: 100%;padding-top: 15px;">
         <el-table-column label="姓名">
           <template slot-scope="scope">
             {{ scope.row.name }}
@@ -81,7 +88,7 @@
 </template>
 
 <script>
-import { queryClinic } from '@/api/salesman'
+import { customer } from '@/api/salesman'
 
 export default {
   data() {
@@ -103,7 +110,7 @@ export default {
     fetchData() {
       const id = this.$route.params && this.$route.params.id
       console.log('customer detail ==> ' + id)
-      queryClinic(id).then(response => {
+      customer(id).then(response => {
         var data = response.data
         this.customer = data
         console.log(this.customer)

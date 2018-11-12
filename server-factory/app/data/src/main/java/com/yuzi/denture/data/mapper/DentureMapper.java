@@ -1,6 +1,7 @@
 package com.yuzi.denture.data.mapper;
 
 import com.yuzi.denture.domain.Denture;
+import com.yuzi.denture.domain.criteria.DentureCriteria;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -15,6 +16,6 @@ public interface DentureMapper {
     List<Denture> findDenturesByFactoryId(Long factoryId);
 
     List<Denture> findWaitingDentures(Long factoryId);
-    List<Denture> findDoingDentures(Long factoryId);
+    List<Denture> findDoingDentures(DentureCriteria criteria);
     List<Denture> findDoneDentures(Long factoryId);
 }

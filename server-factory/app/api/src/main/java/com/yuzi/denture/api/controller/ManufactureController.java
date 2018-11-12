@@ -2,24 +2,22 @@ package com.yuzi.denture.api.controller;
 
 import com.yuzi.denture.api.assembler.*;
 import com.yuzi.denture.api.session.SessionManager;
-import com.yuzi.denture.api.vo.DentureOrderVo;
-import com.yuzi.denture.api.vo.IngredientVo;
-import com.yuzi.denture.api.vo.ProcedureVo;
-import com.yuzi.denture.api.vo.SupplierVo;
+import com.yuzi.denture.api.vo.*;
 import com.yuzi.denture.api.vo.base.DentureVo;
 import com.yuzi.denture.api.vo.base.WebResult;
 import com.yuzi.denture.domain.*;
 import com.yuzi.denture.domain.GroupType;
+import com.yuzi.denture.domain.criteria.DentureCriteria;
 import com.yuzi.denture.domain.repository.FactoryRepository;
 import com.yuzi.denture.domain.service.FactoryService;
 import com.yuzi.denture.domain.type.*;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -131,7 +129,9 @@ public class ManufactureController {
                             "ThreeQuarter(松)\n" +
                             "SC_TQ(舌侧金属3/4颌侧)\n" +
                             "JinBelow(金属颌侧)\n" +
-                            "AllCi(舌侧全瓷边)\n")
+                            "AllCi(舌侧全瓷边)\n"),
+            @ApiImplicitParam(paramType = "form", name = "requirement", dataType = "string",
+                    required = true, value = "制作要求")
     })
     @ResponseBody
     @RequestMapping(value = "/recordOrder", method = POST)
@@ -139,7 +139,7 @@ public class ManufactureController {
                                             String positions, String type, String specification,
                                             String colorNo, String fieldType, String biteLevel, String borderType,
                                             String neckType, String innerCrownType, String paddingType,
-                                            String outerCrownType, HttpServletRequest request) {
+                                            String outerCrownType, String requirement, HttpServletRequest request) {
         FactoryUser user = SessionManager.Instance().user(request);
         Long factoryId = user.getFactoryId();
         logger.info("录入订单:clinicId={}, dentistId={}, comment={}, positions={}, " +
@@ -147,10 +147,10 @@ public class ManufactureController {
                 positions, type, specification, colorNo);
         WebResult<DentureVo> result = WebResult.execute(res -> {
             Denture denture = service.createOrderAndDenture(clinicId, dentistId, factoryId, comment, positions,
-                    Denture.DentureType.typeOf(type), Denture.SpecType.typeOf(specification), colorNo,
+                    Denture.DentureType.typeOf(type), specification, colorNo,
                     FieldType.typeOf(fieldType), BiteLevel.typeOf(biteLevel), BorderType.typeOf(borderType),
                     NeckType.typeOf(neckType), InnerCrownType.typeOf(innerCrownType), PaddingType.typeOf(paddingType),
-                    OuterCrownType.typeOf(outerCrownType));
+                    OuterCrownType.typeOf(outerCrownType), requirement);
             DentureVo vo = DentureAssembler.toVo(denture);
             res.setData(vo);
             logger.info("录入订单成功");
@@ -164,6 +164,8 @@ public class ManufactureController {
                     required = true, value = "诊所名"),
             @ApiImplicitParam(paramType = "form", name = "contact", dataType = "long",
                     required = true, value = "联系方式"),
+            @ApiImplicitParam(paramType = "form", name = "region", dataType = "long",
+                    required = true, value = "所在区域"),
             @ApiImplicitParam(paramType = "form", name = "address", dataType = "long",
                     required = true, value = "地址"),
             @ApiImplicitParam(paramType = "form", name = "dentistName", dataType = "long",
@@ -171,14 +173,14 @@ public class ManufactureController {
     })
     @ResponseBody
     @RequestMapping(value = "/recordCustomer", method = POST)
-    public WebResult recordCustomer(String name, String contact, String address, String dentistName,
+    public WebResult recordCustomer(String name, String contact, String region, String address, String dentistName,
                                     HttpServletRequest request) {
         FactoryUser user = SessionManager.Instance().user(request);
         Long factoryId = user.getFactoryId();
         Long uid = user.getId();
         logger.info("录入诊所客户:name={},contact={},address={},dentistName={}",name, contact, address, dentistName);
         WebResult result = WebResult.execute(res -> {
-            service.addCustomer(factoryId, uid, name, contact, address, dentistName);
+            service.addCustomer(factoryId, uid, name, contact, region, address, dentistName);
             logger.info("添加客户成功");
         }, "录入诊所客户", logger);
         return result;
@@ -217,23 +219,24 @@ public class ManufactureController {
     }
 
     //comprehensive user api
-    @ApiOperation(value = "义齿综合管理查询", response = DentureVo.class, httpMethod = "GET")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "status", dataType = "String", required = true, value = "status=[Waiting(\"待审核\"), Doing(\"处理中\"), Done(\"已结束\")]")
-    })
+    @ApiOperation(value = "义齿综合管理查询", response = DentureVo.class, httpMethod = "POST")
     @ResponseBody
-    @RequestMapping(value = "/queryDenturesByStatus", method = GET)
-    public WebResult<List<DentureVo>> queryDenturesByStatus(String status, HttpServletRequest request) {
+    @RequestMapping(value = "/queryDenturesByCriteria", method = POST)
+    public WebResult<List<DentureVo>> queryDenturesByCriteria(@RequestBody DentureCriteriaVo criteriaVo,
+                                                            HttpServletRequest request) {
         FactoryUser user = SessionManager.Instance().user(request);
         Long factoryId = user.getFactoryId();
-        logger.info("查询订单:factoryId={}, status={}", factoryId, status);
-        Denture.ComprehensiveStatus s = Denture.ComprehensiveStatus.typeOf(status);
+        logger.info("查询订单:criteriaVo={}", criteriaVo);
+        Denture.ComprehensiveStatus s = Denture.ComprehensiveStatus.typeOf(criteriaVo.getStatus());
         WebResult<List<DentureVo>> result = WebResult.execute(res -> {
             List<Denture> dentures;
+            DentureCriteria criteria = new DentureCriteria();
+            BeanUtils.copyProperties(criteriaVo, criteria);
+            criteria.setFactoryId(factoryId);
             if(s==Denture.ComprehensiveStatus.Waiting) {
                 dentures = repository.findWaitingDentures(factoryId);
             } else if(s==Denture.ComprehensiveStatus.Doing) {
-                dentures = repository.findDoingDentures(factoryId);
+                dentures = repository.findDoingDentures(criteria);
             } else {
                 dentures = repository.findDoneDentures(factoryId);
             }

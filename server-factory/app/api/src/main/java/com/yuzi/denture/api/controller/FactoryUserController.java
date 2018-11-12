@@ -170,13 +170,29 @@ public class FactoryUserController {
     @ApiOperation(value = "查询客户列表", response = FactoryCustomerVo.class, httpMethod = "GET")
     @ResponseBody
     @RequestMapping(value = "/customers", method = GET)
-    public WebResult<FactoryCustomerVo> customers(HttpServletRequest request) {
+    public WebResult<List<FactoryCustomer>> customers(HttpServletRequest request) {
         FactoryUser user = SessionManager.Instance().user(request);
         Long uid = user.getId();
-        WebResult<FactoryCustomerVo> result = WebResult.execute(res -> {
+        WebResult<List<FactoryCustomer>> result = WebResult.execute(res -> {
             List<FactoryCustomer> customers = repository.findCustomersByUid(uid);
             List<FactoryCustomerVo> vos = FactoryCustomerAssembler.toVos(customers);
             res.setData(vos);
+            logger.info("查询客户列表成功");
+        }, "查询客户列表错误", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "查询客户详情", response = FactoryCustomerVo.class, httpMethod = "GET")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "id", dataType = "Long", required = true, value = "客户ID")
+    })
+    @ResponseBody
+    @RequestMapping(value = "/customer", method = GET)
+    public WebResult<FactoryCustomerVo> customer(Long id) {
+        WebResult<FactoryCustomerVo> result = WebResult.execute(res -> {
+            FactoryCustomer customer = repository.findCustomerDetail(id);
+            FactoryCustomerVo vo = FactoryCustomerAssembler.toVo(customer);
+            res.setData(vo);
             logger.info("查询客户列表成功");
         }, "查询客户列表错误", logger);
         return result;

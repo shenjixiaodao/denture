@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { queryDenturesByStatus, queryByDeliveryId } from '@/api/comprehensive'
+import { queryDenturesByCriteria, queryByDeliveryId } from '@/api/comprehensive'
 import { isStringNull, isNull } from '@/utils/validate'
 import { Message } from 'element-ui'
 
@@ -53,7 +53,13 @@ export default {
       ],
       queryParams: {
         company: null,
-        deliveryId: null
+        deliveryId: null,
+        dentureId: '',
+        patientName: '',
+        status: 'Waiting',
+        createdDate: null,
+        region: null,
+        clinicName: ''
       },
       list: null
     }
@@ -63,7 +69,7 @@ export default {
   },
   methods: {
     fetchData() {
-      queryDenturesByStatus('Waiting').then(response => {
+      queryDenturesByCriteria(this.queryParams).then(response => {
         var data = response.data
         console.log(data)
         this.list = data

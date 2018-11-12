@@ -28,7 +28,7 @@ public class ClinicUserAssembler {
         ClinicUserVo vo = new ClinicUserVo();
         BeanUtils.copyProperties(user, vo);
         if(user.getRole() != null) {
-            vo.setRole(user.getRole().name());
+            vo.setRole(user.getRole().text());
         }
         return vo;
     }

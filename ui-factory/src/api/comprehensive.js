@@ -1,10 +1,10 @@
 import request from '@/utils/request'
 
-export function queryDenturesByStatus(status) {
+export function queryDenturesByCriteria(criteria) {
   return request({
-    url: '/manufacture/queryDenturesByStatus',
-    method: 'get',
-    params: { status: status }
+    url: '/manufacture/queryDenturesByCriteria',
+    method: 'post',
+    criteria
   })
 }
 

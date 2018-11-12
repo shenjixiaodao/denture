@@ -31,60 +31,82 @@
           <section class="hongbo">
             <span style="font-size: 13px">上排:</span>
             <span>
-              <input v-model="position_group" type="checkbox" value="a1">
-              <input v-model="position_group" type="checkbox" value="a2">
-              <input v-model="position_group" type="checkbox" value="a3">
-              <input v-model="position_group" type="checkbox" value="a4">
-              <input v-model="position_group" type="checkbox" value="a5">
-              <input v-model="position_group" type="checkbox" value="a6">
-              <input v-model="position_group" type="checkbox" value="a7">
               <input v-model="position_group" type="checkbox" value="a8">
+              <input v-model="position_group" type="checkbox" value="a7">
+              <input v-model="position_group" type="checkbox" value="a6">
+              <input v-model="position_group" type="checkbox" value="a5">
+              <input v-model="position_group" type="checkbox" value="a4">
+              <input v-model="position_group" type="checkbox" value="a3">
+              <input v-model="position_group" type="checkbox" value="a2">
+              <input v-model="position_group" type="checkbox" value="a1">
               <b>|</b>
-              <input v-model="position_group" type="checkbox" value="b8">
-              <input v-model="position_group" type="checkbox" value="b7">
-              <input v-model="position_group" type="checkbox" value="b6">
-              <input v-model="position_group" type="checkbox" value="b5">
-              <input v-model="position_group" type="checkbox" value="b4">
-              <input v-model="position_group" type="checkbox" value="b3">
-              <input v-model="position_group" type="checkbox" value="b2">
               <input v-model="position_group" type="checkbox" value="b1">
+              <input v-model="position_group" type="checkbox" value="b2">
+              <input v-model="position_group" type="checkbox" value="b3">
+              <input v-model="position_group" type="checkbox" value="b4">
+              <input v-model="position_group" type="checkbox" value="b5">
+              <input v-model="position_group" type="checkbox" value="b6">
+              <input v-model="position_group" type="checkbox" value="b7">
+              <input v-model="position_group" type="checkbox" value="b8">
             </span>
+          </section>
+          <section class="hongbo" style="padding-left: 30px">
+            <b style="padding-left: 5px">8</b>
+            <b style="padding-left: 4px">7</b>
+            <b style="padding-left: 4px">6</b>
+            <b style="padding-left: 4px">5</b>
+            <b style="padding-left: 4px">4</b>
+            <b style="padding-left: 4px">3</b>
+            <b style="padding-left: 4px">2</b>
+            <b style="padding-left: 4px">1</b>
+            <b style="padding-left: 4px">|</b>
+            <b style="padding-left: 2px">1</b>
+            <b style="padding-left: 4px">2</b>
+            <b style="padding-left: 4px">3</b>
+            <b style="padding-left: 4px">4</b>
+            <b style="padding-left: 4px">5</b>
+            <b style="padding-left: 4px">6</b>
+            <b style="padding-left: 4px">7</b>
+            <b style="padding-left: 4px">8</b>
           </section>
           <section class="hongbo" style="background:#fff;padding:0px 0px 16px;">
             <span style="font-size: 13px">下排:</span>
             <span>
-              <input v-model="position_group" type="checkbox" value="c1">
-              <input v-model="position_group" type="checkbox" value="c2">
-              <input v-model="position_group" type="checkbox" value="c3">
-              <input v-model="position_group" type="checkbox" value="c4">
-              <input v-model="position_group" type="checkbox" value="c5">
-              <input v-model="position_group" type="checkbox" value="c6">
-              <input v-model="position_group" type="checkbox" value="c7">
               <input v-model="position_group" type="checkbox" value="c8">
+              <input v-model="position_group" type="checkbox" value="c7">
+              <input v-model="position_group" type="checkbox" value="c6">
+              <input v-model="position_group" type="checkbox" value="c5">
+              <input v-model="position_group" type="checkbox" value="c4">
+              <input v-model="position_group" type="checkbox" value="c3">
+              <input v-model="position_group" type="checkbox" value="c2">
+              <input v-model="position_group" type="checkbox" value="c1">
               <b>|</b>
-              <input v-model="position_group" type="checkbox" value="d8">
-              <input v-model="position_group" type="checkbox" value="d7">
-              <input v-model="position_group" type="checkbox" value="d6">
-              <input v-model="position_group" type="checkbox" value="d5">
-              <input v-model="position_group" type="checkbox" value="d4">
-              <input v-model="position_group" type="checkbox" value="d3">
-              <input v-model="position_group" type="checkbox" value="d2">
               <input v-model="position_group" type="checkbox" value="d1">
+              <input v-model="position_group" type="checkbox" value="d2">
+              <input v-model="position_group" type="checkbox" value="d3">
+              <input v-model="position_group" type="checkbox" value="d4">
+              <input v-model="position_group" type="checkbox" value="d5">
+              <input v-model="position_group" type="checkbox" value="d6">
+              <input v-model="position_group" type="checkbox" value="d7">
+              <input v-model="position_group" type="checkbox" value="d8">
             </span>
           </section>
         </section>
         <el-form-item label="种类名称" prop="title">
-          <el-select v-model="order.type" placeholder="类型" clearable style="width: 90px" class="filter-item">
+          <el-select v-model="order.type" placeholder="类型" clearable class="filter-item">
             <el-option v-for="item in types" :key="item.code" :label="item.name" :value="item.code"/>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="材质规格" prop="title">
+          <el-select v-model="order.specification" placeholder="材质" clearable class="filter-item">
+            <el-option v-for="item in specifications" :key="item.code" :label="item.name" :value="item.code"/>
           </el-select>
         </el-form-item>
         <el-form-item label="色号" prop="title">
           <el-input v-model="order.colorNo" style="width: 70%;"/>
         </el-form-item>
-        <el-form-item label="材质规格" prop="title">
-          <el-select v-model="order.specification" placeholder="材质" clearable style="width: 90px" class="filter-item">
-            <el-option v-for="item in specifications" :key="item.code" :label="item.name" :value="item.code"/>
-          </el-select>
+        <el-form-item label="制作要求" prop="title">
+          <el-input v-model="order.requirement" style="width: 70%;"/>
         </el-form-item>
         <el-form-item label="备注">
           <el-input :autosize="{ minRows: 2, maxRows: 4}" v-model="order.comment" type="textarea" placeholder="请输入" style="width: 70%;"/>
@@ -194,6 +216,7 @@ export default {
         colorNo: null,
         specification: null,
         positions: null,
+        requirement: null,
         comment: null,
         fieldType: null,
         biteLevel: null,

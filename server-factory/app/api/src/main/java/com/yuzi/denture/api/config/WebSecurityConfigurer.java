@@ -15,7 +15,7 @@ public class WebSecurityConfigurer {
 
     public static final String ExpiredUrl = "/denture/factory/info/expired";
 
-    @Bean
+    /*@Bean
     public WebMvcConfigurerAdapter webMvcConfigurerAdapter() {
         return new WebMvcConfigurerAdapter() {
             @Override
@@ -29,5 +29,5 @@ public class WebSecurityConfigurer {
                 registry.addInterceptor(mappedInterceptor);
             }
         };
-    }
+    }*/
 }
