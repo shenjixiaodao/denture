@@ -4,7 +4,7 @@ export function queryDenturesByCriteria(criteria) {
   return request({
     url: '/manufacture/queryDenturesByCriteria',
     method: 'post',
-    criteria
+    data: criteria
   })
 }
 

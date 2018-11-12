@@ -204,7 +204,7 @@
             and patient.name=#{patientName}
         </if>
         <if test="region!=null">
-            and c.region=#{region}
+            and c.region like CONCAT('%',#{region},'%')
         </if>
         <if test="clinicName!=null">
             and c.name=#{clinicName}
@@ -239,10 +239,12 @@
 
     <select id="findDoingDentures" parameterType="Long" resultMap="baseRM">
         SELECT <include refid="baseSQL" />
-        FROM denture d inner join denture_order do on (
-        d.factory_id=#{factoryId} and do.factory_id=#{factoryId} and d.id=do.denture_id
-        and do.status in('Accepted','Making','Inspecting','PackAndClr','Released','Return','Remaking')
-        )
+        FROM denture d
+        inner join denture_order do on (
+            d.factory_id=#{factoryId} and do.factory_id=#{factoryId} and d.id=do.denture_id
+            and do.status in('Accepted','Making','Inspecting','PackAndClr','Released','Return','Remaking')
+          )
+        inner join clinic c on (d.clinic_id=c.id)
         <include refid="criteriaWhere" />
     </select>
     <select id="findDoneDentures" parameterType="Long" resultMap="baseRM">
