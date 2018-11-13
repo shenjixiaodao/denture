@@ -15,7 +15,7 @@ public interface DentureMapper {
     Denture findByDentureId(String dentureId);
     List<Denture> findDenturesByFactoryId(Long factoryId);
 
-    List<Denture> findWaitingDentures(Long factoryId);
+    List<Denture> findWaitingDentures(DentureCriteria criteria);
     List<Denture> findDoingDentures(DentureCriteria criteria);
-    List<Denture> findDoneDentures(Long factoryId);
+    List<Denture> findDoneDentures(DentureCriteria criteria);
 }

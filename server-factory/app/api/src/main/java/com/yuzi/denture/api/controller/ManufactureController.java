@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -234,11 +235,11 @@ public class ManufactureController {
             BeanUtils.copyProperties(criteriaVo, criteria);
             criteria.setFactoryId(factoryId);
             if(s==Denture.ComprehensiveStatus.Waiting) {
-                dentures = repository.findWaitingDentures(factoryId);
+                dentures = repository.findWaitingDentures(criteria);
             } else if(s==Denture.ComprehensiveStatus.Doing) {
                 dentures = repository.findDoingDentures(criteria);
             } else {
-                dentures = repository.findDoneDentures(factoryId);
+                dentures = repository.findDoneDentures(criteria);
             }
             List<DentureVo> vos = DentureAssembler.toVos(dentures);
             res.setData(vos);
@@ -271,23 +272,33 @@ public class ManufactureController {
 
     @ApiOperation(value = "牙模入厂生产审核", response = DentureVo.class, httpMethod = "POST")
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "form", name = "dentureId", dataType = "string",
+            @ApiImplicitParam(paramType = "form", name = "id", dataType = "string",
                     required = true, value = "义齿ID"),
+            @ApiImplicitParam(paramType = "form", name = "estimatedDuration", dataType = "double",
+                    required = true, value = "预计加工时长"),
+            @ApiImplicitParam(paramType = "form", name = "basePrice", dataType = "string",
+                    required = true, value = "应收单价"),
+            @ApiImplicitParam(paramType = "form", name = "factoryPrice", dataType = "string",
+                    required = true, value = "出厂单价"),
+            @ApiImplicitParam(paramType = "form", name = "requirement", dataType = "string",
+                    required = true, value = "制作要求"),
             @ApiImplicitParam(paramType = "form", name = "reviewResult", dataType = "string",
                     required = true, value = "审核结果[Accept, Reject]")
     })
     @ResponseBody
     @RequestMapping(value = "/review", method = POST)
-    public WebResult<DentureVo> review(String dentureId, String reviewResult, HttpServletRequest request) {
+    public WebResult<DentureVo> review(String id, Double estimatedDuration, String basePrice,
+                                       String factoryPrice, String requirement, String reviewResult,
+                                       HttpServletRequest request) {
         FactoryUser user = SessionManager.Instance().user(request);
         Long operatorId = user.getId();
-        logger.info("审核义齿:operator={}, dentureId={}, reviewResult={}",operatorId, dentureId,
+        logger.info("审核义齿:operator={}, dentureId={}, reviewResult={}",operatorId, id,
                     reviewResult);
 
         WebResult<DentureVo> result = new WebResult<>();
         try {
-            Denture denture = service.inspectReviewAndStart(dentureId, operatorId,
-                    ReviewResult.typeOf(reviewResult));
+            Denture denture = service.inspectReviewAndStart(id, estimatedDuration, basePrice,
+                    factoryPrice, requirement, operatorId, ReviewResult.typeOf(reviewResult));
             DentureVo vo = DentureAssembler.toVo(denture);
             result.setData(vo);
         } catch (Exception ex) {

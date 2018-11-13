@@ -54,8 +54,8 @@ export default {
       queryParams: {
         company: null,
         deliveryId: null,
-        dentureId: '',
-        patientName: '',
+        dentureId: null,
+        patientName: null,
         status: 'Waiting',
         createdDate: null,
         region: null,

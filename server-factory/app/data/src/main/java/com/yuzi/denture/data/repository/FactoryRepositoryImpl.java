@@ -147,8 +147,8 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     }
 
     @Override
-    public List<Denture> findWaitingDentures(Long factoryId) {
-        List<Denture> dentures = dentureMapper.findWaitingDentures(factoryId);
+    public List<Denture> findWaitingDentures(DentureCriteria criteria) {
+        List<Denture> dentures = dentureMapper.findWaitingDentures(criteria);
         return dentures;
     }
 
@@ -159,8 +159,8 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     }
 
     @Override
-    public List<Denture> findDoneDentures(Long factoryId) {
-        List<Denture> dentures = dentureMapper.findDoneDentures(factoryId);
+    public List<Denture> findDoneDentures(DentureCriteria criteria) {
+        List<Denture> dentures = dentureMapper.findDoneDentures(criteria);
         return dentures;
     }
 

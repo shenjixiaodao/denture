@@ -31,6 +31,17 @@ export function user(uid) {
   })
 }
 
+export function review(data) {
+  return request({
+    url: '/manufacture/review',
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data
+  })
+}
+
 export function addUser(data) {
   return request({
     url: '/factoryUser/add',

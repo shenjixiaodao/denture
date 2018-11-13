@@ -39,7 +39,7 @@ const comprehensiveRouter = {
     },
     {
       path: 'users',
-      component: () => import('@/views/manufacture/comprehensive/user'),
+      component: () => import('@/views/manufacture/comprehensive/users'),
       name: 'User',
       meta: { title: '用户管理' }
     },

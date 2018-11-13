@@ -20,6 +20,6 @@ logging:
   file: log/denture.log
 
 avatar:
-  location: /usr/share/upload/avatar
+  location: /usr/share/upload/factory/avatar
 logo:
-  location: /usr/share/upload/logo
+  location: /usr/share/upload/factory/logo

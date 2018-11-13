@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -52,11 +53,17 @@ public class FactoryServiceImpl implements FactoryService {
     }
 
     @Override
-    public Denture inspectReviewAndStart(String dentureId, Long inspectorId, ReviewResult reviewResult) {
+    public Denture inspectReviewAndStart(String dentureId, Double estimatedDuration, String basePrice,
+                                         String factoryPrice, String requirement, Long inspectorId,
+                                         ReviewResult reviewResult) {
         Denture denture = repository.findDenture(dentureId);
         denture.setStartDate(new Date());
         denture.setModelInspectionDate(new Date());
         denture.setModelInspector(new FactoryUser(inspectorId));
+        denture.setEstimatedDuration(estimatedDuration);
+        denture.setBasePrice(basePrice);
+        denture.setFactoryPrice(factoryPrice);
+        denture.setRequirement(requirement);
         //审核合并执行
         denture.setProReview(reviewResult);
         denture.setProReviewDate(new Date());

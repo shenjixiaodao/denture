@@ -22,10 +22,22 @@
             <td class="td_title_prop">数量:</td><td class="td_content_prop">{{ denture.number }}</td>
           </tr>
           <tr>
-            <td class="td_title_prop">应收单价:</td><td class="td_content_prop">{{ denture.basePrice }}</td>
+            <td class="td_title_prop">加工时长:</td>
+            <td class="td_content_prop">
+              <el-input v-model="denture.estimatedDuration" class="filter-item" />
+            </td>
           </tr>
           <tr>
-            <td class="td_title_prop">出货单价:</td><td class="td_content_prop">{{ denture.factoryPrice }}</td>
+            <td class="td_title_prop">应收单价:</td>
+            <td class="td_content_prop">
+              <el-input v-model="denture.basePrice" class="filter-item" />
+            </td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">出货单价:</td>
+            <td class="td_content_prop">
+              <el-input v-model="denture.factoryPrice" class="filter-item" />
+            </td>
           </tr>
           <tr>
             <td class="td_title_prop">牙位</td><td class="td_content_prop">{{ denture.positions }}</td>
@@ -34,7 +46,10 @@
             <td class="td_title_prop">色号:</td><td class="td_content_prop">{{ denture.colorNo }}</td>
           </tr>
           <tr>
-            <td class="td_title_prop">制作要求:</td><td class="td_content_prop">{{ denture.requirement }}</td>
+            <td class="td_title_prop">制作要求:</td>
+            <td class="td_content_prop">
+              <el-input v-model="denture.requirement" class="filter-item" />
+            </td>
           </tr>
           <tr>
             <td class="td_title_prop">咬合:</td><td class="td_content_prop">{{ denture.biteLevel }}</td>
@@ -122,7 +137,7 @@
 
 <script>
 import { queryByDentureId } from '@/api/common'
-import { queryIngredients, applyIngredient } from '@/api/comprehensive'
+import { queryIngredients, applyIngredient, review } from '@/api/comprehensive'
 
 export default {
   data() {
@@ -150,11 +165,13 @@ export default {
       queryByDentureId(id).then(response => {
         var data = response.data
         this.denture = data
+        this.isShow = !data.startDate
         this.appliedIngredients = this.denture.appliedIngredients
       })
     },
     review(result) {
-      console.log(result)
+      this.denture['reviewResult'] = result
+      review(this.denture)
     },
     applyIngredient() {
       this.dialogAddVisible = true

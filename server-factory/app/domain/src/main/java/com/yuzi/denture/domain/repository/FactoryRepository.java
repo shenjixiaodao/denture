@@ -48,9 +48,9 @@ public interface FactoryRepository {
      * 等待审核, 正在制作，已完成
      * 的义齿
      */
-    List<Denture> findWaitingDentures(Long factoryId);
+    List<Denture> findWaitingDentures(DentureCriteria criteria);
     List<Denture> findDoingDentures(DentureCriteria criteria);
-    List<Denture> findDoneDentures(Long factoryId);
+    List<Denture> findDoneDentures(DentureCriteria criteria);
 
     /**
      * 综合管理人员可以通过{@param factoryId} 查询所有工厂的订单

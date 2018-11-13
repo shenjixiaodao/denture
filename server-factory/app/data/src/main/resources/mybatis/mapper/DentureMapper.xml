@@ -198,7 +198,7 @@
             and d.id=#{dentureId}
         </if>
         <if test="createdDate">
-            and d.createdDate=#{createdDate}
+            and DATE_FORMAT(d.createdDate,'%Y-%m-%d')=#{createdDate}
         </if>
         <if test="patientName!=null">
             and patient.name=#{patientName}
@@ -231,6 +231,8 @@
           d.factory_id=#{factoryId} and do.factory_id=#{factoryId} and d.id=do.denture_id
           and do.status in('Created','Paid')
         )
+        inner join clinic c on (d.clinic_id=c.id)
+        <include refid="criteriaWhere" />
     </select>
     <select id="findByDeliveryInfo" parameterType="Map" resultMap="baseRM">
         SELECT <include refid="baseSQL" /> FROM denture d
@@ -253,5 +255,7 @@
         d.factory_id=#{factoryId} and do.factory_id=#{factoryId} and d.id=do.denture_id
         and do.status in('Rejected','Installed')
         )
+        inner join clinic c on (d.clinic_id=c.id)
+        <include refid="criteriaWhere" />
     </select>
 </mapper>

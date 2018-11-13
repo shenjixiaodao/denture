@@ -58,3 +58,14 @@ export function replyCo(factoryId, isAccepted) {
     data
   })
 }
+
+export function changeAvatar(data) {
+  return request({
+    url: '/user/changeAvatar',
+    method: 'post',
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    },
+    data: data
+  })
+}
