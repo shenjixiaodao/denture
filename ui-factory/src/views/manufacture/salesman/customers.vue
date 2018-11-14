@@ -35,7 +35,7 @@
           <el-input v-model="customer.name" style="width: 70%;"/>
         </el-form-item>
         <el-form-item label="所在城市" prop="title">
-          <el-cascader :options="cities" v-model="customer.region" :props="props" placeholder="省/市/县" @change="handleChange"/>
+          <el-cascader :options="cities" :props="props" placeholder="省/市/县" @change="handleChange"/>
         </el-form-item>
         <el-form-item label="具体地址" prop="title">
           <el-input v-model="customer.address" style="width: 70%;"/>
@@ -94,13 +94,16 @@ export default {
     },
     addCustomer() {
       this.dialogAddVisible = false
-      this.customer.region = this.selectedCity.join('-')
+      this.customer.region = this.selectedCity.join('/')
       recordCustomer(this.customer).then(resp => {
         customers().then(response => {
           var data = response.data
           this.list = data
         })
       })
+    },
+    handleChange(value) {
+      this.selectedCity = value
     }
   }
 }

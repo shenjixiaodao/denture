@@ -1,5 +1,6 @@
 package com.yuzi.denture.api.vo;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -12,6 +13,26 @@ public class IngredientPurchaseRecordVo {
     private Double number;
     private Date gmtCreated;
     private Date gmtModified;
+    //采购单号
+    private String billNo;
+    //采购单价
+    BigDecimal price;
+
+    public String getBillNo() {
+        return billNo;
+    }
+
+    public void setBillNo(String billNo) {
+        this.billNo = billNo;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
 
     public Long getId() {
         return id;

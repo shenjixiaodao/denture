@@ -164,14 +164,15 @@ public class FactoryServiceImpl implements FactoryService {
 
     @Transactional
     @Override
-    public void newIngredientPurchaseRecord(Long ingredientId, Long supplierId, Double number) {
+    public void newIngredientPurchaseRecord(String billNo, String price, Long ingredientId,
+                                            Long supplierId, Double number) {
         Ingredient ingredient = repository.findIngredient(ingredientId);
         if(ingredient == null) {
             throw new IllegalArgumentException("未知物料");
         }
         ingredient.addBalance(number);
         repository.updateIngredient(ingredient);
-        IngredientPurchaseRecord record = new IngredientPurchaseRecord(ingredientId, supplierId, number);
+        IngredientPurchaseRecord record = new IngredientPurchaseRecord(billNo, price, ingredientId, supplierId, number);
         repository.recordIngredientPurchase(record);
     }
 

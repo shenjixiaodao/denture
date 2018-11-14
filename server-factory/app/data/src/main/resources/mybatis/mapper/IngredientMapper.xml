@@ -24,7 +24,9 @@
         `number`,
         `gmt_created`,
         `gmt_modified`,
-        `supplier_id`
+        `supplier_id`,
+        `bill_no`,
+        `price`
         )
         VALUES
         (
@@ -32,7 +34,9 @@
         #{number},
         #{gmtCreated},
         #{gmtModified},
-        #{supplierId}
+        #{supplierId},
+        #{billNo},
+        #{price}
         );
     </insert>
 
@@ -109,6 +113,8 @@
             <result column="pr_number" property="number" />
             <result column="pr_gmt_created" property="gmtCreated" />
             <result column="pr_gmt_modified" property="gmtModified" />
+            <result column="bill_no" property="billNo" />
+            <result column="price" property="price" />
         </collection>
         <collection property="appliedIngredients" ofType="com.yuzi.denture.domain.AppliedIngredient">
             <result column="id" property="ingredient.id" />
@@ -129,7 +135,8 @@
     <sql id="IngredientSQL">
         i.*,
         pr.id pr_id, pr.ingredient_id pr_ingredient_id, pr.supplier_id pr_supplier_id,
-        pr.number pr_number, pr.gmt_created pr_gmt_created, pr.gmt_modified pr_gmt_modified
+        pr.number pr_number, pr.gmt_created pr_gmt_created, pr.gmt_modified pr_gmt_modified,
+        bill_no, price
     </sql>
     <sql id="appliedIngredientSQL">
         ai.denture_id ai_denture_id, ai.no ai_no, ai.applied_number ai_applied_number,

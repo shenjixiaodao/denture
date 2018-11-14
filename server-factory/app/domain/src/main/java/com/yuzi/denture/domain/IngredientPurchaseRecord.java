@@ -1,5 +1,6 @@
 package com.yuzi.denture.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -12,8 +13,14 @@ public class IngredientPurchaseRecord {
     private Double number;
     private Date gmtCreated;
     private Date gmtModified;
+    //采购单号
+    private String billNo;
+    //采购单价
+    BigDecimal price;
 
-    public IngredientPurchaseRecord(Long ingredientId, Long supplierId, Double number) {
+    public IngredientPurchaseRecord(String billNo, String price, Long ingredientId, Long supplierId, Double number) {
+        this.billNo = billNo;
+        this.price = new BigDecimal(price);
         this.ingredientId = ingredientId;
         this.supplierId = supplierId;
         this.number = number;
@@ -22,6 +29,22 @@ public class IngredientPurchaseRecord {
     }
 
     public IngredientPurchaseRecord() {
+    }
+
+    public String getBillNo() {
+        return billNo;
+    }
+
+    public void setBillNo(String billNo) {
+        this.billNo = billNo;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public Long getId() {

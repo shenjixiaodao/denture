@@ -336,15 +336,20 @@ public class ManufactureController {
             @ApiImplicitParam(paramType = "form", name = "supplierId", dataType = "long",
                     required = true, value = "供应商ID"),
             @ApiImplicitParam(paramType = "form", name = "number", dataType = "double",
-                    required = true, value = "购买量")
+                    required = true, value = "购买量"),
+            @ApiImplicitParam(paramType = "form", name = "billNo", dataType = "String",
+                    required = true, value = "采购单据"),
+            @ApiImplicitParam(paramType = "form", name = "price", dataType = "String",
+                    required = true, value = "购买单价")
     })
     @ResponseBody
     @RequestMapping(value = "/recordIngredientPurchase", method = POST)
-    public WebResult recordIngredientPurchase(Long ingredientId, Long supplierId, Double number) {
+    public WebResult recordIngredientPurchase(String billNo, String price, Long ingredientId,
+                                              Long supplierId, Double number) {
         logger.info("记录新购入物料:ingredientId={}, supplierId={}, number={}", ingredientId, supplierId, number);
         WebResult result = new WebResult<>();
         try {
-            service.newIngredientPurchaseRecord(ingredientId,supplierId, number);
+            service.newIngredientPurchaseRecord(billNo, price, ingredientId,supplierId, number);
         } catch (Exception ex) {
             logger.warn("记录新购入物料异常: {}", ex);
             return WebResult.failure(ex.getMessage());

@@ -20,9 +20,14 @@
 
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <el-table :data="purchaseRecords" style="width: 100%;padding-top: 15px;">
-        <el-table-column label="入库时间">
+        <el-table-column label="采购时间">
           <template slot-scope="scope">
             {{ scope.row.gmtCreated.split(' ',2)[0] }}
+          </template>
+        </el-table-column>
+        <el-table-column label="购入单价" align="center">
+          <template slot-scope="scope">
+            {{ scope.row.price }}
           </template>
         </el-table-column>
         <el-table-column label="购入量" align="center">
@@ -35,12 +40,17 @@
             {{ scope.row.supplierId }}
           </template>
         </el-table-column>
+        <el-table-column label="采购单号" align="center">
+          <template slot-scope="scope">
+            {{ scope.row.billNo }}
+          </template>
+        </el-table-column>
       </el-table>
     </el-row>
 
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <el-table :data="appliedRecords" style="width: 100%;padding-top: 15px;">
-        <el-table-column label="领用时间">
+        <el-table-column label="领用时间" align="center">
           <template slot-scope="scope">
             {{ scope.row.appliedDate.split(' ',2)[0] }}
           </template>
@@ -50,16 +60,16 @@
             {{ scope.row.appliedNumber }}
           </template>
         </el-table-column>
-        <el-table-column label="加工义齿">
-          <template slot-scope="scope">
-            <router-link :to="'denture/'+scope.row.dentureId" class="link-type">
-              <span>详情</span>
-            </router-link>
-          </template>
-        </el-table-column>
         <el-table-column label="备注" align="center">
           <template slot-scope="scope">
             {{ scope.row.comment }}
+          </template>
+        </el-table-column>
+        <el-table-column label="加工义齿" align="center">
+          <template slot-scope="scope">
+            <router-link :to="'/comprehensive/denture/'+scope.row.dentureId" class="link-type">
+              <span>详情</span>
+            </router-link>
           </template>
         </el-table-column>
       </el-table>
