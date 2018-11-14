@@ -59,6 +59,8 @@ public class FactoryUserController {
                     required = true, value = "姓名"),
             @ApiImplicitParam(paramType = "form", name = "contact", dataType = "string",
                     required = true, value = "手机"),
+            @ApiImplicitParam(paramType = "form", name = "cardId", dataType = "String",
+                    required = true, value = "身份证号"),
             @ApiImplicitParam(paramType = "form", name = "role", dataType = "string",
                     required = true, value = "角色\n" +
                     "       [ShiGao(\"石膏技师\"),\n" +
@@ -83,14 +85,15 @@ public class FactoryUserController {
     })
     @ResponseBody
     @RequestMapping(value = "/add", method = POST)
-    public WebResult add(String name, String contact, String role, String joinDate, HttpServletRequest request) {
+    public WebResult add(String name, String contact, String cardId, String role,
+                         String joinDate, HttpServletRequest request) {
         FactoryUser user = SessionManager.Instance().user(request);
         Long factoryId = user.getFactoryId();
         logger.info("审核义齿:name={}, contact={}, role={}, joinDate={}",name, contact,
                 role, joinDate);
         WebResult result = WebResult.success();
         try {
-            user = new FactoryUser(factoryId, name, contact, FactoryRole.Role.typeOf(role));
+            user = new FactoryUser(factoryId, name, contact, cardId, FactoryRole.Role.typeOf(role));
             if(!StringUtils.isEmpty(joinDate)) {
                 DateFormatter formatter = new DateFormatter("yyyy-mm-dd");
                 user.setJoinDate(formatter.parse(joinDate, Locale.CHINA));
@@ -111,7 +114,13 @@ public class FactoryUserController {
             @ApiImplicitParam(paramType = "form", name = "uid", dataType = "Long",
                     required = true, value = "用户ID"),
             @ApiImplicitParam(paramType = "form", name = "roles", dataType = "String",
-                    required = true, value = "用户角色,多个角色用','分隔")
+                    required = true, value = "用户角色,多个角色用','分隔"),
+            @ApiImplicitParam(paramType = "form", name = "marital", dataType = "Boolean",
+                    required = true, value = "婚姻状况"),
+            @ApiImplicitParam(paramType = "form", name = "address", dataType = "String",
+                    required = true, value = "地址"),
+            @ApiImplicitParam(paramType = "form", name = "educational", dataType = "String",
+                    required = true, value = "教育状况")
     })
     @ResponseBody
     @RequestMapping(value = "/modify", method = POST)

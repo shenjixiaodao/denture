@@ -40,6 +40,52 @@ public class FactoryUserVo implements Serializable{
     @ApiModelProperty(value="登录成功后的token")
     private String token;
     String avatar;
+    Boolean marital;
+    Integer age;
+    String cardId;
+    String address;
+    String educational;
+
+    public Boolean getMarital() {
+        return marital;
+    }
+
+    public void setMarital(Boolean marital) {
+        this.marital = marital;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getCardId() {
+        return cardId;
+    }
+
+    public void setCardId(String cardId) {
+        this.cardId = cardId;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getEducational() {
+        return educational;
+    }
+
+    public void setEducational(String educational) {
+        this.educational = educational;
+    }
+
     public Long getId() {
         return id;
     }

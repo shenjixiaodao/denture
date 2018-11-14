@@ -1,5 +1,6 @@
 package com.yuzi.denture.domain;
 
+import com.yuzi.denture.domain.type.Educational;
 import com.yuzi.denture.domain.util.RSAUtil;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
@@ -50,11 +51,17 @@ public class FactoryUser {
      Date joinDate;
     List<FactoryRole> roles;
     String avatar;
+    Boolean marital;
+    Integer age;
+    String cardId;
+    String address;
+    Educational educational;
 
-    public FactoryUser(Long factoryId, String name, String contact, FactoryRole.Role role) {
+    public FactoryUser(Long factoryId, String name, String contact, String cardId, FactoryRole.Role role) {
         this.factoryId = factoryId;
         this.name = name;
         this.contact = contact;
+        this.cardId = cardId;
         this.password = hashPWD(DefaultPWD(this.contact).getBytes());
         roles = new ArrayList<>();
         roles.add(new FactoryRole(role));
@@ -103,6 +110,46 @@ public class FactoryUser {
         for(String role:strs) {
             this.roles.add(new FactoryRole(this.id, FactoryRole.Role.typeOf(role)));
         }
+    }
+
+    public Boolean getMarital() {
+        return marital;
+    }
+
+    public void setMarital(Boolean marital) {
+        this.marital = marital;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getCardId() {
+        return cardId;
+    }
+
+    public void setCardId(String cardId) {
+        this.cardId = cardId;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Educational getEducational() {
+        return educational;
+    }
+
+    public void setEducational(Educational educational) {
+        this.educational = educational;
     }
 
     public Long getId() {

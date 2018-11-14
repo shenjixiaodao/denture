@@ -11,7 +11,12 @@
         `group_type`,
         `join_date`,
         `factory_id`,
-        `avatar`
+        `avatar`,
+        `marital`,
+        `age`,
+        `card_id`,
+        `address`,
+        `educational`
         )
         VALUES
         (
@@ -21,7 +26,12 @@
         #{groupType},
         #{joinDate},
         #{factoryId},
-        #{avatar}
+        #{avatar},
+        #{marital},
+        #{age},
+        #{cardId},
+        #{address},
+        #{educational}
         );
     </insert>
 
@@ -46,6 +56,18 @@
         </if>
         <if test="avatar!=null">
             ,`avatar` = #{avatar}
+        </if>
+        <if test="marital!=null">
+            ,`marital` = #{marital}
+        </if>
+        <if test="cardId!=null">
+            ,`card_id` = #{cardId}
+        </if>
+        <if test="address!=null">
+            ,`address` = #{address}
+        </if>
+        <if test="educational!=null">
+            ,`educational` = #{educational}
         </if>
         WHERE `id` = #{id};
     </update>
@@ -127,7 +149,11 @@
         <result column="group_type" property="groupType" />
         <result column="join_date" property="joinDate" />
         <result column="avatar" property="avatar" />
-        <collection property="roles" resultMap="baseRoleRM" />
+        <result column="marital" property="marital" />
+        <result column="age" property="age" />
+        <result column="card_id" property="cardId" />
+        <result column="address" property="address" />
+        <result column="educational" property="educational" />
     </resultMap>
     <resultMap id="baseRoleRM" type="com.yuzi.denture.domain.FactoryRole">
         <result column="role_uid" property="uid" />
