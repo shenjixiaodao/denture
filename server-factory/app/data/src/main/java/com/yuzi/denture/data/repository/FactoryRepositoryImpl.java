@@ -68,8 +68,8 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     }
 
     @Override
-    public void addRole(FactoryRole role) {
-        userMapper.addRole(role);
+    public void addRole(List<FactoryRole> roles) {
+        userMapper.addRole(roles);
     }
 
     @Override

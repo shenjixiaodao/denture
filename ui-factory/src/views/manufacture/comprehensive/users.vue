@@ -41,7 +41,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label-width="80px" label="入职时间" class="postInfo-container-item">
-          <el-date-picker v-model="user.joinDate" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="选择日期时间"/>
+          <el-date-picker v-model="user.joinDate" type="date" format="yyyy-MM-dd" placeholder="选择日期时间"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

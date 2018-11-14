@@ -11,7 +11,7 @@
         `group_type`,
         `join_date`,
         `factory_id`,
-        'avatar'
+        `avatar`
         )
         VALUES
         (
@@ -50,17 +50,23 @@
         WHERE `id` = #{id};
     </update>
 
-    <insert id="addRole" parameterType="com.yuzi.denture.domain.FactoryRole">
+    <insert id="addRole" parameterType="java.util.List">
+        <!--DELETE FROM factory_role WHERE factory_uid IN (
+        <foreach collection="list" item="item" separator=",">
+            #{item.uid}
+        </foreach> );-->
         INSERT INTO factory_role
         (
-        `factory_uid`,
-        `role`
+            `factory_uid`,
+            `role`
         )
         VALUES
+        <foreach collection="list" item="item" separator =",">
         (
-        #{uid},
-        #{role}
-        );
+            #{item.uid},
+            #{item.role}
+        )
+        </foreach>
     </insert>
 
     <insert id="addCustomer" parameterType="com.yuzi.denture.domain.FactoryCustomer">
@@ -177,8 +183,8 @@
         on (contact=#{contact} and fu.id=fr.factory_uid)
     </select>
     <select id="findUserById" resultMap="baseRM">
-        SELECT * FROM factory_user
-        WHERE id=#{id}
+        SELECT * FROM factory_user fu
+        inner JOIN factory_role fr ON (fu.id=#{id} and fu.id=fr.factory_uid)
     </select>
     <select id="findUsersByFactoryId" resultMap="baseRM">
         SELECT * FROM factory_user

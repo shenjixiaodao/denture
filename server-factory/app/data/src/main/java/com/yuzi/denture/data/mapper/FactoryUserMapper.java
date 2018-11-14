@@ -15,7 +15,7 @@ import java.util.Map;
 public interface FactoryUserMapper {
 
     void save(FactoryUser user);
-    void addRole(FactoryRole role);
+    void addRole(List<FactoryRole> roles);
     void update(FactoryUser user);
     void addCustomer(FactoryCustomer customer);
     void updateCustomer(FactoryCustomer customer);
