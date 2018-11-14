@@ -73,6 +73,11 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     }
 
     @Override
+    public void deleteRole(Long uid) {
+        userMapper.deleteRole(uid);
+    }
+
+    @Override
     public void update(FactoryUser user) {
         userMapper.update(user);
     }

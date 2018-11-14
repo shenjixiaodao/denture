@@ -2,6 +2,7 @@ package com.yuzi.denture.domain;
 
 import com.yuzi.denture.domain.util.RSAUtil;
 import org.springframework.util.DigestUtils;
+import org.springframework.util.StringUtils;
 
 import java.security.KeyPair;
 import java.security.PrivateKey;
@@ -92,6 +93,16 @@ public class FactoryUser {
 
     public String token() {
         return UUID.randomUUID().toString();
+    }
+
+    public void setRoles(String roles) {
+        if(StringUtils.isEmpty(roles))
+            throw new IllegalArgumentException("角色为空");
+        String[] strs = roles.split(",");
+        this.roles = new ArrayList<>(strs.length);
+        for(String role:strs) {
+            this.roles.add(new FactoryRole(this.id, FactoryRole.Role.typeOf(role)));
+        }
     }
 
     public Long getId() {

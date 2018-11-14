@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -102,6 +103,25 @@ public class FactoryUserController {
             logger.warn("审核义齿异常: {}", ex);
             return WebResult.failure(ex.getMessage());
         }
+        return result;
+    }
+
+    @ApiOperation(value = "修改用户", response = WebResult.class, httpMethod = "POST")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "form", name = "uid", dataType = "Long",
+                    required = true, value = "用户ID"),
+            @ApiImplicitParam(paramType = "form", name = "roles", dataType = "String",
+                    required = true, value = "用户角色,多个角色用','分隔")
+    })
+    @ResponseBody
+    @RequestMapping(value = "/modify", method = POST)
+    public WebResult<FactoryUserVo> modify(Long uid, String roles) {
+        logger.info("修改用户:roles={}",roles);
+        WebResult result = WebResult.execute(res -> {
+            FactoryUser user = repository.findUser(uid);
+            user.setRoles(roles);
+            service.modifyUser(user);
+        }, "修改用户错误", logger);
         return result;
     }
 

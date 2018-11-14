@@ -9,6 +9,7 @@ public class Ingredient {
     private Double balance;
     private Long factoryId;
     private List<IngredientPurchaseRecord> purchaseRecords;
+    List<AppliedIngredient> appliedIngredients;
 
     public Ingredient(String name,Long factoryId) {
         this.name = name;
@@ -31,6 +32,14 @@ public class Ingredient {
         if(balance < number)
             throw new IllegalArgumentException("物料【"+name+"】库存不足");
         this.balance -= number;
+    }
+
+    public List<AppliedIngredient> getAppliedIngredients() {
+        return appliedIngredients;
+    }
+
+    public void setAppliedIngredients(List<AppliedIngredient> appliedIngredients) {
+        this.appliedIngredients = appliedIngredients;
     }
 
     public Long getId() {

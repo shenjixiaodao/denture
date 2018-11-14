@@ -8,6 +8,11 @@ public class FactoryRole {
     Long uid;
     Role role;
 
+    public FactoryRole(Long uid, Role role) {
+        this.uid = uid;
+        this.role = role;
+    }
+
     public FactoryRole(Role role) {
         this.role = role;
     }

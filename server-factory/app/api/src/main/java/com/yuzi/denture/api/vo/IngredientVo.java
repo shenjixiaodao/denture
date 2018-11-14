@@ -1,5 +1,6 @@
 package com.yuzi.denture.api.vo;
 
+
 import java.util.List;
 
 public class IngredientVo {
@@ -8,6 +9,7 @@ public class IngredientVo {
     private Double balance;
     private Long factoryId;
     private List<IngredientPurchaseRecordVo> records;
+    List<AppliedIngredientVo> appliedIngredients;
 
     public Long getId() {
         return id;
@@ -47,5 +49,13 @@ public class IngredientVo {
 
     public void setRecords(List<IngredientPurchaseRecordVo> records) {
         this.records = records;
+    }
+
+    public List<AppliedIngredientVo> getAppliedIngredients() {
+        return appliedIngredients;
+    }
+
+    public void setAppliedIngredients(List<AppliedIngredientVo> appliedIngredients) {
+        this.appliedIngredients = appliedIngredients;
     }
 }

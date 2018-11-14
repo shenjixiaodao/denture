@@ -1,56 +1,60 @@
 <template>
   <div class="app-container">
-    <div class="panel panel-primary">
-      <table>
-        <tbody>
-          <tr>
-            <td class="td_title_prop">姓名:</td><td class="td_content_prop">{{ user.name }}</td>
-          </tr>
-          <tr>
-            <td class="td_title_prop">联系方式:</td><td class="td_content_prop">{{ user.contact }}</td>
-          </tr>
-          <tr>
-            <td class="td_title_prop">所在组:</td><td class="td_content_prop">{{ user.groupType }}</td>
-          </tr>
-          <tr>
-            <td class="td_title_prop">入职时间:</td><td class="td_content_prop">{{ user.joinDate }}</td>
-          </tr>
-        </tbody>
-      </table>
-      <div>
-        <span>权限:</span>
-        <el-checkbox-group v-model="user.roles" @change="handleChange">
-          <el-checkbox :label="roles[0].code">{{ roles[0].name }}</el-checkbox>
-          <el-checkbox :label="roles[1].name" :key="roles[1].code" />
-          <el-checkbox :label="roles[2].name" :key="roles[2].code"/>
-          <br>
-          <el-checkbox :label="roles[3].name" :key="roles[3].code"/>
-          <el-checkbox :label="roles[4].name" :key="roles[4].code"/>
-          <el-checkbox :label="roles[5].name" :key="roles[5].code"/>
-          <br>
-          <el-checkbox :label="roles[6].name" :key="roles[6].code"/>
-          <el-checkbox :label="roles[7].name" :key="roles[7].code"/>
-          <el-checkbox :label="roles[8].name" :key="roles[8].code"/>
-          <br>
-          <el-checkbox :label="roles[9].name" :key="roles[9].code"/>
-          <el-checkbox :label="roles[10].name" :key="roles[10].code"/>
-          <el-checkbox :label="roles[11].name" :key="roles[11].code"/>
-          <br>
-          <el-checkbox :label="roles[12].name" :key="roles[12].code"/>
-          <el-checkbox :label="roles[13].name" :key="roles[13].code"/>
-          <el-checkbox :label="roles[14].name" :key="roles[14].code"/>
-          <br>
-          <el-checkbox :label="roles[15].name" :key="roles[15].code"/>
-          <el-checkbox :label="roles[16].name" :key="roles[16].code"/>
-        </el-checkbox-group>
+    <el-row style="background:#fff;padding:5px 5px 0;margin-bottom:20px;">
+      <div class="panel panel-primary">
+        <table>
+          <tbody>
+            <tr>
+              <td class="td_title_prop">姓名:</td><td class="td_content_prop">{{ user.name }}</td>
+            </tr>
+            <tr>
+              <td class="td_title_prop">联系方式:</td><td class="td_content_prop">{{ user.contact }}</td>
+            </tr>
+            <tr>
+              <td class="td_title_prop">所在组:</td><td class="td_content_prop">{{ user.groupType }}</td>
+            </tr>
+            <tr>
+              <td class="td_title_prop">入职时间:</td><td class="td_content_prop">{{ user.joinDate }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div>
+          <span>权限:</span>
+          <el-checkbox-group v-model="user.roles">
+            <el-checkbox :label="roles[0].code">{{ roles[0].name }}</el-checkbox>
+            <el-checkbox :label="roles[1].code">{{ roles[1].name }}</el-checkbox>
+            <el-checkbox :label="roles[2].code">{{ roles[2].name }}</el-checkbox>
+            <br>
+            <el-checkbox :label="roles[3].code">{{ roles[3].name }}</el-checkbox>
+            <el-checkbox :label="roles[4].code">{{ roles[4].name }}</el-checkbox>
+            <el-checkbox :label="roles[5].code">{{ roles[5].name }}</el-checkbox>
+            <br>
+            <el-checkbox :label="roles[6].code">{{ roles[6].name }}</el-checkbox>
+            <el-checkbox :label="roles[7].code">{{ roles[7].name }}</el-checkbox>
+            <el-checkbox :label="roles[8].code">{{ roles[8].name }}</el-checkbox>
+            <br>
+            <el-checkbox :label="roles[9].code">{{ roles[9].name }}</el-checkbox>
+            <el-checkbox :label="roles[10].code">{{ roles[10].name }}</el-checkbox>
+            <el-checkbox :label="roles[11].code">{{ roles[11].name }}</el-checkbox>
+            <br>
+            <el-checkbox :label="roles[12].code">{{ roles[12].name }}</el-checkbox>
+            <el-checkbox :label="roles[13].code">{{ roles[13].name }}</el-checkbox>
+            <el-checkbox :label="roles[14].code">{{ roles[14].name }}</el-checkbox>
+            <br>
+            <el-checkbox :label="roles[15].code">{{ roles[15].name }}</el-checkbox>
+            <el-checkbox :label="roles[16].code">{{ roles[16].name }}</el-checkbox>
+          </el-checkbox-group>
+        </div>
       </div>
-    </div>
+    </el-row>
+    <el-row style="background:#fff;padding:5px 5px 0;margin-bottom:32px;">
+      <el-button type="primary" @click="modifyUser">修改</el-button>
+    </el-row>
   </div>
-
 </template>
 
 <script>
-import { user } from '@/api/comprehensive'
+import { user, modifyUser } from '@/api/comprehensive'
 
 export default {
   data() {
@@ -89,8 +93,14 @@ export default {
         this.user = data
       })
     },
-    handleChange(value) {
-      console.log(value)
+    modifyUser() {
+      modifyUser({
+        uid: this.user.id,
+        roles: this.user.roles.join(',')
+      }).then(response => {
+        var data = response.data
+        this.user = data
+      })
     }
   }
 }

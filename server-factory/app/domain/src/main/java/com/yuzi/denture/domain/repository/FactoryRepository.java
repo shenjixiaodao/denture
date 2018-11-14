@@ -21,6 +21,7 @@ public interface FactoryRepository {
     //user
     void add(FactoryUser user);
     void addRole(List<FactoryRole> roles);
+    void deleteRole(Long uid);
     void update(FactoryUser user);
     void addCustomer(FactoryCustomer customer);
     void updateCustomer(FactoryCustomer customer);

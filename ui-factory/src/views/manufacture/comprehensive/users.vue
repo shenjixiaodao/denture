@@ -28,20 +28,20 @@
     </el-row>
 
     <el-dialog :visible.sync="dialogAddVisible" title="添加员工">
-      <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+      <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 100%;">
         <el-form-item label="名字" prop="title">
-          <el-input v-model="user.name"/>
+          <el-input v-model="user.name" style="width: 70%;"/>
         </el-form-item>
         <el-form-item label="手机" prop="title">
-          <el-input v-model="user.contact"/>
+          <el-input v-model="user.contact" style="width: 70%;"/>
         </el-form-item>
         <el-form-item label="名字" prop="title">
-          <el-select v-model="user.role" placeholder="角色" clearable style="width: 90px" class="filter-item">
+          <el-select v-model="user.role" placeholder="角色" clearable style="width: 70%;" class="filter-item">
             <el-option v-for="item in roles" :key="item.code" :label="item.name" :value="item.code"/>
           </el-select>
         </el-form-item>
         <el-form-item label-width="80px" label="入职时间" class="postInfo-container-item">
-          <el-date-picker v-model="user.joinDate" type="date" format="yyyy-MM-dd" placeholder="选择日期时间"/>
+          <el-date-picker v-model="user.joinDate" type="date" format="yyyy-MM-dd" placeholder="选择日期时间" style="width: 70%;"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

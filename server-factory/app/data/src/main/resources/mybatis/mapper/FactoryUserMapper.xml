@@ -51,10 +51,6 @@
     </update>
 
     <insert id="addRole" parameterType="java.util.List">
-        <!--DELETE FROM factory_role WHERE factory_uid IN (
-        <foreach collection="list" item="item" separator=",">
-            #{item.uid}
-        </foreach> );-->
         INSERT INTO factory_role
         (
             `factory_uid`,
@@ -68,6 +64,9 @@
         )
         </foreach>
     </insert>
+    <delete id="deleteRole" parameterType="Long">
+        DELETE FROM factory_role WHERE factory_uid=#{uid}
+    </delete>
 
     <insert id="addCustomer" parameterType="com.yuzi.denture.domain.FactoryCustomer">
         INSERT INTO factory_customer

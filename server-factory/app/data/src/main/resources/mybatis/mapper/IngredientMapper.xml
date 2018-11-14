@@ -110,6 +110,16 @@
             <result column="pr_gmt_created" property="gmtCreated" />
             <result column="pr_gmt_modified" property="gmtModified" />
         </collection>
+        <collection property="appliedIngredients" ofType="com.yuzi.denture.domain.AppliedIngredient">
+            <result column="id" property="ingredient.id" />
+            <result column="name" property="ingredient.name" />
+            <result column="ai_denture_id" property="dentureId" />
+            <result column="ai_no" property="no" />
+            <result column="ai_applicant_id" property="applicant.id" />
+            <result column="ai_applied_number" property="appliedNumber" />
+            <result column="ai_applied_date" property="appliedDate" />
+            <result column="ai_comment" property="comment" />
+        </collection>
     </resultMap>
 
     <select id="findIngredients" parameterType="Long" resultMap="baseRM">
@@ -121,9 +131,14 @@
         pr.id pr_id, pr.ingredient_id pr_ingredient_id, pr.supplier_id pr_supplier_id,
         pr.number pr_number, pr.gmt_created pr_gmt_created, pr.gmt_modified pr_gmt_modified
     </sql>
+    <sql id="appliedIngredientSQL">
+        ai.denture_id ai_denture_id, ai.no ai_no, ai.applied_number ai_applied_number,
+        ai.applicant_id ai_applicant_id, ai.applied_date ai_applied_date, ai.comment ai_comment
+    </sql>
     <select id="findIngredientById" parameterType="Long" resultMap="baseRM">
-        SELECT <include refid="IngredientSQL" /> FROM `ingredient` i
+        SELECT <include refid="IngredientSQL"/>, <include refid="appliedIngredientSQL"/> FROM `ingredient` i
         LEFT JOIN ingredient_purchase_record pr ON i.id=pr.ingredient_id
+        left join applied_ingredient ai on i.id=ai.ingredient_id
         where i.id=#{id}
     </select>
 

@@ -33,6 +33,7 @@ public class IngredientAssembler {
         IngredientVo vo = new IngredientVo();
         BeanUtils.copyProperties(ingredient, vo);
         vo.setRecords(toRecordVos(ingredient.getPurchaseRecords()));
+        vo.setAppliedIngredients(AppliedIngredientAssembler.toVos(ingredient.getAppliedIngredients()));
         return vo;
     }
 

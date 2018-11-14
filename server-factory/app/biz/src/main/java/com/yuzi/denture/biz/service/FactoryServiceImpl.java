@@ -88,12 +88,18 @@ public class FactoryServiceImpl implements FactoryService {
         for(FactoryRole role:roles) {
             role.setUid(user.getId());
         }
+        repository.deleteRole(user.getId());
         repository.addRole(roles);
     }
 
     @Override
+    @Transactional
     public void modifyUser(FactoryUser user) {
         repository.update(user);
+        if(user.getRoles() != null) {
+            repository.deleteRole(user.getId());
+            repository.addRole(user.getRoles());
+        }
     }
 
     @Override

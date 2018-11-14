@@ -1,21 +1,19 @@
 <template>
   <div class="app-container">
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <div class="panel panel-primary">
-        <table class="table table-bordered table-striped text-center">
-          <tbody>
-            <tr>
-              <td>物料名</td><td>{{ ingredientDetail.name }}</td>
-            </tr>
-            <tr>
-              <td>库存</td><td>{{ ingredientDetail.balance }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <table>
+        <tbody>
+          <tr>
+            <td class="td_title_prop">物料名:</td><td class="td_content_prop">{{ ingredientDetail.name }}</td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">库存:</td><td class="td_content_prop">{{ ingredientDetail.balance }}</td>
+          </tr>
+        </tbody>
+      </table>
     </el-row>
 
-    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:10px;">
       <el-button type="primary" @click="dialogAddIngredientVisible = true">添加物料</el-button>
       <el-button type="primary" @click="dialogAddSupplierVisible = true">添加供应商</el-button>
     </el-row>
@@ -27,7 +25,7 @@
             {{ scope.row.gmtCreated.split(' ',2)[0] }}
           </template>
         </el-table-column>
-        <el-table-column label="库存" align="center">
+        <el-table-column label="购入量" align="center">
           <template slot-scope="scope">
             {{ scope.row.number }}
           </template>
@@ -40,6 +38,33 @@
       </el-table>
     </el-row>
 
+    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+      <el-table :data="appliedRecords" style="width: 100%;padding-top: 15px;">
+        <el-table-column label="领用时间">
+          <template slot-scope="scope">
+            {{ scope.row.appliedDate.split(' ',2)[0] }}
+          </template>
+        </el-table-column>
+        <el-table-column label="领用数量" align="center">
+          <template slot-scope="scope">
+            {{ scope.row.appliedNumber }}
+          </template>
+        </el-table-column>
+        <el-table-column label="加工义齿">
+          <template slot-scope="scope">
+            <router-link :to="'denture/'+scope.row.dentureId" class="link-type">
+              <span>详情</span>
+            </router-link>
+          </template>
+        </el-table-column>
+        <el-table-column label="备注" align="center">
+          <template slot-scope="scope">
+            {{ scope.row.comment }}
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-row>
+
     <el-dialog :visible.sync="dialogAddIngredientVisible" title="添加新材料">
       <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 100%;">
         <el-form-item label="供应商" prop="title">
@@ -47,8 +72,14 @@
             <el-option v-for="item in suppliers" :key="item.id" :label="item.name" :value="item.id"/>
           </el-select>
         </el-form-item>
+        <el-form-item label="采购单号" prop="title">
+          <el-input v-model="ingredient.billNo" style="width: 70%;"/>
+        </el-form-item>
         <el-form-item label="购入数量" prop="title">
           <el-input v-model="ingredient.number" style="width: 70%;"/>
+        </el-form-item>
+        <el-form-item label="购入单价" prop="title">
+          <el-input v-model="ingredient.price" style="width: 70%;"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -87,12 +118,15 @@ export default {
     return {
       ingredientDetail: null,
       purchaseRecords: null,
+      appliedRecords: null,
       dialogAddIngredientVisible: false,
       dialogAddSupplierVisible: false,
       ingredient: {
         ingredientId: null,
         supplierId: null,
-        number: null
+        billNo: null,
+        number: null,
+        price: null
       },
       supplier: {
         name: null,
@@ -113,6 +147,7 @@ export default {
         var data = response.data
         this.ingredientDetail = data
         this.purchaseRecords = this.ingredientDetail.records
+        this.appliedRecords = this.ingredientDetail.appliedIngredients
         this.ingredient.ingredientId = data.id
       })
       querySuppliers().then(response => {
@@ -155,3 +190,6 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+@import "@/styles/common.scss";
+</style>

@@ -53,6 +53,17 @@ export function addUser(data) {
   })
 }
 
+export function modifyUser(data) {
+  return request({
+    url: '/factoryUser/modify',
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data
+  })
+}
+
 // ingredient
 export function newIngredient(ingredientName) {
   return request({
