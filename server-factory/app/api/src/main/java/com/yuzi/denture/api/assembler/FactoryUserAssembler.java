@@ -31,7 +31,9 @@ public class FactoryUserAssembler {
         FactoryUserVo vo = new FactoryUserVo();
         BeanUtils.copyProperties(user, vo);
         if(user.getGroupType() != null)
-            vo.setGroupType(user.getGroupType().name());
+            vo.setGroupType(user.getGroupType().text());
+        if(user.getEducational()!=null)
+            vo.setEducational(user.getEducational().text());
         if(user.getRoles() != null) {
             List<String> rs = new ArrayList<>(user.getRoles().size());
             List<FactoryRole> roles = user.getRoles();

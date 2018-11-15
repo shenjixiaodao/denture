@@ -9,6 +9,7 @@ import com.yuzi.denture.api.vo.base.WebResult;
 import com.yuzi.denture.domain.*;
 import com.yuzi.denture.domain.repository.FactoryRepository;
 import com.yuzi.denture.domain.service.FactoryService;
+import com.yuzi.denture.domain.type.Educational;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -61,6 +62,10 @@ public class FactoryUserController {
                     required = true, value = "手机"),
             @ApiImplicitParam(paramType = "form", name = "cardId", dataType = "String",
                     required = true, value = "身份证号"),
+            @ApiImplicitParam(paramType = "form", name = "position", dataType = "String",
+                    required = true, value = "职位"),
+            @ApiImplicitParam(paramType = "form", name = "address", dataType = "String",
+                    required = true, value = "住址"),
             @ApiImplicitParam(paramType = "form", name = "role", dataType = "string",
                     required = true, value = "角色\n" +
                     "       [ShiGao(\"石膏技师\"),\n" +
@@ -86,7 +91,7 @@ public class FactoryUserController {
     @ResponseBody
     @RequestMapping(value = "/add", method = POST)
     public WebResult add(String name, String contact, String cardId, String role,
-                         String joinDate, HttpServletRequest request) {
+                         String joinDate, String position, String address, HttpServletRequest request) {
         FactoryUser user = SessionManager.Instance().user(request);
         Long factoryId = user.getFactoryId();
         logger.info("审核义齿:name={}, contact={}, role={}, joinDate={}",name, contact,
@@ -94,6 +99,8 @@ public class FactoryUserController {
         WebResult result = WebResult.success();
         try {
             user = new FactoryUser(factoryId, name, contact, cardId, FactoryRole.Role.typeOf(role));
+            user.setAddress(address);
+            user.setPosition(position);
             if(!StringUtils.isEmpty(joinDate)) {
                 DateFormatter formatter = new DateFormatter("yyyy-mm-dd");
                 user.setJoinDate(formatter.parse(joinDate, Locale.CHINA));
@@ -120,15 +127,22 @@ public class FactoryUserController {
             @ApiImplicitParam(paramType = "form", name = "address", dataType = "String",
                     required = true, value = "地址"),
             @ApiImplicitParam(paramType = "form", name = "educational", dataType = "String",
-                    required = true, value = "教育状况")
+                    required = true, value = "教育状况"),
+            @ApiImplicitParam(paramType = "form", name = "cardId", dataType = "String",
+                    required = true, value = "身份证号")
     })
     @ResponseBody
     @RequestMapping(value = "/modify", method = POST)
-    public WebResult<FactoryUserVo> modify(Long uid, String roles) {
+    public WebResult<FactoryUserVo> modify(Long uid, String roles, Boolean martial, String address, String educational,
+                                           String cardId) {
         logger.info("修改用户:roles={}",roles);
         WebResult result = WebResult.execute(res -> {
             FactoryUser user = repository.findUser(uid);
             user.setRoles(roles);
+            user.setMarital(martial);
+            user.setAddress(address);
+            user.setEducational(Educational.typeOf(educational));
+            user.setCardId(cardId);
             service.modifyUser(user);
         }, "修改用户错误", logger);
         return result;

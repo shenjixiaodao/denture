@@ -7,6 +7,9 @@ import org.springframework.util.StringUtils;
 
 import java.security.KeyPair;
 import java.security.PrivateKey;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class FactoryUser {
@@ -56,19 +59,20 @@ public class FactoryUser {
     String cardId;
     String address;
     Educational educational;
+    String position;
 
     public FactoryUser(Long factoryId, String name, String contact, String cardId, FactoryRole.Role role) {
         this.factoryId = factoryId;
         this.name = name;
         this.contact = contact;
-        this.cardId = cardId;
+        this.setCardId(cardId);
         this.password = hashPWD(DefaultPWD(this.contact).getBytes());
         roles = new ArrayList<>();
         roles.add(new FactoryRole(role));
         this.groupType = role.group();
     }
     public static void main(String[] strs) throws Exception {
-        System.out.println(DigestUtils.md5DigestAsHex("123456".getBytes()));
+        /*System.out.println(DigestUtils.md5DigestAsHex("123456".getBytes()));
         KeyPair keyPair = RSAUtil.getKeyPair();
         String priKey = RSAUtil.getPrivateKey(keyPair);
         System.out.println("private key : \n" + priKey);
@@ -78,7 +82,8 @@ public class FactoryUser {
         String cryptStr = RSAUtil.byte2Base64(crypt);
         System.out.println("bas64密文:\n"+cryptStr);
         byte[] content = RSAUtil.decrypt(RSAUtil.base642Byte(cryptStr), RSAUtil.string2PrivateKey(priKey));
-        System.out.println(new String(content));
+        System.out.println(new String(content));*/
+        System.out.println(parseAge("360781199012105518"));
     }
      static String DefaultPWD(String contact) {
         return contact.substring(contact.length() - 6);
@@ -132,8 +137,35 @@ public class FactoryUser {
         return cardId;
     }
 
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
     public void setCardId(String cardId) {
-        this.cardId = cardId;
+        if(!StringUtils.isEmpty(cardId)) {
+            if(cardId.length() != 18)
+                throw new RuntimeException("身份证号格式错误");
+            try {
+                this.cardId = cardId;
+                this.age = parseAge(cardId);
+            } catch (Exception ex) {
+                throw new RuntimeException("身份证号格式错误");
+            }
+        }
+    }
+
+    private static Integer parseAge(String cardId) {
+        Integer birthyear = Integer.parseInt(cardId.substring(6, 10));
+        String birthday = cardId.substring(10, 14);
+        Calendar calendar = Calendar.getInstance();
+        Integer age = calendar.get(Calendar.YEAR) - birthyear;
+        DateFormat df = new SimpleDateFormat("MMdd");
+        age = df.format(calendar.getTime()).compareTo(birthday) < 0 ? age -1 : age;
+        return age;
     }
 
     public String getAddress() {

@@ -12,6 +12,11 @@
             {{ scope.row.contact }}
           </template>
         </el-table-column>
+        <el-table-column label="职位" >
+          <template slot-scope="scope">
+            {{ scope.row.position }}
+          </template>
+        </el-table-column>
         <el-table-column label="详情">
           <template slot-scope="scope">
             <router-link :to="'user/'+scope.row.id" class="link-type">
@@ -35,12 +40,18 @@
         <el-form-item label="手机" prop="title">
           <el-input v-model="user.contact" style="width: 70%;"/>
         </el-form-item>
-        <el-form-item label="名字" prop="title">
+        <el-form-item label="身份证号" prop="title">
+          <el-input v-model="user.cardId" style="width: 70%;"/>
+        </el-form-item>
+        <el-form-item label="职位" prop="title">
+          <el-input v-model="user.position" style="width: 70%;"/>
+        </el-form-item>
+        <el-form-item label="角色" prop="title">
           <el-select v-model="user.role" placeholder="角色" clearable style="width: 70%;" class="filter-item">
             <el-option v-for="item in roles" :key="item.code" :label="item.name" :value="item.code"/>
           </el-select>
         </el-form-item>
-        <el-form-item label-width="80px" label="入职时间" class="postInfo-container-item">
+        <el-form-item label="入职时间" class="postInfo-container-item">
           <el-date-picker v-model="user.joinDate" type="date" format="yyyy-MM-dd" placeholder="选择日期时间" style="width: 70%;"/>
         </el-form-item>
       </el-form>
@@ -65,6 +76,8 @@ export default {
         name: null,
         contact: null,
         role: null,
+        cardId: null,
+        position: null,
         joinDate: null
       },
       roles: [
@@ -78,7 +91,7 @@ export default {
         { code: 'ChongjiaoLeader', name: '充胶组长' },
         { code: 'ShangCi', name: '上瓷技师' },
         { code: 'ShangCiLeader', name: '上瓷组长' },
-        { code: 'CheCi', name: '车瓷' },
+        { code: 'CheCi', name: '车瓷技师' },
         { code: 'CheCiLeader', name: '车瓷组长' },
         { code: 'Comprehensive', name: '综合管理人员' },
         { code: 'ComprehensiveLeader', name: '综合部主管' },

@@ -16,7 +16,8 @@
         `age`,
         `card_id`,
         `address`,
-        `educational`
+        `educational`,
+        `position`
         )
         VALUES
         (
@@ -31,7 +32,8 @@
         #{age},
         #{cardId},
         #{address},
-        #{educational}
+        #{educational},
+        #{position}
         );
     </insert>
 
@@ -68,6 +70,9 @@
         </if>
         <if test="educational!=null">
             ,`educational` = #{educational}
+        </if>
+        <if test="position!=null">
+            ,`position` = #{position}
         </if>
         WHERE `id` = #{id};
     </update>
@@ -154,6 +159,8 @@
         <result column="card_id" property="cardId" />
         <result column="address" property="address" />
         <result column="educational" property="educational" />
+        <result column="position" property="position" />
+        <collection property="roles" resultMap="baseRoleRM" />
     </resultMap>
     <resultMap id="baseRoleRM" type="com.yuzi.denture.domain.FactoryRole">
         <result column="role_uid" property="uid" />
