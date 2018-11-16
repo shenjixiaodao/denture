@@ -57,7 +57,7 @@
         </el-table-column>
         <el-table-column label="完成时间">
           <template slot-scope="scope">
-            {{ scope.row.completedDate }}
+            {{ scope.row.completedDate.split(' ',2)[0] }}
           </template>
         </el-table-column>
         <el-table-column label="备注">

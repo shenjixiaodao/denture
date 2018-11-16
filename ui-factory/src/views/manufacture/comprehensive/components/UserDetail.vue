@@ -74,7 +74,7 @@
       </table>
     </el-row>
     <el-row style="background:#fff;padding:5px 5px 0;margin-bottom:32px;">
-      <el-button type="primary" @click="modifyUser">修改</el-button>
+      <el-button :loading="loading" type="primary" @click="modifyUser">修改</el-button>
     </el-row>
   </div>
 </template>
@@ -104,7 +104,8 @@ export default {
         { code: 'Management', name: '管理层' },
         { code: 'Market', name: '市场人员' },
         { code: 'MarketLeader', name: '市场主管' }
-      ]
+      ],
+      loading: false
     }
   },
   created() {
@@ -120,12 +121,16 @@ export default {
       })
     },
     modifyUser() {
+      this.loading = true
       modifyUser({
         uid: this.user.id,
         roles: this.user.roles.join(',')
       }).then(response => {
+        this.loading = false
         var data = response.data
         this.user = data
+      }).catch(() => {
+        this.loading = false
       })
     }
   }
