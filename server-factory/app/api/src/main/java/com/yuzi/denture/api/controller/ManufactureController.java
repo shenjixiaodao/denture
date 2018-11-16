@@ -54,10 +54,11 @@ public class ManufactureController {
         WebResult<DentureVo> result = new WebResult<>();
         try {
             Denture denture = repository.findDenture(dentureId);
+            // todo 是否需要针对不同的工序组过滤工序记录
             //filter procedure by group
-            if(group!=GroupType.Comprehensive) {
+            /*if(group!=GroupType.Comprehensive) {
                 denture.filterGroup(group);
-            }
+            }*/
             DentureVo vo = DentureAssembler.toVo(denture);
             result.setData(vo);
         } catch (Exception ex) {

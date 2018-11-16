@@ -151,8 +151,8 @@ public class Denture {
         if(StringUtils.isEmpty(id)) {
             throw new IllegalArgumentException("dentureId为空");
         }
-        this.procedureGroups = new ArrayList<>(GroupType.values().length);
-        for(GroupType gt : GroupType.values()) {
+        this.procedureGroups = new ArrayList<>(ProcedureType.values().length);
+        for(ProcedureType gt : ProcedureType.values()) {
             ProcedureGroup group = new ProcedureGroup(gt, this.id);
             procedureGroups.add(group);
         }
@@ -162,11 +162,12 @@ public class Denture {
     public void filterGroup(GroupType type) {
         if(procedureGroups == null)
             return;
-        for(Iterator<ProcedureGroup> iterator = procedureGroups.iterator(); iterator.hasNext();) {
+        // todo 是否需要针对不同的工序组过滤工序记录
+        /*for(Iterator<ProcedureGroup> iterator = procedureGroups.iterator(); iterator.hasNext();) {
             ProcedureGroup group = iterator.next();
             if(group.getType() != type)
                 iterator.remove();
-        }
+        }*/
     }
 
     public Denture() {

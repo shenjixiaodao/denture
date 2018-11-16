@@ -1,5 +1,6 @@
 package com.yuzi.denture.domain;
 
+import com.yuzi.denture.domain.type.ProcedureType;
 import java.util.Date;
 import java.util.List;
 
@@ -8,7 +9,7 @@ public class ProcedureGroup {
     //工序组操作编号(id):
     private Long id;
     //工序组:
-    private GroupType type;
+    private ProcedureType type;
     //产品编号(DentureId):
     private String dentureId;
     //辅料使用记录(usedIngredients):
@@ -28,7 +29,7 @@ public class ProcedureGroup {
     //检查结果(inspectionResult):
     private InspectionResult inspectionResult;
 
-    public ProcedureGroup(GroupType type, String dentureId) {
+    public ProcedureGroup(ProcedureType type, String dentureId) {
         this.type = type;
         this.dentureId = dentureId;
     }
@@ -41,11 +42,11 @@ public class ProcedureGroup {
         this.id = id;
     }
 
-    public GroupType getType() {
+    public ProcedureType getType() {
         return type;
     }
 
-    public void setType(GroupType type) {
+    public void setType(ProcedureType type) {
         this.type = type;
     }
 
