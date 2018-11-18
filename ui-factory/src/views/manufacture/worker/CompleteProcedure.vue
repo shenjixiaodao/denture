@@ -71,32 +71,52 @@
         </tbody>
       </table>
     </el-row>
+    <!--<div v-if="isShow">
+      <el-row v-for="group in procedureGroups" style="background:#fff;margin-bottom:32px;">
+        <table cellspacing="15" style="text-align: left">
+          <tr>
+            <td class="td_title_prop">工序组:</td>
+            <td class="td_content_prop">{{ group.type }}</td>
+            <td class="td_title_prop">开始时间:</td>
+            <td class="td_content_prop">
+              <span v-if="group.startDate">{{ group.startDate.split(' ',2)[0] }}</span>
+            </td>
+          </tr>
+        </table>
+        <div style="font-size: 15px;padding-top: 10px;font-weight: bold;">工序列表:</div>
+        <el-table :data="group.procedures" style="width: 100%;">
+          <el-table-column label="工序名">
+            <template slot-scope="scope">
+              {{ scope.row.name }}
+            </template>
+          </el-table-column>
+          <el-table-column label="完成时间">
+            <template slot-scope="scope">
+              {{ scope.row.completedDate.split(' ',2)[0] }}
+            </template>
+          </el-table-column>
+          <el-table-column label="备注">
+            <template slot-scope="scope">
+              {{ scope.row.comment }}
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-row>
+    </div>-->
 
     <el-row v-if="isShow" style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="dialogSubmitVisible=true">
         提交工序
       </el-button>
-      <el-table :data="procedures" style="width: 100%;padding-top: 15px;">
-        <el-table-column label="工序名">
-          <template slot-scope="scope">
-            {{ scope.row.name }}
-          </template>
-        </el-table-column>
-        <el-table-column label="完成时间">
-          <template slot-scope="scope">
-            {{ scope.row.completedDate.split(' ',2)[0] }}
-          </template>
-        </el-table-column>
-        <el-table-column label="备注">
-          <template slot-scope="scope">
-            {{ scope.row.comment }}
-          </template>
-        </el-table-column>
-      </el-table>
     </el-row>
 
     <el-dialog :visible.sync="dialogSubmitVisible" title="提交工序">
       <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 100%;">
+        <el-form-item label="工序组" prop="title">
+          <el-select v-model="procedure.pgId" placeholder="请选择" clearable style="width: 90px" class="filter-item">
+            <el-option v-for="group in procedureGroups" :key="group.id" :label="group.type" :value="group.id"/>
+          </el-select>
+        </el-form-item>
         <el-form-item label="工序名" prop="title">
           <el-input v-model="procedure.name" style="width: 70%;"/>
         </el-form-item>
@@ -126,7 +146,7 @@ export default {
       dialogSubmitVisible: false,
       dentureId: null,
       denture: {},
-      procedures: null,
+      procedureGroups: null,
       pgId: null,
       procedure: {
         pgId: null,
@@ -157,12 +177,13 @@ export default {
         // fetch procedure data
         if (isNotNull(this.denture.procedureGroups)) {
           console.log(this.denture.procedureGroups)
+          this.procedureGroups = this.denture.procedureGroups
           this.pgId = this.denture.procedureGroups[0].id
           this.procedure.pgId = this.pgId
           queryProcedures(this.pgId).then(response => {
             var data = response.data
             console.log(data)
-            this.procedures = data
+            // this.procedures = data
           })
         }
       })
@@ -173,7 +194,7 @@ export default {
         queryProcedures(this.pgId).then(response2 => {
           var data = response2.data
           console.log(data)
-          this.procedures = data
+          // this.procedures = data
           this.dialogSubmitVisible = false
         })
       })
