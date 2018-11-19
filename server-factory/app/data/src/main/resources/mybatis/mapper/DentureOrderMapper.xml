@@ -27,6 +27,14 @@
         );
     </insert>
 
+    <update id="update" parameterType="com.yuzi.denture.domain.DentureOrder">
+        UPDATE `denture_order`
+        SET
+            received_date=#{receivedDate},
+            `status` = #{status}
+        WHERE `denture_id` = #{dentureId};
+    </update>
+
     <resultMap id="baseRM" type="com.yuzi.denture.domain.DentureOrder">
         <result column="id" property="id" />
         <result column="denture_id" property="dentureId" />

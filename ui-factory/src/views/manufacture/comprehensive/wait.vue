@@ -59,7 +59,7 @@ export default {
         status: 'Waiting',
         createdDate: null,
         region: null,
-        clinicName: ''
+        clinicName: null
       },
       list: null
     }

@@ -8,6 +8,7 @@ import java.util.List;
 @Mapper
 public interface DentureOrderMapper {
     void save(DentureOrder order);
+    void update(DentureOrder order);
     List<DentureOrder> findOrdersByFactoryId(Long factoryId);
     DentureOrder findOrderByDentureId(String dentureId);
     List<DentureOrder> findOrdersByUid(Long uid);

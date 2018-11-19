@@ -1,9 +1,7 @@
 <template>
   <div class="app-container">
-    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+    <el-row style="background:#fff;margin-bottom:20px;">
       <el-button type="primary" @click="dialogAddVisible = true">新增</el-button>
-    </el-row>
-    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <el-table :data="list" style="width: 100%;padding-top: 15px;">
         <el-table-column label="名称">
           <template slot-scope="scope">

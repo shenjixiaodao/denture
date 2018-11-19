@@ -8,6 +8,8 @@ import java.util.List;
 public interface FactoryRepository {
     //denture order, 业务经理通过传统线下方式录单
     void add(DentureOrder order);
+    void update(DentureOrder order);
+    DentureOrder findOrderByDentureId(String dentureId);
     //denture
     void add(Denture denture);
     void update(Denture denture);

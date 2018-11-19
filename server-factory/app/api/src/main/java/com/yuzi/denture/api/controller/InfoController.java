@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
 @RequestMapping(value = "/denture/factory/info")
@@ -132,9 +133,9 @@ public class InfoController {
         }
     }
 
-    @ApiOperation(value = "登录过期", response = ClinicVo.class, httpMethod = "GET")
+    @ApiOperation(value = "登录过期", response = ClinicVo.class)
     @ResponseBody
-    @RequestMapping(value = "/expired", method = GET)
+    @RequestMapping(value = "/expired", method = { POST, GET })
     public WebResult expired() {
         return WebResult.expired();
     }

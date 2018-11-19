@@ -37,6 +37,16 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     }
 
     @Override
+    public void update(DentureOrder order) {
+        dentureOrderMapper.update(order);
+    }
+
+    @Override
+    public DentureOrder findOrderByDentureId(String dentureId) {
+        return dentureOrderMapper.findOrderByDentureId(dentureId);
+    }
+
+    @Override
     public void add(Denture denture) {
         dentureMapper.save(denture);
     }

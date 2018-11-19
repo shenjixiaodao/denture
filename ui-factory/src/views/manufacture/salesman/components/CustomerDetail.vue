@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+    <el-row style="background:#fff;margin-bottom:10px;">
       <table style="text-align: right">
         <tbody>
           <tr>
@@ -23,10 +23,8 @@
       </table>
     </el-row>
 
-    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+    <el-row style="background:#fff;margin-bottom:32px;">
       <el-button type="primary" @click="dialogAddVisible = true">新增</el-button>
-    </el-row>
-    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <!--<el-button type="primary" @click="dialogAddVisible = true">添加成员</el-button>-->
       <el-table :data="customer.clinic.users" style="width: 100%;padding-top: 15px;">
         <el-table-column label="姓名">

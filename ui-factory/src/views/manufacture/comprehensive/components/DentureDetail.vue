@@ -172,6 +172,7 @@ export default {
     review(result) {
       this.denture['reviewResult'] = result
       review(this.denture)
+      this.fetchData()
     },
     applyIngredient() {
       this.dialogAddVisible = true

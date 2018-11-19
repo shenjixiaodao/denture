@@ -53,6 +53,7 @@ public class FactoryServiceImpl implements FactoryService {
     }
 
     @Override
+    @Transactional
     public Denture inspectReviewAndStart(String dentureId, Double estimatedDuration, String basePrice,
                                          String factoryPrice, String requirement, Long inspectorId,
                                          ReviewResult reviewResult) {
@@ -70,6 +71,14 @@ public class FactoryServiceImpl implements FactoryService {
         denture.setQuaReview(reviewResult);
         denture.setQuaReviewDate(new Date());
         repository.update(denture);
+        //order
+        DentureOrder order = repository.findOrderByDentureId(dentureId);
+        order.setReceivedDate(new Date());
+        if(reviewResult == ReviewResult.Accept)
+            order.setStatus(DentureOrder.Status.Accepted);
+        else
+            order.setStatus(DentureOrder.Status.Rejected);
+        repository.update(order);
         return denture;
     }
 
