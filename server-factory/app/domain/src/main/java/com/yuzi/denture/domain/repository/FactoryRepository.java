@@ -17,6 +17,7 @@ public interface FactoryRepository {
     void add(Procedure procedure);
 
     List<Procedure> findProcedures(Long pgId);
+    List<ProcedureGroup> findProcedureGroups(String dentureId);
 
     //user
     void add(FactoryUser user);

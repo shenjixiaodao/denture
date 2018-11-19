@@ -22,3 +22,18 @@ export function modifyPwd(srcPwd, dstPwd) {
     }
   })
 }
+
+export function statTotalIngredient() {
+  return request({
+    url: '/info/statTotalIngredient',
+    method: 'get'
+  })
+}
+
+export function statIngredient(id) {
+  return request({
+    url: '/info/statIngredient',
+    method: 'get',
+    params: { id: id }
+  })
+}

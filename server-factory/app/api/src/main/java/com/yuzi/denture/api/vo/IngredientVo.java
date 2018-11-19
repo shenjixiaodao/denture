@@ -8,8 +8,17 @@ public class IngredientVo {
     private String name;
     private Double balance;
     private Long factoryId;
+    String type;
     private List<IngredientPurchaseRecordVo> records;
     List<AppliedIngredientVo> appliedIngredients;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public Long getId() {
         return id;

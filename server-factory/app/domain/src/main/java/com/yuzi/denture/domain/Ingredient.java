@@ -8,6 +8,7 @@ public class Ingredient {
     private String name;
     private Double balance;
     private Long factoryId;
+    String type;
     private List<IngredientPurchaseRecord> purchaseRecords;
     List<AppliedIngredient> appliedIngredients;
 
@@ -22,6 +23,14 @@ public class Ingredient {
     }
 
     public Ingredient() {
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public void addBalance(Double number) {

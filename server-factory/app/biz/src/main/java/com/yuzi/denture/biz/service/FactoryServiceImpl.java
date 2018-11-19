@@ -157,8 +157,9 @@ public class FactoryServiceImpl implements FactoryService {
     }
 
     @Override
-    public void newIngredient(String name, Long factoryId) {
+    public void newIngredient(String name, Long factoryId, String type) {
         Ingredient ingredient = new Ingredient(name, factoryId);
+        ingredient.setType(type);
         repository.newIngredient(ingredient);
     }
 
@@ -178,7 +179,8 @@ public class FactoryServiceImpl implements FactoryService {
 
     @Override
     @Transactional
-    public void applyIngredient(Long uid, String dentureId, Long ingredientId, Double number, String comment) {
+    public void applyIngredient(Long uid, String dentureId, Long ingredientId, Double number,
+                                String comment, Long factoryId) {
         Ingredient ingredient = repository.findIngredient(ingredientId);
         if(ingredient == null) {
             throw new IllegalArgumentException("未知物料");
@@ -186,6 +188,7 @@ public class FactoryServiceImpl implements FactoryService {
         ingredient.subBalance(number);
         repository.updateIngredient(ingredient);
         AppliedIngredient appliedIngredient = new AppliedIngredient(ingredientId, dentureId, number, uid, comment);
+        appliedIngredient.setFactoryId(factoryId);
         repository.applyIngredient(appliedIngredient);
     }
 }

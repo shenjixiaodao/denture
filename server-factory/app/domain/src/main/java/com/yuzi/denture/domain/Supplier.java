@@ -9,6 +9,8 @@ public class Supplier {
     String name;
     String address;
     String contact;
+    String contacter;
+    String phone;
 
     public Supplier(Long factoryId, String name, String address, String contact) {
         this.factoryId = factoryId;
@@ -18,6 +20,22 @@ public class Supplier {
     }
 
     public Supplier() {
+    }
+
+    public String getContacter() {
+        return contacter;
+    }
+
+    public void setContacter(String contacter) {
+        this.contacter = contacter;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public Long getId() {

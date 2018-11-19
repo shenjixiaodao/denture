@@ -48,7 +48,8 @@ public interface FactoryService {
     void modifyCustomer(Long customerId, Long clinicId, Long salesmanId);
 
     //ingredient
-    void newIngredient(String name, Long factoryId);
+    void newIngredient(String name, Long factoryId, String type);
     void newIngredientPurchaseRecord(String billNo, String price, Long ingredientId, Long supplierId, Double number);
-    void applyIngredient(Long uid, String dentureId, Long ingredientId, Double number, String comment);
+    void applyIngredient(Long uid, String dentureId, Long ingredientId, Double number,
+                         String comment, Long factoryId);
 }

@@ -7,12 +7,16 @@
         (
         `name`,
         `balance`,
+        `factory_id`,
+        `type`,
         `factory_id`
         )
         VALUES
         (
         #{name},
         #{balance},
+        #{factoryId},
+        #{type},
         #{factoryId}
         );
     </insert>
@@ -79,13 +83,17 @@
         `address`,
         `contact`,
         `factory_id`
+        `contacter`,
+        `phone`
         )
         VALUES
         (
         #{name},
         #{address},
         #{contact},
-        #{factoryId}
+        #{factoryId},
+        #{contacter},
+        #{phone}
         );
     </insert>
 
@@ -95,6 +103,8 @@
         <result column="address" property="address" />
         <result column="contact" property="contact" />
         <result column="factory_id" property="factoryId" />
+        <result column="contacter" property="contacter" />
+        <result column="phone" property="phone" />
     </resultMap>
 
     <select id="findSuppliers" parameterType="Long" resultMap="baseSupplierRM">
@@ -106,6 +116,7 @@
         <result column="name" property="name" />
         <result column="balance" property="balance" />
         <result column="factoryId" property="factoryId" />
+        <result column="type" property="type" />
         <collection property="purchaseRecords" ofType="com.yuzi.denture.domain.IngredientPurchaseRecord">
             <result column="pr_id" property="id" />
             <result column="pr_ingredient_id" property="ingredientId" />
@@ -147,6 +158,27 @@
         LEFT JOIN ingredient_purchase_record pr ON i.id=pr.ingredient_id
         left join applied_ingredient ai on i.id=ai.ingredient_id
         where i.id=#{id}
+    </select>
+
+    <select id="yearApplied" resultType="Map">
+        select sum(applied_number) from applied_ingredient
+        where factory_id=#{factoryId} and ingredient_id=#{ingredientId}
+          and year(applied_date)=year(curdate())
+    </select>
+
+    <select id="monthApplied" parameterType="Map" resultType="Long">
+        select sum(applied_number) from applied_ingredient
+        where factory_id=#{factoryId} and ingredient_id=#{ingredientId}
+          and month(applied_date)=month(curdate())
+          and year(applied_date)=year(curdate())
+    </select>
+
+    <select id="dayApplied" parameterType="Map" resultType="Long">
+        select sum(applied_number) from applied_ingredient
+        where factory_id=#{factoryId} and ingredient_id=#{ingredientId}
+            and day(applied_date)=day(curdate())
+            and month(applied_date)=month(curdate())
+            and year(applied_date)=year(curdate())
     </select>
 
 </mapper>

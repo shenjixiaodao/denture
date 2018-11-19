@@ -312,17 +312,19 @@ public class ManufactureController {
     @ApiOperation(value = "新增物料", response = WebResult.class, httpMethod = "POST")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "form", name = "name", dataType = "string",
-                    required = true, value = "物料名称")
+                    required = true, value = "物料名称"),
+            @ApiImplicitParam(paramType = "form", name = "type", dataType = "string",
+                    required = true, value = "型号")
     })
     @ResponseBody
     @RequestMapping(value = "/newIngredient", method = POST)
-    public WebResult newIngredient(String name, HttpServletRequest request) {
+    public WebResult newIngredient(String name, String type, HttpServletRequest request) {
         FactoryUser user = SessionManager.Instance().user(request);
         Long factoryId = user.getFactoryId();
         logger.info("新增物料:name={}", name);
         WebResult result = new WebResult<>();
         try {
-            service.newIngredient(name, factoryId);
+            service.newIngredient(name, factoryId, type);
         } catch (Exception ex) {
             logger.warn("审核义齿异常: {}", ex);
             return WebResult.failure(ex.getMessage());
@@ -375,10 +377,11 @@ public class ManufactureController {
                                      HttpServletRequest request) {
         FactoryUser user = SessionManager.Instance().user(request);
         Long applicantId = user.getId();
+        Long factoryId = user.getFactoryId();
         logger.info("申请物料:ingredientId={}, comment={}, number={}", ingredientId, comment, number);
         WebResult result = new WebResult<>();
         try {
-            service.applyIngredient(applicantId, dentureId, ingredientId, number, comment);
+            service.applyIngredient(applicantId, dentureId, ingredientId, number, comment, factoryId);
         } catch (Exception ex) {
             logger.warn("申请物料异常: {}", ex);
             return WebResult.failure(ex.getMessage());
@@ -426,17 +429,24 @@ public class ManufactureController {
             @ApiImplicitParam(paramType = "form", name = "address", dataType = "String",
                     required = true, value = "地址"),
             @ApiImplicitParam(paramType = "form", name = "contact", dataType = "String",
-                    required = true, value = "联系方式")
+                    required = true, value = "联系方式"),
+            @ApiImplicitParam(paramType = "form", name = "contacter", dataType = "String",
+                    required = true, value = "联系人"),
+            @ApiImplicitParam(paramType = "form", name = "phone", dataType = "String",
+                    required = true, value = "手机")
     })
     @ResponseBody
     @RequestMapping(value = "/newSupplier", method = POST)
-    public WebResult newSupplier(String name, String address, String contact, HttpServletRequest request) {
+    public WebResult newSupplier(String name, String address, String contact, String contacter, String phone,
+                                 HttpServletRequest request) {
         logger.info("新增供应商:name={}, name={}, contact={}", name, name, contact);
         WebResult result = new WebResult<>();
         try {
             FactoryUser user = SessionManager.Instance().user(request);
             Long factoryId = user.getFactoryId();
             Supplier supplier = new Supplier(factoryId, name, address, contact);
+            supplier.setContacter(contacter);
+            supplier.setPhone(phone);
             repository.newSupplier(supplier);
         } catch (Exception ex) {
             logger.warn("新增供应商异常: {}", ex);
@@ -503,6 +513,23 @@ public class ManufactureController {
             List<ProcedureVo> vos = ProcedureAssembler.toVos(procedures);
             res.setData(vos);
         }, "查询工序列表错误", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "查询义齿工序列表", response = ProcedureGroupVo.class, httpMethod = "GET")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "dentureId", dataType = "String", required = true, value = "义齿ID")
+    })
+    @ResponseBody
+    @RequestMapping(value = "/queryProcedureGroups", method = GET)
+    public WebResult<List<ProcedureGroupVo>> queryProcedureGroups(Long dentureId) {
+        logger.info("查询义齿工序列表:dentureId={}",dentureId);
+
+        WebResult<List<ProcedureGroupVo>> result = WebResult.execute(res -> {
+            /*List<Procedure> procedures = repository.findProcedures(pgId);
+            List<ProcedureVo> vos = ProcedureAssembler.toVos(procedures);
+            res.setData(vos);*/
+        }, "查询义齿工序列表错误", logger);
         return result;
     }
 }

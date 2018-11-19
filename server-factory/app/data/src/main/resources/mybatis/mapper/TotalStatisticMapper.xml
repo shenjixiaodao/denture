@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuzi.denture.data.mapper.TotalStatisticMapper" >
+
+    <insert id="saveIngredientStat" parameterType="com.yuzi.denture.domain.aggregate.TotalIngredientStatistic">
+        INSERT INTO `total_ingredient_statistic`
+        (
+        `factory_id`,
+        `year`,
+        `month`,
+        `day`,
+        `date`
+        )
+        VALUES
+        (
+        #{factoryId},
+        #{year},
+        #{month},
+        #{day},
+        #{date}
+        );
+    </insert>
+
+    <resultMap id="baseIngredientStatRM" type="com.yuzi.denture.domain.aggregate.TotalIngredientStatistic">
+        <result column="factory_id" property="factoryId" />
+        <result column="year" property="year" />
+        <result column="month" property="month" />
+        <result column="day" property="day" />
+        <result column="date" property="date" />
+    </resultMap>
+
+    <select id="statIngredient" parameterType="Long" resultMap="baseIngredientStatRM">
+        SELECT * FROM `total_ingredient_statistic` WHERE factory_id=#{factoryId}
+    </select>
+
+</mapper>

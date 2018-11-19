@@ -6,6 +6,8 @@ import com.yuzi.denture.api.vo.ClinicVo;
 import com.yuzi.denture.api.vo.base.WebResult;
 import com.yuzi.denture.domain.Clinic;
 import com.yuzi.denture.domain.FactoryUser;
+import com.yuzi.denture.domain.aggregate.IngredientStatistic;
+import com.yuzi.denture.domain.aggregate.TotalIngredientStatistic;
 import com.yuzi.denture.domain.repository.InfoRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -41,6 +43,38 @@ public class InfoController {
     private String AvatarLocation;
     @Autowired
     private InfoRepository infoRepository;
+
+    @ApiOperation(value = "统计总物料信息", response = TotalIngredientStatistic.class, httpMethod = "GET")
+    @ResponseBody
+    @RequestMapping(value = "/statTotalIngredient", method = GET)
+    public WebResult<TotalIngredientStatistic> statTotalIngredient(HttpServletRequest request) {
+        FactoryUser user = SessionManager.Instance().user(request);
+        Long factoryId = user.getFactoryId();
+        logger.info("统计总物料信息:factoryId={}",factoryId);
+        WebResult<TotalIngredientStatistic> result = WebResult.execute(res -> {
+            TotalIngredientStatistic statistic = infoRepository.statTotalIngredient(factoryId);
+            res.setData(statistic);
+        }, "查询统计总物料信息", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "统计物料信息", response = IngredientStatistic.class, httpMethod = "GET")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "form", name = "id", dataType = "long",
+                    required = true, value = "物料ID")
+    })
+    @ResponseBody
+    @RequestMapping(value = "/statIngredient", method = GET)
+    public WebResult<IngredientStatistic> statIngredient(Long id, HttpServletRequest request) {
+        FactoryUser user = SessionManager.Instance().user(request);
+        Long factoryId = user.getFactoryId();
+        logger.info("统计物料信息:factoryId={}",factoryId);
+        WebResult<IngredientStatistic> result = WebResult.execute(res -> {
+            IngredientStatistic statistic = infoRepository.statIngredient(id, factoryId);
+            res.setData(statistic);
+        }, "查询统计物料信息", logger);
+        return result;
+    }
 
     @ApiOperation(value = "查询诊所列表", response = ClinicVo.class, httpMethod = "GET")
     @ResponseBody

@@ -156,6 +156,17 @@
             <result column="pg_inspector_id" property="inspector.id" />
             <result column="pg_inspection_content" property="inspectionContent" />
             <result column="pg_inspection_result" property="inspectionResult" />
+            <collection property="procedures" ofType="com.yuzi.denture.domain.Procedure">
+                <result column="proc_id" property="id" />
+                <result column="pg_id" property="pgId" />
+                <result column="proc_name" property="name" />
+                <result column="proc_specification" property="specification" />
+                <result column="proc_operation_record" property="operationRecord" />
+                <result column="proc_comment" property="comment" />
+                <result column="proc_operator_id" property="operator.id" />
+                <result column="proc_completed_date" property="completedDate" />
+                <result column="proc_modified_date" property="modifiedDate" />
+            </collection>
         </collection>
         <collection property="appliedIngredients" ofType="com.yuzi.denture.domain.AppliedIngredient">
             <result column="ai_ingredient_id" property="ingredient.id" />
@@ -188,6 +199,11 @@
         pg.operator_id pg_operator_id, pg.inspector_id pg_inspector_id, pg.inspection_content pg_inspection_content,
         pg.inspection_result pg_inspection_result
     </sql>
+    <sql id="procedureSQL">
+        proc.id proc_id, proc.name proc_name, proc.specification proc_specification, proc.operation_record proc_operation_record,
+        proc.comment proc_comment, proc.operator_id proc_operator_id, proc.completed_date proc_completed_date,
+        proc.modified_date proc_modified_date
+    </sql>
     <sql id="appliedIngredientSQL">
         ai.ingredient_id ai_ingredient_id, aii.name aii_name, ai.denture_id ai_denture_id, ai.no ai_no, ai.applied_number ai_applied_number,
         ai.applicant_id ai_applicant_id, ai.applied_date ai_applied_date, ai.comment ai_comment
@@ -213,9 +229,11 @@
 
     <select id="findByDentureId" parameterType="String" resultMap="baseRM">
         SELECT <include refid="baseSQL" />, <include refid="clinicSQL" />,
-        <include refid="procedureGroupSQL" />, <include refid="appliedIngredientSQL" />
+        <include refid="procedureGroupSQL" />, <include refid="appliedIngredientSQL" />,
+        <include refid="procedureSQL" />
         FROM denture d inner join clinic c on (d.id=#{dentureId} and d.clinic_id=c.id)
         INNER JOIN procedure_group pg ON (pg.denture_id=#{dentureId} and d.id=pg.denture_id)
+        LEFT JOIN `procedure` proc on pg.id=proc.pg_id
         left join applied_ingredient ai on d.id=ai.denture_id
         left join ingredient aii on ai.ingredient_id=aii.id
     </select>

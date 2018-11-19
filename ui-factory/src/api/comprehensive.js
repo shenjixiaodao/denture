@@ -65,14 +65,14 @@ export function modifyUser(data) {
 }
 
 // ingredient
-export function newIngredient(ingredientName) {
+export function newIngredient(data) {
   return request({
     url: '/manufacture/newIngredient',
     method: 'post',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
-    data: { name: ingredientName }
+    data
   })
 }
 

@@ -7,6 +7,7 @@ import com.yuzi.denture.domain.Supplier;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by liyou on 2018/10/21.
@@ -22,4 +23,9 @@ public interface IngredientMapper {
 
     void saveSupplier(Supplier supplier);
     List<Supplier> findSuppliers(Long factoryId);
+
+    //statistic
+    Long yearApplied(Map paras);
+    Long monthApplied(Map paras);
+    Long dayApplied(Map paras);
 }

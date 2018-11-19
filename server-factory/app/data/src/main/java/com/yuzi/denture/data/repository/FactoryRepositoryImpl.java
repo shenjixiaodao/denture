@@ -63,6 +63,11 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     }
 
     @Override
+    public List<ProcedureGroup> findProcedureGroups(String dentureId) {
+        return null;
+    }
+
+    @Override
     public void add(FactoryUser user) {
         userMapper.save(user);
     }
