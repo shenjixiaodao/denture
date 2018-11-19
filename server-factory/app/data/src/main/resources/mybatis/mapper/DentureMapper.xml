@@ -75,7 +75,7 @@
             ,`color_no` = #{colorNo}
         </if>
         <if test="positions!=null">
-            `positions` = #{positions}
+            ,`positions` = #{positions}
         </if>
         <if test="createdDate!=null">
             ,`created_date` = #{createdDate}
