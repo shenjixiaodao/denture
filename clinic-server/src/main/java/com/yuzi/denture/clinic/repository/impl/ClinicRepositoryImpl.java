@@ -64,6 +64,11 @@ public class ClinicRepositoryImpl implements ClinicRepository {
     }
 
     @Override
+    public void update(ClinicUser user) {
+        userMapper.update(user);
+    }
+
+    @Override
     public void addUser(ClinicUser user) {
         userMapper.save(user);
     }

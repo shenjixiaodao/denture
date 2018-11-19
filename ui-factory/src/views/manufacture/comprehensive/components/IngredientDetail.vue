@@ -48,13 +48,13 @@
       </el-table>
     </el-row>
 
-    <IngredientStatPanel />
     <div style="margin:0 0 5px 20px">领用记录</div>
-    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <el-table :data="appliedRecords" style="width: 100%;padding-top: 15px;">
+    <IngredientStatPanel :id="id" />
+    <el-row style="background:#fff;padding:10px 10px 0;margin-bottom:32px;">
+      <el-table :data="appliedRecords" style="width: 100%;padding-top: 5px;">
         <el-table-column label="领用时间" align="center">
           <template slot-scope="scope">
-            {{ scope.row.appliedDate.split(' ',2)[0] }}
+            {{ scope.row.appliedDate | time2DateStr }}
           </template>
         </el-table-column>
         <el-table-column label="领用数量" align="center">
@@ -107,7 +107,7 @@
 import { queryIngredientById, addIngredient, querySuppliers } from '@/api/comprehensive'
 import { Message } from 'element-ui'
 import { isNull } from '@/utils/validate'
-import IngredientStatPanel from './components/IngredientStatPanel'
+import IngredientStatPanel from './IngredientStatPanel'
 
 export default {
   components: {
@@ -115,6 +115,7 @@ export default {
   },
   data() {
     return {
+      id: null,
       ingredientDetail: null,
       purchaseRecords: null,
       appliedRecords: null,
@@ -134,9 +135,8 @@ export default {
   },
   methods: {
     fetchData() {
-      const id = this.$route.params && this.$route.params.id
-      console.log('user detail ==> ' + id)
-      queryIngredientById(id).then(response => {
+      this.id = Number(this.$route.params && this.$route.params.id)
+      queryIngredientById(this.id).then(response => {
         var data = response.data
         this.ingredientDetail = data
         this.purchaseRecords = this.ingredientDetail.records

@@ -21,6 +21,12 @@ export default {
   components: {
     CountTo
   },
+  props: {
+    id: {
+      type: Number,
+      required: true
+    }
+  },
   data() {
     return {
       year: null,
@@ -33,7 +39,9 @@ export default {
   },
   methods: {
     fetchData() {
-      statIngredient().then(response => {
+      const { id } = this
+      console.log(id)
+      statIngredient(id).then(response => {
         var data = response.data
         console.log(data)
         this.year = data.year

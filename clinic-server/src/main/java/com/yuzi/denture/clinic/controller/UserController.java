@@ -17,12 +17,17 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -37,6 +42,8 @@ public class UserController {
     private InfoRepository repository;
     @Autowired
     private ClinicService service;
+    @Value("${avatar.location}")
+    private String AvatarLocation;
 
     private static Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -130,6 +137,33 @@ public class UserController {
             SessionManager.Instance().cacheUser(token, user);
             res.setData(vo);
         }, "查询订单错误", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "修改头像", response = String.class, httpMethod = "POST")
+    @ResponseBody
+    @RequestMapping(value = "/changeAvatar", method = POST)
+    public WebResult<String> changeAvatar(@RequestPart MultipartFile avatar, HttpServletRequest request) {
+        logger.info("修改头像");
+        ClinicUser user = SessionManager.Instance().user(request);
+        Long uid = user.getId();
+        WebResult<String> result = WebResult.execute(res -> {
+            String filename = avatar.getOriginalFilename();
+            filename = uid + filename.substring(filename.lastIndexOf("."));
+            File destFile = new File(AvatarLocation + File.separator + filename);
+            try {
+                avatar.transferTo(destFile);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            if(!destFile.exists()) {
+                throw new RuntimeException("文件上传失败");
+            }
+            user.setAvatar(filename);
+            service.modifyUser(user);
+            res.setData(filename);
+            logger.info("修改头像成功");
+        }, "修改头像错误", logger);
         return result;
     }
 }

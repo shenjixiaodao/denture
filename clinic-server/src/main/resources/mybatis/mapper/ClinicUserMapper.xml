@@ -9,7 +9,8 @@
         `contact`,
         `password`,
         `role`,
-        `clinic_id`
+        `clinic_id`,
+        `avatar`
         )
         VALUES
         (
@@ -18,8 +19,33 @@
         #{password},
         #{role},
         #{clinic.id}
+        #{avatar}
         );
     </insert>
+
+    <update id="update" parameterType="com.yuzi.denture.clinic.domain.ClinicUser">
+        UPDATE `liyou`.`clinic_user`
+        SET `id` = id,
+        <if test="clinic!=null">
+          ,`clinic_id` = #{clinic.id}
+        </if>
+        <if test="name!=null">
+          ,`name` = #{name},
+        </if>
+        <if test="contact!=null">
+          ,`contact` = #{contact},
+        </if>
+        <if test="role!=null">
+          ,`role` = #{role},
+        </if>
+        <if test="password!=null">
+          ,`password` = #{password},
+        </if>
+        <if test="avatar!=null">
+          ,`avatar` = #{avatar}
+        </if>
+        WHERE `id` = #{id};
+    </update>
 
     <insert id="saveClinic" useGeneratedKeys="true" keyProperty="id" parameterType="com.yuzi.denture.clinic.domain.Clinic">
         INSERT INTO `clinic`

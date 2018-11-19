@@ -13,6 +13,7 @@ import java.util.List;
 public interface ClinicUserMapper {
 
     void save(ClinicUser user);
+    void update(ClinicUser user);
     void saveClinic(Clinic clinic);
     ClinicUser findUserByContact(String contact);
 }

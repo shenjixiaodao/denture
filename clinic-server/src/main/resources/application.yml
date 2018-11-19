@@ -9,6 +9,11 @@ spring:
     time-zone: GMT+8
   application:
     name: clinic
+  http:
+    multipart:
+      file-size-threshold: 1MB
+      max-file-size: 1MB
+      max-request-size: 2MB
 
 ribbon:
   ReadTimeout: 5000

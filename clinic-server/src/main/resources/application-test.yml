@@ -18,3 +18,9 @@ logging:
   level:
     com.yuzi.denture: DEBUG
   file: log/clinic.log
+
+avatar:
+  location: /usr/share/upload/clinic/avatar
+
+logo:
+  location: /usr/share/upload/clinic/logo

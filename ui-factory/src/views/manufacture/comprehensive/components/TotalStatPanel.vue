@@ -1,5 +1,5 @@
 <template>
-  <el-row style="background:#fff">
+  <el-row style="width: 100%;background:#fff">
     <table cellspacing="15" style="text-align: left">
       <tr>
         <td class="td_title_prop">年度总计:</td>
@@ -9,7 +9,7 @@
         <td class="td_title_prop">当日总计:</td>
         <td class="td_content_prop">{{ day?day:'--' }}元</td>
         <td class="td_title_prop">统计日:</td>
-        <td class="td_content_prop"><span v-if="date">{{ date.split(' ',2)[0] }}</span></td>
+        <td class="td_content_prop">{{ date | time2DateStr }}</td>
       </tr>
     </table>
   </el-row>

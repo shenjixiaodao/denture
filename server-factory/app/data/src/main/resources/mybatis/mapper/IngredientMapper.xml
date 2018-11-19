@@ -160,7 +160,7 @@
         where i.id=#{id}
     </select>
 
-    <select id="yearApplied" resultType="Map">
+    <select id="yearApplied" parameterType="Map" resultType="Long">
         select sum(applied_number) from applied_ingredient
         where factory_id=#{factoryId} and ingredient_id=#{ingredientId}
           and year(applied_date)=year(curdate())

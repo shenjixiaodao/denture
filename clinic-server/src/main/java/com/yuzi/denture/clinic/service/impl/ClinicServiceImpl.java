@@ -79,4 +79,9 @@ public class ClinicServiceImpl implements ClinicService {
         user = repository.findUser(phone);
         return user;
     }
+
+    @Override
+    public void modifyUser(ClinicUser user) {
+        repository.update(user);
+    }
 }

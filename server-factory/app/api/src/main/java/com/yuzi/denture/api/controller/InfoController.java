@@ -60,7 +60,7 @@ public class InfoController {
 
     @ApiOperation(value = "统计物料信息", response = IngredientStatistic.class, httpMethod = "GET")
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "form", name = "id", dataType = "long",
+            @ApiImplicitParam(paramType = "query", name = "id", dataType = "long",
                     required = true, value = "物料ID")
     })
     @ResponseBody

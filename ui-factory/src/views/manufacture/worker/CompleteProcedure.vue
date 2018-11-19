@@ -60,26 +60,27 @@
             <td class="td_title_prop">如空间不够:</td><td class="td_content_prop">{{ denture.paddingType }}</td>
           </tr>
           <tr>
-            <td class="td_title_prop">创建日期:</td><td class="td_content_prop"><span v-if="denture.createdDate">{{ denture.createdDate.split(' ',2)[0] }}</span></td>
+            <td class="td_title_prop">创建日期:</td><td class="td_content_prop">{{ denture.createdDate | time2DateStr }}</td>
           </tr>
           <tr>
-            <td class="td_title_prop">生产开始日期:</td><td class="td_content_prop"><span v-if="denture.startDate">{{ denture.startDate.split(' ',2)[0] }}</span></td>
+            <td class="td_title_prop">生产开始日期:</td><td class="td_content_prop">{{ denture.startDate | time2DateStr }}</td>
           </tr>
           <tr>
-            <td class="td_title_prop">生产结束日期:</td><td class="td_content_prop"><span v-if="denture.endDate">{{ denture.endDate.split(' ',2)[0] }}</span></td>
+            <td class="td_title_prop">生产结束日期:</td><td class="td_content_prop">{{ denture.endDate | time2DateStr }}</td>
           </tr>
         </tbody>
       </table>
     </el-row>
-    <!--<div v-if="isShow">
-      <el-row v-for="group in procedureGroups" style="background:#fff;margin-bottom:32px;">
+    <div v-if="isShow">
+      <el-row v-for="group in procedureGroups" :key="group.id" style="background:#fff;margin-bottom:25px;">
+        <hr style="filter: progid:DXImageTransform.Microsoft.Glow(color=#987cb9,strength=10)" width="100%" color="#987cb9" SIZE="1">
         <table cellspacing="15" style="text-align: left">
           <tr>
             <td class="td_title_prop">工序组:</td>
             <td class="td_content_prop">{{ group.type }}</td>
             <td class="td_title_prop">开始时间:</td>
             <td class="td_content_prop">
-              <span v-if="group.startDate">{{ group.startDate.split(' ',2)[0] }}</span>
+              {{ group.startDate | time2DateStr }}
             </td>
           </tr>
         </table>
@@ -102,7 +103,7 @@
           </el-table-column>
         </el-table>
       </el-row>
-    </div>-->
+    </div>
 
     <el-row v-if="isShow" style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="dialogSubmitVisible=true">

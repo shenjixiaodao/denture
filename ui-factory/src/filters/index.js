@@ -1,6 +1,13 @@
 // set function parseTime,formatTime to filter
 export { parseTime, formatTime } from '@/utils'
 
+export function time2DateStr(time) {
+  if (time) {
+    return time.split(' ', 2)[0]
+  }
+  return null
+}
+
 function pluralize(time, label) {
   if (time === 1) {
     return time + label
