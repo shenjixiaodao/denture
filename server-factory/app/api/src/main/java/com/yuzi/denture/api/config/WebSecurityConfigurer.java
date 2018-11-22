@@ -23,7 +23,7 @@ public class WebSecurityConfigurer {
                 HandlerInterceptor interceptor = new RequestInterceptor(ExpiredUrl);
                 String[] includePatterns =  {"/**","/denture/factory/**"};
                 String[] excludePatterns = {"/denture/factory/factoryUser/login", "/denture/factory/info/expired",
-                        "/denture/factory/info/avatar/**"};
+                        "/denture/factory/info/avatar/**", "/denture/factory/hj/**"};
                 HandlerInterceptor mappedInterceptor = new MappedInterceptor(includePatterns, excludePatterns,
                         interceptor);
                 registry.addInterceptor(mappedInterceptor);

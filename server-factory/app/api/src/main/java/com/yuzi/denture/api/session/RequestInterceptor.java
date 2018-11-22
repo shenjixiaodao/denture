@@ -15,6 +15,7 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
 
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
                              Object handler) throws Exception {
+        System.out.println(request.getRequestURI());
         if(SessionManager.Instance().exist(request)) {
             return true;  
         }

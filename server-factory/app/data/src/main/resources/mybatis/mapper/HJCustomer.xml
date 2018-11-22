@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuzi.denture.data.hj.CustomerMapper" >
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.yuzi.denture.domain.hj.Customer">
+        INSERT INTO `liyou`.`hj_customer`
+        (
+        `name`,
+        `telephone`,
+        `contact`,
+        `contact_position`,
+        `contact_phone`,
+        `contact_is_shareholder`,
+        `contact_other`,
+        'region',
+        `address`,
+        `source`,
+        `type`,
+        `state_owned`,
+        `scale`,
+        `furnace_number`,
+        `start_date`,
+        `customer_manager`,
+        `gmt_created`,
+        `gmt_modified`,
+        `product_type`,
+        `comment`
+        )
+        VALUES
+        (
+        #{name},
+        #{telephone},
+        #{contact},
+        #{contact_position},
+        #{contact_phone},
+        #{contact_is_shareholder},
+        #{contact_other},
+        #{region},
+        #{address},
+        #{source},
+        #{type},
+        #{state_owned},
+        #{scale},
+        #{furnace_number},
+        #{start_date},
+        #{customer_manager},
+        now(),
+        now(),
+        #{product_type},
+        #{comment}
+        );
+    </insert>
+
+    <resultMap id="baseRM" type="com.yuzi.denture.domain.hj.Customer">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="telephone" property="telephone" />
+        <result column="contact_position" property="contact_position" />
+        <result column="contact_phone" property="contact_phone" />
+        <result column="contact_is_shareholder" property="contact_is_shareholder" />
+        <result column="contact_other" property="contact_other" />
+        <result column="region" property="region" />
+        <result column="address" property="address" />
+        <result column="source" property="source" />
+        <result column="type" property="type" />
+        <result column="state_owned" property="state_owned" />
+        <result column="scale" property="scale" />
+        <result column="furnace_number" property="furnace_number" />
+        <result column="start_date" property="start_date" />
+        <result column="customer_manager" property="customer_manager" />
+        <result column="product_type" property="product_type" />
+    </resultMap>
+
+    <select id="findCustomers" resultMap="baseRM">
+        select * from hj_customer;
+    </select>
+
+    <select id="findCustomer" parameterType="Long" resultMap="baseRM">
+        select * from hj_customer where id=#{id};
+    </select>
+</mapper>
