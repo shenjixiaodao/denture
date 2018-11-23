@@ -3,11 +3,11 @@
     <table cellspacing="15" style="text-align: left">
       <tr>
         <td class="td_title_prop">年度总计:</td>
-        <td class="td_content_prop">{{ year?year:'--' }}元</td>
+        <td class="td_content_prop">{{ year?year:'--' }}</td>
         <td class="td_title_prop">月度总计:</td>
-        <td class="td_content_prop">{{ month?month:'--' }}元</td>
+        <td class="td_content_prop">{{ month?month:'--' }}</td>
         <td class="td_title_prop">当日总计:</td>
-        <td class="td_content_prop">{{ day?day:'--' }}元</td>
+        <td class="td_content_prop">{{ day?day:'--' }}</td>
       </tr>
     </table>
   </el-row>

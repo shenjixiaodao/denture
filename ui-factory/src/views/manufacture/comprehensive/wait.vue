@@ -15,6 +15,11 @@
             {{ scope.row.createdDate.split(' ',2)[0] }}
           </template>
         </el-table-column>
+        <el-table-column label="定制方">
+          <template slot-scope="scope">
+            {{ scope.row.clinic.name }}
+          </template>
+        </el-table-column>
         <el-table-column label="类型">
           <template slot-scope="scope">
             {{ scope.row.type }}

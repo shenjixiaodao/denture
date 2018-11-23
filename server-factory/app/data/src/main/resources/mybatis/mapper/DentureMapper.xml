@@ -243,8 +243,13 @@
         WHERE d.factory_id=#{factoryId}
     </select>
 
+    <select id="findByDeliveryInfo" parameterType="Map" resultMap="baseRM">
+        SELECT <include refid="baseSQL" /> FROM denture d
+        INNER JOIN delivery_info di ON (delivery_id=#{deliveryId} AND company=#{company} AND d.id=di.denture_id)
+    </select>
+
     <select id="findWaitingDentures" parameterType="Long" resultMap="baseRM">
-        SELECT <include refid="baseSQL" />
+        SELECT <include refid="baseSQL" />, <include refid="clinicSQL" />
         FROM denture d inner join denture_order do on (
           d.factory_id=#{factoryId} and do.factory_id=#{factoryId} and d.id=do.denture_id
           and do.status in('Created','Paid')
@@ -252,13 +257,9 @@
         inner join clinic c on (d.clinic_id=c.id)
         <include refid="criteriaWhere" />
     </select>
-    <select id="findByDeliveryInfo" parameterType="Map" resultMap="baseRM">
-        SELECT <include refid="baseSQL" /> FROM denture d
-        INNER JOIN delivery_info di ON (delivery_id=#{deliveryId} AND company=#{company} AND d.id=di.denture_id)
-    </select>
 
     <select id="findDoingDentures" parameterType="Long" resultMap="baseRM">
-        SELECT <include refid="baseSQL" />
+        SELECT <include refid="baseSQL" />, <include refid="clinicSQL" />
         FROM denture d
         inner join denture_order do on (
             d.factory_id=#{factoryId} and do.factory_id=#{factoryId} and d.id=do.denture_id
@@ -268,7 +269,7 @@
         <include refid="criteriaWhere" />
     </select>
     <select id="findDoneDentures" parameterType="Long" resultMap="baseRM">
-        SELECT <include refid="baseSQL" />
+        SELECT <include refid="baseSQL" />, <include refid="clinicSQL" />
         FROM denture d inner join denture_order do on (
         d.factory_id=#{factoryId} and do.factory_id=#{factoryId} and d.id=do.denture_id
         and do.status in('Rejected','Installed')

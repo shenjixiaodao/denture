@@ -19,7 +19,7 @@ public class ProcedureGroupAssembler {
         ProcedureGroupVo vo = new ProcedureGroupVo();
         BeanUtils.copyProperties(group, vo);
         if(group.getType() != null)
-            vo.setType(group.getType().name());
+            vo.setType(group.getType().text());
         vo.setUsedIngredients(UsedIngredientAssembler.toVos(group.getUsedIngredients()));
         vo.setProcedures(ProcedureAssembler.toVos(group.getProcedures()));
         vo.setOperator(FactoryUserAssembler.toVo(group.getOperator()));
