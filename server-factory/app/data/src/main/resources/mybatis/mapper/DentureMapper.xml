@@ -214,7 +214,7 @@
             and d.id=#{dentureId}
         </if>
         <if test="createdDate">
-            and DATE_FORMAT(d.createdDate,'%Y-%m-%d')=#{createdDate}
+            and DATE_FORMAT(d.created_date,'%Y-%m-%d')=#{createdDate}
         </if>
         <if test="patientName!=null">
             and patient.name=#{patientName}

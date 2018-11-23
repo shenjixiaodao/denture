@@ -128,15 +128,17 @@ public class FactoryUserController {
                     required = true, value = "地址"),
             @ApiImplicitParam(paramType = "form", name = "educational", dataType = "String",
                     required = true, value = "教育状况"),
+            @ApiImplicitParam(paramType = "form", name = "joinDate", dataType = "String",
+                    required = true, value = "入职时间"),
             @ApiImplicitParam(paramType = "form", name = "cardId", dataType = "String",
                     required = true, value = "身份证号")
     })
     @ResponseBody
     @RequestMapping(value = "/modify", method = POST)
     public WebResult<FactoryUserVo> modify(Long uid, String roles, Boolean martial, String address, String educational,
-                                           String cardId) {
+                                           String cardId, String joinDate) {
         logger.info("修改用户:roles={}",roles);
-        WebResult result = WebResult.execute(res -> {
+        WebResult<FactoryUserVo> result = WebResult.execute(res -> {
             FactoryUser user = repository.findUser(uid);
             user.setRoles(roles);
             user.setMarital(martial);
@@ -144,6 +146,8 @@ public class FactoryUserController {
             user.setEducational(Educational.typeOf(educational));
             user.setCardId(cardId);
             service.modifyUser(user);
+            FactoryUserVo vo = FactoryUserAssembler.toVo(user);
+            res.setData(vo);
         }, "修改用户错误", logger);
         return result;
     }

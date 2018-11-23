@@ -8,10 +8,10 @@
               <td class="td_title_prop">姓名:</td><td class="td_content_prop">{{ user.name }}</td>
             </tr>
             <tr>
-              <td class="td_title_prop">身份证号:</td><td class="td_content_prop">{{ user.cardId }}</td>
+              <td class="td_title_prop">身份证号:</td><td class="td_content_prop"><el-input v-model="user.cardId" class="filter-item" /></td>
             </tr>
             <tr>
-              <td class="td_title_prop">职位:</td><td class="td_content_prop">{{ user.position }}</td>
+              <td class="td_title_prop">职位:</td><td class="td_content_prop"><el-input v-model="user.position" class="filter-item" /></td>
             </tr>
             <tr>
               <td class="td_title_prop">联系方式:</td><td class="td_content_prop">{{ user.contact }}</td>
@@ -20,19 +20,29 @@
               <td class="td_title_prop">所在组:</td><td class="td_content_prop">{{ user.groupType }}</td>
             </tr>
             <tr>
-              <td class="td_title_prop">入职时间:</td><td class="td_content_prop">{{ user.joinDate }}</td>
+              <td class="td_title_prop">入职时间:</td><td class="td_content_prop">
+                <el-date-picker v-model="user.joinDate" type="date" value-format="yyyy-MM-dd" placeholder="选择日期时间" style="width: 70%;"/>
+              </td>
             </tr>
             <tr>
               <td class="td_title_prop">年龄:</td><td class="td_content_prop">{{ user.age }}</td>
             </tr>
             <tr>
-              <td class="td_title_prop">学历:</td><td class="td_content_prop">{{ user.educational }}</td>
+              <td class="td_title_prop">学历:</td><td class="td_content_prop"><el-input v-model="user.educational" class="filter-item" /></td>
             </tr>
             <tr>
-              <td class="td_title_prop">婚姻:</td><td class="td_content_prop">{{ user.marital ? '已婚': '未婚' }}</td>
+              <td class="td_title_prop">婚姻:</td><td class="td_content_prop">
+                <!--{{ user.marital ? '已婚': '未婚' }}-->
+                <input id="radio_1" v-model="user.marital" type="radio" value="false">
+                <label for="radio_1">未婚</label>
+                <input id="radio_2" v-model="user.marital" type="radio" value="true" >
+                <label for="radio_2">已婚</label>
+              </td>
             </tr>
             <tr>
-              <td class="td_title_prop">住址:</td><td class="td_content_prop">{{ user.address }}</td>
+              <td class="td_title_prop">住址:</td><td class="td_content_prop">
+                <el-input v-model="user.address" class="filter-item" />
+              </td>
             </tr>
           </tbody>
         </table>
@@ -124,7 +134,12 @@ export default {
       this.loading = true
       modifyUser({
         uid: this.user.id,
-        roles: this.user.roles.join(',')
+        roles: this.user.roles.join(','),
+        marital: this.user.marital,
+        address: this.user.address,
+        educational: this.user.educational,
+        cardId: this.user.cardId,
+        joinDate: this.user.joinDate
       }).then(response => {
         this.loading = false
         var data = response.data

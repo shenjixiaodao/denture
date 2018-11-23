@@ -4,7 +4,7 @@
       <el-input v-model="queryParams.dentureId" placeholder="产品编号" style="width: 200px;" class="filter-item" />
       <!--<el-input v-model="queryParams.region" placeholder="区域" style="width: 200px;" class="filter-item" />-->
       <el-cascader :options="cities" :props="props" placeholder="省/市" style="width: 200px;" @change="handleChange"/>
-      <el-date-picker v-model="queryParams.createdDate" type="date" style="width: 200px;" placeholder="订单创建日" />
+      <el-date-picker v-model="queryParams.createdDate" type="date" style="width: 200px;" placeholder="订单创建日" value-format="yyyy-MM-dd"/>
       <!--<el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" >扫描</el-button>-->
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="search()" >搜索</el-button>
     </el-row>
