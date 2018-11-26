@@ -30,7 +30,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -208,7 +207,7 @@ public class FactoryUserController {
         Long uid = user.getId();
         Long factoryId = user.getFactoryId();
         WebResult result = WebResult.execute(res -> {
-            service.addCustomer(factoryId, clinicId, uid);
+            service.inviteCustomer(factoryId, clinicId, uid);
             logger.info("添加客户成功");
         }, "添加客户错误", logger);
         return result;

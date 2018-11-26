@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -136,7 +135,7 @@ public class FactoryServiceImpl implements FactoryService {
     }
 
     @Override
-    public void addCustomer(Long factoryId, Long clinicId, Long salesmanId) {
+    public void inviteCustomer(Long factoryId, Long clinicId, Long salesmanId) {
         FactoryCustomer customer = new FactoryCustomer(factoryId, clinicId, salesmanId);
         repository.addCustomer(customer);
     }
@@ -144,13 +143,15 @@ public class FactoryServiceImpl implements FactoryService {
     @Transactional
     @Override
     public void addCustomer(Long factoryId, Long salesmanId, String name, String contact, String region,
-                            String address, String dentistName) {
+                               String address, String dentistName) {
         Clinic clinic = new Clinic(name, region, address, contact);
         clinicRepository.add(clinic);
         ClinicUser user = new ClinicUser(contact, dentistName);
         user.setClinicId(clinic.getId());
         clinicRepository.addUser(user);
-        this.addCustomer(factoryId, clinic.getId(), salesmanId);
+        FactoryCustomer customer = new FactoryCustomer(factoryId, salesmanId);
+        customer.setClinic(clinic);
+        repository.addCustomer(customer);
     }
 
     @Override
@@ -163,6 +164,12 @@ public class FactoryServiceImpl implements FactoryService {
             customer.setSalesmanId(salesmanId);
         }
         repository.updateCustomer(customer);
+    }
+
+    @Override
+    @Transactional
+    public void addClinicUser(ClinicUser user) {
+        clinicRepository.addUser(user);
     }
 
     @Override

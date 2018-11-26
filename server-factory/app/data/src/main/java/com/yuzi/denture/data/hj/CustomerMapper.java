@@ -8,6 +8,7 @@ import java.util.List;
 @Mapper
 public interface CustomerMapper {
     void save(Customer customer);
+    void update(Customer customer);
     List<Customer> findCustomers();
     Customer findCustomer(Long id);
 }

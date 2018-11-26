@@ -4,6 +4,9 @@
       <table style="text-align: right">
         <tbody>
           <tr>
+            <td class="td_title_prop">编号:</td><td class="td_content_prop">{{ denture.id }}</td>
+          </tr>
+          <tr>
             <td class="td_title_prop">类型:</td><td class="td_content_prop">{{ denture.type }}</td>
           </tr>
           <tr>

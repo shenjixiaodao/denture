@@ -51,7 +51,7 @@
             </span>
           </section>
           <section class="hongbo" style="padding-left: 30px">
-            <b style="padding-left: 5px">8</b>
+            <b style="padding-left: 6px">8</b>
             <b style="padding-left: 4px">7</b>
             <b style="padding-left: 4px">6</b>
             <b style="padding-left: 4px">5</b>
@@ -59,7 +59,7 @@
             <b style="padding-left: 4px">3</b>
             <b style="padding-left: 4px">2</b>
             <b style="padding-left: 4px">1</b>
-            <b style="padding-left: 4px">|</b>
+            <b style="padding-left: 3px">|</b>
             <b style="padding-left: 2px">1</b>
             <b style="padding-left: 4px">2</b>
             <b style="padding-left: 4px">3</b>
@@ -92,14 +92,14 @@
             </span>
           </section>
         </section>
-        <el-form-item label="种类名称" prop="title">
-          <el-select v-model="order.type" placeholder="类型" clearable class="filter-item">
-            <el-option v-for="item in types" :key="item.code" :label="item.name" :value="item.code"/>
-          </el-select>
-        </el-form-item>
         <el-form-item label="材质规格" prop="title">
           <el-select v-model="order.specification" placeholder="材质" clearable class="filter-item">
             <el-option v-for="item in specifications" :key="item.code" :label="item.name" :value="item.code"/>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="种类名称" prop="title">
+          <el-select v-model="order.type" placeholder="类型" clearable class="filter-item">
+            <el-option v-for="item in types" :key="item.code" :label="item.name" :value="item.code"/>
           </el-select>
         </el-form-item>
         <el-form-item label="色号" prop="title">

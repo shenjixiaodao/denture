@@ -42,10 +42,13 @@ public interface FactoryService {
     void modifyUser(FactoryUser user);
     FactoryUser login(String contact, String encryptPWD);
     void modifyPwd(Long uid, String srcPwd, String dstPwd);
-    void addCustomer(Long factoryId, Long clinicId, Long salesmanId);
+    void inviteCustomer(Long factoryId, Long clinicId, Long salesmanId);
     void addCustomer(Long factoryId, Long salesmanId, String name, String contact, String region, String address,
-                     String dentistName);
+                        String dentistName);
     void modifyCustomer(Long customerId, Long clinicId, Long salesmanId);
+
+    //clinic
+    void addClinicUser(ClinicUser user);
 
     //ingredient
     void newIngredient(String name, Long factoryId, String type);

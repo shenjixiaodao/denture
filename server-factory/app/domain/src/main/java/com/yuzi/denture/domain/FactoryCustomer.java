@@ -17,7 +17,7 @@ public class FactoryCustomer {
     Date createdDate;
     Integer fixedGuarantee;
     Integer mobilizableGuarantee;
-    // 0:发起请求\n1:  同意\n-1：拒绝
+    // 0:发起请求 1:同意  -1:拒绝  -2:工厂自己添加:
     Byte isValid;
 
     public FactoryCustomer(Long factoryId, Long clinicId, Long salesmanId) {
@@ -26,6 +26,13 @@ public class FactoryCustomer {
         this.salesmanId = salesmanId;
         this.createdDate = new Date();
         this.isValid = 0;
+    }
+
+    public FactoryCustomer(Long factoryId, Long salesmanId) {
+        this.factoryId = factoryId;
+        this.salesmanId = salesmanId;
+        this.createdDate = new Date();
+        this.isValid = -2;
     }
 
     public FactoryCustomer() {

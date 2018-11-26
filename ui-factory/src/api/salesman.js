@@ -63,6 +63,17 @@ export function recordCustomer(data) {
   })
 }
 
+export function addClinicUser(data) {
+  return request({
+    url: '/manufacture/addClinicUser',
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data
+  })
+}
+
 export function queryClinics() {
   return request({
     url: '/info/queryClinics',

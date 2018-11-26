@@ -3,7 +3,7 @@
 <mapper namespace="com.yuzi.denture.data.hj.CustomerMapper" >
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.yuzi.denture.domain.hj.Customer">
-        INSERT INTO `liyou`.`hj_customer`
+        INSERT INTO `hj_customer`
         (
         `name`,
         `telephone`,
@@ -50,6 +50,65 @@
         #{comment}
         );
     </insert>
+
+    <update id="update" parameterType="com.yuzi.denture.domain.hj.Customer">
+        update hj_customer
+        set id=id
+        <if test="name!=null">
+            , name=#{name}
+        </if>
+        <if test="telephone!=null">
+            , telephone=#{telephone}
+        </if>
+        <if test="contact!=null">
+            , contact=#{contact}
+        </if>
+        <if test="contact_position!=null">
+            , contact_position=#{contact_position}
+        </if>
+        <if test="contact_phone!=null">
+            , contact_phone=#{contact_phone}
+        </if>
+        <if test="contact_is_shareholder!=null">
+            , contact_is_shareholder=#{contact_is_shareholder}
+        </if>
+        <if test="contact_other!=null">
+            , contact_other=#{contact_other}
+        </if>
+        <if test="region!=null">
+            , region=#{region}
+        </if>
+        <if test="address!=null">
+            , address=#{address}
+        </if>
+        <if test="source!=null">
+            , source=#{source}
+        </if>
+        <if test="type!=null">
+            , type=#{type}
+        </if>
+        <if test="state_owned!=null">
+            , state_owned=#{state_owned}
+        </if>
+        <if test="scale!=null">
+            , scale=#{scale}
+        </if>
+        <if test="furnace_number!=null">
+            , furnace_number=#{furnace_number}
+        </if>
+        <if test="start_date!=null">
+            , start_date=#{start_date}
+        </if>
+        <if test="customer_manager!=null">
+            , customer_manager=#{customer_manager}
+        </if>
+        <if test="product_type!=null">
+            , product_type=#{product_type}
+        </if>
+        <if test="comment!=null">
+            , comment=#{comment}
+        </if>
+    </update>
 
     <resultMap id="baseRM" type="com.yuzi.denture.domain.hj.Customer">
         <result column="id" property="id" />

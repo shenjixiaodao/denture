@@ -16,8 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -185,6 +183,30 @@ public class ManufactureController {
             service.addCustomer(factoryId, uid, name, contact, region, address, dentistName);
             logger.info("添加客户成功");
         }, "录入诊所客户", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "录入诊所员工", response = ClinicUserVo.class, httpMethod = "POST")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "form", name = "name", dataType = "string",
+                    required = true, value = "诊所名"),
+            @ApiImplicitParam(paramType = "form", name = "clinicId", dataType = "Long",
+                    required = true, value = "门诊ID"),
+            @ApiImplicitParam(paramType = "form", name = "role", dataType = "string",
+                    required = true, value = "职称"),
+            @ApiImplicitParam(paramType = "form", name = "contact", dataType = "string",
+                    required = true, value = "联系电话")
+    })
+    @ResponseBody
+    @RequestMapping(value = "/addClinicUser", method = POST)
+    public WebResult<ClinicUserVo> addClinicUser(String name, Long clinicId, String role, String contact) {
+        logger.info("录入诊所员工");
+        WebResult<ClinicUserVo> result = WebResult.execute(res -> {
+            ClinicUser user = new ClinicUser(clinicId, role, contact, name);
+            service.addClinicUser(user);
+            ClinicUserVo vo = ClinicUserAssembler.toVo(user);
+            res.setData(vo);
+        }, "录入诊所员工", logger);
         return result;
     }
 

@@ -1,5 +1,7 @@
 package com.yuzi.denture.domain;
 
+import org.springframework.util.StringUtils;
+
 public class ClinicUser {
 
     //编号(id):
@@ -23,6 +25,13 @@ public class ClinicUser {
         this.name = name;
     }
 
+    public ClinicUser(Long clinicId, String role, String contact, String name) {
+        this.clinicId = clinicId;
+        this.role = ClinicRole.typeOf(role);
+        this.contact = contact;
+        this.name = name;
+    }
+
     public ClinicUser() {
     }
 
@@ -34,6 +43,15 @@ public class ClinicUser {
         }
         public String text() {
             return this.text;
+        }
+        public static ClinicRole typeOf(String type) {
+            if(StringUtils.isEmpty(type))
+                return null;
+            for(ClinicRole result : ClinicRole.values()){
+                if(result.name().toLowerCase().equals(type.toLowerCase()))
+                    return result;
+            }
+            throw new IllegalArgumentException("未知类型");
         }
     }
 

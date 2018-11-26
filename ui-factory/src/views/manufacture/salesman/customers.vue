@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-row style="background:#fff;margin-bottom:20px;">
-      <el-button type="primary" @click="dialogAddVisible = true">新增</el-button>
+      <el-button type="primary" @click="dialogAddVisible = true">新增客户</el-button>
       <el-table :data="list" style="width: 100%;padding-top: 15px;">
         <el-table-column label="名称">
           <template slot-scope="scope">
@@ -27,7 +27,7 @@
         </el-table-column>
       </el-table>
     </el-row>
-    <el-dialog :visible.sync="dialogAddVisible" title="添加客户">
+    <el-dialog :visible.sync="dialogAddVisible" title="新增客户">
       <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 100%;">
         <el-form-item label="诊所名" prop="title">
           <el-input v-model="customer.name" style="width: 70%;"/>

@@ -23,9 +23,9 @@
       </table>
     </el-row>
 
+    <el-button type="primary" @click="dialogAddVisible = true">添加成员</el-button>
     <el-row style="background:#fff;margin-bottom:32px;">
-      <el-button type="primary" @click="dialogAddVisible = true">新增</el-button>
-      <!--<el-button type="primary" @click="dialogAddVisible = true">添加成员</el-button>-->
+      <div style="margin:0 0 5px 5px">成员列表</div>
       <el-table :data="customer.clinic.users" style="width: 100%;padding-top: 15px;">
         <el-table-column label="姓名">
           <template slot-scope="scope">
@@ -45,13 +45,15 @@
       </el-table>
     </el-row>
 
-    <el-dialog :visible.sync="dialogAddVisible" title="添加客户">
+    <el-dialog :visible.sync="dialogAddVisible" title="添加成员">
       <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 100%;">
         <el-form-item label="姓名" prop="title">
           <el-input v-model="member.name" style="width: 70%;"/>
         </el-form-item>
         <el-form-item label="职称" prop="title">
-          <el-input v-model="member.role" style="width: 70%;"/>
+          <el-select v-model="member.role" placeholder="请选择" clearable style="width: 70px" class="filter-item">
+            <el-option v-for="role in roles" :key="role.code" :label="role.name" :value="role.code"/>
+          </el-select>
         </el-form-item>
         <el-form-item label="联系方式" prop="title">
           <el-input v-model="member.contact" style="width: 70%;"/>
@@ -59,7 +61,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogAddVisible = false">取消</el-button>
-        <el-button type="primary" @click="addCustomer">提交</el-button>
+        <el-button type="primary" @click="addMember">保存</el-button>
       </div>
     </el-dialog>
 
@@ -86,17 +88,23 @@
 </template>
 
 <script>
-import { customer } from '@/api/salesman'
+import { customer, addClinicUser } from '@/api/salesman'
 
 export default {
   data() {
     return {
       customer: null,
       member: {
+        clinicId: null,
         name: null,
         role: null,
         contact: null
       },
+      roles: [
+        { code: 'Dentist', name: '医生' },
+        { code: 'Nurse', name: '护士' },
+        { code: 'Other', name: '其它' }
+      ],
       appliedIngredients: [],
       dialogAddVisible: false
     }
@@ -116,14 +124,15 @@ export default {
     },
     addMember() {
       this.dialogAddVisible = false
-      /* queryIngredients().then(response => {
+      this.member.clinicId = customer.id
+      addClinicUser(this.member).then(response => {
         var data = response.data
-        this.ingredients = data
-      }) */
+        this.customer.clinic.users.push(data)
+      })
     }
   }
 }
 </script>
 <style lang="scss" scoped>
-  @import "@/styles/common.scss";
+@import "@/styles/common.scss";
 </style>

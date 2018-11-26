@@ -15,7 +15,16 @@ public class HJRepositoryImpl implements HJRepository {
 
     @Override
     public void store(Customer customer) {
-        customerMapper.save(customer);
+        if(customer.getId() != null) {
+
+        } else {
+            customerMapper.save(customer);
+        }
+    }
+
+    @Override
+    public void update(Customer customer) {
+        customerMapper.update(customer);
     }
 
     @Override
