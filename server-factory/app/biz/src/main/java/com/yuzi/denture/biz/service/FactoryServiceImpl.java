@@ -24,13 +24,13 @@ public class FactoryServiceImpl implements FactoryService {
     @Transactional
     @Override
     public Denture createOrderAndDenture(Long clinicId, Long dentistId, Long factoryId, String comment,
-                                         String positions, Denture.DentureType type, String specification,
+                                         String positions, Denture.DentureType type, String specification, Integer number,
                                          String colorNo, FieldType fieldType, BiteLevel biteLevel,
                                          BorderType borderType, NeckType neckType, InnerCrownType innerCrowType,
                                          PaddingType paddingType, OuterCrownType outerCrowType, String requirement) {
         //1, create denture
         Denture denture = new Denture(type, specification, clinicId, comment,
-                factoryId, positions, colorNo);
+                factoryId, positions, number, colorNo);
         denture.setId(IdGenerator.generate(factoryId));
         denture.setFieldType(fieldType);
         denture.setBiteLevel(biteLevel);

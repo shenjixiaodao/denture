@@ -88,7 +88,8 @@
 </template>
 
 <script>
-import { customer, addClinicUser } from '@/api/salesman'
+import { addClinicUser } from '@/api/salesman'
+import { customer } from '@/api/common'
 
 export default {
   data() {
@@ -105,7 +106,6 @@ export default {
         { code: 'Nurse', name: '护士' },
         { code: 'Other', name: '其它' }
       ],
-      appliedIngredients: [],
       dialogAddVisible: false
     }
   },

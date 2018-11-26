@@ -20,7 +20,7 @@ public interface FactoryService {
      * @return denture
      */
     Denture createOrderAndDenture(Long clinicId, Long dentistId, Long factoryId, String comment,
-                                  String positions, Denture.DentureType type, String specification,
+                                  String positions, Denture.DentureType type, String specification, Integer number,
                                   String colorNo, FieldType fieldType, BiteLevel biteLevel,
                                   BorderType borderType, NeckType neckType, InnerCrownType innerCrowType,
                                   PaddingType paddingType, OuterCrownType outerCrowType, String requirement);

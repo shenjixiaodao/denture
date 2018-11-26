@@ -77,23 +77,14 @@ public class ManufactureController {
                     required = true, value = "医生备注"),
             @ApiImplicitParam(paramType = "form", name = "positions", dataType = "string",
                     required = true, value = "牙位[牙位号格式: 半位[a|b|c|d]-编号[1-8], eg: a-2（表示左上半第2号）;多个使用\",\"分隔各个牙位号]"),
+            @ApiImplicitParam(paramType = "form", name = "number", dataType = "Integer",
+                    required = true, value = "数量"),
             @ApiImplicitParam(paramType = "form", name = "colorNo", dataType = "string",
                     required = true, value = "色号"),
             @ApiImplicitParam(paramType = "form", name = "type", dataType = "string",
-                    required = true, value = "义齿类型[Fixed(\"定制式固定义齿\"), Mobilizable(\"定制式活动义齿\")]"),
+                    required = true, value = "义齿规格[Fixed(\"定制式固定义齿\"), Mobilizable(\"定制式活动义齿\")]"),
             @ApiImplicitParam(paramType = "form", name = "specification", dataType = "string",
-                    required = true, value = "规格" +
-                    "       [GuGe(\"钴铬合金\"),\n" +
-                    "        GuiJinShuDanGuan(\"贵金属单冠\"),\n" +
-                    "        LianGuan(\"连冠（桥、嵌体、贴面）\"),\n" +
-                    "        ErYangHuaGao(\"二氧化锆\"),\n" +
-                    "        YangHuaGao(\"氧化锆\"),\n" +
-                    "        ErYangHuaGuiGuan(\"二氧化硅冠（桥、嵌体、贴面)\"),\n" +
-                    "        NieGeHeJinGuan(\"镍铬合金冠\"),\n" +
-                    "        NieGeHeJinQiao(\"镍铬合金桥\"),\n" +
-                    "        WanZhiZhiJiaKeZhai(\"弯制支架可摘局部义齿\"),\n" +
-                    "        ShuZhiJiTuoQuanKou(\"树脂基托全口义齿\"),\n" +
-                    "        Other(\"其他\")]"),
+                    required = true, value = "具体类型"),
             @ApiImplicitParam(paramType = "form", name = "fieldType", dataType = "string",
                     value = "缺牙区[DaMaAn(大马鞍)\n" +
                             "PianCe(偏侧型)\n" +
@@ -136,7 +127,7 @@ public class ManufactureController {
     @ResponseBody
     @RequestMapping(value = "/recordOrder", method = POST)
     public WebResult<DentureVo> recordOrder(Long clinicId, Long dentistId, String comment,
-                                            String positions, String type, String specification,
+                                            String positions, String type, String specification, Integer number,
                                             String colorNo, String fieldType, String biteLevel, String borderType,
                                             String neckType, String innerCrownType, String paddingType,
                                             String outerCrownType, String requirement, HttpServletRequest request) {
@@ -147,7 +138,7 @@ public class ManufactureController {
                 positions, type, specification, colorNo);
         WebResult<DentureVo> result = WebResult.execute(res -> {
             Denture denture = service.createOrderAndDenture(clinicId, dentistId, factoryId, comment, positions,
-                    Denture.DentureType.typeOf(type), specification, colorNo,
+                    Denture.DentureType.typeOf(type), specification, number, colorNo,
                     FieldType.typeOf(fieldType), BiteLevel.typeOf(biteLevel), BorderType.typeOf(borderType),
                     NeckType.typeOf(neckType), InnerCrownType.typeOf(innerCrownType), PaddingType.typeOf(paddingType),
                     OuterCrownType.typeOf(outerCrownType), requirement);
@@ -243,6 +234,21 @@ public class ManufactureController {
     }
 
     //comprehensive user api
+    @ApiOperation(value = "查询工厂所有客户列表", response = FactoryCustomerVo.class, httpMethod = "GET")
+    @ResponseBody
+    @RequestMapping(value = "/customers", method = GET)
+    public WebResult<List<FactoryCustomer>> customers(HttpServletRequest request) {
+        FactoryUser user = SessionManager.Instance().user(request);
+        Long factoryId = user.getFactoryId();
+        WebResult<List<FactoryCustomer>> result = WebResult.execute(res -> {
+            List<FactoryCustomer> customers = repository.findCustomersByFactoryId(factoryId);
+            List<FactoryCustomerVo> vos = FactoryCustomerAssembler.toVos(customers);
+            res.setData(vos);
+            logger.info("查询客户列表成功");
+        }, "查询客户列表错误", logger);
+        return result;
+    }
+
     @ApiOperation(value = "义齿综合管理查询", response = DentureVo.class, httpMethod = "POST")
     @ResponseBody
     @RequestMapping(value = "/queryDenturesByCriteria", method = POST)

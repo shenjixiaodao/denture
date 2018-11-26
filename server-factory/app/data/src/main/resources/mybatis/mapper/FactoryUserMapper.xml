@@ -209,6 +209,10 @@
         SELECT <include refid="baseCustomerSQL" /> FROM factory_customer fc
         inner join clinic c on (fc.salesman_id=#{uid} and fc.clinic_id=c.id)
     </select>
+    <select id="findCustomersByFactoryId" parameterType="Long" resultMap="baseCustomerRM">
+        SELECT <include refid="baseCustomerSQL" /> FROM factory_customer fc
+        inner join clinic c on (fc.factory_id=#{factoryId} and fc.clinic_id=c.id)
+    </select>
     <select id="findUserByContact" resultMap="baseRM">
         select fu.*, fr.role from factory_user fu
         inner join factory_role fr

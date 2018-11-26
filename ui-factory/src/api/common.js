@@ -37,3 +37,11 @@ export function statIngredient(id) {
     params: { id: id }
   })
 }
+
+export function customer(id) {
+  return request({
+    url: '/factoryUser/customer',
+    method: 'get',
+    params: { id: id }
+  })
+}

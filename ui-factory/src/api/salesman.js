@@ -33,14 +33,6 @@ export function customers() {
   })
 }
 
-export function customer(id) {
-  return request({
-    url: '/factoryUser/customer',
-    method: 'get',
-    params: { id: id }
-  })
-}
-
 export function addCustomer(data) {
   return request({
     url: '/factoryUser/addCustomer',

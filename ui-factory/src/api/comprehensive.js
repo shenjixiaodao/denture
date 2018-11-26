@@ -130,3 +130,10 @@ export function querySuppliers() {
     method: 'get'
   })
 }
+
+export function customers() {
+  return request({
+    url: '/manufacture/customers',
+    method: 'get'
+  })
+}

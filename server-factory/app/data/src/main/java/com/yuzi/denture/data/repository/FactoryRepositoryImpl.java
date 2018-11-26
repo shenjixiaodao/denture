@@ -128,8 +128,7 @@ public class FactoryRepositoryImpl implements FactoryRepository {
 
     @Override
     public List<FactoryCustomer> findCustomersByFactoryId(Long factoryId) {
-        //todo
-        return null;
+        return userMapper.findCustomersByFactoryId(factoryId);
     }
 
     @Override

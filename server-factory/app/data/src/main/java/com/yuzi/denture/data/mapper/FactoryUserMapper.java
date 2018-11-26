@@ -23,6 +23,7 @@ public interface FactoryUserMapper {
     FactoryCustomer findCustomerById(Long id);
     FactoryCustomer findCustomerDetailById(Long id);
     List<FactoryCustomer> findCustomersByUid(Long uid);
+    List<FactoryCustomer> findCustomersByFactoryId(Long factoryId);
     FactoryUser findUserByContact(String contact);
     FactoryUser findUserById(Long id);
 

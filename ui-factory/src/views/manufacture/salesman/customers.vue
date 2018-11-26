@@ -1,8 +1,13 @@
 <template>
   <div class="app-container">
     <el-row style="background:#fff;margin-bottom:20px;">
-      <el-button type="primary" @click="dialogAddVisible = true">新增客户</el-button>
+      <div style="font-size: 15px;padding-top: 10px;font-weight: bold;">客户列表:</div>
       <el-table :data="list" style="width: 100%;padding-top: 15px;">
+        <el-table-column label="编号">
+          <template slot-scope="scope">
+            {{ scope.row.clinic.id }}
+          </template>
+        </el-table-column>
         <el-table-column label="名称">
           <template slot-scope="scope">
             {{ scope.row.clinic.name }}
