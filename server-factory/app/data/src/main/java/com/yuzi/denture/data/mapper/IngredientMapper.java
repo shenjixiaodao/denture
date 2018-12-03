@@ -1,9 +1,6 @@
 package com.yuzi.denture.data.mapper;
 
-import com.yuzi.denture.domain.AppliedIngredient;
-import com.yuzi.denture.domain.Ingredient;
-import com.yuzi.denture.domain.IngredientPurchaseRecord;
-import com.yuzi.denture.domain.Supplier;
+import com.yuzi.denture.domain.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -28,4 +25,7 @@ public interface IngredientMapper {
     Long yearApplied(Map paras);
     Long monthApplied(Map paras);
     Long dayApplied(Map paras);
+
+    //used ingredient
+    void saveUsedIngredient(UsedIngredient usedIngredient);
 }

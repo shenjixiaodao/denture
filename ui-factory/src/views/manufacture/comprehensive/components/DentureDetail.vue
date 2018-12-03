@@ -121,8 +121,14 @@
             <el-option v-for="item in ingredients" :key="item.id" :label="item.name" :value="item.id"/>
           </el-select>
         </el-form-item>
-        <el-form-item label="数量" prop="title">
+        <el-form-item label="领用数量" prop="title">
           <el-input v-model="ingredient.number" style="width: 70%;"/> <!-- 可用数量 -->
+        </el-form-item>
+        <el-form-item label="使用数量" prop="title">
+          <el-input v-model="ingredient.usedNumber" style="width: 70%;"/> <!-- 可用数量 -->
+        </el-form-item>
+        <el-form-item label="应用设备" prop="title">
+          <el-input v-model="ingredient.equipment" style="width: 70%;"/>
         </el-form-item>
         <el-form-item label="备注" prop="title">
           <el-input v-model="ingredient.comment" style="width: 70%;"/>
@@ -148,7 +154,9 @@ export default {
       ingredient: {
         dentureId: null,
         ingredientId: null,
+        usedNumber: null,
         number: null,
+        equipment: null,
         comment: null
       },
       ingredients: null,
@@ -197,5 +205,5 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  @import "@/styles/common.scss";
+@import "@/styles/common.scss";
 </style>
