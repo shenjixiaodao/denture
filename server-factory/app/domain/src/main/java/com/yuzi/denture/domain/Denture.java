@@ -68,18 +68,14 @@ public class Denture {
     Double estimatedDuration;
 
     public Denture(DentureType type, String specification, Long clinicId, String comment,
-                   Long factoryId, String positions, String colorNo) {
+                   Long factoryId, String positions, Integer number, String colorNo) {
         this.type = type;
         this.specification = specification;
         this.clinic = new Clinic(clinicId);
         this.comment = comment;
         this.factory = new Factory(factoryId);
         this.positions = positions;
-        for(String pos : positions.split(PositionSeparator)) {
-            this.number = 0;
-            if(!StringUtils.isEmpty(pos))
-                this.number++;
-        }
+        this.number = number;
         this.colorNo = colorNo;
         this.createdDate = new Date();
     }
