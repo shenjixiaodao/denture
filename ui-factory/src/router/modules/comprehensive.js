@@ -62,6 +62,19 @@ const comprehensiveRouter = {
       name: 'ComprehensiveIngredientDetail',
       meta: { title: '物料详情', noCache: true },
       hidden: true
+    },
+    {
+      path: 'customers',
+      component: () => import('@/views/manufacture/comprehensive/customers'),
+      name: 'Customers',
+      meta: { title: '客户列表', noCache: true }
+    },
+    {
+      path: 'customer/:id(\\d+)',
+      component: () => import('@/views/manufacture/comprehensive/components/CustomerDetail'),
+      name: 'CustomerDetail',
+      meta: { title: '客户详情' },
+      hidden: true
     }
   ]
 }

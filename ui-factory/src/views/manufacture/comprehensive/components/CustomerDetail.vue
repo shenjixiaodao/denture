@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-row style="background:#fff;margin-bottom:10px;">
+    <el-row style="background:#fff;margin-bottom:30px;">
       <table style="text-align: right">
         <tbody>
           <tr>
@@ -23,7 +23,7 @@
       </table>
     </el-row>
 
-    <el-row style="background:#fff;margin-bottom:32px;">
+    <el-row style="background:#fff;margin-bottom:20px;">
       <div style="margin:0 0 5px 5px">成员列表</div>
       <el-table :data="customer.clinic.users" style="width: 100%;padding-top: 15px;">
         <el-table-column label="姓名">

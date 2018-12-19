@@ -25,7 +25,7 @@
         </el-table-column>
         <el-table-column label="客户详情" align="center">
           <template slot-scope="scope">
-            <router-link :to="'customer/'+scope.row.id" class="link-type">
+            <router-link :to="'/salesman/customer/'+scope.row.id" class="link-type">
               <span>详情</span>
             </router-link>
           </template>

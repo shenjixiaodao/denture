@@ -72,6 +72,11 @@
       </table>
     </el-row>
     <div v-if="isShow">
+      <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+        <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="dialogSubmitVisible=true">
+          提交工序
+        </el-button>
+      </el-row>
       <el-row v-for="group in procedureGroups" :key="group.id" style="background:#fff;margin-bottom:25px;">
         <hr style="filter: progid:DXImageTransform.Microsoft.Glow(color=#987cb9,strength=10)" width="100%" color="#987cb9" SIZE="1">
         <table cellspacing="15" style="text-align: left">
@@ -104,12 +109,6 @@
         </el-table>
       </el-row>
     </div>
-
-    <el-row v-if="isShow" style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="dialogSubmitVisible=true">
-        提交工序
-      </el-button>
-    </el-row>
 
     <el-dialog :visible.sync="dialogSubmitVisible" title="提交工序">
       <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 100%;">

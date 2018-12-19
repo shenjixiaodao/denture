@@ -1,8 +1,12 @@
 package com.yuzi.denture.api.vo;
 
 public class UsedIngredientVo {
-    
+
+    Long appliedId;
     //工序组编号(pgId):
+    String dentureId;
+    Long factoryId;
+    String equipment;
     private Long pgId;
     //使用辅料编号(ingredientId):
     private Long ingredientId;
@@ -10,6 +14,38 @@ public class UsedIngredientVo {
     private Double usedNumber;
     //备注(comment):
     private String comment;
+
+    public Long getAppliedId() {
+        return appliedId;
+    }
+
+    public void setAppliedId(Long appliedId) {
+        this.appliedId = appliedId;
+    }
+
+    public String getDentureId() {
+        return dentureId;
+    }
+
+    public void setDentureId(String dentureId) {
+        this.dentureId = dentureId;
+    }
+
+    public Long getFactoryId() {
+        return factoryId;
+    }
+
+    public void setFactoryId(Long factoryId) {
+        this.factoryId = factoryId;
+    }
+
+    public String getEquipment() {
+        return equipment;
+    }
+
+    public void setEquipment(String equipment) {
+        this.equipment = equipment;
+    }
 
     public Long getPgId() {
         return pgId;

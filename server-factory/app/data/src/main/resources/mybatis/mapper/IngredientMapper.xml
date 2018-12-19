@@ -181,4 +181,29 @@
             and year(applied_date)=year(curdate())
     </select>
 
+    <insert id="saveUsedIngredient" parameterType="com.yuzi.denture.domain.UsedIngredient">
+        INSERT INTO `liyou`.`used_ingredient`
+        (
+        `applied_id`,
+        `pg_id`,
+        `ingredient_id`,
+        `used_number`,
+        `comment`,
+        `factory_id`,
+        `equipment`,
+        `denture_id`
+        )
+        VALUES
+        (
+        #{appliedId},
+        #{pgId},
+        #{ingredientId},
+        #{usedNumber},
+        #{comment},
+        #{factoryId},
+        #{equipment},
+        #{dentureId}
+        );
+    </insert>
+
 </mapper>
