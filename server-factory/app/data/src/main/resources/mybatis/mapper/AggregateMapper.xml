@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuzi.denture.data.mapper.AggregateMapper" >
+
+
+    <resultMap id="baseRM" type="com.yuzi.denture.domain.aggregate.AggregateOrder">
+        <result column="order_id" property="orderId" />
+        <result column="denture_id" property="dentureId" />
+        <result column="specification" property="specification" />
+        <result column="end_date" property="endDate" />
+        <result column="number" property="number" />
+        <result column="base_price" property="basePrice" />
+        <result column="salesman_id" property="salesmanId" />
+        <result column="salesman" property="salesman" />
+        <result column="customer_id" property="customerId" />
+        <result column="customer" property="customer" />
+    </resultMap>
+
+    <sql id="AggregateOrderSQL">
+        do.id order_id, d.specification, d.id denture_id, d.end_date, d.number, d.base_price,
+        fc.salesman_id, fu.name salesman, d.clinic_id customer_id, c.name customer
+    </sql>
+    <select id="findAggregateOrders" parameterType="com.yuzi.denture.domain.criteria.AggregateOrderCriteria" resultMap="baseRM">
+        SELECT <include refid="AggregateOrderSQL" /> FROM denture d
+        INNER JOIN denture_order do ON d.id=do.denture_id
+        INNER JOIN clinic c on d.clinic_id=c.id
+        INNER JOIN factory_customer fc ON (fc.factory_id=d.factory_id AND fc.clinic_id=d.clinic_id)
+        INNER JOIN factory_user fu ON (fu.factory_id=d.factory_id AND fu.id=fc.salesman_id)
+    </select>
+
+
+
+</mapper>
