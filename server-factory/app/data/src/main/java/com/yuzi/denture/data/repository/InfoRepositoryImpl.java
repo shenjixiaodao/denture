@@ -4,8 +4,10 @@ import com.yuzi.denture.data.mapper.ClinicMapper;
 import com.yuzi.denture.data.mapper.IngredientMapper;
 import com.yuzi.denture.data.mapper.TotalStatisticMapper;
 import com.yuzi.denture.domain.Clinic;
+import com.yuzi.denture.domain.aggregate.AggregateOrder;
 import com.yuzi.denture.domain.aggregate.IngredientStatistic;
 import com.yuzi.denture.domain.aggregate.TotalIngredientStatistic;
+import com.yuzi.denture.domain.criteria.AggregateOrderCriteria;
 import com.yuzi.denture.domain.repository.InfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -53,5 +55,10 @@ public class InfoRepositoryImpl implements InfoRepository {
         statistic.setMonth(ingredientMapper.monthApplied(paras));
         statistic.setDay(ingredientMapper.dayApplied(paras));
         return statistic;
+    }
+
+    @Override
+    public List<AggregateOrder> findAggregateOrders(AggregateOrderCriteria criteria) {
+        return null;
     }
 }
