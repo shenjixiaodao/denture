@@ -17,6 +17,7 @@ public interface IngredientMapper {
     List<Ingredient> findIngredients(Long factoryId);
     Ingredient findIngredientById(Long id);
     void saveAppliedIngredient(AppliedIngredient ingredient);
+    List<AppliedIngredient> findAppliedIngredient(String dentureId);
 
     void saveSupplier(Supplier supplier);
     List<Supplier> findSuppliers(Long factoryId);
@@ -28,4 +29,5 @@ public interface IngredientMapper {
 
     //used ingredient
     void saveUsedIngredient(UsedIngredient usedIngredient);
+    List<UsedIngredient> findUsedIngredient(String dentureId);
 }

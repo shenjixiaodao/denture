@@ -231,6 +231,11 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     }
 
     @Override
+    public void useIngredient(UsedIngredient usedIngredient) {
+        ingredientMapper.saveUsedIngredient(usedIngredient);
+    }
+
+    @Override
     public void newSupplier(Supplier supplier) {
         ingredientMapper.saveSupplier(supplier);
     }

@@ -1,5 +1,9 @@
 package com.yuzi.denture.api.vo;
 
+import com.yuzi.denture.domain.Ingredient;
+
+import java.util.Date;
+
 public class UsedIngredientVo {
 
     Long appliedId;
@@ -8,12 +12,21 @@ public class UsedIngredientVo {
     Long factoryId;
     String equipment;
     private Long pgId;
-    //使用辅料编号(ingredientId):
-    private Long ingredientId;
+    //使用辅料编号(ingredient):
+    private Ingredient ingredient;
     //使用量(usedNumber):
     private Double usedNumber;
     //备注(comment):
     private String comment;
+    private Date usedTime;
+
+    public Date getUsedTime() {
+        return usedTime;
+    }
+
+    public void setUsedTime(Date usedTime) {
+        this.usedTime = usedTime;
+    }
 
     public Long getAppliedId() {
         return appliedId;
@@ -55,12 +68,12 @@ public class UsedIngredientVo {
         this.pgId = pgId;
     }
 
-    public Long getIngredientId() {
-        return ingredientId;
+    public Ingredient getIngredient() {
+        return ingredient;
     }
 
-    public void setIngredientId(Long ingredientId) {
-        this.ingredientId = ingredientId;
+    public void setIngredient(Ingredient ingredient) {
+        this.ingredient = ingredient;
     }
 
     public Double getUsedNumber() {

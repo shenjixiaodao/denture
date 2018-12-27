@@ -26,6 +26,7 @@
         INNER JOIN clinic c on d.clinic_id=c.id
         INNER JOIN factory_customer fc ON (fc.factory_id=d.factory_id AND fc.clinic_id=d.clinic_id)
         INNER JOIN factory_user fu ON (fu.factory_id=d.factory_id AND fu.id=fc.salesman_id)
+        where do.created_date <![CDATA[ => ]]> #{startDate} and do.created_date <![CDATA[ <= ]]> #{endDate}
     </select>
 
 

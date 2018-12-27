@@ -127,16 +127,27 @@
             <result column="bill_no" property="billNo" />
             <result column="price" property="price" />
         </collection>
-        <collection property="appliedIngredients" ofType="com.yuzi.denture.domain.AppliedIngredient">
-            <result column="id" property="ingredient.id" />
-            <result column="name" property="ingredient.name" />
-            <result column="ai_denture_id" property="dentureId" />
-            <result column="ai_no" property="no" />
-            <result column="ai_applicant_id" property="applicant.id" />
-            <result column="ai_applied_number" property="appliedNumber" />
-            <result column="ai_applied_date" property="appliedDate" />
-            <result column="ai_comment" property="comment" />
-        </collection>
+        <collection property="appliedIngredients" resultMap="appliedIngredientRM" />
+    </resultMap>
+    <resultMap id="appliedIngredientRM" type="com.yuzi.denture.domain.AppliedIngredient">
+        <result column="id" property="ingredient.id" />
+        <result column="name" property="ingredient.name" />
+        <result column="ai_denture_id" property="dentureId" />
+        <result column="ai_no" property="no" />
+        <result column="ai_applicant_id" property="applicant.id" />
+        <result column="ai_applied_number" property="appliedNumber" />
+        <result column="ai_applied_date" property="appliedDate" />
+        <result column="ai_comment" property="comment" />
+    </resultMap>
+    <resultMap id="usedIngredientRM" type="com.yuzi.denture.domain.UsedIngredient">
+        <result column="id" property="ingredient.id" />
+        <result column="name" property="ingredient.name" />
+        <result column="denture_id" property="dentureId" />
+        <result column="factory_id" property="factoryId" />
+        <result column="equipment" property="equipment" />
+        <result column="pg_id" property="pgId" />
+        <result column="used_number" property="usedNumber" />
+        <result column="comment" property="comment" />
     </resultMap>
 
     <select id="findIngredients" parameterType="Long" resultMap="baseRM">
@@ -153,6 +164,20 @@
         ai.denture_id ai_denture_id, ai.no ai_no, ai.applied_number ai_applied_number,
         ai.applicant_id ai_applicant_id, ai.applied_date ai_applied_date, ai.comment ai_comment
     </sql>
+    <sql id="usedIngredientSQL">
+        pg_id, used_number, comment, factory_id, equipment, denture_id, used_time
+    </sql>
+
+    <select id="findUsedIngredient" parameterType="String" resultMap="usedIngredientRM">
+        SELECT i.id id, i.name name, <include refid="usedIngredientSQL"/> FROM used_ingredient ui
+        inner join `ingredient` i on(ai.denture_id=#{dentureId} and i.id=ui.ingredient_id)
+    </select>
+
+    <select id="findAppliedIngredient" parameterType="String" resultMap="appliedIngredientRM">
+        SELECT i.id id, i.name name, <include refid="appliedIngredientSQL"/> FROM applied_ingredient ai
+        inner join `ingredient` i on(ai.denture_id=#{dentureId} and i.id=ai.ingredient_id)
+    </select>
+
     <select id="findIngredientById" parameterType="Long" resultMap="baseRM">
         SELECT <include refid="IngredientSQL"/>, <include refid="appliedIngredientSQL"/> FROM `ingredient` i
         LEFT JOIN ingredient_purchase_record pr ON i.id=pr.ingredient_id
@@ -182,7 +207,7 @@
     </select>
 
     <insert id="saveUsedIngredient" parameterType="com.yuzi.denture.domain.UsedIngredient">
-        INSERT INTO `liyou`.`used_ingredient`
+        INSERT INTO used_ingredient
         (
         `applied_id`,
         `pg_id`,
@@ -195,7 +220,7 @@
         )
         VALUES
         (
-        #{appliedId},
+        #{id},
         #{pgId},
         #{ingredientId},
         #{usedNumber},

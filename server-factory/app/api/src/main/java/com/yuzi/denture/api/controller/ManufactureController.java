@@ -560,4 +560,14 @@ public class ManufactureController {
         }, "查询义齿工序列表错误", logger);
         return result;
     }
+
+    @ApiOperation(value = "记录物料使用记录", response = WebResult.class, httpMethod = "POST")
+    @ResponseBody
+    @RequestMapping(value = "/useIngredient", method = POST)
+    public WebResult useIngredient(@RequestBody UsedIngredient ingredient) {
+        WebResult result = WebResult.execute(res -> {
+            repository.useIngredient(ingredient);
+        }, "记录物料使用记录", logger);
+        return result;
+    }
 }

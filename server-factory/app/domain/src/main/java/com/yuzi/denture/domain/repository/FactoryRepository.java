@@ -74,6 +74,7 @@ public interface FactoryRepository {
     List<Ingredient> findIngredients(Long factoryId);
     Ingredient findIngredient(Long id);
     void applyIngredient(AppliedIngredient ingredient);
+    void useIngredient(UsedIngredient usedIngredient);
 
     void newSupplier(Supplier supplier);
     List<Supplier> findSuppliers(Long factoryId);

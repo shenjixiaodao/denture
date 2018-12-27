@@ -1,7 +1,9 @@
 package com.yuzi.denture.domain.repository;
 
+import com.yuzi.denture.domain.AppliedIngredient;
 import com.yuzi.denture.domain.Clinic;
 import com.yuzi.denture.domain.aggregate.AggregateOrder;
+import com.yuzi.denture.domain.aggregate.AppliedUsedIngredient;
 import com.yuzi.denture.domain.aggregate.IngredientStatistic;
 import com.yuzi.denture.domain.aggregate.TotalIngredientStatistic;
 import com.yuzi.denture.domain.criteria.AggregateOrderCriteria;
@@ -9,6 +11,9 @@ import com.yuzi.denture.domain.criteria.AggregateOrderCriteria;
 import java.util.List;
 
 public interface InfoRepository {
+
+    List<AppliedUsedIngredient> findAppliedUsedIngredient(String dentureId);
+
     List<Clinic> findCustomerClinics(Long factoryId, Long uid);
 
     Clinic findCustomerClinic(Long id);
