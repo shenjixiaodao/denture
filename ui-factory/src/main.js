@@ -18,9 +18,6 @@ import './permission' // permission control
 import './mock' // simulation data
 
 import * as filters from './filters' // global filters
-import bus from '@/utils/eventBus'
-
-Vue.prototype.bus = bus
 
 Vue.use(Element, {
   size: 'mini', // set element-ui default size

@@ -6,6 +6,7 @@ import com.yuzi.denture.api.vo.ClinicVo;
 import com.yuzi.denture.api.vo.base.WebResult;
 import com.yuzi.denture.domain.Clinic;
 import com.yuzi.denture.domain.FactoryUser;
+import com.yuzi.denture.domain.aggregate.AppliedUsedIngredient;
 import com.yuzi.denture.domain.aggregate.IngredientStatistic;
 import com.yuzi.denture.domain.aggregate.TotalIngredientStatistic;
 import com.yuzi.denture.domain.repository.InfoRepository;
@@ -17,10 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -107,6 +105,16 @@ public class InfoController {
             ClinicVo vos = ClinicAssembler.toVo(clinic);
             res.setData(vos);
         }, "查询诊所列表错误", logger);
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/findAppliedUsedIngredient", method = GET)
+    public WebResult<List<AppliedUsedIngredient>> findAppliedUsedIngredient(@RequestParam String dentureId) {
+        WebResult<List<AppliedUsedIngredient>> result = WebResult.execute(res -> {
+            List<AppliedUsedIngredient> appliedUsedIngredients = infoRepository.findAppliedUsedIngredient(dentureId);
+            res.setData(appliedUsedIngredients);
+        }, "查询申请使用物料信息", logger);
         return result;
     }
 

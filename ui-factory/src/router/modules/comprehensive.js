@@ -75,6 +75,12 @@ const comprehensiveRouter = {
       name: 'CustomerDetail',
       meta: { title: '客户详情' },
       hidden: true
+    },
+    {
+      path: 'dashboard',
+      component: () => import('@/views/manufacture/comprehensive/dashboard'),
+      name: 'Dashboard',
+      meta: { title: '综合统计', noCache: true }
     }
   ]
 }

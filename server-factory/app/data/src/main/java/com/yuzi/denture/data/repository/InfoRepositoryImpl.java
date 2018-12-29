@@ -1,5 +1,6 @@
 package com.yuzi.denture.data.repository;
 
+import com.yuzi.denture.data.mapper.AggregateMapper;
 import com.yuzi.denture.data.mapper.ClinicMapper;
 import com.yuzi.denture.data.mapper.IngredientMapper;
 import com.yuzi.denture.data.mapper.TotalStatisticMapper;
@@ -29,6 +30,8 @@ public class InfoRepositoryImpl implements InfoRepository {
     private TotalStatisticMapper totalStatisticMapper;
     @Autowired
     private IngredientMapper ingredientMapper;
+    @Autowired
+    private AggregateMapper aggregateMapper;
 
     @Override
     public List<AppliedUsedIngredient> findAppliedUsedIngredient(String dentureId) {
@@ -87,6 +90,6 @@ public class InfoRepositoryImpl implements InfoRepository {
 
     @Override
     public List<AggregateOrder> findAggregateOrders(AggregateOrderCriteria criteria) {
-        return null;
+        return aggregateMapper.findAggregateOrders(criteria);
     }
 }

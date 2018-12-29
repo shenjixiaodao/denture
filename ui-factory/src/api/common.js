@@ -45,3 +45,11 @@ export function customer(id) {
     params: { id: id }
   })
 }
+
+export function findAppliedUsedIngredient(id) {
+  return request({
+    url: '/info/findAppliedUsedIngredient',
+    method: 'get',
+    params: { dentureId: id }
+  })
+}

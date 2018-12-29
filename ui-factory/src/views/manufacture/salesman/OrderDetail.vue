@@ -18,7 +18,7 @@
           <tr>
             <td class="td_title_prop">下单时间:</td>
             <td class="td_content_prop">
-              <span v-if="orderInfo.createdDate">{{ orderInfo.createdDate.split(' ',2)[0] }}</span>
+              {{ orderInfo.createdDate | time2DateStr }}
             </td>
           </tr>
           <tr>

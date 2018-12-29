@@ -5,7 +5,7 @@ public class AppliedUsedIngredient {
     String ingredientName;
     Double appliedNumber;
     Double usedNumber = 0.0;
-    Double balance;
+    Double balance = 0.0;
 
     public void addAppliedNumber(Double number) {
         appliedNumber += number;
