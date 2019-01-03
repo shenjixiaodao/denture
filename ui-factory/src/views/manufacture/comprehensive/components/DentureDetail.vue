@@ -79,6 +79,14 @@
             <td class="td_title_prop">创建日期:</td><td class="td_content_prop"><span v-if="denture.createdDate">{{ denture.createdDate.split(' ',2)[0] }}</span></td>
           </tr>
           <tr>
+            <td class="td_title_prop">生产记录:</td>
+            <td class="td_content_prop">
+              <router-link :to="'/worker/complete-procedure/'+denture.id" class="link-type">
+                <span>详情</span>
+              </router-link>
+            </td>
+          </tr>
+          <tr>
             <td class="td_title_prop">生产开始日期:</td><td class="td_content_prop"><span v-if="denture.startDate">{{ denture.startDate.split(' ',2)[0] }}</span></td>
           </tr>
           <tr>

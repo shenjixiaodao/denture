@@ -101,7 +101,7 @@
           </el-table-column>
           <el-table-column label="完成时间">
             <template slot-scope="scope">
-              {{ scope.row.completedDate.split(' ',2)[0] }}
+              {{ scope.row.completedDate | time2DateStr }}
             </template>
           </el-table-column>
           <el-table-column label="备注">
@@ -141,7 +141,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="物料名" prop="title">
-          <el-select v-model="usedIngredient.ingredient.id" placeholder="请选择" clearable style="width: 90px" class="filter-item">
+          <el-select v-model="usedIngredient.ingredient.id" placeholder="请选择" style="width: 90px" class="filter-item" @change="usedIngredientChange">
             <el-option v-for="group in appliedUsedIngredient" :key="group.ingredientId" :label="group.ingredientName" :value="group.ingredientId"/>
           </el-select>
         </el-form-item>
@@ -149,7 +149,7 @@
           <el-input v-model="usedIngredient.equipment" style="width: 70%;"/>
         </el-form-item>
         <el-form-item label="使用量" prop="title">
-          <el-input v-model="usedIngredient.usedNumber" style="width: 70%;"/>
+          <el-input v-model="usedIngredient.usedNumber" :placeholder="'剩余可用:'+selectedBalance" style="width: 70%;"/>
         </el-form-item>
         <el-form-item label="备注">
           <el-input :autosize="{ minRows: 2, maxRows: 4}" v-model="usedIngredient.comment" type="textarea" placeholder="请输入" style="width: 70%;"/>
@@ -179,6 +179,7 @@ export default {
       dentureId: null,
       denture: {},
       procedureGroups: null,
+      selectedBalance: 0,
       appliedUsedIngredient: null,
       pgId: null,
       procedure: {
@@ -198,7 +199,16 @@ export default {
       }
     }
   },
+  created() {
+    this.fetchData()
+  },
   methods: {
+    fetchData() {
+      this.dentureId = this.$route.params && this.$route.params.id
+      if (this.denture) {
+        this.search()
+      }
+    },
     search() {
       if (!isvalidDentureId(this.dentureId)) {
         this.isShow = false
@@ -257,6 +267,15 @@ export default {
       useIngredient(this.usedIngredient).then(response => {
         this.dialogUseIngredient = false
       })
+    },
+    usedIngredientChange(value) {
+      if (this.appliedUsedIngredient) {
+        for (var item of this.appliedUsedIngredient) {
+          if (item.ingredientId === value) {
+            this.selectedBalance = item.balance
+          }
+        }
+      }
     }
   }
 }

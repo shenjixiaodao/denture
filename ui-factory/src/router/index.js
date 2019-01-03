@@ -78,12 +78,13 @@ export const asyncRouterMap = [
   {
     path: '/worker',
     component: Layout,
+    redirect: '/worker/complete-procedure/0',
     children: [
       {
-        path: 'complete-procedure',
+        path: 'complete-procedure/:id(\\d+)',
         component: () => import('@/views/manufacture/worker/CompleteProcedure'),
         name: 'Complete-Procedure',
-        meta: { title: '生产人员管理', icon: 'international' }
+        meta: { title: '生产管理', icon: 'international' }
       }
     ]
   },
