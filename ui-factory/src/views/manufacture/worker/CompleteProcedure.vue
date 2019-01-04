@@ -199,16 +199,7 @@ export default {
       }
     }
   },
-  created() {
-    this.fetchData()
-  },
   methods: {
-    fetchData() {
-      this.dentureId = this.$route.params && this.$route.params.id
-      if (this.denture) {
-        this.search()
-      }
-    },
     search() {
       if (!isvalidDentureId(this.dentureId)) {
         this.isShow = false

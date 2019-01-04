@@ -145,3 +145,11 @@ export function aggregateOrders(data) {
     data
   })
 }
+
+export function aggregateAppliedUsedIngredient(data) {
+  return request({
+    url: '/aggregate/aggregateAppliedUsedIngredient',
+    method: 'post',
+    data
+  })
+}

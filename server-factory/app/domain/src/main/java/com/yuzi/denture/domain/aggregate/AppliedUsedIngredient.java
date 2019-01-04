@@ -3,6 +3,7 @@ package com.yuzi.denture.domain.aggregate;
 public class AppliedUsedIngredient {
     Long ingredientId;
     String ingredientName;
+    String ingredientType;
     Double appliedNumber;
     Double usedNumber = 0.0;
     Double balance = 0.0;
@@ -15,6 +16,14 @@ public class AppliedUsedIngredient {
     public void addUsedNumber(Double number) {
         usedNumber += number;
         balance -= number;
+    }
+
+    public String getIngredientType() {
+        return ingredientType;
+    }
+
+    public void setIngredientType(String ingredientType) {
+        this.ingredientType = ingredientType;
     }
 
     public Long getIngredientId() {

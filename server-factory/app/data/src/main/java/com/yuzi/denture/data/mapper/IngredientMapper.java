@@ -1,6 +1,7 @@
 package com.yuzi.denture.data.mapper;
 
 import com.yuzi.denture.domain.*;
+import com.yuzi.denture.domain.criteria.IngredientCriteria;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -30,4 +31,7 @@ public interface IngredientMapper {
     //used ingredient
     void saveUsedIngredient(UsedIngredient usedIngredient);
     List<UsedIngredient> findUsedIngredient(String dentureId);
+
+    List<AppliedIngredient> findAppliedIngredientByFactoryId(IngredientCriteria criteria);
+    List<UsedIngredient> findUsedIngredientByFactoryId(IngredientCriteria criteria);
 }
