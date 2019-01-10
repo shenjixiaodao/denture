@@ -165,17 +165,28 @@
         ai.applicant_id ai_applicant_id, ai.applied_date ai_applied_date, ai.comment ai_comment
     </sql>
     <sql id="usedIngredientSQL">
-        pg_id, used_number, comment, factory_id, equipment, denture_id, used_time
+        ui.pg_id, ui.used_number, ui.comment, ui.factory_id, ui.equipment, ui.denture_id, ui.used_time
     </sql>
 
     <select id="findUsedIngredient" parameterType="String" resultMap="usedIngredientRM">
         SELECT i.id id, i.name name, <include refid="usedIngredientSQL"/> FROM used_ingredient ui
-        inner join `ingredient` i on(ai.denture_id=#{dentureId} and i.id=ui.ingredient_id)
+        inner join `ingredient` i on(ui.denture_id=#{dentureId} and i.id=ui.ingredient_id)
     </select>
 
     <select id="findAppliedIngredient" parameterType="String" resultMap="appliedIngredientRM">
         SELECT i.id id, i.name name, <include refid="appliedIngredientSQL"/> FROM applied_ingredient ai
         inner join `ingredient` i on(ai.denture_id=#{dentureId} and i.id=ai.ingredient_id)
+    </select>
+
+    <select id="findUsedIngredientByFactoryId" parameterType="com.yuzi.denture.domain.criteria.IngredientCriteria" resultMap="usedIngredientRM">
+        SELECT i.id id, i.name name, <include refid="usedIngredientSQL"/> FROM used_ingredient ui
+        inner join `ingredient` i on(ui.factory_id=#{factoryId} and i.id=ui.ingredient_id)
+        where used_time <![CDATA[ >= ]]> #{startTime} and used_time <![CDATA[ <= ]]> #{endTime}
+    </select>
+    <select id="findAppliedIngredientByFactoryId" parameterType="com.yuzi.denture.domain.criteria.IngredientCriteria" resultMap="appliedIngredientRM">
+        SELECT i.id id, i.name name, <include refid="appliedIngredientSQL"/> FROM applied_ingredient ai
+        inner join `ingredient` i on(ai.factory_id=#{factoryId} and i.id=ai.ingredient_id)
+        where applied_date <![CDATA[ >= ]]> #{startTime} and applied_date <![CDATA[ <= ]]> #{endTime}
     </select>
 
     <select id="findIngredientById" parameterType="Long" resultMap="baseRM">

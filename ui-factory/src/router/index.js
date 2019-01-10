@@ -83,7 +83,7 @@ export const asyncRouterMap = [
         path: 'complete-procedure',
         component: () => import('@/views/manufacture/worker/CompleteProcedure'),
         name: 'Complete-Procedure',
-        meta: { title: '生产人员管理', icon: 'international' }
+        meta: { title: '生产管理', icon: 'international' }
       }
     ]
   },

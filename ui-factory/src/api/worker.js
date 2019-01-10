@@ -18,3 +18,11 @@ export function completeProcedure(data) {
     data
   })
 }
+
+export function useIngredient(data) {
+  return request({
+    url: '/manufacture/useIngredient',
+    method: 'post',
+    data
+  })
+}

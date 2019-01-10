@@ -137,3 +137,19 @@ export function customers() {
     method: 'get'
   })
 }
+
+export function aggregateOrders(data) {
+  return request({
+    url: '/aggregate/aggregateOrders',
+    method: 'post',
+    data
+  })
+}
+
+export function aggregateAppliedUsedIngredient(data) {
+  return request({
+    url: '/aggregate/aggregateAppliedUsedIngredient',
+    method: 'post',
+    data
+  })
+}

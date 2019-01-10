@@ -118,7 +118,7 @@
         </if>
         WHERE `id` = #{id};
     </update>
-    <resultMap id="baseRM" type="com.yuzi.denture.domain.Denture">
+    <resultMap id="detailRM" type="com.yuzi.denture.domain.Denture">
         <result column="id" property="id" />
         <result column="type" property="type" />
         <result column="specification" property="specification" />
@@ -180,13 +180,36 @@
         </collection>
     </resultMap>
 
-    <!--<sql id="baseSQL">
-        d.id id, d.type type , d.specification specification, d.clinic_id clinic_id,
-        d.factory_id factory_id, d.number number, d.positions positions, d.color_no color_no, d.created_date created_date,
-        d.model_inspector_id model_inspector_id, d.model_inspection_date model_inspection_date,
-        d.start_date start_date, d.end_date end_date, d.pro_review pro_review, d.pro_review_date pro_review_date,
-        d.qua_review qua_review, d.qua_review_date qua_review_date
-    </sql>-->
+    <!--<resultMap id="baseRM" type="com.yuzi.denture.domain.Denture">
+        <result column="id" property="id" />
+        <result column="type" property="type" />
+        <result column="specification" property="specification" />
+        <result column="factory_id" property="factory.id" />
+        <result column="number" property="number" />
+        <result column="positions" property="positions" />
+        <result column="color_no" property="colorNo" />
+        <result column="created_date" property="createdDate" />
+        <result column="model_inspector_id" property="modelInspector.id" />
+        <result column="model_inspection_date" property="modelInspectionDate" />
+        <result column="start_date" property="startDate" />
+        <result column="end_date" property="endDate" />
+        <result column="pro_review" property="proReview" />
+        <result column="pro_review_date" property="proReviewDate" />
+        <result column="qua_review" property="quaReview" />
+        <result column="qua_review_date" property="quaReviewDate" />
+        <result column="requirement" property="requirement" />
+        <result column="base_price" property="basePrice" />
+        <result column="factory_price" property="factoryPrice" />
+        <result column="estimated_duration" property="estimatedDuration" />
+        <association property="clinic" javaType="com.yuzi.denture.domain.Clinic">
+            <result column="clinic_id" property="id" />
+            <result column="clinic_name" property="name" />
+            <result column="clinic_region" property="region" />
+            <result column="clinic_address" property="address" />
+            <result column="clinic_contact" property="contact" />
+        </association>
+    </resultMap>-->
+
     <sql id="baseSQL">
         d.*
     </sql>
@@ -227,7 +250,13 @@
         </if>
     </sql>
 
-    <select id="findByDentureId" parameterType="String" resultMap="baseRM">
+    <!--<select id="findBaseDentureInfoById" parameterType="String" resultMap="baseRM">
+        SELECT <include refid="baseSQL" />, <include refid="clinicSQL" />
+        FROM denture d
+        inner join clinic c on (d.id=#{dentureId} and d.clinic_id=c.id)
+    </select>-->
+
+    <select id="findByDentureId" parameterType="String" resultMap="detailRM">
         SELECT <include refid="baseSQL" />, <include refid="clinicSQL" />,
         <include refid="procedureGroupSQL" />, <include refid="appliedIngredientSQL" />,
         <include refid="procedureSQL" />
@@ -238,17 +267,17 @@
         left join ingredient aii on ai.ingredient_id=aii.id
     </select>
 
-    <select id="findDenturesByFactoryId" parameterType="Long" resultMap="baseRM">
+    <select id="findDenturesByFactoryId" parameterType="Long" resultMap="detailRM">
         SELECT <include refid="baseSQL" /> FROM denture d
         WHERE d.factory_id=#{factoryId}
     </select>
 
-    <select id="findByDeliveryInfo" parameterType="Map" resultMap="baseRM">
+    <select id="findByDeliveryInfo" parameterType="Map" resultMap="detailRM">
         SELECT <include refid="baseSQL" /> FROM denture d
         INNER JOIN delivery_info di ON (delivery_id=#{deliveryId} AND company=#{company} AND d.id=di.denture_id)
     </select>
 
-    <select id="findWaitingDentures" parameterType="Long" resultMap="baseRM">
+    <select id="findWaitingDentures" parameterType="Long" resultMap="detailRM">
         SELECT <include refid="baseSQL" />, <include refid="clinicSQL" />
         FROM denture d inner join denture_order do on (
           d.factory_id=#{factoryId} and do.factory_id=#{factoryId} and d.id=do.denture_id
@@ -258,7 +287,7 @@
         <include refid="criteriaWhere" />
     </select>
 
-    <select id="findDoingDentures" parameterType="Long" resultMap="baseRM">
+    <select id="findDoingDentures" parameterType="Long" resultMap="detailRM">
         SELECT <include refid="baseSQL" />, <include refid="clinicSQL" />
         FROM denture d
         inner join denture_order do on (
@@ -268,7 +297,7 @@
         inner join clinic c on (d.clinic_id=c.id)
         <include refid="criteriaWhere" />
     </select>
-    <select id="findDoneDentures" parameterType="Long" resultMap="baseRM">
+    <select id="findDoneDentures" parameterType="Long" resultMap="detailRM">
         SELECT <include refid="baseSQL" />, <include refid="clinicSQL" />
         FROM denture d inner join denture_order do on (
         d.factory_id=#{factoryId} and do.factory_id=#{factoryId} and d.id=do.denture_id

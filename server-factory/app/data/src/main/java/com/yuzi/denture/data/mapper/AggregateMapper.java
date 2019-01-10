@@ -1,5 +1,7 @@
 package com.yuzi.denture.data.mapper;
 
+import com.yuzi.denture.domain.AppliedIngredient;
+import com.yuzi.denture.domain.UsedIngredient;
 import com.yuzi.denture.domain.aggregate.AggregateOrder;
 import com.yuzi.denture.domain.criteria.AggregateOrderCriteria;
 import org.apache.ibatis.annotations.Mapper;
