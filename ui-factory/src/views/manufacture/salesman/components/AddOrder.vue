@@ -5,27 +5,6 @@
         <el-form-item label="下单方" prop="title">
           <el-cascader :options="clinics" v-model="selectedClinic" :props="props" placeholder="诊所/医生" @change="handleChange"/>
         </el-form-item>
-        <!--<el-form-item label="医生" prop="title">
-          <el-input v-model="order.dentistId"/>
-        </el-form-item>-->
-
-        <!--<el-form-item label="牙位" prop="title">
-          &lt;!&ndash;<el-checkbox-group v-model="position_group">
-            <table class="answer-table">
-              <tbody>
-                <tr>
-                  <td><el-checkbox-button label="a8"/></td><td><el-checkbox-button label="a7" /></td><td><el-checkbox-button label="a6"/></td><td><el-checkbox-button label="a5"/></td><td><el-checkbox-button label="a4"/></td><td><el-checkbox-button label="a3"/></td><td><el-checkbox-button label="a2"/></td><td><el-checkbox-button label="a1"/></td>
-                  <td><el-checkbox-button label="b1"/></td><td><el-checkbox-button label="b2"/></td><td><el-checkbox-button label="b3"/></td><td><el-checkbox-button label="b4"/></td><td><el-checkbox-button label="b5"/></td><td><el-checkbox-button label="b6"/></td><td><el-checkbox-button label="b7"/></td><td><el-checkbox-button label="b8"/></td>
-                </tr>
-                <tr>
-                  <td><el-checkbox-button label="c8"/></td><td><el-checkbox-button label="c7"/></td><td><el-checkbox-button label="c6"/></td><td><el-checkbox-button label="c5"/></td><td><el-checkbox-button label="c4"/></td><td><el-checkbox-button label="c3"/></td><td><el-checkbox-button label="c2"/></td><td><el-checkbox-button label="c1"/></td>
-                  <td><el-checkbox-button label="d1"/></td><td><el-checkbox-button label="d2"/></td><td><el-checkbox-button label="d3"/></td><td><el-checkbox-button label="d4"/></td><td><el-checkbox-button label="d5"/></td><td><el-checkbox-button label="d6"/></td><td><el-checkbox-button label="d7"/></td><td><el-checkbox-button label="d8"/></td>
-                </tr>
-              </tbody>
-            </table>
-          </el-checkbox-group>&ndash;&gt;
-          &lt;!&ndash;<el-input v-model="order.positions"/>&ndash;&gt;
-        </el-form-item>-->
         <el-form-item label="牙位" />
         <section style="background:#fff;padding:0px 5px 10px;">
           <section class="hongbo">

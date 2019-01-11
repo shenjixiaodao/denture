@@ -110,6 +110,34 @@
             </template>
           </el-table-column>
         </el-table>
+        <div style="font-size: 15px;padding-top: 10px;font-weight: bold;">物料使用列表:</div>
+        <el-table :data="group.usedIngredients" style="width: 100%;">
+          <el-table-column label="物料名">
+            <template slot-scope="scope">
+              {{ scope.row.ingredient.name }}
+            </template>
+          </el-table-column>
+          <el-table-column label="使用设备">
+            <template slot-scope="scope">
+              {{ scope.row.equipment }}
+            </template>
+          </el-table-column>
+          <el-table-column label="使用量">
+            <template slot-scope="scope">
+              {{ scope.row.usedNumber }}
+            </template>
+          </el-table-column>
+          <el-table-column label="使用时间">
+            <template slot-scope="scope">
+              {{ scope.row.usedTime | time2DateStr }}
+            </template>
+          </el-table-column>
+          <el-table-column label="备注">
+            <template slot-scope="scope">
+              {{ scope.row.comment }}
+            </template>
+          </el-table-column>
+        </el-table>
       </el-row>
     </div>
 

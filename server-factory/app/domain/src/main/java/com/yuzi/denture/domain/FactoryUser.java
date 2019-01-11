@@ -83,7 +83,7 @@ public class FactoryUser {
         System.out.println("bas64密文:\n"+cryptStr);
         byte[] content = RSAUtil.decrypt(RSAUtil.base642Byte(cryptStr), RSAUtil.string2PrivateKey(priKey));
         System.out.println(new String(content));*/
-        System.out.println(parseAge("360781199012105518"));
+        System.out.println(parseAge("360781999912105338"));
     }
      static String DefaultPWD(String contact) {
         return contact.substring(contact.length() - 6);

@@ -27,6 +27,9 @@
         INNER JOIN factory_customer fc ON (fc.factory_id=d.factory_id AND fc.clinic_id=d.clinic_id)
         INNER JOIN factory_user fu ON (fu.factory_id=d.factory_id AND fu.id=fc.salesman_id)
         where d.start_date <![CDATA[ >= ]]> #{startTime} and d.start_date <![CDATA[ <= ]]> #{endTime}
+        <if test="customer!=null">
+            and customer like CONCAT('%',#{customer},'%')
+        </if>
     </select>
 
 

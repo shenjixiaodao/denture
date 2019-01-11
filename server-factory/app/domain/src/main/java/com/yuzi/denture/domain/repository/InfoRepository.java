@@ -23,4 +23,7 @@ public interface InfoRepository {
 
     List<AggregateOrder> aggregateOrders(AggregateOrderCriteria criteria);
     List<AppliedUsedIngredient> aggregateAppliedUsedIngredient(IngredientCriteria criteria);
+
+    //Financial stat
+
 }

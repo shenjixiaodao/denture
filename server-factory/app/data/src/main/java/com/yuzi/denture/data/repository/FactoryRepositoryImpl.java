@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -157,6 +158,19 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     @Override
     public Denture findDenture(String dentureId) {
         Denture denture = dentureMapper.findByDentureId(dentureId);
+        List<UsedIngredient> usedIngredients = ingredientMapper.findUsedIngredient(dentureId);
+        for(ProcedureGroup group: denture.getProcedureGroups()) {
+            Iterator<UsedIngredient> iterator = usedIngredients.iterator();
+            if(!iterator.hasNext())
+                break;
+            while (iterator.hasNext()) {
+                UsedIngredient usedIngredient = iterator.next();
+                if(group.getId()==usedIngredient.getPgId()) {
+                    group.addUsedIngredient(usedIngredient);
+                    iterator.remove();
+                }
+            }
+        }
         return denture;
     }
 

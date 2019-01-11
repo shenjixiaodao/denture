@@ -19,6 +19,9 @@
               <label style="font-size: 10px;">活动类:</label><el-input v-model="customer.mobilizableGuarantee" style="width: 40px;"/>年
             </td>
           </tr>
+          <tr>
+            <td class="td_title_prop">跟单员:</td><td class="td_content_prop">{{ salesman.name }}</td>
+          </tr>
         </tbody>
       </table>
     </el-row>
@@ -49,10 +52,12 @@
 
 <script>
 import { customer } from '@/api/common'
+import { user } from '@/api/comprehensive'
 
 export default {
   data() {
     return {
+      salesman: null,
       customer: null
     }
   },
@@ -66,7 +71,10 @@ export default {
       customer(id).then(response => {
         var data = response.data
         this.customer = data
-        console.log(this.customer)
+        user(this.customer.salesmanId).then(response1 => {
+          var data = response1.data
+          this.salesman = data
+        })
       })
     }
   }
