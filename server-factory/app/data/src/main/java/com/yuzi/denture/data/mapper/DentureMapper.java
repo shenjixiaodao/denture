@@ -18,4 +18,6 @@ public interface DentureMapper {
     List<Denture> findWaitingDentures(DentureCriteria criteria);
     List<Denture> findDoingDentures(DentureCriteria criteria);
     List<Denture> findDoneDentures(DentureCriteria criteria);
+
+    List<Denture> findDenturesByCriteria(DentureCriteria criteria);
 }

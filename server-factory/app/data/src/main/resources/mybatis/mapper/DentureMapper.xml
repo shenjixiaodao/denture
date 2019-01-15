@@ -233,6 +233,12 @@
     </sql>
     <sql id="criteriaWhere">
         where 1=1
+        <if test="factoryId!=null">
+            and d.factory_id=#{factoryId}
+        </if>
+        <if test="clinicId!=null">
+            and d.clinic_id=#{clinicId}
+        </if>
         <if test="dentureId!=null">
             and d.id=#{dentureId}
         </if>
@@ -250,12 +256,6 @@
         </if>
     </sql>
 
-    <!--<select id="findBaseDentureInfoById" parameterType="String" resultMap="baseRM">
-        SELECT <include refid="baseSQL" />, <include refid="clinicSQL" />
-        FROM denture d
-        inner join clinic c on (d.id=#{dentureId} and d.clinic_id=c.id)
-    </select>-->
-
     <select id="findByDentureId" parameterType="String" resultMap="detailRM">
         SELECT <include refid="baseSQL" />, <include refid="clinicSQL" />,
         <include refid="procedureGroupSQL" />, <include refid="appliedIngredientSQL" />,
@@ -271,13 +271,17 @@
         SELECT <include refid="baseSQL" /> FROM denture d
         WHERE d.factory_id=#{factoryId}
     </select>
+    <select id="findDenturesByCriteria" parameterType="com.yuzi.denture.domain.criteria.DentureCriteria" resultMap="detailRM">
+        SELECT <include refid="baseSQL" /> FROM denture d
+        <include refid="criteriaWhere" />
+    </select>
 
     <select id="findByDeliveryInfo" parameterType="Map" resultMap="detailRM">
         SELECT <include refid="baseSQL" /> FROM denture d
         INNER JOIN delivery_info di ON (delivery_id=#{deliveryId} AND company=#{company} AND d.id=di.denture_id)
     </select>
 
-    <select id="findWaitingDentures" parameterType="Long" resultMap="detailRM">
+    <select id="findWaitingDentures" parameterType="com.yuzi.denture.domain.criteria.DentureCriteria" resultMap="detailRM">
         SELECT <include refid="baseSQL" />, <include refid="clinicSQL" />
         FROM denture d inner join denture_order do on (
           d.factory_id=#{factoryId} and do.factory_id=#{factoryId} and d.id=do.denture_id
@@ -287,7 +291,7 @@
         <include refid="criteriaWhere" />
     </select>
 
-    <select id="findDoingDentures" parameterType="Long" resultMap="detailRM">
+    <select id="findDoingDentures" parameterType="com.yuzi.denture.domain.criteria.DentureCriteria" resultMap="detailRM">
         SELECT <include refid="baseSQL" />, <include refid="clinicSQL" />
         FROM denture d
         inner join denture_order do on (
@@ -297,7 +301,7 @@
         inner join clinic c on (d.clinic_id=c.id)
         <include refid="criteriaWhere" />
     </select>
-    <select id="findDoneDentures" parameterType="Long" resultMap="detailRM">
+    <select id="findDoneDentures" parameterType="com.yuzi.denture.domain.criteria.DentureCriteria" resultMap="detailRM">
         SELECT <include refid="baseSQL" />, <include refid="clinicSQL" />
         FROM denture d inner join denture_order do on (
         d.factory_id=#{factoryId} and do.factory_id=#{factoryId} and d.id=do.denture_id

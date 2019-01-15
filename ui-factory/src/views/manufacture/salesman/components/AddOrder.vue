@@ -3,30 +3,30 @@
     <el-row style="background:#fff;padding:10px 10px 0;">
       <el-form ref="dataForm" label-position="left" label-width="20%">
         <el-form-item label="下单方" prop="title">
-          <el-cascader :options="clinics" v-model="selectedClinic" :props="props" placeholder="诊所/医生" @change="handleChange"/>
+          <el-cascader :options="clinics" v-model="selectedClinic" :props="props" placeholder="诊所/医生" filterable @change="handleChange"/>
         </el-form-item>
         <el-form-item label="牙位" />
         <section style="background:#fff;padding:0px 5px 10px;">
           <section class="hongbo">
             <span style="font-size: 13px">上排:</span>
             <span>
-              <input v-model="position_group" type="checkbox" value="a8">
-              <input v-model="position_group" type="checkbox" value="a7">
-              <input v-model="position_group" type="checkbox" value="a6">
-              <input v-model="position_group" type="checkbox" value="a5">
-              <input v-model="position_group" type="checkbox" value="a4">
-              <input v-model="position_group" type="checkbox" value="a3">
-              <input v-model="position_group" type="checkbox" value="a2">
-              <input v-model="position_group" type="checkbox" value="a1">
+              <input v-model="position_group" type="checkbox" value="a8" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="a7" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="a6" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="a5" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="a4" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="a3" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="a2" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="a1" @change="handleSelect">
               <b>|</b>
-              <input v-model="position_group" type="checkbox" value="b1">
-              <input v-model="position_group" type="checkbox" value="b2">
-              <input v-model="position_group" type="checkbox" value="b3">
-              <input v-model="position_group" type="checkbox" value="b4">
-              <input v-model="position_group" type="checkbox" value="b5">
-              <input v-model="position_group" type="checkbox" value="b6">
-              <input v-model="position_group" type="checkbox" value="b7">
-              <input v-model="position_group" type="checkbox" value="b8">
+              <input v-model="position_group" type="checkbox" value="b1" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="b2" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="b3" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="b4" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="b5" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="b6" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="b7" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="b8" @change="handleSelect">
             </span>
           </section>
           <section class="hongbo" style="padding-left: 30px">
@@ -51,23 +51,23 @@
           <section class="hongbo" style="background:#fff;padding:0px 0px 16px;">
             <span style="font-size: 13px">下排:</span>
             <span>
-              <input v-model="position_group" type="checkbox" value="c8">
-              <input v-model="position_group" type="checkbox" value="c7">
-              <input v-model="position_group" type="checkbox" value="c6">
-              <input v-model="position_group" type="checkbox" value="c5">
-              <input v-model="position_group" type="checkbox" value="c4">
-              <input v-model="position_group" type="checkbox" value="c3">
-              <input v-model="position_group" type="checkbox" value="c2">
-              <input v-model="position_group" type="checkbox" value="c1">
+              <input v-model="position_group" type="checkbox" value="c8" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="c7" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="c6" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="c5" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="c4" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="c3" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="c2" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="c1" @change="handleSelect">
               <b>|</b>
-              <input v-model="position_group" type="checkbox" value="d1">
-              <input v-model="position_group" type="checkbox" value="d2">
-              <input v-model="position_group" type="checkbox" value="d3">
-              <input v-model="position_group" type="checkbox" value="d4">
-              <input v-model="position_group" type="checkbox" value="d5">
-              <input v-model="position_group" type="checkbox" value="d6">
-              <input v-model="position_group" type="checkbox" value="d7">
-              <input v-model="position_group" type="checkbox" value="d8">
+              <input v-model="position_group" type="checkbox" value="d1" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="d2" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="d3" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="d4" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="d5" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="d6" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="d7" @change="handleSelect">
+              <input v-model="position_group" type="checkbox" value="d8" @change="handleSelect">
             </span>
           </section>
         </section>
@@ -197,7 +197,7 @@ export default {
         colorNo: null,
         specification: null,
         positions: null,
-        number: null,
+        number: 0,
         requirement: null,
         comment: null,
         fieldType: null,
@@ -239,6 +239,9 @@ export default {
     handleChange(value) {
       this.order.clinicId = value[0]
       this.order.dentistId = value[1]
+    },
+    handleSelect() {
+      this.order.number = this.position_group.length
     }
   }
 }

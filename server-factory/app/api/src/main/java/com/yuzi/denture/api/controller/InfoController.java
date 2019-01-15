@@ -1,14 +1,18 @@
 package com.yuzi.denture.api.controller;
 
 import com.yuzi.denture.api.assembler.ClinicAssembler;
+import com.yuzi.denture.api.assembler.DentureAssembler;
 import com.yuzi.denture.api.session.SessionManager;
 import com.yuzi.denture.api.vo.ClinicVo;
+import com.yuzi.denture.api.vo.base.DentureVo;
 import com.yuzi.denture.api.vo.base.WebResult;
 import com.yuzi.denture.domain.Clinic;
+import com.yuzi.denture.domain.Denture;
 import com.yuzi.denture.domain.FactoryUser;
 import com.yuzi.denture.domain.aggregate.AppliedUsedIngredient;
 import com.yuzi.denture.domain.aggregate.IngredientStatistic;
 import com.yuzi.denture.domain.aggregate.TotalIngredientStatistic;
+import com.yuzi.denture.domain.criteria.DentureCriteria;
 import com.yuzi.denture.domain.repository.InfoRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -115,6 +119,21 @@ public class InfoController {
             List<AppliedUsedIngredient> appliedUsedIngredients = infoRepository.findAppliedUsedIngredient(dentureId);
             res.setData(appliedUsedIngredients);
         }, "查询申请使用物料信息", logger);
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/findDenturesByCustomer", method = POST)
+    public WebResult<List<DentureVo>> findDenturesByCustomer(@RequestBody DentureCriteria criteria,
+                                                             HttpServletRequest request) {
+        FactoryUser user = SessionManager.Instance().user(request);
+        Long factoryId = user.getFactoryId();
+        WebResult<List<DentureVo>> result = WebResult.execute(res -> {
+            criteria.setFactoryId(factoryId);
+            List<Denture> dentures = infoRepository.findDenturesByCriteria(criteria);
+            List<DentureVo> vos = DentureAssembler.toVos(dentures);
+            res.setData(vos);
+        }, "查询客户相关订单", logger);
         return result;
     }
 

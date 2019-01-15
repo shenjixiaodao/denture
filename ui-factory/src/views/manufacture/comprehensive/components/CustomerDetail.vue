@@ -27,24 +27,56 @@
     </el-row>
 
     <el-row style="background:#fff;margin-bottom:20px;">
-      <div style="margin:0 0 5px 5px">成员列表</div>
-      <el-table :data="customer.clinic.users" style="width: 100%;padding-top: 15px;">
-        <el-table-column label="姓名">
-          <template slot-scope="scope">
-            {{ scope.row.name }}
-          </template>
-        </el-table-column>
-        <el-table-column label="职称" align="center">
-          <template slot-scope="scope">
-            {{ scope.row.role }}
-          </template>
-        </el-table-column>
-        <el-table-column label="联系方式" align="center">
-          <template slot-scope="scope">
-            {{ scope.row.contact }}
-          </template>
-        </el-table-column>
-      </el-table>
+      <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+        <el-tab-pane label="成员列表" name="StaffList">
+          <el-table :data="customer.clinic.users" style="width: 100%;padding-top: 15px;">
+            <el-table-column label="姓名">
+              <template slot-scope="scope">
+                {{ scope.row.name }}
+              </template>
+            </el-table-column>
+            <el-table-column label="职称" align="center">
+              <template slot-scope="scope">
+                {{ scope.row.role }}
+              </template>
+            </el-table-column>
+            <el-table-column label="联系方式" align="center">
+              <template slot-scope="scope">
+                {{ scope.row.contact }}
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="业务统计" name="AggregateBusiness">
+          <el-table :data="dentures" style="width: 100%;padding-top: 15px;">
+            <el-table-column label="订单日期">
+              <template slot-scope="scope">
+                {{ scope.row.createdDate.split(' ',2)[0] }}
+              </template>
+            </el-table-column>
+            <el-table-column label="类型">
+              <template slot-scope="scope">
+                {{ scope.row.type }}
+              </template>
+            </el-table-column>
+            <el-table-column label="规格">
+              <template slot-scope="scope">
+                {{ scope.row.specification }}
+              </template>
+            </el-table-column>
+            <el-table-column label="义齿详情" align="center">
+              <template slot-scope="scope">
+                <router-link :to="'/comprehensive/denture/'+scope.row.id" class="link-type">
+                  <span>详情</span>
+                </router-link>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+      </el-tabs>
+      <el-tab-pane label="价目表" name="PriceList">
+        价目表
+      </el-tab-pane>
     </el-row>
 
   </div>
@@ -52,13 +84,15 @@
 
 <script>
 import { customer } from '@/api/common'
-import { user } from '@/api/comprehensive'
+import { user, findDenturesByCustomer } from '@/api/comprehensive'
 
 export default {
   data() {
     return {
       salesman: null,
-      customer: null
+      customer: null,
+      activeName: 'StaffList',
+      dentures: null
     }
   },
   created() {
@@ -76,6 +110,15 @@ export default {
           this.salesman = data
         })
       })
+    },
+    handleClick(tab, event) {
+      if (this.activeName === 'AggregateBusiness') {
+        findDenturesByCustomer({
+          clinicId: this.customer.id
+        }).then(response => {
+          this.dentures = response.data
+        })
+      }
     }
   }
 }

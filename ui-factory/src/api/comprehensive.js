@@ -153,3 +153,11 @@ export function aggregateAppliedUsedIngredient(data) {
     data
   })
 }
+
+export function findDenturesByCustomer(data) {
+  return request({
+    url: '/info/findDenturesByCustomer',
+    method: 'post',
+    data
+  })
+}

@@ -48,6 +48,7 @@ public class AppliedUsedIngredient {
 
     public void setAppliedNumber(Double appliedNumber) {
         this.appliedNumber = appliedNumber;
+        this.balance += appliedNumber;
     }
 
     public Double getUsedNumber() {
