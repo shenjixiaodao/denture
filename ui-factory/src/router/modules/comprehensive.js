@@ -41,7 +41,7 @@ const comprehensiveRouter = {
       path: 'users',
       component: () => import('@/views/manufacture/comprehensive/users'),
       name: 'User',
-      meta: { title: '用户管理' }
+      meta: { title: '员工管理' }
     },
     {
       path: 'user/:id(\\d+)',
@@ -88,6 +88,12 @@ const comprehensiveRouter = {
       name: 'ProcedureDetail',
       meta: { title: '工序详情' },
       hidden: true
+    },
+    {
+      path: 'products',
+      component: () => import('@/views/manufacture/comprehensive/products'),
+      name: 'Products',
+      meta: { title: '产品管理', noCache: true }
     }
   ]
 }

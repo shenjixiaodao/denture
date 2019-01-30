@@ -2,6 +2,7 @@ package com.yuzi.denture.domain.repository;
 
 import com.yuzi.denture.domain.Clinic;
 import com.yuzi.denture.domain.Denture;
+import com.yuzi.denture.domain.ProductType;
 import com.yuzi.denture.domain.aggregate.AggregateOrder;
 import com.yuzi.denture.domain.aggregate.AppliedUsedIngredient;
 import com.yuzi.denture.domain.aggregate.IngredientStatistic;
@@ -30,4 +31,6 @@ public interface InfoRepository {
 
     //Financial stat
 
+
+    List<ProductType> findProductTypesByFactoryId(Long factoryId);
 }

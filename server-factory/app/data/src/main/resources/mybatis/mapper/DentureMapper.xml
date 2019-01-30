@@ -15,7 +15,7 @@
         `positions`,
         `created_date`,
         `comment`,
-        `field_typ`,
+        `field_type`,
         `bite_level`,
         `border_type`,
         `neck_type`,
@@ -24,7 +24,7 @@
         `outer_crown_type`,
         `requirement`,
         `base_price`,
-        `facotry_price`,
+        `factory_price`,
         `estimated_duration`
         )
         VALUES
@@ -135,6 +135,13 @@
         <result column="pro_review_date" property="proReviewDate" />
         <result column="qua_review" property="quaReview" />
         <result column="qua_review_date" property="quaReviewDate" />
+        <result column="bite_level" property="biteLevel" />
+        <result column="border_type" property="borderType" />
+        <result column="field_type" property="fieldType" />
+        <result column="inner_crown_type" property="innerCrownType" />
+        <result column="neck_type" property="neckType" />
+        <result column="outer_crown_type" property="outerCrownType" />
+        <result column="padding_type" property="paddingType" />
         <result column="requirement" property="requirement" />
         <result column="base_price" property="basePrice" />
         <result column="factory_price" property="factoryPrice" />

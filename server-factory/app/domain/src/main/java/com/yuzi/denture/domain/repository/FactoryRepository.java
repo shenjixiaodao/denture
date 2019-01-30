@@ -78,4 +78,6 @@ public interface FactoryRepository {
 
     void newSupplier(Supplier supplier);
     List<Supplier> findSuppliers(Long factoryId);
+
+    void add(ProductType type);
 }

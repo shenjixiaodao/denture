@@ -9,6 +9,7 @@ import com.yuzi.denture.api.vo.base.WebResult;
 import com.yuzi.denture.domain.Clinic;
 import com.yuzi.denture.domain.Denture;
 import com.yuzi.denture.domain.FactoryUser;
+import com.yuzi.denture.domain.ProductType;
 import com.yuzi.denture.domain.aggregate.AppliedUsedIngredient;
 import com.yuzi.denture.domain.aggregate.IngredientStatistic;
 import com.yuzi.denture.domain.aggregate.TotalIngredientStatistic;
@@ -134,6 +135,18 @@ public class InfoController {
             List<DentureVo> vos = DentureAssembler.toVos(dentures);
             res.setData(vos);
         }, "查询客户相关订单", logger);
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/findProductTypes", method = GET)
+    public WebResult<List<ProductType>> findProductTypes(HttpServletRequest request) {
+        FactoryUser user = SessionManager.Instance().user(request);
+        Long factoryId = user.getFactoryId();
+        WebResult<List<ProductType>> result = WebResult.execute(res -> {
+            List<ProductType> types = infoRepository.findProductTypesByFactoryId(factoryId);
+            res.setData(types);
+        }, "查询产品类型", logger);
         return result;
     }
 

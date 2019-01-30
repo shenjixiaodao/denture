@@ -3,7 +3,7 @@
 <mapper namespace="com.yuzi.denture.data.mapper.DentureOrderMapper" >
 
     <insert id="save" parameterType="com.yuzi.denture.domain.DentureOrder">
-        INSERT INTO `liyou`.`denture_order`
+        INSERT INTO `denture_order`
         (
         `id`,
         `clinic_id`,

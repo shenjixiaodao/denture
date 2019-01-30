@@ -161,3 +161,18 @@ export function findDenturesByCustomer(data) {
     data
   })
 }
+
+export function findProductTypes() {
+  return request({
+    url: '/info/findProductTypes',
+    method: 'get'
+  })
+}
+
+export function addProductType(data) {
+  return request({
+    url: '/manufacture/addProductType',
+    method: 'post',
+    data
+  })
+}

@@ -75,7 +75,13 @@
           <el-input v-model="order.number" style="width: 70%;"/>
         </el-form-item>
         <el-form-item label="种类名称" prop="title">
-          <el-input v-model="order.specification" style="width: 70%;"/>
+          <!--<el-input v-model="order.specification" style="width: 70%;"/>-->
+          <el-select v-model="order.specification" :filter-method="filterMethod" filterable placeholder="类型" class="filter-item">
+            <el-option v-for="item in specificationOptions" :key="item.code" :label="item.name" :value="item.code"/>
+          </el-select>
+          <router-link :to="'/comprehensive/products'" class="link-type">
+            <span>详情</span>
+          </router-link>
         </el-form-item>
         <!-- 材质规格 -->
         <el-form-item label="材质规格" prop="title">
@@ -113,9 +119,9 @@
         </el-form-item>
         <el-form-item label="颈缘" prop="title">
           <el-radio-group v-model="order.neckType">
-            <el-radio label="Plan">按肩台</el-radio>
-            <el-radio label="Point">龈上边缘</el-radio>
-            <el-radio label="Normal">龈下边缘</el-radio>
+            <el-radio label="AnJianTai">按肩台</el-radio>
+            <el-radio label="Top">龈上边缘</el-radio>
+            <el-radio label="Below">龈下边缘</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="内冠" prop="title">
@@ -139,13 +145,14 @@
     </el-row>
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <!--<el-button @click="dialogAddVisible = false">取消</el-button>-->
-      <el-button type="primary" @click="addOrder">添加</el-button>
+      <el-button type="primary" @click="addOrder">保存</el-button>
     </el-row>
   </div>
 </template>
 
 <script>
 import { addOrder, queryClinics } from '@/api/salesman'
+import { findProductTypes } from '@/api/comprehensive'
 
 export default {
   name: 'AddUser',
@@ -154,19 +161,8 @@ export default {
       types: [
         { code: 'Fixed', name: '定制式固定义齿' }, { code: 'Mobilizable', name: '定制式活动义齿' }
       ],
-      specifications: [
-        { code: 'GuGe', name: '钴铬合金' },
-        { code: 'GuiJinShuDanGuan', name: '贵金属单冠' },
-        { code: 'LianGuan', name: '连冠（桥、嵌体、贴面）' },
-        { code: 'ErYangHuaGao', name: '二氧化锆' },
-        { code: 'YangHuaGao', name: '氧化锆' },
-        { code: 'ErYangHuaGuiGuan', name: '二氧化硅冠（桥、嵌体、贴面)' },
-        { code: 'NieGeHeJinGuan', name: '镍铬合金冠' },
-        { code: 'NieGeHeJinQiao', name: '镍铬合金桥' },
-        { code: 'WanZhiZhiJiaKeZhai', name: '弯制支架可摘局部义齿' },
-        { code: 'ShuZhiJiTuoQuanKou', name: '树脂基托全口义齿' },
-        { code: 'Other', name: '其他' }
-      ],
+      specificationOptions: null,
+      specifications: null,
       fieldTypes: [
         { code: 'DaMaAn', name: '大马鞍' },
         { code: 'PianCe', name: '偏侧型' },
@@ -228,6 +224,11 @@ export default {
         console.log(data)
         this.clinics = data
       })
+      findProductTypes().then(response => {
+        var data = response.data
+        this.specifications = data
+        this.specificationOptions = data
+      })
     },
     addOrder() {
       // todo check console.log(this.position_group.join(','))
@@ -242,6 +243,17 @@ export default {
     },
     handleSelect() {
       this.order.number = this.position_group.length
+    },
+    filterMethod(query) {
+      if (query !== '') {
+        console.log(query)
+        this.specificationOptions = this.specifications.filter(item => {
+          return item.code.toLowerCase().indexOf(query.toLowerCase()) > -1 ||
+            item.name.indexOf(query) > -1
+        })
+      } else {
+        this.specificationOptions = []
+      }
     }
   }
 }

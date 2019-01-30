@@ -1,10 +1,7 @@
 package com.yuzi.denture.data.repository;
 
 import com.yuzi.denture.data.mapper.*;
-import com.yuzi.denture.domain.AppliedIngredient;
-import com.yuzi.denture.domain.Clinic;
-import com.yuzi.denture.domain.Denture;
-import com.yuzi.denture.domain.UsedIngredient;
+import com.yuzi.denture.domain.*;
 import com.yuzi.denture.domain.aggregate.AggregateOrder;
 import com.yuzi.denture.domain.aggregate.AppliedUsedIngredient;
 import com.yuzi.denture.domain.aggregate.IngredientStatistic;
@@ -34,6 +31,8 @@ public class InfoRepositoryImpl implements InfoRepository {
     private AggregateMapper aggregateMapper;
     @Autowired
     private DentureMapper dentureMapper;
+    @Autowired
+    private ProductTypeMapper productTypeMapper;
 
     @Override
     public List<Denture> findDenturesByCriteria(DentureCriteria criteria) {
@@ -88,6 +87,11 @@ public class InfoRepositoryImpl implements InfoRepository {
         List<AppliedIngredient> applied = ingredientMapper.findAppliedIngredientByFactoryId(criteria);
         List<UsedIngredient> used = ingredientMapper.findUsedIngredientByFactoryId(criteria);
         return aggregateAppliedUsedIngredient(applied, used);
+    }
+
+    @Override
+    public List<ProductType> findProductTypesByFactoryId(Long factoryId) {
+        return productTypeMapper.findTypesByFactoryId(factoryId);
     }
 
     private List<AppliedUsedIngredient> aggregateAppliedUsedIngredient(List<AppliedIngredient> applied,

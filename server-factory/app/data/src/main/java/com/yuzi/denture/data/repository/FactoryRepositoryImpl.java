@@ -31,6 +31,8 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     private ClinicMapper clinicMapper;
     @Autowired
     private IngredientMapper ingredientMapper;
+    @Autowired
+    private ProductTypeMapper productTypeMapper;
 
     @Override
     public void add(DentureOrder order) {
@@ -257,5 +259,10 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     @Override
     public List<Supplier> findSuppliers(Long factoryId) {
         return ingredientMapper.findSuppliers(factoryId);
+    }
+
+    @Override
+    public void add(ProductType type) {
+        productTypeMapper.save(type);
     }
 }
