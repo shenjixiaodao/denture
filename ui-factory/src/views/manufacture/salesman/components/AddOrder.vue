@@ -216,8 +216,19 @@ export default {
   },
   created() {
     this.fetchData()
+    this.loadShortcuts()
   },
   methods: {
+    loadShortcuts() {
+      document.onkeydown = function(event) {
+        var e = event || window.event
+        console.log(e.code)
+        console.log(e)
+        if (e && e.code === 'KeyS' && e.altKey) {
+          addOrder()
+        }
+      }
+    },
     fetchData() {
       queryClinics().then(response => {
         var data = response.data

@@ -176,3 +176,14 @@ export function addProductType(data) {
     data
   })
 }
+
+export function deleteProductType(data) {
+  return request({
+    url: '/manufacture/deleteProductType',
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data
+  })
+}

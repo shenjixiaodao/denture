@@ -581,7 +581,19 @@ public class ManufactureController {
         WebResult result = WebResult.execute(res -> {
             type.setFactoryId(factoryId);
             type.setGmtCreated(new Date());
-            repository.add(type);
+            service.addProductType(type);
+        }, "添加产品类别异常", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "删除产品类别", response = WebResult.class, httpMethod = "POST")
+    @ResponseBody
+    @RequestMapping(value = "/deleteProductType", method = POST)
+    public WebResult deleteProductType(@RequestParam("id") Long id, HttpServletRequest request) {
+        FactoryUser user = SessionManager.Instance().user(request);
+        Long factoryId = user.getFactoryId();
+        WebResult result = WebResult.execute(res -> {
+            repository.deleteProductType(id);
         }, "添加产品类别异常", logger);
         return result;
     }

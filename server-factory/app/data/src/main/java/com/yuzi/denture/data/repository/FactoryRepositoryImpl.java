@@ -265,4 +265,9 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     public void add(ProductType type) {
         productTypeMapper.save(type);
     }
+
+    @Override
+    public void deleteProductType(Long id) {
+        productTypeMapper.delete(id);
+    }
 }

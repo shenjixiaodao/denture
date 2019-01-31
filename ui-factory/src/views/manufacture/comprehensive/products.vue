@@ -18,6 +18,11 @@
             {{ scope.row.gmtCreated | time2DateStr }}
           </template>
         </el-table-column>
+        <el-table-column label="操作" align="center">
+          <template slot-scope="scope">
+            <el-button size="mini" type="danger" @click="deleteProductType(scope.row.id)">删除</el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </el-row>
 
@@ -39,7 +44,7 @@
 </template>
 
 <script>
-import { findProductTypes, addProductType } from '@/api/comprehensive'
+import { findProductTypes, addProductType, deleteProductType } from '@/api/comprehensive'
 
 export default {
   data() {
@@ -65,8 +70,38 @@ export default {
     },
     addProductType() {
       addProductType(this.productType).then(response => {
-        //
+        // 刷新页面
+        findProductTypes().then(response => {
+          var data = response.data
+          console.log(data)
+          this.list = data
+        })
         this.dialogAddProductVisible = false
+      })
+    },
+    deleteProductType(id) {
+      this.$confirm('此操作将永久删除记录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteProductType({ id: id }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
+        })
+        // 刷新页面
+        findProductTypes().then(response => {
+          var data = response.data
+          console.log(data)
+          this.list = data
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
       })
     }
   }

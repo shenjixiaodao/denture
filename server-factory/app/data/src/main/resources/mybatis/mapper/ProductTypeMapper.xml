@@ -19,6 +19,10 @@
         );
     </insert>
 
+    <delete id="delete" parameterType="Long">
+        delete from product_type where id=#{id}
+    </delete>
+
     <resultMap id="baseRM" type="com.yuzi.denture.domain.ProductType">
         <result column="id" property="id" />
         <result column="name" property="name" />
