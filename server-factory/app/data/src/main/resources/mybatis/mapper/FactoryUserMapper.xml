@@ -74,6 +74,21 @@
         <if test="position!=null">
             ,`position` = #{position}
         </if>
+        <if test="baseSalary!=null">
+            ,`base_salary` = #{baseSalary}
+        </if>
+        <if test="mealSubsidy!=null">
+            ,`meal_subsidy` = #{mealSubsidy}
+        </if>
+        <if test="trafficSubsidy!=null">
+            ,`traffic_subsidy` = #{trafficSubsidy}
+        </if>
+        <if test="accommodationSubsidy!=null">
+            ,`accommodation_subsidy` = #{accommodationSubsidy}
+        </if>
+        <if test="commissionRate!=null">
+            ,`commission_rate` = #{commissionRate}
+        </if>
         WHERE `id` = #{id};
     </update>
 
@@ -160,6 +175,11 @@
         <result column="address" property="address" />
         <result column="educational" property="educational" />
         <result column="position" property="position" />
+        <result column="base_salary" property="baseSalary" />
+        <result column="meal_subsidy" property="mealSubsidy" />
+        <result column="traffic_subsidy" property="trafficSubsidy" />
+        <result column="accommodation_subsidy" property="accommodationSubsidy" />
+        <result column="commission_rate" property="commissionRate" />
         <collection property="roles" resultMap="baseRoleRM" />
     </resultMap>
     <resultMap id="baseRoleRM" type="com.yuzi.denture.domain.FactoryRole">

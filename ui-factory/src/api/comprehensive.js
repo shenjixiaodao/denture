@@ -187,3 +187,11 @@ export function deleteProductType(data) {
     data
   })
 }
+
+export function salaryList(data) {
+  return request({
+    url: '/aggregate/salaryList',
+    method: 'post',
+    data
+  })
+}

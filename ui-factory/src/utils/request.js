@@ -34,7 +34,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const res = response.data
-    if (res.code === '1' || res.code === '3') {
+    if (res.code === '1' || res.code === '3' || res.code === '4') {
       Message({
         message: '请求错误: ' + res.message,
         type: 'error',

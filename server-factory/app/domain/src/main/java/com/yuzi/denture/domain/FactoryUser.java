@@ -1,10 +1,13 @@
 package com.yuzi.denture.domain;
 
+import com.yuzi.denture.domain.exception.CodeException;
+import com.yuzi.denture.domain.response.ResponseCode;
 import com.yuzi.denture.domain.type.Educational;
 import com.yuzi.denture.domain.util.RSAUtil;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.text.DateFormat;
@@ -60,6 +63,11 @@ public class FactoryUser {
     String address;
     Educational educational;
     String position;
+    BigDecimal baseSalary;
+    BigDecimal mealSubsidy;
+    BigDecimal trafficSubsidy;
+    BigDecimal accommodationSubsidy;
+    Double commissionRate;
 
     public FactoryUser(Long factoryId, String name, String contact, String cardId, FactoryRole.Role role) {
         this.factoryId = factoryId;
@@ -240,6 +248,15 @@ public class FactoryUser {
         this.joinDate = joinDate;
     }
 
+    public void setJoinDate(String joinDate) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            this.joinDate = df.parse(joinDate);
+        } catch (ParseException e) {
+            throw new CodeException(ResponseCode.DateFormat_Error);
+        }
+    }
+
     public FactoryUser(Long id) {
         this.id = id;
     }
@@ -258,6 +275,72 @@ public class FactoryUser {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public BigDecimal getBaseSalary() {
+        return baseSalary;
+    }
+
+    public void setBaseSalary(BigDecimal baseSalary) {
+        this.baseSalary = baseSalary;
+    }
+
+    public BigDecimal getMealSubsidy() {
+        return mealSubsidy;
+    }
+
+    public void setMealSubsidy(BigDecimal mealSubsidy) {
+        this.mealSubsidy = mealSubsidy;
+    }
+
+    public BigDecimal getTrafficSubsidy() {
+        return trafficSubsidy;
+    }
+
+    public void setTrafficSubsidy(BigDecimal trafficSubsidy) {
+        this.trafficSubsidy = trafficSubsidy;
+    }
+
+    public BigDecimal getAccommodationSubsidy() {
+        return accommodationSubsidy;
+    }
+
+    public void setAccommodationSubsidy(BigDecimal accommodationSubsidy) {
+        this.accommodationSubsidy = accommodationSubsidy;
+    }
+
+    public Double getCommissionRate() {
+        return commissionRate;
+    }
+
+    public void setCommissionRate(Double commissionRate) {
+        this.commissionRate = commissionRate;
+    }
+
+    @Override
+    public String toString() {
+        return "FactoryUser{" +
+                "id=" + id +
+                ", factoryId=" + factoryId +
+                ", name='" + name + '\'' +
+                ", contact='" + contact + '\'' +
+                ", password='" + password + '\'' +
+                ", groupType=" + groupType +
+                ", joinDate=" + joinDate +
+                ", roles=" + roles +
+                ", avatar='" + avatar + '\'' +
+                ", marital=" + marital +
+                ", age=" + age +
+                ", cardId='" + cardId + '\'' +
+                ", address='" + address + '\'' +
+                ", educational=" + educational +
+                ", position='" + position + '\'' +
+                ", baseSalary=" + baseSalary +
+                ", mealSubsidy=" + mealSubsidy +
+                ", trafficSubsidy=" + trafficSubsidy +
+                ", accommodationSubsidy=" + accommodationSubsidy +
+                ", commissionRate=" + commissionRate +
+                '}';
     }
 
     public FactoryUser() {

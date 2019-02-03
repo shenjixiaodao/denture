@@ -1,9 +1,10 @@
 package com.yuzi.denture.data.mapper;
 
-import com.yuzi.denture.domain.AppliedIngredient;
-import com.yuzi.denture.domain.UsedIngredient;
+
 import com.yuzi.denture.domain.aggregate.AggregateOrder;
+import com.yuzi.denture.domain.aggregate.Salary;
 import com.yuzi.denture.domain.criteria.AggregateOrderCriteria;
+import com.yuzi.denture.domain.criteria.SalaryCriteria;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -14,4 +15,6 @@ import java.util.List;
 @Mapper
 public interface AggregateMapper {
     List<AggregateOrder> findAggregateOrders(AggregateOrderCriteria criteria);
+
+    List<Salary> findSalaries(SalaryCriteria criteria);
 }

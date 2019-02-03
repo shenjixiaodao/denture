@@ -2,13 +2,11 @@ package com.yuzi.denture.data.repository;
 
 import com.yuzi.denture.data.mapper.*;
 import com.yuzi.denture.domain.*;
-import com.yuzi.denture.domain.aggregate.AggregateOrder;
-import com.yuzi.denture.domain.aggregate.AppliedUsedIngredient;
-import com.yuzi.denture.domain.aggregate.IngredientStatistic;
-import com.yuzi.denture.domain.aggregate.TotalIngredientStatistic;
+import com.yuzi.denture.domain.aggregate.*;
 import com.yuzi.denture.domain.criteria.AggregateOrderCriteria;
 import com.yuzi.denture.domain.criteria.DentureCriteria;
 import com.yuzi.denture.domain.criteria.IngredientCriteria;
+import com.yuzi.denture.domain.criteria.SalaryCriteria;
 import com.yuzi.denture.domain.repository.InfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -92,6 +90,11 @@ public class InfoRepositoryImpl implements InfoRepository {
     @Override
     public List<ProductType> findProductTypesByFactoryId(Long factoryId) {
         return productTypeMapper.findTypesByFactoryId(factoryId);
+    }
+
+    @Override
+    public List<Salary> salaryList(SalaryCriteria criteria) {
+        return aggregateMapper.findSalaries(criteria);
     }
 
     private List<AppliedUsedIngredient> aggregateAppliedUsedIngredient(List<AppliedIngredient> applied,

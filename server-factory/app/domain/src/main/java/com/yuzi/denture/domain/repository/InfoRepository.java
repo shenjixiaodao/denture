@@ -3,13 +3,11 @@ package com.yuzi.denture.domain.repository;
 import com.yuzi.denture.domain.Clinic;
 import com.yuzi.denture.domain.Denture;
 import com.yuzi.denture.domain.ProductType;
-import com.yuzi.denture.domain.aggregate.AggregateOrder;
-import com.yuzi.denture.domain.aggregate.AppliedUsedIngredient;
-import com.yuzi.denture.domain.aggregate.IngredientStatistic;
-import com.yuzi.denture.domain.aggregate.TotalIngredientStatistic;
+import com.yuzi.denture.domain.aggregate.*;
 import com.yuzi.denture.domain.criteria.AggregateOrderCriteria;
 import com.yuzi.denture.domain.criteria.DentureCriteria;
 import com.yuzi.denture.domain.criteria.IngredientCriteria;
+import com.yuzi.denture.domain.criteria.SalaryCriteria;
 
 import java.util.List;
 
@@ -33,4 +31,6 @@ public interface InfoRepository {
 
 
     List<ProductType> findProductTypesByFactoryId(Long factoryId);
+
+    List<Salary> salaryList(SalaryCriteria criteria);
 }

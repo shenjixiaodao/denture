@@ -29,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Locale;
@@ -127,15 +128,21 @@ public class FactoryUserController {
                     required = true, value = "地址"),
             @ApiImplicitParam(paramType = "form", name = "educational", dataType = "String",
                     required = true, value = "教育状况"),
+            @ApiImplicitParam(paramType = "form", name = "cardId", dataType = "String",
+                    required = true, value = "身份证号"),
             @ApiImplicitParam(paramType = "form", name = "joinDate", dataType = "String",
                     required = true, value = "入职时间"),
-            @ApiImplicitParam(paramType = "form", name = "cardId", dataType = "String",
-                    required = true, value = "身份证号")
+            @ApiImplicitParam(paramType = "form", name = "baseSalary", dataType = "String", value = "基本工资"),
+            @ApiImplicitParam(paramType = "form", name = "mealSubsidy", dataType = "String", value = "餐补"),
+            @ApiImplicitParam(paramType = "form", name = "trafficSubsidy", dataType = "String", value = "交通补"),
+            @ApiImplicitParam(paramType = "form", name = "accommodationSubsidy", dataType = "String", value = "住宿补"),
+            @ApiImplicitParam(paramType = "form", name = "commissionRate", dataType = "Double", value = "提成率"),
     })
     @ResponseBody
     @RequestMapping(value = "/modify", method = POST)
     public WebResult<FactoryUserVo> modify(Long uid, String roles, Boolean martial, String address, String educational,
-                                           String cardId, String joinDate) {
+                                           String cardId, String joinDate, String baseSalary, String mealSubsidy,
+                                           String trafficSubsidy, String accommodationSubsidy, Double commissionRate) {
         logger.info("修改用户:roles={}",roles);
         WebResult<FactoryUserVo> result = WebResult.execute(res -> {
             FactoryUser user = repository.findUser(uid);
@@ -144,6 +151,12 @@ public class FactoryUserController {
             user.setAddress(address);
             user.setEducational(Educational.typeOf(educational));
             user.setCardId(cardId);
+            user.setJoinDate(joinDate);
+            user.setBaseSalary(new BigDecimal(baseSalary));
+            user.setMealSubsidy(new BigDecimal(mealSubsidy));
+            user.setTrafficSubsidy(new BigDecimal(trafficSubsidy));
+            user.setAccommodationSubsidy(new BigDecimal(accommodationSubsidy));
+            user.setCommissionRate(commissionRate);
             service.modifyUser(user);
             FactoryUserVo vo = FactoryUserAssembler.toVo(user);
             res.setData(vo);
