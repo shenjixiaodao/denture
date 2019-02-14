@@ -9,6 +9,24 @@ public class AggregateOrderCriteria {
     Long factoryId;
     String startTime;
     String endTime;
+    String salesman;
+    String customer;
+
+    public String getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(String customer) {
+        this.customer = customer;
+    }
+
+    public String getSalesman() {
+        return salesman;
+    }
+
+    public void setSalesman(String salesman) {
+        this.salesman = salesman;
+    }
 
     public Long getFactoryId() {
         return factoryId;

@@ -44,6 +44,31 @@
                 <el-input v-model="user.address" class="filter-item" />
               </td>
             </tr>
+            <tr>
+              <td class="td_title_prop">基本工资:</td><td class="td_content_prop">
+                <el-input v-model="user.baseSalary" class="filter-item" />
+              </td>
+            </tr>
+            <tr>
+              <td class="td_title_prop">餐补:</td><td class="td_content_prop">
+                <el-input v-model="user.mealSubsidy" class="filter-item" />
+              </td>
+            </tr>
+            <tr>
+              <td class="td_title_prop">交通补:</td><td class="td_content_prop">
+                <el-input v-model="user.trafficSubsidy" class="filter-item" />
+              </td>
+            </tr>
+            <tr>
+              <td class="td_title_prop">住宿补:</td><td class="td_content_prop">
+                <el-input v-model="user.accommodationSubsidy" class="filter-item" />
+              </td>
+            </tr>
+            <tr>
+              <td class="td_title_prop">提成率:</td><td class="td_content_prop">
+                <el-input v-model="user.commissionRate" class="filter-item" />
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>

@@ -55,4 +55,6 @@ public interface FactoryService {
     void newIngredientPurchaseRecord(String billNo, String price, Long ingredientId, Long supplierId, Double number);
     void applyIngredient(Long uid, String dentureId, Long ingredientId, Double number,
                          String comment, Long factoryId);
+
+    void addProductType(ProductType type);
 }

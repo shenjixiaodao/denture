@@ -153,3 +153,45 @@ export function aggregateAppliedUsedIngredient(data) {
     data
   })
 }
+
+export function findDenturesByCustomer(data) {
+  return request({
+    url: '/info/findDenturesByCustomer',
+    method: 'post',
+    data
+  })
+}
+
+export function findProductTypes() {
+  return request({
+    url: '/info/findProductTypes',
+    method: 'get'
+  })
+}
+
+export function addProductType(data) {
+  return request({
+    url: '/manufacture/addProductType',
+    method: 'post',
+    data
+  })
+}
+
+export function deleteProductType(data) {
+  return request({
+    url: '/manufacture/deleteProductType',
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data
+  })
+}
+
+export function salaryList(data) {
+  return request({
+    url: '/aggregate/salaryList',
+    method: 'post',
+    data
+  })
+}

@@ -1,13 +1,19 @@
 package com.yuzi.denture.api.controller;
 
 
+import com.yuzi.denture.api.assembler.DentureAssembler;
 import com.yuzi.denture.api.session.SessionManager;
+import com.yuzi.denture.api.vo.base.DentureVo;
 import com.yuzi.denture.api.vo.base.WebResult;
+import com.yuzi.denture.domain.Denture;
 import com.yuzi.denture.domain.FactoryUser;
 import com.yuzi.denture.domain.aggregate.AggregateOrder;
 import com.yuzi.denture.domain.aggregate.AppliedUsedIngredient;
+import com.yuzi.denture.domain.aggregate.Salary;
 import com.yuzi.denture.domain.criteria.AggregateOrderCriteria;
+import com.yuzi.denture.domain.criteria.DentureCriteria;
 import com.yuzi.denture.domain.criteria.IngredientCriteria;
+import com.yuzi.denture.domain.criteria.SalaryCriteria;
 import com.yuzi.denture.domain.repository.InfoRepository;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
@@ -56,6 +62,20 @@ public class AggregateController {
             List<AppliedUsedIngredient> appliedUsedIngredients = infoRepository.aggregateAppliedUsedIngredient(criteria);
             res.setData(appliedUsedIngredients);
         }, "查询聚合物料领用信息", logger);
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/salaryList", method = POST)
+    public WebResult<List<Salary>> salaryList(@RequestBody SalaryCriteria criteria,
+                                              HttpServletRequest request) {
+        FactoryUser user = SessionManager.Instance().user(request);
+        Long factoryId = user.getFactoryId();
+        WebResult<List<Salary>> result = WebResult.execute(res -> {
+            criteria.setFactoryId(factoryId);
+            List<Salary> salaries = infoRepository.salaryList(criteria);
+            res.setData(salaries);
+        }, "查询工资单", logger);
         return result;
     }
 

@@ -2,6 +2,8 @@
  * 
  */
 package com.yuzi.denture.api.vo.base;
+import com.yuzi.denture.domain.exception.CodeException;
+import com.yuzi.denture.domain.response.ResponseCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.slf4j.Logger;
@@ -55,10 +57,14 @@ public class WebResult<T> {
 		WebResult<T> result = WebResult.success();
 		try {
 			function.doAction(result);
-		}  catch (Exception e) {
+		} catch (CodeException ex){
+			logger.warn(exceptionLog+": {}",ex);
+			result.setCode(ex.getCode().code());
+			result.setMessage(ex.getCode().msg());
+		} catch(Exception e) {
 			logger.warn(exceptionLog+": {}",e);
 			result.setCode(ResponseCode.FAILURE.code());
-			result.setMessage(e.getMessage());
+			result.setMessage(ResponseCode.FAILURE.msg());
 		}
 		return result;
 	}

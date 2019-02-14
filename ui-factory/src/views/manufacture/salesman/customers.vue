@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-row style="background:#fff;margin-bottom:20px;">
-      <div style="font-size: 15px;padding-top: 10px;font-weight: bold;">客户列表:</div>
+      <el-button type="primary" @click="dialogAddVisible = true">新增客户</el-button>
       <el-table :data="list" style="width: 100%;padding-top: 15px;">
         <el-table-column label="编号">
           <template slot-scope="scope">

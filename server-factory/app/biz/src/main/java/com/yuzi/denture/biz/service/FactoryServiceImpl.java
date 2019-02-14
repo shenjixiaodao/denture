@@ -2,11 +2,14 @@ package com.yuzi.denture.biz.service;
 
 import com.yuzi.denture.biz.util.IdGenerator;
 import com.yuzi.denture.domain.*;
+import com.yuzi.denture.domain.exception.CodeException;
 import com.yuzi.denture.domain.repository.ClinicRepository;
 import com.yuzi.denture.domain.repository.FactoryRepository;
+import com.yuzi.denture.domain.response.ResponseCode;
 import com.yuzi.denture.domain.service.FactoryService;
 import com.yuzi.denture.domain.type.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -206,5 +209,14 @@ public class FactoryServiceImpl implements FactoryService {
         AppliedIngredient appliedIngredient = new AppliedIngredient(ingredientId, dentureId, number, uid, comment);
         appliedIngredient.setFactoryId(factoryId);
         repository.applyIngredient(appliedIngredient);
+    }
+
+    @Override
+    public void addProductType(ProductType type) {
+        try {
+            repository.add(type);
+        } catch (DuplicateKeyException dke) {
+            throw new CodeException(ResponseCode.Duplicate_Code);
+        }
     }
 }

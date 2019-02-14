@@ -1,6 +1,8 @@
 package com.yuzi.denture.domain;
 
 import com.yuzi.denture.domain.type.ProcedureType;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,6 +34,12 @@ public class ProcedureGroup {
     public ProcedureGroup(ProcedureType type, String dentureId) {
         this.type = type;
         this.dentureId = dentureId;
+    }
+
+    public void addUsedIngredient(UsedIngredient usedIngredient) {
+        if(this.usedIngredients == null)
+            usedIngredients = new ArrayList<>();
+        this.usedIngredients.add(usedIngredient);
     }
 
     public Long getId() {

@@ -27,8 +27,28 @@
         INNER JOIN factory_customer fc ON (fc.factory_id=d.factory_id AND fc.clinic_id=d.clinic_id)
         INNER JOIN factory_user fu ON (fu.factory_id=d.factory_id AND fu.id=fc.salesman_id)
         where d.start_date <![CDATA[ >= ]]> #{startTime} and d.start_date <![CDATA[ <= ]]> #{endTime}
+        <if test="customer!=null">
+            and customer like CONCAT('%',#{customer},'%')
+        </if>
     </select>
 
+    <resultMap id="baseSalaryRM" type="com.yuzi.denture.domain.aggregate.Salary">
+        <result column="nominal_salary" property="nominalSalary" />
+        <result column="actual_salary" property="actualSalary" />
+        <result column="commission" property="commission" />
+        <result column="factory_id" property="factoryId" />
+        <result column="month" property="month" />
+        <result column="reward_punishment" property="rewardPunishment" />
+        <association property="user" javaType="com.yuzi.denture.domain.FactoryUser">
+            <result column="uid" property="id" />
+            <result column="name" property="name" />
+            <result column="contact" property="contact" />
+        </association>
+    </resultMap>
+    <select id="findSalaries" parameterType="com.yuzi.denture.domain.criteria.SalaryCriteria" resultMap="baseSalaryRM">
+        select * from salary s
+        inner join factory_user fu on(s.factory_id=#{factoryId} and s.month=#{month} and s.uid=fu.id)
+    </select>
 
 
 </mapper>

@@ -1,6 +1,7 @@
 package com.yuzi.denture.domain.hj;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 public class Customer implements Serializable {
     Long id;
@@ -24,6 +25,7 @@ public class Customer implements Serializable {
     String gmt_modified;
     String product_type;
     String comment;
+    BigDecimal total_unpaid_amount;
 
     public Long getId() {
         return id;
@@ -191,6 +193,14 @@ public class Customer implements Serializable {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public BigDecimal getTotal_unpaid_amount() {
+        return total_unpaid_amount;
+    }
+
+    public void setTotal_unpaid_amount(BigDecimal total_unpaid_amount) {
+        this.total_unpaid_amount = total_unpaid_amount;
     }
 
     @Override

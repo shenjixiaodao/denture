@@ -45,7 +45,7 @@
     </insert>
 
     <insert id="saveAppliedIngredient" parameterType="com.yuzi.denture.domain.AppliedIngredient">
-        INSERT INTO `liyou`.`applied_ingredient`
+        INSERT INTO `applied_ingredient`
         (
         `denture_id`,
         `no`,
@@ -77,7 +77,7 @@
     </update>
 
     <insert id="saveSupplier" parameterType="com.yuzi.denture.domain.Supplier">
-        INSERT INTO `liyou`.`supplier`
+        INSERT INTO `supplier`
         (
         `name`,
         `address`,

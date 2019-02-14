@@ -12,7 +12,7 @@
         `contact_phone`,
         `contact_is_shareholder`,
         `contact_other`,
-        'region',
+        `region`,
         `address`,
         `source`,
         `type`,
@@ -24,7 +24,8 @@
         `gmt_created`,
         `gmt_modified`,
         `product_type`,
-        `comment`
+        `comment`,
+        `total_unpaid_amount`
         )
         VALUES
         (
@@ -47,7 +48,8 @@
         now(),
         now(),
         #{product_type},
-        #{comment}
+        #{comment},
+        #{total_unpaid_amount}
         );
     </insert>
 
@@ -108,6 +110,9 @@
         <if test="comment!=null">
             , comment=#{comment}
         </if>
+        <if test="total_unpaid_amount!=null">
+            , total_unpaid_amount=#{total_unpaid_amount}
+        </if>
     </update>
 
     <resultMap id="baseRM" type="com.yuzi.denture.domain.hj.Customer">
@@ -128,6 +133,7 @@
         <result column="start_date" property="start_date" />
         <result column="customer_manager" property="customer_manager" />
         <result column="product_type" property="product_type" />
+        <result column="total_unpaid_amount" property="total_unpaid_amount" />
     </resultMap>
 
     <select id="findCustomers" resultMap="baseRM">

@@ -4,6 +4,7 @@ package com.yuzi.denture.api.vo;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -46,6 +47,51 @@ public class FactoryUserVo implements Serializable{
     String address;
     String educational;
     String position;
+    BigDecimal baseSalary;
+    BigDecimal mealSubsidy;
+    BigDecimal trafficSubsidy;
+    BigDecimal accommodationSubsidy;
+    Double commissionRate;
+
+    public BigDecimal getBaseSalary() {
+        return baseSalary;
+    }
+
+    public void setBaseSalary(BigDecimal baseSalary) {
+        this.baseSalary = baseSalary;
+    }
+
+    public BigDecimal getMealSubsidy() {
+        return mealSubsidy;
+    }
+
+    public void setMealSubsidy(BigDecimal mealSubsidy) {
+        this.mealSubsidy = mealSubsidy;
+    }
+
+    public BigDecimal getTrafficSubsidy() {
+        return trafficSubsidy;
+    }
+
+    public void setTrafficSubsidy(BigDecimal trafficSubsidy) {
+        this.trafficSubsidy = trafficSubsidy;
+    }
+
+    public BigDecimal getAccommodationSubsidy() {
+        return accommodationSubsidy;
+    }
+
+    public void setAccommodationSubsidy(BigDecimal accommodationSubsidy) {
+        this.accommodationSubsidy = accommodationSubsidy;
+    }
+
+    public Double getCommissionRate() {
+        return commissionRate;
+    }
+
+    public void setCommissionRate(Double commissionRate) {
+        this.commissionRate = commissionRate;
+    }
 
     public String getPosition() {
         return position;

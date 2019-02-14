@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -568,6 +569,32 @@ public class ManufactureController {
         WebResult result = WebResult.execute(res -> {
             repository.useIngredient(ingredient);
         }, "记录物料使用记录", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "添加产品类别", response = WebResult.class, httpMethod = "POST")
+    @ResponseBody
+    @RequestMapping(value = "/addProductType", method = POST)
+    public WebResult addProductType(@RequestBody ProductType type, HttpServletRequest request) {
+        FactoryUser user = SessionManager.Instance().user(request);
+        Long factoryId = user.getFactoryId();
+        WebResult result = WebResult.execute(res -> {
+            type.setFactoryId(factoryId);
+            type.setGmtCreated(new Date());
+            service.addProductType(type);
+        }, "添加产品类别异常", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "删除产品类别", response = WebResult.class, httpMethod = "POST")
+    @ResponseBody
+    @RequestMapping(value = "/deleteProductType", method = POST)
+    public WebResult deleteProductType(@RequestParam("id") Long id, HttpServletRequest request) {
+        FactoryUser user = SessionManager.Instance().user(request);
+        Long factoryId = user.getFactoryId();
+        WebResult result = WebResult.execute(res -> {
+            repository.deleteProductType(id);
+        }, "添加产品类别异常", logger);
         return result;
     }
 }

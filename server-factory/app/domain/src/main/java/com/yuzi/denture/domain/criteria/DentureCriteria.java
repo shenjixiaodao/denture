@@ -2,11 +2,20 @@ package com.yuzi.denture.domain.criteria;
 
 public class DentureCriteria {
     Long factoryId;
+    Long clinicId;
     String dentureId;
     String patientName;
     String createdDate;
     String region;
     String clinicName;
+
+    public Long getClinicId() {
+        return clinicId;
+    }
+
+    public void setClinicId(Long clinicId) {
+        this.clinicId = clinicId;
+    }
 
     public Long getFactoryId() {
         return factoryId;
