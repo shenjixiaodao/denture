@@ -2,6 +2,8 @@ package com.yuzi.denture.data.hj;
 
 import com.yuzi.denture.domain.hj.Customer;
 import com.yuzi.denture.domain.hj.HJRepository;
+import com.yuzi.denture.domain.hj.Order;
+import com.yuzi.denture.domain.hj.OrderDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +14,8 @@ public class HJRepositoryImpl implements HJRepository {
 
     @Autowired
     CustomerMapper customerMapper;
+    @Autowired
+    OrderMapper orderMapper;
 
     @Override
     public void store(Customer customer) {
@@ -35,5 +39,25 @@ public class HJRepositoryImpl implements HJRepository {
     @Override
     public Customer findCustomer(Long id) {
         return customerMapper.findCustomer(id);
+    }
+
+    @Override
+    public void store(Order order) {
+        orderMapper.save(order);
+    }
+
+    @Override
+    public void store(OrderDetail detail) {
+        orderMapper.saveDetail(detail);
+    }
+
+    @Override
+    public List<Order> findOrders() {
+        return orderMapper.findOrders();
+    }
+
+    @Override
+    public Order findDetail(Long id) {
+        return orderMapper.findDetail(id);
     }
 }

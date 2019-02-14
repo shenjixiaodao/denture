@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuzi.denture.data.hj.OrderMapper" >
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.yuzi.denture.domain.hj.Order">
+        INSERT INTO `hj_order`
+        (
+        `customer_id`,
+        `customer_name`,
+        `created_date`,
+        `deadline`,
+        `salesman`,
+        `paid_type`,
+        `paid_amount`,
+        `paid_date`,
+        `unpaid_amount`,
+        `prepaid_amount`,
+        `prepaid_date`,
+        `recycled_cu`,
+        `comment`,
+        `delivery_date`
+        )
+        VALUES
+        (
+        #{customer_id},
+        #{customer_name},
+        #{created_date},
+        #{deadline},
+        #{salesman},
+        #{paid_type},
+        #{paid_amount},
+        #{paid_date},
+        #{unpaid_amount},
+        #{prepaid_amount},
+        #{prepaid_date},
+        #{recycled_cu},
+        #{comment},
+        #{delivery_date}
+        );
+    </insert>
+
+    <insert id="saveDetail" parameterType="com.yuzi.denture.domain.hj.OrderDetail">
+        INSERT INTO `hj_order_detail`
+        (
+        `order_id`,
+        `product_name`,
+        `specification`,
+        `unit`,
+        `number`,
+        `unit_price`,
+        `processing_unit_price`,
+        `ingredient_amount`,
+        `supplier`,
+        `comment`
+        )
+        VALUES
+        (
+        #{order_id},
+        #{product_name},
+        #{specification},
+        #{unit},
+        #{number},
+        #{unit_price},
+        #{processing_unit_price},
+        #{ingredient_amount},
+        #{supplier},
+        #{comment}
+        );
+    </insert>
+
+    <!--<update id="update" parameterType="com.yuzi.denture.domain.hj.Customer">
+        update hj_customer
+        set id=id
+        <if test="name!=null">
+            , name=#{name}
+        </if>
+        <if test="telephone!=null">
+            , telephone=#{telephone}
+        </if>
+        <if test="contact!=null">
+            , contact=#{contact}
+        </if>
+        <if test="contact_position!=null">
+            , contact_position=#{contact_position}
+        </if>
+        <if test="contact_phone!=null">
+            , contact_phone=#{contact_phone}
+        </if>
+        <if test="contact_is_shareholder!=null">
+            , contact_is_shareholder=#{contact_is_shareholder}
+        </if>
+        <if test="contact_other!=null">
+            , contact_other=#{contact_other}
+        </if>
+        <if test="region!=null">
+            , region=#{region}
+        </if>
+        <if test="address!=null">
+            , address=#{address}
+        </if>
+        <if test="source!=null">
+            , source=#{source}
+        </if>
+        <if test="type!=null">
+            , type=#{type}
+        </if>
+        <if test="state_owned!=null">
+            , state_owned=#{state_owned}
+        </if>
+        <if test="scale!=null">
+            , scale=#{scale}
+        </if>
+        <if test="furnace_number!=null">
+            , furnace_number=#{furnace_number}
+        </if>
+        <if test="start_date!=null">
+            , start_date=#{start_date}
+        </if>
+        <if test="customer_manager!=null">
+            , customer_manager=#{customer_manager}
+        </if>
+        <if test="product_type!=null">
+            , product_type=#{product_type}
+        </if>
+        <if test="comment!=null">
+            , comment=#{comment}
+        </if>
+        <if test="total_unpaid_amount!=null">
+            , total_unpaid_amount=#{total_unpaid_amount}
+        </if>
+    </update>-->
+
+    <resultMap id="orderRM" type="com.yuzi.denture.domain.hj.Order">
+        <result column="id" property="id" />
+        <result column="customer_id" property="customer_id" />
+        <result column="customer_name" property="customer_name" />
+        <result column="deadline" property="deadline" />
+        <result column="salesman" property="salesman" />
+        <result column="paid_type" property="paid_type" />
+        <result column="paid_amount" property="paid_amount" />
+        <result column="paid_date" property="paid_date" />
+        <result column="unpaid_amount" property="unpaid_amount" />
+        <result column="prepaid_amount" property="prepaid_amount" />
+        <result column="prepaid_date" property="prepaid_date" />
+        <result column="recycled_cu" property="recycled_cu" />
+        <result column="comment" property="comment" />
+        <result column="delivery_date" property="delivery_date" />
+        <collection property="details" resultMap="orderDetailRM" />
+    </resultMap>
+    <resultMap id="orderDetailRM" type="com.yuzi.denture.domain.hj.OrderDetail">
+        <result column="customer_id" property="order_id" />
+        <result column="product_name" property="product_name" />
+        <result column="specification" property="specification" />
+        <result column="unit" property="unit" />
+        <result column="number" property="number" />
+        <result column="unit_price" property="unit_price" />
+        <result column="processing_unit_price" property="processing_unit_price" />
+        <result column="ingredient_amount" property="ingredient_amount" />
+        <result column="supplier" property="supplier" />
+        <result column="comment" property="comment" />
+    </resultMap>
+
+    <select id="findOrders" resultMap="orderRM">
+        select * from hj_order;
+    </select>
+
+    <select id="findDetail" parameterType="Long" resultMap="orderRM">
+        select * from hj_order  o
+        inner join hj_order_detail od on(o.id=#{id} and o.id=od.order_id)
+    </select>
+</mapper>

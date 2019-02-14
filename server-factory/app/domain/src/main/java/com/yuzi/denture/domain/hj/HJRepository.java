@@ -7,4 +7,10 @@ public interface HJRepository {
     void update(Customer customer);
     List<Customer> findCustomers();
     Customer findCustomer(Long id);
+
+    void store(Order order);
+    void store(OrderDetail detail);
+    List<Order> findOrders();
+    Order findDetail(Long id);
+
 }
