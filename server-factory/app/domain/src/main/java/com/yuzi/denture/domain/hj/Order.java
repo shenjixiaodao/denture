@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Order {
     Long id;
-    Integer customer_id;
+    Long customer_id;
     String customer_name;
     String created_date;
     String deadline;
@@ -15,19 +15,11 @@ public class Order {
     String paid_date;
     BigDecimal unpaid_amount;
     BigDecimal prepaid_amount;
-    BigDecimal prepaid_date;
-    BigDecimal recycled_cu;
-    BigDecimal comment;
-    BigDecimal delivery_date;
+    String prepaid_date;
+    Double recycled_cu;
+    String comment;
+    String delivery_date;
     List<OrderDetail> details;
-
-    public String getCustomer_name() {
-        return customer_name;
-    }
-
-    public void setCustomer_name(String customer_name) {
-        this.customer_name = customer_name;
-    }
 
     public Long getId() {
         return id;
@@ -37,12 +29,20 @@ public class Order {
         this.id = id;
     }
 
-    public Integer getCustomer_id() {
+    public Long getCustomer_id() {
         return customer_id;
     }
 
-    public void setCustomer_id(Integer customer_id) {
+    public void setCustomer_id(Long customer_id) {
         this.customer_id = customer_id;
+    }
+
+    public String getCustomer_name() {
+        return customer_name;
+    }
+
+    public void setCustomer_name(String customer_name) {
+        this.customer_name = customer_name;
     }
 
     public String getCreated_date() {
@@ -109,35 +109,35 @@ public class Order {
         this.prepaid_amount = prepaid_amount;
     }
 
-    public BigDecimal getPrepaid_date() {
+    public String getPrepaid_date() {
         return prepaid_date;
     }
 
-    public void setPrepaid_date(BigDecimal prepaid_date) {
+    public void setPrepaid_date(String prepaid_date) {
         this.prepaid_date = prepaid_date;
     }
 
-    public BigDecimal getRecycled_cu() {
+    public Double getRecycled_cu() {
         return recycled_cu;
     }
 
-    public void setRecycled_cu(BigDecimal recycled_cu) {
+    public void setRecycled_cu(Double recycled_cu) {
         this.recycled_cu = recycled_cu;
     }
 
-    public BigDecimal getComment() {
+    public String getComment() {
         return comment;
     }
 
-    public void setComment(BigDecimal comment) {
+    public void setComment(String comment) {
         this.comment = comment;
     }
 
-    public BigDecimal getDelivery_date() {
+    public String getDelivery_date() {
         return delivery_date;
     }
 
-    public void setDelivery_date(BigDecimal delivery_date) {
+    public void setDelivery_date(String delivery_date) {
         this.delivery_date = delivery_date;
     }
 

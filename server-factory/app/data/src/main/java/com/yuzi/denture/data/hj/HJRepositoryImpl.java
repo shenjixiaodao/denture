@@ -43,6 +43,8 @@ public class HJRepositoryImpl implements HJRepository {
 
     @Override
     public void store(Order order) {
+        Customer customer = customerMapper.findCustomer(order.getCustomer_id());
+        order.setCustomer_name(customer.getName());
         orderMapper.save(order);
     }
 

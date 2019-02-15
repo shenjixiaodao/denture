@@ -2,6 +2,7 @@ package com.yuzi.denture.domain.hj;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 public class Customer implements Serializable {
     Long id;
@@ -26,6 +27,15 @@ public class Customer implements Serializable {
     String product_type;
     String comment;
     BigDecimal total_unpaid_amount;
+    List<Order> orders;
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
 
     public Long getId() {
         return id;

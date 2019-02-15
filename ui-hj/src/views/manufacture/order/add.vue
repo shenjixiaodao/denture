@@ -2,47 +2,46 @@
   <div class="dashboard-container" style="overflow:auto;">
     <el-row style="background:#fff;padding:10px 10px 0;">
       <el-form ref="dataForm" label-position="left" label-width="20%">
-        <el-form-item label="下单方" prop="title">
-          <el-cascader :options="clinics" v-model="selectedClinic" :props="props" placeholder="诊所/医生" filterable @change="handleChange"/>
-        </el-form-item>
-        <el-form-item label="数量" prop="title">
-          <el-input v-model="order.number" style="width: 70%;"/>
-        </el-form-item>
-        <el-form-item label="种类名称" prop="title">
-          <!--<el-input v-model="order.specification" style="width: 70%;"/>-->
-          <el-select v-model="order.specification" :filter-method="filterMethod" filterable placeholder="类型" class="filter-item">
-            <el-option v-for="item in specificationOptions" :key="item.code" :label="item.name" :value="item.code"/>
-          </el-select>
-          <router-link :to="'/comprehensive/products'" class="link-type">
-            <span>详情</span>
-          </router-link>
-        </el-form-item>
-        <!-- 材质规格 -->
-        <el-form-item label="材质规格" prop="title">
-          <el-select v-model="order.type" placeholder="类型" clearable class="filter-item">
-            <el-option v-for="item in types" :key="item.code" :label="item.name" :value="item.code"/>
+        <el-form-item label="客户名" prop="title">
+          <el-select v-model="order.customer_id" placeholder="类型" filterable class="filter-item">
+            <el-option v-for="item in customers" :key="item.id" :label="item.name" :value="item.id"/>
           </el-select>
         </el-form-item>
-        <el-form-item label="色号" prop="title">
-          <el-input v-model="order.colorNo" style="width: 70%;"/>
+        <el-form-item label="创建日期" prop="title">
+          <el-date-picker v-model="order.created_date" type="date" style="width: 200px;" placeholder="创建日期" value-format="yyyy-MM-dd" />
         </el-form-item>
-        <el-form-item label="制作要求" prop="title">
-          <el-input v-model="order.requirement" style="width: 70%;"/>
+        <el-form-item label="完成日期" prop="title">
+          <el-date-picker v-model="order.deadline" type="date" style="width: 200px;" placeholder="完成日期" value-format="yyyy-MM-dd" />
+        </el-form-item>
+        <el-form-item label="业务员" prop="title">
+          <el-input v-model="order.salesman" style="width: 70%;"/>
+        </el-form-item>
+        <el-form-item label="付款方式" prop="title">
+          <el-input v-model="order.paid_type" style="width: 70%;"/>
+        </el-form-item>
+        <el-form-item label="支付金额" prop="title">
+          <el-input v-model="order.paid_amount" style="width: 70%;"/>
+        </el-form-item>
+        <el-form-item label="支付日期" prop="title">
+          <el-date-picker v-model="order.paid_date" type="date" style="width: 200px;" placeholder="支付日期" value-format="yyyy-MM-dd" />
+        </el-form-item>
+        <el-form-item label="欠款金额" prop="title">
+          <el-input v-model="order.unpaid_amount" style="width: 70%;"/>
+        </el-form-item>
+        <el-form-item label="预付金额" prop="title">
+          <el-input v-model="order.prepaid_amount" style="width: 70%;"/>
+        </el-form-item>
+        <el-form-item label="预付时间" prop="title">
+          <el-date-picker v-model="order.prepaid_date" type="date" style="width: 200px;" placeholder="发货日期" value-format="yyyy-MM-dd" />
+        </el-form-item>
+        <el-form-item label="来料铜(kg)" prop="title">
+          <el-input v-model="order.recycled_cu" style="width: 70%;"/>
+        </el-form-item>
+        <el-form-item label="发货日期" prop="title">
+          <el-date-picker v-model="order.delivery_date" type="date" style="width: 200px;" placeholder="发货日期" value-format="yyyy-MM-dd" />
         </el-form-item>
         <el-form-item label="备注">
           <el-input :autosize="{ minRows: 2, maxRows: 4}" v-model="order.comment" type="textarea" placeholder="请输入" style="width: 70%;"/>
-        </el-form-item>
-        <el-form-item label="缺牙区" prop="title">
-          <el-select v-model="order.fieldType" placeholder="类型" clearable style="width: 90px" class="filter-item">
-            <el-option v-for="item in fieldTypes" :key="item.code" :label="item.name" :value="item.code"/>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="咬合" prop="title">
-          <el-radio-group v-model="order.biteLevel">
-            <el-radio label="YaoMi">咬密(接触)</el-radio>
-            <el-radio label="QingYao">轻咬合(离开0.2)</el-radio>
-            <el-radio label="BuYao">不咬合(离开0.4)</el-radio>
-          </el-radio-group>
         </el-form-item>
       </el-form>
     </el-row>
@@ -54,39 +53,31 @@
 </template>
 
 <script>
-import { addOrder, queryClinics } from '@/api/salesman'
-import { findProductTypes } from '@/api/comprehensive'
+import { newOrder } from '@/api/order'
+import { findCustomers } from '@/api/customer'
+import { Message } from 'element-ui'
 
 export default {
-  name: 'AddUser',
+  name: 'AddOrder',
   data() {
     return {
       order: {
-        clinicId: null,
-        dentistId: null,
-        type: null,
-        colorNo: null,
-        specification: null,
-        positions: null,
-        number: 0,
-        requirement: null,
-        comment: null,
-        fieldType: null,
-        biteLevel: null,
-        borderType: null,
-        innerCrownType: null,
-        neckType: null,
-        outerCrownType: null,
-        paddingType: null
+        customer_id: null,
+        customer_name: null,
+        created_date: null,
+        deadline: null,
+        salesman: null,
+        paid_type: null,
+        paid_amount: null,
+        paid_date: null,
+        unpaid_amount: null,
+        prepaid_amount: null,
+        prepaid_date: null,
+        recycled_cu: null,
+        delivery_date: null,
+        comment: null
       },
-      clinics: null,
-      selectedClinic: [],
-      props: {
-        value: 'id',
-        label: 'name',
-        children: 'users'
-      },
-      position_group: []
+      customers: null
     }
   },
   created() {
@@ -97,49 +88,29 @@ export default {
     loadShortcuts() {
       document.onkeydown = function(event) {
         var e = event || window.event
-        console.log(e.code)
-        console.log(e)
         if (e && e.code === 'KeyS' && e.altKey) {
-          addOrder()
+          newOrder()
         }
       }
     },
     fetchData() {
-      queryClinics().then(response => {
+      findCustomers().then(response => {
         var data = response.data
-        console.log(data)
-        this.clinics = data
-      })
-      findProductTypes().then(response => {
-        var data = response.data
-        this.specifications = data
-        this.specificationOptions = data
+        this.customers = data
       })
     },
     addOrder() {
-      // todo check console.log(this.position_group.join(','))
-      this.order.positions = this.position_group.join(',')
-      addOrder(this.order).then(response => {
-        this.$router.push({ path: '/salesman/order-list' })
-      })
-    },
-    handleChange(value) {
-      this.order.clinicId = value[0]
-      this.order.dentistId = value[1]
-    },
-    handleSelect() {
-      this.order.number = this.position_group.length
-    },
-    filterMethod(query) {
-      if (query !== '') {
-        console.log(query)
-        this.specificationOptions = this.specifications.filter(item => {
-          return item.code.toLowerCase().indexOf(query.toLowerCase()) > -1 ||
-            item.name.indexOf(query) > -1
+      if (!this.order.customer_id) {
+        return Message({
+          message: '客户为空',
+          type: 'error',
+          duration: 2 * 1000
         })
-      } else {
-        this.specificationOptions = []
       }
+      newOrder(this.order).then(response => {
+        var data = response.data
+        this.$router.push({ path: '/order/' + data.id })
+      })
     }
   }
 }

@@ -4,95 +4,114 @@
       <table style="text-align: right">
         <tbody>
           <tr>
-            <td class="td_title_prop">名称:</td><td class="td_content_prop">{{ customer.clinic.name }}</td>
-          </tr>
-          <tr>
-            <td class="td_title_prop">地址:</td><td class="td_content_prop">{{ customer.clinic.address }}</td>
-          </tr>
-          <tr>
-            <td class="td_title_prop">联系方式:</td><td class="td_content_prop">{{ customer.clinic.contact }}</td>
-          </tr>
-          <tr>
-            <td class="td_title_prop">保修:</td>
+            <td class="td_title_prop">编号:</td>
             <td class="td_content_prop">
-              <label style="font-size: 10px;">固定类:</label><el-input v-model="customer.fixedGuarantee" style="width: 40px;"/>年&nbsp;&nbsp;
-              <label style="font-size: 10px;">活动类:</label><el-input v-model="customer.mobilizableGuarantee" style="width: 40px;"/>年
+              {{ customer.id }}
             </td>
           </tr>
           <tr>
-            <td class="td_title_prop">跟单员:</td><td class="td_content_prop">{{ salesman.name }}</td>
+            <td class="td_title_prop">名称:</td>
+            <td class="td_content_prop">
+              <el-input v-model="customer.name" style="width: 70%;"/>
+            </td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">累计欠款:</td>
+            <td class="td_content_prop">
+              <el-input v-model="customer.total_unpaid_amount" style="width: 70%;"/>
+            </td>
           </tr>
         </tbody>
       </table>
+      <el-button type="primary" @click="modifyCustomer">修改</el-button>
     </el-row>
-
-    <el-row style="background:#fff;margin-bottom:20px;">
-      <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-        <el-tab-pane label="成员列表" name="StaffList">
-          <el-table :data="customer.clinic.users" style="width: 100%;padding-top: 15px;">
-            <el-table-column label="姓名">
-              <template slot-scope="scope">
-                {{ scope.row.name }}
-              </template>
-            </el-table-column>
-            <el-table-column label="职称" align="center">
-              <template slot-scope="scope">
-                {{ scope.row.role }}
-              </template>
-            </el-table-column>
-            <el-table-column label="联系方式" align="center">
-              <template slot-scope="scope">
-                {{ scope.row.contact }}
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-tab-pane>
-        <el-tab-pane label="业务统计" name="AggregateBusiness">
-          <el-table :data="dentures" style="width: 100%;padding-top: 15px;">
-            <el-table-column label="订单日期">
-              <template slot-scope="scope">
-                {{ scope.row.createdDate.split(' ',2)[0] }}
-              </template>
-            </el-table-column>
-            <el-table-column label="类型">
-              <template slot-scope="scope">
-                {{ scope.row.type }}
-              </template>
-            </el-table-column>
-            <el-table-column label="规格">
-              <template slot-scope="scope">
-                {{ scope.row.specification }}
-              </template>
-            </el-table-column>
-            <el-table-column label="义齿详情" align="center">
-              <template slot-scope="scope">
-                <router-link :to="'/comprehensive/denture/'+scope.row.id" class="link-type">
-                  <span>详情</span>
-                </router-link>
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-tab-pane>
-      </el-tabs>
-      <el-tab-pane label="价目表" name="PriceList">
-        价目表
-      </el-tab-pane>
+    <el-row style="background:#fff;margin-left:10px;">
+      <el-table :data="customer.orders" style="width: 100%;padding-top: 15px;">
+        <el-table-column label="订单编号">
+          <template slot-scope="scope">
+            {{ scope.row.id }}
+          </template>
+        </el-table-column>
+        <el-table-column label="创建日期">
+          <template slot-scope="scope">
+            {{ scope.row.created_date }}
+          </template>
+        </el-table-column>
+        <el-table-column label="完成日期">
+          <template slot-scope="scope">
+            {{ scope.row.deadline }}
+          </template>
+        </el-table-column>
+        <el-table-column label="业务员">
+          <template slot-scope="scope">
+            {{ scope.row.salesman }}
+          </template>
+        </el-table-column>
+        <el-table-column label="付款方式">
+          <template slot-scope="scope">
+            {{ scope.row.paid_type }}
+          </template>
+        </el-table-column>
+        <el-table-column label="支付金额">
+          <template slot-scope="scope">
+            {{ scope.row.paid_amount }}
+          </template>
+        </el-table-column>
+        <el-table-column label="支付日期">
+          <template slot-scope="scope">
+            {{ scope.row.paid_date }}
+          </template>
+        </el-table-column>
+        <el-table-column label="欠款金额">
+          <template slot-scope="scope">
+            {{ scope.row.unpaid_amount }}
+          </template>
+        </el-table-column>
+        <el-table-column label="预付金额">
+          <template slot-scope="scope">
+            {{ scope.row.prepaid_amount }}
+          </template>
+        </el-table-column>
+        <el-table-column label="预付时间">
+          <template slot-scope="scope">
+            {{ scope.row.prepaid_date }}
+          </template>
+        </el-table-column>
+        <el-table-column label="来料铜(kg)">
+          <template slot-scope="scope">
+            {{ scope.row.recycled_cu }}
+          </template>
+        </el-table-column>
+        <el-table-column label="发货日期">
+          <template slot-scope="scope">
+            {{ scope.row.delivery_date }}
+          </template>
+        </el-table-column>
+        <el-table-column label="备注">
+          <template slot-scope="scope">
+            {{ scope.row.comment }}
+          </template>
+        </el-table-column>
+        <el-table-column label="订单详情" align="center">
+          <template slot-scope="scope">
+            <router-link :to="'/order/'+scope.row.id" class="link-type">
+              <span>详情</span>
+            </router-link>
+          </template>
+        </el-table-column>
+      </el-table>
     </el-row>
-
   </div>
 </template>
 
 <script>
-import { customer } from '@/api/common'
-import { user, findDenturesByCustomer } from '@/api/comprehensive'
+import { findCustomer, modifyCustomer } from '@/api/customer'
+import { Message } from 'element-ui'
 
 export default {
   data() {
     return {
-      salesman: null,
-      customer: null,
-      activeName: 'StaffList',
-      dentures: null
+      customer: null
     }
   },
   created() {
@@ -102,23 +121,19 @@ export default {
     fetchData() {
       const id = this.$route.params && this.$route.params.id
       console.log('customer detail ==> ' + id)
-      customer(id).then(response => {
+      findCustomer(id).then(response => {
         var data = response.data
         this.customer = data
-        user(this.customer.salesmanId).then(response1 => {
-          var data = response1.data
-          this.salesman = data
-        })
       })
     },
-    handleClick(tab, event) {
-      if (this.activeName === 'AggregateBusiness') {
-        findDenturesByCustomer({
-          clinicId: this.customer.id
-        }).then(response => {
-          this.dentures = response.data
+    modifyCustomer() {
+      modifyCustomer(this.customer).then(response => {
+        Message({
+          message: '修改成功',
+          type: 'success',
+          duration: 2 * 1000
         })
-      }
+      })
     }
   }
 }
