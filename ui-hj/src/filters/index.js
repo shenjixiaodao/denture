@@ -1,6 +1,18 @@
 // set function parseTime,formatTime to filter
 export { parseTime, formatTime } from '@/utils'
 
+export function formatMoney(number) {
+  number = number || 0
+  var places = 2
+  var thousand = ','
+  var decimal = '.'
+  var negative = number < 0 ? '-' : ''
+  var i = parseInt(number = Math.abs(+number || 0).toFixed(places), 10) + ''
+  var j = i.length
+  j = j > 3 ? j % 3 : 0
+  return negative + (j ? i.substr(0, j) + thousand : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, '$1' + thousand) + (places ? decimal + Math.abs(number - i).toFixed(places).slice(2) : '')
+}
+
 export function time2DateStr(time) {
   if (time) {
     return time.split(' ', 2)[0]

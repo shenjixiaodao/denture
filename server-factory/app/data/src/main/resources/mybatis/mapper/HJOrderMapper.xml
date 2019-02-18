@@ -134,6 +134,7 @@
         <result column="id" property="id" />
         <result column="customer_id" property="customer_id" />
         <result column="customer_name" property="customer_name" />
+        <result column="created_date" property="created_date" />
         <result column="deadline" property="deadline" />
         <result column="salesman" property="salesman" />
         <result column="paid_type" property="paid_type" />
@@ -166,6 +167,7 @@
 
     <select id="findDetail" parameterType="Long" resultMap="orderRM">
         select * from hj_order  o
-        inner join hj_order_detail od on(o.id=#{id} and o.id=od.order_id)
+        left join hj_order_detail od on o.id=od.order_id
+        where o.id=#{id}
     </select>
 </mapper>

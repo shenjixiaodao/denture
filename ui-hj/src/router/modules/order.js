@@ -2,7 +2,7 @@
 
 import Layout from '@/views/layout/Layout'
 
-const salesmanRouter = {
+const orderRouter = {
   path: '/order',
   component: Layout,
   redirect: '/order/list',
@@ -34,4 +34,4 @@ const salesmanRouter = {
     }
   ]
 }
-export default salesmanRouter
+export default orderRouter

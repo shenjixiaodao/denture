@@ -5,27 +5,22 @@
       <el-table :data="list" style="width: 100%;padding-top: 15px;">
         <el-table-column label="编号">
           <template slot-scope="scope">
-            {{ scope.row.clinic.id }}
+            {{ scope.row.id }}
           </template>
         </el-table-column>
         <el-table-column label="名称">
           <template slot-scope="scope">
-            {{ scope.row.clinic.name }}
+            {{ scope.row.name }}
           </template>
         </el-table-column>
-        <el-table-column label="地址" align="center">
+        <el-table-column label="累计欠款">
           <template slot-scope="scope">
-            {{ scope.row.clinic.address }}
-          </template>
-        </el-table-column>
-        <el-table-column label="联系方式" align="center">
-          <template slot-scope="scope">
-            {{ scope.row.clinic.contact }}
+            {{ scope.row.total_unpaid_amount }}
           </template>
         </el-table-column>
         <el-table-column label="客户详情" align="center">
           <template slot-scope="scope">
-            <router-link :to="'/comprehensive/customer/'+scope.row.id" class="link-type">
+            <router-link :to="'customer/'+scope.row.id" class="link-type">
               <span>详情</span>
             </router-link>
           </template>
@@ -35,20 +30,8 @@
 
     <el-dialog :visible.sync="dialogAddVisible" title="新增客户">
       <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 100%;">
-        <el-form-item label="诊所名" prop="title">
+        <el-form-item label="公司名" prop="title">
           <el-input v-model="customer.name" style="width: 70%;"/>
-        </el-form-item>
-        <el-form-item label="所在城市" prop="title">
-          <el-cascader :options="cities" :props="props" placeholder="省/市/县" @change="handleChange"/>
-        </el-form-item>
-        <el-form-item label="具体地址" prop="title">
-          <el-input v-model="customer.address" style="width: 70%;"/>
-        </el-form-item>
-        <el-form-item label="联系方式" prop="title">
-          <el-input v-model="customer.contact" style="width: 70%;"/>
-        </el-form-item>
-        <el-form-item label="医生名" prop="title">
-          <el-input v-model="customer.dentistName" style="width: 70%;"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -60,7 +43,7 @@
 </template>
 
 <script>
-import { customers, recordCustomer } from '@/api/salesman'
+import { findCustomers, storeCustomer } from '@/api/customer'
 import { cities } from '@/utils/allCities'
 
 export default {
@@ -69,11 +52,7 @@ export default {
       list: null,
       dialogAddVisible: false,
       customer: {
-        name: null,
-        region: null,
-        address: null,
-        contact: null,
-        dentistName: null
+        name: null
       },
       cities: cities,
       props: {
@@ -89,24 +68,21 @@ export default {
   },
   methods: {
     fetchData() {
-      customers().then(response => {
+      findCustomers().then(response => {
         var data = response.data
         console.log(data)
         this.list = data
       })
     },
     addCustomer() {
-      this.dialogAddVisible = false
-      this.customer.region = this.selectedCity.join('/')
-      recordCustomer(this.customer).then(resp => {
-        customers().then(response => {
+      // this.customer.region = this.selectedCity.join('/')
+      storeCustomer(this.customer).then(resp => {
+        findCustomers().then(response => {
           var data = response.data
           this.list = data
         })
+        this.dialogAddVisible = false
       })
-    },
-    handleChange(value) {
-      this.selectedCity = value
     }
   }
 }

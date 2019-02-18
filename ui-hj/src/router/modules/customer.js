@@ -20,11 +20,11 @@ const customerRouter = {
     },
     {
       path: 'customer/:id(\\d+)',
-      component: () => import('@/views/manufacture/customer/CustomerDetail'),
+      component: () => import('@/views/manufacture/customer/detail'),
       name: 'CustomerDetail',
       meta: { title: '客户详情' },
       hidden: true
     }
   ]
 }
-export default comprehensiveRouter
+export default customerRouter

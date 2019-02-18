@@ -113,6 +113,7 @@
         <if test="total_unpaid_amount!=null">
             , total_unpaid_amount=#{total_unpaid_amount}
         </if>
+        where id=#{id}
     </update>
 
     <resultMap id="baseRM" type="com.yuzi.denture.domain.hj.Customer">
@@ -134,13 +135,37 @@
         <result column="customer_manager" property="customer_manager" />
         <result column="product_type" property="product_type" />
         <result column="total_unpaid_amount" property="total_unpaid_amount" />
+        <collection property="orders" resultMap="orderRM" />
+    </resultMap>
+    <resultMap id="orderRM" type="com.yuzi.denture.domain.hj.Order">
+        <result column="o_id" property="id" />
+        <result column="customer_id" property="customer_id" />
+        <result column="customer_name" property="customer_name" />
+        <result column="created_date" property="created_date" />
+        <result column="deadline" property="deadline" />
+        <result column="salesman" property="salesman" />
+        <result column="paid_type" property="paid_type" />
+        <result column="paid_amount" property="paid_amount" />
+        <result column="paid_date" property="paid_date" />
+        <result column="unpaid_amount" property="unpaid_amount" />
+        <result column="prepaid_amount" property="prepaid_amount" />
+        <result column="prepaid_date" property="prepaid_date" />
+        <result column="recycled_cu" property="recycled_cu" />
+        <result column="o_comment" property="comment" />
+        <result column="delivery_date" property="delivery_date" />
     </resultMap>
 
     <select id="findCustomers" resultMap="baseRM">
         select * from hj_customer;
     </select>
 
+    <sql id="orderSQL">
+        o.id o_id, customer_id, customer_name, created_date, deadline, salesman, paid_type, paid_amount, paid_date,
+        unpaid_amount, prepaid_amount, prepaid_date, recycled_cu, o.comment o_comment, delivery_date
+    </sql>
     <select id="findCustomer" parameterType="Long" resultMap="baseRM">
-        select * from hj_customer where id=#{id};
+        select c.*, <include refid="orderSQL"/> from hj_customer c
+        left join hj_order o on c.id=o.customer_id
+        where c.id=#{id}
     </select>
 </mapper>

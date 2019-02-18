@@ -15,18 +15,6 @@ export function loginByUsername(username, password) {
     data
   })
 }
-/*
-export function loginByUsername(username, password) {
-  const data = {
-    username: username,
-    password: encryptor.encrypt(password)
-  }
-  return request({
-    url: '/login/login',
-    method: 'post',
-    data
-  })
-}*/
 
 export function logout() {
   return request({
@@ -40,6 +28,20 @@ export function getUserInfo(token) {
     url: '/user/info',
     method: 'get',
     params: { token }
+  })
+}
+
+export function modifyPwd(srcPwd, dstPwd) {
+  return request({
+    url: '/factoryUser/modifyPwd',
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data: {
+      srcPwd: encryptPwd(srcPwd),
+      dstPwd: encryptPwd(dstPwd)
+    }
   })
 }
 
