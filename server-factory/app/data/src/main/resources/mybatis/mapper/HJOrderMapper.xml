@@ -68,67 +68,86 @@
         );
     </insert>
 
-    <!--<update id="update" parameterType="com.yuzi.denture.domain.hj.Customer">
-        update hj_customer
+    <update id="updateDetail" parameterType="com.yuzi.denture.domain.hj.OrderDetail">
+        update hj_order_detail
         set id=id
-        <if test="name!=null">
-            , name=#{name}
+        <if test="order_id!=null">
+            , order_id=#{order_id}
         </if>
-        <if test="telephone!=null">
-            , telephone=#{telephone}
+        <if test="product_name!=null">
+            , product_name=#{product_name}
         </if>
-        <if test="contact!=null">
-            , contact=#{contact}
+        <if test="specification!=null">
+            , specification=#{specification}
         </if>
-        <if test="contact_position!=null">
-            , contact_position=#{contact_position}
+        <if test="unit!=null">
+            , unit=#{unit}
         </if>
-        <if test="contact_phone!=null">
-            , contact_phone=#{contact_phone}
+        <if test="number!=null">
+            , number=#{number}
         </if>
-        <if test="contact_is_shareholder!=null">
-            , contact_is_shareholder=#{contact_is_shareholder}
+        <if test="unit_price!=null">
+            , unit_price=#{unit_price}
         </if>
-        <if test="contact_other!=null">
-            , contact_other=#{contact_other}
+        <if test="processing_unit_price!=null">
+            , processing_unit_price=#{processing_unit_price}
         </if>
-        <if test="region!=null">
-            , region=#{region}
+        <if test="ingredient_amount!=null">
+            , ingredient_amount=#{ingredient_amount}
         </if>
-        <if test="address!=null">
-            , address=#{address}
-        </if>
-        <if test="source!=null">
-            , source=#{source}
-        </if>
-        <if test="type!=null">
-            , type=#{type}
-        </if>
-        <if test="state_owned!=null">
-            , state_owned=#{state_owned}
-        </if>
-        <if test="scale!=null">
-            , scale=#{scale}
-        </if>
-        <if test="furnace_number!=null">
-            , furnace_number=#{furnace_number}
-        </if>
-        <if test="start_date!=null">
-            , start_date=#{start_date}
-        </if>
-        <if test="customer_manager!=null">
-            , customer_manager=#{customer_manager}
-        </if>
-        <if test="product_type!=null">
-            , product_type=#{product_type}
+        <if test="supplier!=null">
+            , supplier=#{supplier}
         </if>
         <if test="comment!=null">
             , comment=#{comment}
         </if>
-        <if test="total_unpaid_amount!=null">
-            , total_unpaid_amount=#{total_unpaid_amount}
+        where id=#{id}
+    </update>
+
+    <update id="update" parameterType="com.yuzi.denture.domain.hj.Order">
+        update hj_order
+        set id=id
+        <if test="customer_name!=null">
+            , customer_name=#{customer_name}
         </if>
-    </update>-->
+        <if test="created_date!=null">
+            , created_date=#{created_date}
+        </if>
+        <if test="deadline!=null">
+            , deadline=#{deadline}
+        </if>
+        <if test="salesman!=null">
+            , salesman=#{salesman}
+        </if>
+        <if test="paid_type!=null">
+            , paid_type=#{paid_type}
+        </if>
+        <if test="paid_amount!=null">
+            , paid_amount=#{paid_amount}
+        </if>
+        <if test="paid_date!=null">
+            , paid_date=#{paid_date}
+        </if>
+        <if test="unpaid_amount!=null">
+            , unpaid_amount=#{unpaid_amount}
+        </if>
+        <if test="prepaid_amount!=null">
+            , prepaid_amount=#{prepaid_amount}
+        </if>
+        <if test="prepaid_date!=null">
+            , prepaid_date=#{prepaid_date}
+        </if>
+        <if test="recycled_cu!=null">
+            , recycled_cu=#{recycled_cu}
+        </if>
+        <if test="comment!=null">
+            , comment=#{comment}
+        </if>
+        <if test="delivery_date!=null">
+            , delivery_date=#{delivery_date}
+        </if>
+        where id=#{id}
+    </update>
 
     <resultMap id="orderRM" type="com.yuzi.denture.domain.hj.Order">
         <result column="id" property="id" />
@@ -169,5 +188,10 @@
         select * from hj_order  o
         left join hj_order_detail od on o.id=od.order_id
         where o.id=#{id}
+    </select>
+
+    <select id="findOrderByNameDate" parameterType="Map" resultMap="orderRM">
+        select * from hj_order  o
+        where o.customer_name=#{customer_name} and o.created_date=#{created_date}
     </select>
 </mapper>

@@ -5,6 +5,7 @@ import com.yuzi.denture.domain.hj.HJRepository;
 import com.yuzi.denture.domain.hj.Order;
 import com.yuzi.denture.domain.hj.OrderDetail;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,7 +23,11 @@ public class HJRepositoryImpl implements HJRepository {
         if(customer.getId() != null) {
 
         } else {
-            customerMapper.save(customer);
+            try {
+                customerMapper.save(customer);
+            } catch (DuplicateKeyException dke) {
+                //ignore
+            }
         }
     }
 
@@ -45,12 +50,25 @@ public class HJRepositoryImpl implements HJRepository {
     public void store(Order order) {
         Customer customer = customerMapper.findCustomer(order.getCustomer_id());
         order.setCustomer_name(customer.getName());
-        orderMapper.save(order);
+        try {
+            orderMapper.save(order);
+        } catch (DuplicateKeyException dke) {
+            //ignore
+        }
+    }
+
+    @Override
+    public void update(Order order) {
+        orderMapper.update(order);
     }
 
     @Override
     public void store(OrderDetail detail) {
-        orderMapper.saveDetail(detail);
+        try {
+            orderMapper.saveDetail(detail);
+        } catch (DuplicateKeyException dke) {
+            //ignore
+        }
     }
 
     @Override

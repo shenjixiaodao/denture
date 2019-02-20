@@ -8,6 +8,22 @@ export function newOrder(data) {
   })
 }
 
+export function modifyOrder(data) {
+  return request({
+    url: '/hj/modifyOrder',
+    method: 'post',
+    data
+  })
+}
+
+export function modifyOrderDetail(data) {
+  return request({
+    url: '/hj/modifyOrderDetail',
+    method: 'post',
+    data
+  })
+}
+
 export function addOrderDetail(data) {
   return request({
     url: '/hj/addOrderDetail',

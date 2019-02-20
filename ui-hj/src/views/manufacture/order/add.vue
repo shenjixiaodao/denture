@@ -6,39 +6,42 @@
           <el-select v-model="order.customer_id" placeholder="类型" filterable class="filter-item">
             <el-option v-for="item in customers" :key="item.id" :label="item.name" :value="item.id"/>
           </el-select>
+          <router-link :to="'/customer/list'" class="link-type">
+            <span>详情</span>
+          </router-link>
         </el-form-item>
         <el-form-item label="创建日期" prop="title">
-          <el-date-picker v-model="order.created_date" type="date" style="width: 200px;" placeholder="创建日期" value-format="yyyy-MM-dd" />
+          <el-date-picker v-model="order.created_date" type="date" placeholder="创建日期" value-format="yyyy-MM-dd" />
         </el-form-item>
-        <el-form-item label="完成日期" prop="title">
-          <el-date-picker v-model="order.deadline" type="date" style="width: 200px;" placeholder="完成日期" value-format="yyyy-MM-dd" />
+        <el-form-item label="交货日期" prop="title">
+          <el-input v-model="order.deadline" />
         </el-form-item>
         <el-form-item label="业务员" prop="title">
-          <el-input v-model="order.salesman" style="width: 70%;"/>
+          <el-input v-model="order.salesman" />
         </el-form-item>
         <el-form-item label="付款方式" prop="title">
-          <el-input v-model="order.paid_type" style="width: 70%;"/>
+          <el-input v-model="order.paid_type" />
         </el-form-item>
         <el-form-item label="支付金额" prop="title">
-          <el-input v-model="order.paid_amount" style="width: 70%;"/>
+          <el-input v-model="order.paid_amount" />
         </el-form-item>
         <el-form-item label="支付日期" prop="title">
-          <el-date-picker v-model="order.paid_date" type="date" style="width: 200px;" placeholder="支付日期" value-format="yyyy-MM-dd" />
+          <el-date-picker v-model="order.paid_date" type="date" placeholder="支付日期" value-format="yyyy-MM-dd" />
         </el-form-item>
         <el-form-item label="欠款金额" prop="title">
-          <el-input v-model="order.unpaid_amount" style="width: 70%;"/>
+          <el-input v-model="order.unpaid_amount"/>
         </el-form-item>
         <el-form-item label="预付金额" prop="title">
-          <el-input v-model="order.prepaid_amount" style="width: 70%;"/>
+          <el-input v-model="order.prepaid_amount" />
         </el-form-item>
         <el-form-item label="预付时间" prop="title">
-          <el-date-picker v-model="order.prepaid_date" type="date" style="width: 200px;" placeholder="发货日期" value-format="yyyy-MM-dd" />
+          <el-date-picker v-model="order.prepaid_date" type="date" placeholder="发货日期" value-format="yyyy-MM-dd" />
         </el-form-item>
         <el-form-item label="来料铜(kg)" prop="title">
           <el-input v-model="order.recycled_cu" style="width: 70%;"/>
         </el-form-item>
         <el-form-item label="发货日期" prop="title">
-          <el-date-picker v-model="order.delivery_date" type="date" style="width: 200px;" placeholder="发货日期" value-format="yyyy-MM-dd" />
+          <el-date-picker v-model="order.delivery_date" type="date" placeholder="发货日期" value-format="yyyy-MM-dd" />
         </el-form-item>
         <el-form-item label="备注">
           <el-input :autosize="{ minRows: 2, maxRows: 4}" v-model="order.comment" type="textarea" placeholder="请输入" style="width: 70%;"/>

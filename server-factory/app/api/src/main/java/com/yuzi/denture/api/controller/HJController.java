@@ -33,7 +33,6 @@ public class HJController {
     @ResponseBody
     @RequestMapping(value = "/storeCustomer", method = POST)
     public WebResult<Customer> storeCustomer(@RequestBody Customer customer) {
-        logger.info("记录客户信息:customer={}",customer);
         WebResult<Customer> result = WebResult.execute(res -> {
             service.store(customer);
             res.setData(customer);
@@ -45,7 +44,6 @@ public class HJController {
     @ResponseBody
     @RequestMapping(value = "/modifyCustomer", method = POST)
     public WebResult modifyCustomer(@RequestBody Customer customer) {
-        logger.info("修改客户信息:customer={}",customer);
         WebResult result = WebResult.execute(res -> {
             service.update(customer);
         }, "修改客户信息错误", logger);
@@ -56,7 +54,6 @@ public class HJController {
     @ResponseBody
     @RequestMapping(value = "/findCustomers", method = GET)
     public WebResult<List<Customer>> findCustomers() {
-        logger.info("查询客户信息列表");
         WebResult<List<Customer>> result = WebResult.execute(res -> {
             List<Customer> customers = service.findCustomers();
             res.setData(customers);
@@ -72,7 +69,6 @@ public class HJController {
     @ResponseBody
     @RequestMapping(value = "/findCustomer", method = GET)
     public WebResult<Customer> findCustomers(Long id) {
-        logger.info("查询客户信息:");
         WebResult<Customer> result = WebResult.execute(res -> {
             Customer customer = service.findCustomer(id);
             res.setData(customer);
@@ -85,7 +81,6 @@ public class HJController {
     @ResponseBody
     @RequestMapping(value = "/newOrder", method = POST)
     public WebResult<Order> newOrder(@RequestBody Order order) {
-        logger.info("新建订单信息:order={}",order);
         WebResult<Order> result = WebResult.execute(res -> {
             service.store(order);
             res.setData(order);
@@ -93,14 +88,35 @@ public class HJController {
         return result;
     }
 
+    @ApiOperation(value = "修改订单信息", response = WebResult.class, httpMethod = "POST")
+    @ResponseBody
+    @RequestMapping(value = "/modifyOrder", method = POST)
+    public WebResult modifyOrder(@RequestBody Order order) {
+        WebResult result = WebResult.execute(res -> {
+            service.update(order);
+        }, "修改订单信息错误", logger);
+        return result;
+    }
+
     @ApiOperation(value = "添加订单详情", response = WebResult.class, httpMethod = "POST")
     @ResponseBody
     @RequestMapping(value = "/addOrderDetail", method = POST)
     public WebResult addOrderDetail(@RequestBody OrderDetail detail) {
-        logger.info("添加订单详情:detail={}",detail);
         WebResult result = WebResult.execute(res -> {
             service.store(detail);
         }, "添加订单详情错误", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "修改订单详情信息", response = Order.class, httpMethod = "POST")
+    @ResponseBody
+    @RequestMapping(value = "/modifyOrderDetail", method = POST)
+    public WebResult<Order> modifyOrderDetail(@RequestBody OrderDetail detail) {
+        WebResult<Order> result = WebResult.execute(res -> {
+            service.update(detail);
+            Order order = service.findDetail(detail.getOrder_id());
+            res.setData(order);
+        }, "修改订单详情错误", logger);
         return result;
     }
 
@@ -108,7 +124,6 @@ public class HJController {
     @ResponseBody
     @RequestMapping(value = "/findOrders", method = GET)
     public WebResult<List<Order>> findOrders() {
-        logger.info("查询订单列表");
         WebResult<List<Order>> result = WebResult.execute(res -> {
             List<Order> orders = service.findOrders();
             res.setData(orders);
