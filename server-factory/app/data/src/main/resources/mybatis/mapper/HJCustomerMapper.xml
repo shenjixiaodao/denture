@@ -168,4 +168,8 @@
         left join hj_order o on c.id=o.customer_id
         where c.id=#{id}
     </select>
+    <select id="findCustomerByName" parameterType="String" resultMap="baseRM">
+        select * from hj_customer c
+        where c.name=#{name}
+    </select>
 </mapper>

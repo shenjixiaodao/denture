@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages={"com.yuzi.denture.data"})
-@MapperScan(basePackages = {"com.yuzi.denture.data.mapper"})
+@MapperScan(basePackages = {"com.yuzi.denture.data.mapper", "com.yuzi.denture.data.hj"})
 public class DataApplicationTest {
 
     public static void main(String[] args) {

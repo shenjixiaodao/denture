@@ -11,4 +11,5 @@ public interface CustomerMapper {
     void update(Customer customer);
     List<Customer> findCustomers();
     Customer findCustomer(Long id);
+    Customer findCustomerByName(String name);
 }

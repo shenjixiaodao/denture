@@ -1,57 +1,94 @@
 <template>
   <div class="panel panel-primary">
-    <el-row style="background:#fff;margin-bottom:30px;">
+    <el-row style="background:#fff;margin-left:10px;">
       <table style="text-align: right">
         <tbody>
           <tr>
             <td class="td_title_prop">订单编号:</td><td class="td_content_prop">{{ orderInfo.id }}</td>
           </tr>
           <tr>
-            <td class="td_title_prop">客户名:</td><td class="td_content_prop">{{ orderInfo.customer_name }}</td>
+            <td class="td_title_prop">客户名:</td>
+            <td class="td_content_prop">
+              <el-input v-model="orderInfo.customer_name"/>
+            </td>
           </tr>
           <tr>
-            <td class="td_title_prop">创建日期:</td><td class="td_content_prop">{{ orderInfo.created_date }}</td>
+            <td class="td_title_prop">创建日期:</td>
+            <td class="td_content_prop">
+              <el-date-picker v-model="orderInfo.created_date" type="date" placeholder="创建日期" value-format="yyyy-MM-dd" />
+            </td>
           </tr>
           <tr>
-            <td class="td_title_prop">完成日期:</td><td class="td_content_prop">{{ orderInfo.deadline }}</td>
+            <td class="td_title_prop">交货日期:</td>
+            <td class="td_content_prop">
+              <el-input v-model="orderInfo.deadline" />
+            </td>
           </tr>
           <tr>
             <td class="td_title_prop">业务员:</td>
             <td class="td_content_prop">
-              {{ orderInfo.salesman }}
+              <el-input v-model="orderInfo.salesman" />
             </td>
           </tr>
           <tr>
-            <td class="td_title_prop">付款方式:</td><td class="td_content_prop">{{ orderInfo.paid_type }}</td>
+            <td class="td_title_prop">付款方式:</td>
+            <td class="td_content_prop">
+              <el-input v-model="orderInfo.paid_type" />
+            </td>
           </tr>
           <tr>
-            <td class="td_title_prop">支付金额:</td><td class="td_content_prop">{{ orderInfo.paid_amount }}</td>
+            <td class="td_title_prop">支付金额:</td>
+            <td class="td_content_prop">
+              <el-input v-model="orderInfo.paid_amount" />
+            </td>
           </tr>
           <tr>
-            <td class="td_title_prop">支付日期:</td><td class="td_content_prop">{{ orderInfo.paid_date }}</td>
+            <td class="td_title_prop">支付日期:</td>
+            <td class="td_content_prop">
+              <el-date-picker v-model="orderInfo.paid_date" type="date" placeholder="支付日期" value-format="yyyy-MM-dd" />
+            </td>
           </tr>
           <tr>
-            <td class="td_title_prop">欠款金额:</td><td class="td_content_prop">{{ orderInfo.unpaid_amount }}</td>
+            <td class="td_title_prop">欠款金额:</td>
+            <td class="td_content_prop">
+              <el-input v-model="orderInfo.unpaid_amount" />
+            </td>
           </tr>
           <tr>
-            <td class="td_title_prop">预付金额:</td><td class="td_content_prop">{{ orderInfo.prepaid_amount }}</td>
+            <td class="td_title_prop">预付金额:</td>
+            <td class="td_content_prop">
+              <el-input v-model="orderInfo.prepaid_amount" />
+            </td>
           </tr>
           <tr>
-            <td class="td_title_prop">预付时间:</td><td class="td_content_prop">{{ orderInfo.prepaid_date }}</td>
+            <td class="td_title_prop">预付时间:</td>
+            <td class="td_content_prop">
+              <el-date-picker v-model="orderInfo.prepaid_date" type="date" placeholder="预付时间" value-format="yyyy-MM-dd" />
+            </td>
           </tr>
           <tr>
-            <td class="td_title_prop">来料铜(kg):</td><td class="td_content_prop">{{ orderInfo.recycled_cu }}</td>
+            <td class="td_title_prop">来料铜(kg):</td>
+            <td class="td_content_prop">
+              <el-input v-model="orderInfo.recycled_cu" />
+            </td>
           </tr>
           <tr>
-            <td class="td_title_prop">发货日期:</td><td class="td_content_prop">{{ orderInfo.delivery_date }}</td>
+            <td class="td_title_prop">发货日期:</td>
+            <td class="td_content_prop">
+              <el-date-picker v-model="orderInfo.delivery_date" type="date" placeholder="预付时间" value-format="yyyy-MM-dd" />
+            </td>
           </tr>
           <tr>
-            <td class="td_title_prop">备注:</td><td class="td_content_prop">{{ orderInfo.comment }}</td>
+            <td class="td_title_prop">备注:</td>
+            <td class="td_content_prop">
+              <el-input :autosize="{ minRows: 2, maxRows: 4}" v-model="orderInfo.comment" type="textarea" placeholder="请输入"/>
+            </td>
           </tr>
         </tbody>
       </table>
+      <el-button type="primary" @click="modifyOrder">修改</el-button>
     </el-row>
-    <el-row style="background:#fff;margin-left:10px;">
+    <el-row style="background:#fff;margin-left:10px;margin-top: 30px">
       <el-button type="primary" @click="dialogAddVisible = true">添加产品明细</el-button>
       <el-table :data="orderInfo.details" style="width: 100%;padding-top: 15px;">
         <el-table-column label="产品名">
@@ -99,6 +136,11 @@
             {{ scope.row.comment }}
           </template>
         </el-table-column>
+        <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+          <template slot-scope="scope">
+            <el-button type="primary" size="mini" @click="handleModify(scope.row)">修改</el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </el-row>
     <el-dialog :visible.sync="dialogAddVisible" title="添加产品明细">
@@ -133,14 +175,15 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogAddVisible = false">取消</el-button>
-        <el-button type="primary" @click="addOrderDetail">提交</el-button>
+        <el-button v-if="isCreated" type="primary" @click="addOrderDetail">提交</el-button>
+        <el-button v-else type="primary" @click="addOrderDetail">修改</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { findOrderDetail, addOrderDetail } from '@/api/order'
+import { findOrderDetail, addOrderDetail, modifyOrder, modifyOrderDetail } from '@/api/order'
 import { Message } from 'element-ui'
 
 export default {
@@ -159,7 +202,8 @@ export default {
         ingredient_amount: null,
         supplier: null,
         comment: null
-      }
+      },
+      isCreated: true
     }
   },
   created() {
@@ -170,6 +214,31 @@ export default {
       const id = this.$route.params && this.$route.params.id
       console.log('order detail ==> ' + id)
       findOrderDetail(id).then(response => {
+        var data = response.data
+        this.orderInfo = data
+      })
+    },
+    modifyOrder() {
+      modifyOrder(this.orderInfo).then(res => {
+        Message({
+          message: '修改成功',
+          type: 'success',
+          duration: 2 * 1000
+        })
+      })
+    },
+    handleModify(row) {
+      this.product = Object.assign({}, row)
+      this.dialogAddVisible = true
+      this.isCreated = false
+    },
+    modifyOrderDetail() {
+      modifyOrderDetail(this.product).then(response => {
+        Message({
+          message: '修改成功',
+          type: 'success',
+          duration: 2 * 1000
+        })
         var data = response.data
         this.orderInfo = data
       })

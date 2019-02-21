@@ -29,6 +29,13 @@ public class Customer implements Serializable {
     BigDecimal total_unpaid_amount;
     List<Order> orders;
 
+    public Customer(String name) {
+        this.name = name;
+    }
+
+    public Customer() {
+    }
+
     public List<Order> getOrders() {
         return orders;
     }
