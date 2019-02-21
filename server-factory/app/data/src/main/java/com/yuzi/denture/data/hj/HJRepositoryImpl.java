@@ -63,6 +63,11 @@ public class HJRepositoryImpl implements HJRepository {
     }
 
     @Override
+    public void update(OrderDetail detail) {
+        orderMapper.updateDetail(detail);
+    }
+
+    @Override
     public void store(OrderDetail detail) {
         try {
             orderMapper.saveDetail(detail);

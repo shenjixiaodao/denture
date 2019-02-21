@@ -176,7 +176,7 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogAddVisible = false">取消</el-button>
         <el-button v-if="isCreated" type="primary" @click="addOrderDetail">提交</el-button>
-        <el-button v-else type="primary" @click="addOrderDetail">修改</el-button>
+        <el-button v-else type="primary" @click="modifyOrderDetail">修改</el-button>
       </div>
     </el-dialog>
   </div>
@@ -241,6 +241,7 @@ export default {
         })
         var data = response.data
         this.orderInfo = data
+        this.dialogAddVisible = false
       })
     },
     addOrderDetail() {

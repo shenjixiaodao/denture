@@ -168,7 +168,8 @@
         <collection property="details" resultMap="orderDetailRM" />
     </resultMap>
     <resultMap id="orderDetailRM" type="com.yuzi.denture.domain.hj.OrderDetail">
-        <result column="customer_id" property="order_id" />
+        <result column="od_id" property="id" />
+        <result column="order_id" property="order_id" />
         <result column="product_name" property="product_name" />
         <result column="specification" property="specification" />
         <result column="unit" property="unit" />
@@ -177,7 +178,7 @@
         <result column="processing_unit_price" property="processing_unit_price" />
         <result column="ingredient_amount" property="ingredient_amount" />
         <result column="supplier" property="supplier" />
-        <result column="comment" property="comment" />
+        <result column="od_comment" property="comment" />
     </resultMap>
 
     <select id="findOrders" resultMap="orderRM">
@@ -185,7 +186,7 @@
     </select>
 
     <select id="findDetail" parameterType="Long" resultMap="orderRM">
-        select * from hj_order  o
+        select o.*, od.*, od.id od_id, od.comment od_comment from hj_order  o
         left join hj_order_detail od on o.id=od.order_id
         where o.id=#{id}
     </select>
