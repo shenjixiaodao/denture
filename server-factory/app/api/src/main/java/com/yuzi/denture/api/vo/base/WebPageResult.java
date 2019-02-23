@@ -5,14 +5,14 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * Created by shenjixiaodao on 2017/6/1.
  */
-public class WebPageResult extends WebResult{
+public class WebPageResult<T> extends WebResult<T>{
 
     @ApiModelProperty(value="当前页码")
     private int currentPage;
     @ApiModelProperty( value="每页记录数")
     private int pageSize;
     @ApiModelProperty( value="总记录数")
-    private int totalSize;
+    private long totalSize;
     @ApiModelProperty(value="总页数")
     private int totalPage;
 
@@ -36,15 +36,17 @@ public class WebPageResult extends WebResult{
         return totalPage;
     }
 
+    public long getTotalSize() {
+        return totalSize;
+    }
+
+    public void setTotalSize(long totalSize) {
+        this.totalSize = totalSize;
+    }
+
     public void setTotalPage(int totalPage) {
         this.totalPage = totalPage;
     }
 
-    public int getTotalSize() {
-        return totalSize;
-    }
 
-    public void setTotalSize(int totalSize) {
-        this.totalSize = totalSize;
-    }
 }

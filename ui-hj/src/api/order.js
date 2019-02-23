@@ -32,10 +32,11 @@ export function addOrderDetail(data) {
   })
 }
 
-export function findOrders() {
+export function findOrders(criteria) {
   return request({
     url: '/hj/findOrders',
-    method: 'get'
+    method: 'post',
+    data: criteria
   })
 }
 

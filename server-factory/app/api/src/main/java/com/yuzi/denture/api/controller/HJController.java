@@ -1,10 +1,12 @@
 package com.yuzi.denture.api.controller;
 
+import com.yuzi.denture.api.vo.base.WebPageResult;
 import com.yuzi.denture.api.vo.base.WebResult;
 import com.yuzi.denture.domain.hj.Customer;
 import com.yuzi.denture.domain.hj.HJRepository;
 import com.yuzi.denture.domain.hj.Order;
 import com.yuzi.denture.domain.hj.OrderDetail;
+import com.yuzi.denture.domain.hj.criteria.OrderCriteria;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -120,14 +122,19 @@ public class HJController {
         return result;
     }
 
-    @ApiOperation(value = "查询订单列表", response = Order.class, httpMethod = "GET")
+    @ApiOperation(value = "查询订单列表", response = Order.class, httpMethod = "POST")
     @ResponseBody
-    @RequestMapping(value = "/findOrders", method = GET)
-    public WebResult<List<Order>> findOrders() {
-        WebResult<List<Order>> result = WebResult.execute(res -> {
+    @RequestMapping(value = "/findOrders", method = POST)
+    public WebPageResult<List<Order>> findOrders(@RequestBody OrderCriteria criteria) {
+        /*WebPageResult<List<Order>> result = WebResult.execute(res -> {
             List<Order> orders = service.findOrders();
             res.setData(orders);
-        }, "查询订单列表错误", logger);
+        }, "查询订单列表错误", logger);*/
+        WebPageResult<List<Order>> result = new WebPageResult();
+        Long total = service.countOrders(criteria);
+        List<Order> orders = service.findOrders(criteria);
+        result.setTotalSize(total);
+        result.setData(orders);
         return result;
     }
 

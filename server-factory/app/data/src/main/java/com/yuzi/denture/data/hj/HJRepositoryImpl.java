@@ -4,6 +4,7 @@ import com.yuzi.denture.domain.hj.Customer;
 import com.yuzi.denture.domain.hj.HJRepository;
 import com.yuzi.denture.domain.hj.Order;
 import com.yuzi.denture.domain.hj.OrderDetail;
+import com.yuzi.denture.domain.hj.criteria.OrderCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
@@ -77,8 +78,13 @@ public class HJRepositoryImpl implements HJRepository {
     }
 
     @Override
-    public List<Order> findOrders() {
-        return orderMapper.findOrders();
+    public Long countOrders(OrderCriteria criteria) {
+        return orderMapper.countOrders(criteria);
+    }
+
+    @Override
+    public List<Order> findOrders(OrderCriteria criteria) {
+        return orderMapper.findOrders(criteria);
     }
 
     @Override

@@ -167,6 +167,7 @@
         select c.*, <include refid="orderSQL"/> from hj_customer c
         left join hj_order o on c.id=o.customer_id
         where c.id=#{id}
+        order by o.created_date desc
     </select>
     <select id="findCustomerByName" parameterType="String" resultMap="baseRM">
         select * from hj_customer c

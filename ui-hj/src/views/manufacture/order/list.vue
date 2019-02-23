@@ -3,7 +3,7 @@
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <el-button type="primary" @click="jump">新增</el-button>
     </el-row>
-    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+    <el-row style="background:#fff; margin-left:10px;">
       <orders-table />
     </el-row>
   </div>

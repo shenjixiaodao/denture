@@ -1,6 +1,6 @@
 <template>
-  <div class="app-container">
-    <el-row style="background:#fff;margin-bottom:30px;">
+  <div class="panel panel-primary">
+    <el-row style="background:#fff;margin-left:10px;">
       <table style="text-align: right">
         <tbody>
           <tr>
@@ -12,13 +12,13 @@
           <tr>
             <td class="td_title_prop">名称:</td>
             <td class="td_content_prop">
-              <el-input v-model="customer.name" style="width: 70%;"/>
+              <el-input v-model="customer.name" />
             </td>
           </tr>
           <tr>
             <td class="td_title_prop">累计欠款:</td>
             <td class="td_content_prop">
-              <el-input v-model="customer.total_unpaid_amount" style="width: 70%;"/>
+              <el-input v-model="customer.total_unpaid_amount" />
             </td>
           </tr>
         </tbody>
@@ -27,9 +27,10 @@
     </el-row>
     <el-row style="background:#fff;margin-left:10px;">
       <el-table :data="customer.orders" style="width: 100%;padding-top: 15px;">
+        <el-table-column type="index" />
         <el-table-column label="订单编号">
           <template slot-scope="scope">
-            {{ scope.row.id }}
+            <span style="font-weight: bold">{{ scope.row.id }}</span>
           </template>
         </el-table-column>
         <el-table-column label="创建日期">
@@ -94,7 +95,7 @@
         </el-table-column>
         <el-table-column label="订单详情" align="center">
           <template slot-scope="scope">
-            <router-link :to="'/order/'+scope.row.id" class="link-type">
+            <router-link :to="'/order/order/'+scope.row.id" class="link-type">
               <span>详情</span>
             </router-link>
           </template>

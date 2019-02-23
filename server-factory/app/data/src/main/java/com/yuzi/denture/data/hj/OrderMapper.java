@@ -2,6 +2,7 @@ package com.yuzi.denture.data.hj;
 
 import com.yuzi.denture.domain.hj.Order;
 import com.yuzi.denture.domain.hj.OrderDetail;
+import com.yuzi.denture.domain.hj.criteria.OrderCriteria;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -13,7 +14,8 @@ public interface OrderMapper {
     void saveDetail(OrderDetail detail);
     void update(Order order);
     void updateDetail(OrderDetail detail);
-    List<Order> findOrders();
+    Long countOrders(OrderCriteria criteria);
+    List<Order> findOrders(OrderCriteria criteria);
     Order findDetail(Long id);
     Order findOrderByNameDate(Map para);
 }
