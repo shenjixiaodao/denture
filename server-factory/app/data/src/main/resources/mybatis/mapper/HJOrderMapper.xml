@@ -181,8 +181,26 @@
         <result column="od_comment" property="comment" />
     </resultMap>
 
-    <select id="findOrders" resultMap="orderRM">
-        select * from hj_order;
+    <sql id="criteriaWhere">
+        where 1=1
+        <if test="customer_name!=null">
+            and customer_name like concat("%",#{customer_name},"%")
+        </if>
+        <if test="order_month!=null">
+            and DATE_FORMAT(created_date,'%Y-%m') <![CDATA[ >= ]]> #{order_month} and DATE_FORMAT(created_date,'%Y-%m') <![CDATA[ <= ]]> #{order_month}
+        </if>
+    </sql>
+
+    <select id="countOrders" parameterType="com.yuzi.denture.domain.hj.criteria.OrderCriteria" resultType="Long">
+        select count(*) from hj_order
+        <include refid="criteriaWhere" />
+    </select>
+
+    <select id="findOrders" parameterType="com.yuzi.denture.domain.hj.criteria.OrderCriteria" resultMap="orderRM">
+        select * from hj_order
+        <include refid="criteriaWhere" />
+        order by created_date desc
+        limit ${offset}, ${limit}
     </select>
 
     <select id="findDetail" parameterType="Long" resultMap="orderRM">

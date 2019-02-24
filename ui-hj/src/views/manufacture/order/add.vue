@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-container" style="overflow:auto;">
+  <div class="dashboard-container">
     <el-row style="background:#fff;padding:10px 10px 0;">
       <el-form ref="dataForm" label-position="left" label-width="20%">
         <el-form-item label="客户名" prop="title">

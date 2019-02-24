@@ -24,6 +24,13 @@ const customerRouter = {
       name: 'CustomerDetail',
       meta: { title: '客户详情' },
       hidden: true
+    },
+    {
+      path: 'add',
+      component: () => import('@/views/manufacture/customer/add'),
+      name: 'AddOCustomer',
+      meta: { title: '新增客户' },
+      hidden: true
     }
   ]
 }
