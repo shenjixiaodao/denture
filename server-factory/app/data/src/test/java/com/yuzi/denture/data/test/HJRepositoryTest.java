@@ -5,17 +5,14 @@ package com.yuzi.denture.data.test;
 
 import com.yuzi.denture.data.hj.CustomerMapper;
 import com.yuzi.denture.data.hj.OrderMapper;
-import com.yuzi.denture.domain.hj.Customer;
-import com.yuzi.denture.domain.hj.HJRepository;
-import com.yuzi.denture.domain.hj.Order;
-import com.yuzi.denture.domain.hj.OrderDetail;
+import com.yuzi.denture.data.hj.PublicCustomerMapper;
+import com.yuzi.denture.domain.hj.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.StringUtils;
-
 import java.io.*;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -36,6 +33,62 @@ public class HJRepositoryTest {
     private CustomerMapper customerMapper;
     @Autowired
     private OrderMapper orderMapper;
+    @Autowired
+    private PublicCustomerMapper publicCustomerMapper;
+
+    @Test
+    public void parsePublicCustomer() {
+        String[] files = new String[]{"src/test/resources/全国黄磷生产公司.csv", "src/test/resources/铁合金厂(新疆宁夏甘肃青海).csv"};
+        for(String file: files ) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String line = reader.readLine();
+                while ((line = reader.readLine()) != null) {
+                    if (StringUtils.isEmpty(line))
+                        continue;
+                    String[] cells = line.split(",", 17);
+                    PublicCustomer customer = new PublicCustomer();
+                    customer.setName(cells[0].trim());
+                    customer.setLegal_person(cells[1].trim());
+                    customer.setCapital(cells[2].trim());
+                    customer.setCreated_date(cells[3].trim());
+                    if(cells[4].trim().equals("在业") || cells[4].trim().equals("存续")) {
+                        customer.setStatus(cells[4].trim());
+                    } else {
+                        continue;
+                    }
+                    customer.setProvince(cells[5].trim());
+                    customer.setCity(cells[6].trim());
+                    customer.setCountry(cells[7].trim());
+                    customer.setProperty(cells[8].trim());
+                    customer.setCompany_code(cells[9].trim());
+                    customer.setPublic_phone(cells[10].trim());
+                    customer.setPublic_telephone(cells[11].trim());
+                    customer.setPublic_address(cells[12].trim());
+                    if (cells[13].length() < 100) {
+                        customer.setHomepage(cells[13].trim());
+                    } else {
+                        customer.setHomepage(cells[13].substring(0, 99));
+                    }
+                    if (cells[14].length() < 100) {
+                        customer.setPublic_email(cells[14].trim());
+                    } else {
+                        customer.setPublic_email(cells[14].substring(0, 99));
+                    }
+                    customer.setBusiness(cells[15].trim());
+                    if(file.contains("黄磷")) {
+                        customer.setType("黄磷");
+                    } else if(file.contains("铁合金")) {
+                        customer.setType("铁合金");
+                    }
+                    repository.store(customer);
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     @Test
     public void parse() throws ParseException {
