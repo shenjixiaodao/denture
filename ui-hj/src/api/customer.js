@@ -30,3 +30,11 @@ export function findCustomer(id) {
     params: { id: id }
   })
 }
+
+export function findPublicCustomers(criteria) {
+  return request({
+    url: '/hj/findPublicCustomers',
+    method: 'post',
+    data: criteria
+  })
+}

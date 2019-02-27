@@ -1,10 +1,8 @@
 package com.yuzi.denture.data.hj;
 
-import com.yuzi.denture.domain.hj.Customer;
-import com.yuzi.denture.domain.hj.HJRepository;
-import com.yuzi.denture.domain.hj.Order;
-import com.yuzi.denture.domain.hj.OrderDetail;
+import com.yuzi.denture.domain.hj.*;
 import com.yuzi.denture.domain.hj.criteria.OrderCriteria;
+import com.yuzi.denture.domain.hj.criteria.PublicCustomerCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
@@ -16,6 +14,8 @@ public class HJRepositoryImpl implements HJRepository {
 
     @Autowired
     CustomerMapper customerMapper;
+    @Autowired
+    PublicCustomerMapper publicCustomerMapper;
     @Autowired
     OrderMapper orderMapper;
 
@@ -90,5 +90,24 @@ public class HJRepositoryImpl implements HJRepository {
     @Override
     public Order findDetail(Long id) {
         return orderMapper.findDetail(id);
+    }
+
+    @Override
+    public void store(PublicCustomer customer) {
+        try {
+            publicCustomerMapper.save(customer);
+        } catch (DuplicateKeyException dke) {
+            //ignore
+        }
+    }
+
+    @Override
+    public List<PublicCustomer> findPublicCustomers(PublicCustomerCriteria criteria) {
+        return publicCustomerMapper.findPublicCustomers(criteria);
+    }
+
+    @Override
+    public Long countPublicCustomers(PublicCustomerCriteria criteria) {
+        return publicCustomerMapper.countPublicCustomers(criteria);
     }
 }

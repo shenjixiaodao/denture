@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuzi.denture.data.hj.PublicCustomerMapper" >
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.yuzi.denture.domain.hj.PublicCustomer">
+        INSERT INTO `hj_public_customer`
+        (
+        `name`,
+        `legal_person`,
+        `capital`,
+        `created_date`,
+        `status`,
+        `province`,
+        `city`,
+        `country`,
+        `property`,
+        `company_code`,
+        `public_phone`,
+        `public_telephone`,
+        `public_address`,
+        `homepage`,
+        `public_email`,
+        `business`,
+        `type`
+        )
+        VALUES
+        (
+        #{name},
+        #{legal_person},
+        #{capital},
+        #{created_date},
+        #{status},
+        #{province},
+        #{city},
+        #{country},
+        #{property},
+        #{company_code},
+        #{public_phone},
+        #{public_telephone},
+        #{public_address},
+        #{homepage},
+        #{public_email},
+        #{business},
+        #{type}
+        );
+    </insert>
+
+    <resultMap id="baseRM" type="com.yuzi.denture.domain.hj.PublicCustomer">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="legal_person" property="legal_person" />
+        <result column="capital" property="capital" />
+        <result column="created_date" property="created_date" />
+        <result column="status" property="status" />
+        <result column="province" property="province" />
+        <result column="city" property="city" />
+        <result column="country" property="country" />
+        <result column="property" property="property" />
+        <result column="company_code" property="company_code" />
+        <result column="public_phone" property="public_phone" />
+        <result column="public_telephone" property="public_telephone" />
+        <result column="public_address" property="public_address" />
+        <result column="homepage" property="homepage" />
+        <result column="public_email" property="public_email" />
+        <result column="business" property="business" />
+        <result column="type" property="type" />
+    </resultMap>
+
+    <sql id="criteriaWhere">
+        where 1=1
+        <if test="province!=null">
+            and province like concat("%",#{province},"%")
+        </if>
+        <if test="name!=null">
+            and name like concat("%",#{name},"%")
+        </if>
+        <if test="country!=null">
+            and country like concat("%",#{country},"%")
+        </if>
+        <if test="type!=null">
+            and type = #{type}
+        </if>
+    </sql>
+    <select id="findPublicCustomers" parameterType="com.yuzi.denture.domain.hj.criteria.PublicCustomerCriteria" resultMap="baseRM">
+        select * from hj_public_customer
+        <include refid="criteriaWhere" />
+        limit ${offset}, ${limit}
+    </select>
+    <select id="countPublicCustomers" parameterType="com.yuzi.denture.domain.hj.criteria.PublicCustomerCriteria" resultType="Long">
+        select count(*) from hj_public_customer
+        <include refid="criteriaWhere" />
+    </select>
+</mapper>

@@ -1,6 +1,7 @@
 package com.yuzi.denture.domain.hj;
 
 import com.yuzi.denture.domain.hj.criteria.OrderCriteria;
+import com.yuzi.denture.domain.hj.criteria.PublicCustomerCriteria;
 
 import java.util.List;
 
@@ -18,4 +19,8 @@ public interface HJRepository {
     List<Order> findOrders(OrderCriteria criteria);
     Order findDetail(Long id);
 
+    //public customer
+    void store(PublicCustomer customer);
+    List<PublicCustomer> findPublicCustomers(PublicCustomerCriteria criteria);
+    Long countPublicCustomers(PublicCustomerCriteria criteria);
 }

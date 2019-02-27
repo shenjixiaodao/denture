@@ -5,7 +5,7 @@
       <el-input v-model="queryParam.customer_name" style="width: 200px;"/>
       <span style="color: #999;font-size: 14px;">订单月份: </span>
       <el-date-picker v-model="queryParam.order_month" type="month" style="width: 200px;" placeholder="月份" value-format="yyyy-MM" />
-      <el-button class="filter-item" type="primary" icon="el-icon-search" @click="fetchData" >搜索</el-button>
+      <el-button class="filter-item" type="primary" icon="el-icon-search" @click="search" >搜索</el-button>
     </el-row>
     <el-row>
       <el-table :data="list">
@@ -117,6 +117,14 @@ export default {
   },
   methods: {
     fetchData() {
+      findOrders(this.queryParam).then(response => {
+        this.total = response.totalSize
+        this.list = response.data
+      })
+    },
+    search() {
+      this.queryParam.page = 1
+      this.queryParam.limit = 20
       findOrders(this.queryParam).then(response => {
         this.total = response.totalSize
         this.list = response.data
