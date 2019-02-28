@@ -9,6 +9,8 @@ import java.util.List;
 @Mapper
 public interface PublicCustomerMapper {
     void save(PublicCustomer customer);
+    void update(PublicCustomer customer);
+    PublicCustomer findByName(String name);
     List<PublicCustomer> findPublicCustomers(PublicCustomerCriteria criteria);
     Long countPublicCustomers(PublicCustomerCriteria criteria);
 }

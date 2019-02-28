@@ -97,7 +97,11 @@ public class HJRepositoryImpl implements HJRepository {
         try {
             publicCustomerMapper.save(customer);
         } catch (DuplicateKeyException dke) {
-            //ignore
+            PublicCustomer localCustomer = publicCustomerMapper.findByName(customer.getName());
+            if(!localCustomer.getType().contains(customer.getType())) {
+                localCustomer.setType(localCustomer.getType()+","+customer.getType());
+                publicCustomerMapper.update(localCustomer);
+            }
         }
     }
 

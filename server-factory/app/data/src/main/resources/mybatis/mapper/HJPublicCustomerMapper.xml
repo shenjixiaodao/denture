@@ -45,6 +45,57 @@
         );
     </insert>
 
+    <update id="update" parameterType="com.yuzi.denture.domain.hj.PublicCustomer">
+        update hj_public_customer
+        set id=id
+        <if test="name!=null">
+            , name=#{name}
+        </if>
+        <if test="legal_person!=null">
+            , legal_person=#{legal_person}
+        </if>
+        <if test="capital!=null">
+            , capital=#{capital}
+        </if>
+        <if test="created_date!=null">
+            , created_date=#{created_date}
+        </if>
+        <if test="status!=null">
+            , status=#{status}
+        </if>
+        <if test="city!=null">
+            , city=#{city}
+        </if>
+        <if test="country!=null">
+            , country=#{country}
+        </if>
+        <if test="property!=null">
+            , property=#{property}
+        </if>
+        <if test="company_code!=null">
+            , public_phone=#{public_phone}
+        </if>
+        <if test="public_telephone!=null">
+            , public_telephone=#{public_telephone}
+        </if>
+        <if test="public_address!=null">
+            , public_address=#{public_address}
+        </if>
+        <if test="homepage!=null">
+            , homepage=#{homepage}
+        </if>
+        <if test="public_email!=null">
+            , public_email=#{public_email}
+        </if>
+        <if test="business!=null">
+            , business=#{business}
+        </if>
+        <if test="type!=null">
+            , type=#{type}
+        </if>
+        where id=#{id}
+    </update>
+
     <resultMap id="baseRM" type="com.yuzi.denture.domain.hj.PublicCustomer">
         <result column="id" property="id" />
         <result column="name" property="name" />
@@ -89,5 +140,10 @@
     <select id="countPublicCustomers" parameterType="com.yuzi.denture.domain.hj.criteria.PublicCustomerCriteria" resultType="Long">
         select count(*) from hj_public_customer
         <include refid="criteriaWhere" />
+    </select>
+
+    <select id="findPublicCustomerByName" parameterType="String" resultMap="baseRM">
+        select * from hj_public_customer
+        where name=#{name}
     </select>
 </mapper>
