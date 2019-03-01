@@ -142,7 +142,7 @@
         <include refid="criteriaWhere" />
     </select>
 
-    <select id="findPublicCustomerByName" parameterType="String" resultMap="baseRM">
+    <select id="findByName" parameterType="String" resultMap="baseRM">
         select * from hj_public_customer
         where name=#{name}
     </select>
