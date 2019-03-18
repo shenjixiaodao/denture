@@ -66,13 +66,11 @@
             {{ scope.row.business }}
           </template>
         </el-table-column>
-        <!--<el-table-column label="订单详情" align="center">
+        <el-table-column label="客户详情" align="center">
           <template slot-scope="scope">
-            <router-link :to="'order/'+scope.row.id" class="link-type">
-              <span>详情</span>
-            </router-link>
+            <el-button type="primary" size="mini" @click="handleDetail(scope.row)">详情</el-button>
           </template>
-        </el-table-column>-->
+        </el-table-column>
       </el-table>
       <pagination :total="total" :page.sync="queryParam.page" :limit.sync="queryParam.limit" @pagination="fetchData" />
     </el-row>
@@ -80,7 +78,7 @@
 </template>
 
 <script>
-import { findPublicCustomers } from '@/api/customer'
+import { findPublicCustomers, checkNameCustomer } from '@/api/customer'
 import Pagination from '@/components/Pagination'
 
 export default {
@@ -116,6 +114,12 @@ export default {
       findPublicCustomers(this.queryParam).then(response => {
         this.total = response.totalSize
         this.list = response.data
+      })
+    },
+    handleDetail(row) {
+      checkNameCustomer({ name: row.name }).then(response => {
+        var data = response.data
+        this.$router.push({ path: 'customer/' + data.id })
       })
     }
   }

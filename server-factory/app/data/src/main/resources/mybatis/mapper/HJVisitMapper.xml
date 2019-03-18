@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuzi.denture.data.hj.VisitMapper" >
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.yuzi.denture.domain.hj.Visit">
+        INSERT INTO `hj_visit`
+        (
+        `visit_date`,
+        `customer_id`,
+        `interview`,
+        `expansion_plan`,
+        `rebuild_plan`,
+        `purchase_intended`,
+        `feedback`,
+        `atitude`
+        )
+        VALUES
+        (
+        #{visit_date},
+        #{customer_id},
+        #{interview},
+        #{expansion_plan},
+        #{rebuild_plan},
+        #{purchase_intended},
+        #{feedback},
+        #{atitude}
+        );
+    </insert>
+
+    <resultMap id="baseRM" type="com.yuzi.denture.domain.hj.Visit">
+        <result column="id" property="id" />
+        <result column="visit_date" property="visit_date" />
+        <result column="interview" property="interview" />
+        <result column="expansion_plan" property="expansion_plan" />
+        <result column="rebuild_plan" property="rebuild_plan" />
+        <result column="purchase_intended" property="purchase_intended" />
+        <result column="feedback" property="feedback" />
+        <result column="atitude" property="atitude" />
+    </resultMap>
+
+    <select id="findVisits" resultMap="baseRM">
+        select * from hj_visit
+    </select>
+
+</mapper>

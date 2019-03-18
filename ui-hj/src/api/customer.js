@@ -38,3 +38,11 @@ export function findPublicCustomers(criteria) {
     data: criteria
   })
 }
+
+export function checkNameCustomer(customer) {
+  return request({
+    url: '/hj/checkNameCustomer',
+    method: 'post',
+    data: customer
+  })
+}

@@ -9,10 +9,107 @@
               {{ customer.id }}
             </td>
           </tr>
+          <tr v-if="customer.is_customer===0">
+            <td class="td_title_prop">是否客户:</td>
+            <td class="td_content_prop">
+              否
+            </td>
+          </tr>
           <tr>
             <td class="td_title_prop">名称:</td>
             <td class="td_content_prop">
-              <el-input v-model="customer.name" />
+              <!--<el-input v-model="customer.name" />-->
+              {{ customer.name }}
+            </td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">企业性质:</td>
+            <td class="td_content_prop">
+              <el-input v-model="customer.property" />
+            </td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">开户行及账号:</td>
+            <td class="td_content_prop">
+              <el-input v-model="customer.bank_account" />
+            </td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">所在城市:</td>
+            <td class="td_content_prop">
+              <el-input v-model="customer.cities" />
+            </td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">详细地址:</td>
+            <td class="td_content_prop">
+              <el-input v-model="customer.address" />
+            </td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">发货路线、方式、费用:</td>
+            <td class="td_content_prop">
+              <el-input :autosize="{ minRows: 2, maxRows: 4}" v-model="customer.delivery" type="textarea" placeholder="请输入"/>
+            </td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">炉子功率、种类、数量:</td>
+            <td class="td_content_prop">
+              <el-input :autosize="{ minRows: 2, maxRows: 4}" v-model="customer.equipment" type="textarea" placeholder="请输入"/>
+            </td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">生产产品:</td>
+            <td class="td_content_prop">
+              <el-input v-model="customer.product" />
+            </td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">产量情况:</td>
+            <td class="td_content_prop">
+              <el-input v-model="customer.production" />
+            </td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">目前开工情况:</td>
+            <td class="td_content_prop">
+              <el-input v-model="customer.work_status" />
+            </td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">采购负责人:</td>
+            <td class="td_content_prop">
+              <el-input v-model="customer.purchase_manager" />
+            </td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">负责人联系方式:</td>
+            <td class="td_content_prop">
+              <el-input v-model="customer.purchase_contact" />
+            </td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">负责人是否为老板亲信:</td>
+            <td class="td_content_prop">
+              <el-input v-model="customer.is_trusted_manager" />
+            </td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">采购方式:</td>
+            <td class="td_content_prop">
+              <el-input v-model="customer.purchase_style" />
+            </td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">是否长期客户:</td>
+            <td class="td_content_prop">
+              <el-input v-model="customer.is_long_term" />
+            </td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">是否参观过我单位:</td>
+            <td class="td_content_prop">
+              <el-input v-model="customer.is_visit_company" />
             </td>
           </tr>
           <tr>
@@ -24,6 +121,7 @@
         </tbody>
       </table>
       <el-button type="primary" @click="modifyCustomer">修改</el-button>
+      <el-button v-if="customer.is_customer===0" type="primary" @click="convert2Customer">转为客户</el-button>
     </el-row>
     <el-row style="background:#fff;margin-left:10px;margin-top: 10px">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
@@ -106,7 +204,7 @@
         </el-tab-pane>
         <el-tab-pane label="回访记录" name="visit">
           <el-button type="primary" @click="dialogAddVisible=true">添加回访记录</el-button>
-          <el-table :data="customer.visit">
+          <el-table :data="customer.visits">
             <el-table-column type="index" />
             <el-table-column label="回访时间">
               <template slot-scope="scope">
@@ -115,7 +213,7 @@
             </el-table-column>
             <el-table-column label="接待人员">
               <template slot-scope="scope">
-                {{ scope.row.interviewe }}
+                {{ scope.row.interview }}
               </template>
             </el-table-column>
             <el-table-column label="扩能计划">
@@ -130,7 +228,7 @@
             </el-table-column>
             <el-table-column label="采购计划及意向">
               <template slot-scope="scope">
-                {{ scope.row.puchase_intended }}
+                {{ scope.row.purchase_intended }}
               </template>
             </el-table-column>
             <el-table-column label="产品使用情况反馈">
@@ -150,30 +248,30 @@
     <el-dialog :visible.sync="dialogAddVisible" title="新增回访记录">
       <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 100%;">
         <el-form-item label="回访时间" prop="title">
-          <el-date-picker v-model="customer.visit_date" type="date" placeholder="回访时间" value-format="yyyy-MM-dd" />
+          <el-date-picker v-model="visit.visit_date" type="date" placeholder="回访时间" value-format="yyyy-MM-dd" />
         </el-form-item>
         <el-form-item label="接待人员" prop="title">
-          <el-input v-model="customer.interviewe"/>
+          <el-input v-model="visit.interview"/>
         </el-form-item>
         <el-form-item label="扩能计划" prop="title">
-          <el-input v-model="customer.expansion_plan"/>
+          <el-input v-model="visit.expansion_plan"/>
         </el-form-item>
         <el-form-item label="短网改造计划" prop="title">
-          <el-input v-model="customer.rebuild_plan"/>
+          <el-input v-model="visit.rebuild_plan"/>
         </el-form-item>
         <el-form-item label="采购计划及意向" prop="title">
-          <el-input v-model="customer.puchase_intended"/>
+          <el-input v-model="visit.purchase_intended"/>
         </el-form-item>
         <el-form-item label="产品使用情况反馈" prop="title">
-          <el-input v-model="customer.feedback"/>
+          <el-input v-model="visit.feedback"/>
         </el-form-item>
         <el-form-item label="对我司的态度" prop="title">
-          <el-input v-model="customer.atitude"/>
+          <el-input v-model="visit.atitude"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogAddVisible = false">取消</el-button>
-        <el-button type="primary" @click="addCustomer">提交</el-button>
+        <el-button type="primary" @click="addVisit">提交</el-button>
       </div>
     </el-dialog>
   </div>
@@ -181,12 +279,23 @@
 
 <script>
 import { findCustomer, modifyCustomer } from '@/api/customer'
+import { newVisit } from '@/api/visit'
 import { Message } from 'element-ui'
 
 export default {
   data() {
     return {
       customer: null,
+      visit: {
+        visit_date: null,
+        interview: null,
+        expansion_plan: null,
+        rebuild_plan: null,
+        purchase_intended: null,
+        feedback: null,
+        atitude: null,
+        customer_id: null
+      },
       activeName: 'orders',
       dialogAddVisible: false
     }
@@ -214,6 +323,29 @@ export default {
     },
     handleClick(tab, event) {
       console.log(tab, event)
+    },
+    addVisit() {
+      this.visit.customer_id = this.customer.id
+      newVisit(this.visit).then(resp => {
+        findCustomer(this.customer.id).then(response => {
+          var data = response.data
+          this.customer = data
+        })
+        this.dialogAddVisible = false
+      })
+    },
+    convert2Customer() {
+      modifyCustomer({
+        id: this.customer.id,
+        is_customer: 1
+      }).then(response => {
+        this.customer.is_customer = 1
+        Message({
+          message: '加入成功',
+          type: 'success',
+          duration: 2 * 1000
+        })
+      })
     }
   }
 }

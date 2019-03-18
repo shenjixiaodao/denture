@@ -40,6 +40,22 @@ public class HJController {
         return result;
     }
 
+    @ApiOperation(value = "检查客户信息", response = Customer.class, httpMethod = "POST")
+    @ResponseBody
+    @RequestMapping(value = "/checkNameCustomer", method = POST)
+    public WebResult<Customer> checkNameCustomer(@RequestBody Customer customer) {
+        WebResult<Customer> result = WebResult.execute(res -> {
+            Customer localCustomer = service.findCustomerByName(customer.getName());
+            if(localCustomer == null) {
+                localCustomer = new Customer(customer.getName());
+                localCustomer.setIs_customer(0);
+                service.store(localCustomer);
+            }
+            res.setData(localCustomer);
+        }, "记录客户信息错误", logger);
+        return result;
+    }
+
     @ApiOperation(value = "修改客户信息", response = WebResult.class, httpMethod = "POST")
     @ResponseBody
     @RequestMapping(value = "/modifyCustomer", method = POST)
@@ -155,4 +171,15 @@ public class HJController {
         return result;
     }
 
+
+    @ApiOperation(value = "记录回访信息", response = Visit.class, httpMethod = "POST")
+    @ResponseBody
+    @RequestMapping(value = "/storeVisit", method = POST)
+    public WebResult<Visit> storeVisit(@RequestBody Visit visit) {
+        WebResult<Visit> result = WebResult.execute(res -> {
+            service.store(visit);
+            res.setData(visit);
+        }, "记录回访信息", logger);
+        return result;
+    }
 }

@@ -98,7 +98,7 @@ public class HJRepositoryTest {
     @Test
     public void parse() throws ParseException {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        try(BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/orders.csv"))) {
+        try(BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/order(2019).csv"))) {
             String line = reader.readLine();
             while ((line=reader.readLine())!=null) {
                 if(StringUtils.isEmpty(line))

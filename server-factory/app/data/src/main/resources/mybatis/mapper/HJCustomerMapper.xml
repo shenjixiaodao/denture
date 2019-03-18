@@ -3,54 +3,46 @@
 <mapper namespace="com.yuzi.denture.data.hj.CustomerMapper" >
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.yuzi.denture.domain.hj.Customer">
-        INSERT INTO `hj_customer`
+        INSERT INTO hj_customer
         (
         `name`,
-        `telephone`,
-        `contact`,
-        `contact_position`,
-        `contact_phone`,
-        `contact_is_shareholder`,
-        `contact_other`,
-        `region`,
+        `property`,
+        `bank_account`,
+        `city`,
         `address`,
-        `source`,
-        `type`,
-        `state_owned`,
-        `scale`,
-        `furnace_number`,
-        `start_date`,
-        `customer_manager`,
-        `gmt_created`,
-        `gmt_modified`,
-        `product_type`,
-        `comment`,
-        `total_unpaid_amount`
-        )
+        `delivery`,
+        `equipment`,
+        `product`,
+        `production`,
+        `work_status`,
+        `purchase_manager`,
+        `purchase_contact`,
+        `is_trusted_manager`,
+        `purchase_style`,
+        `is_long_term`,
+        `is_visit_company`,
+        `total_unpaid_amount`,
+        `is_customer`)
         VALUES
         (
         #{name},
-        #{telephone},
-        #{contact},
-        #{contact_position},
-        #{contact_phone},
-        #{contact_is_shareholder},
-        #{contact_other},
-        #{region},
+        #{property},
+        #{bank_account},
+        #{city},
         #{address},
-        #{source},
-        #{type},
-        #{state_owned},
-        #{scale},
-        #{furnace_number},
-        #{start_date},
-        #{customer_manager},
-        now(),
-        now(),
-        #{product_type},
-        #{comment},
-        #{total_unpaid_amount}
-        );
+        #{delivery},
+        #{equipment},
+        #{product},
+        #{production},
+        #{work_status},
+        #{purchase_manager},
+        #{purchase_contact},
+        #{is_trusted_manager},
+        #{purchase_style},
+        #{is_long_term},
+        #{is_visit_company},
+        #{total_unpaid_amount},
+        #{is_customer});
     </insert>
 
     <update id="update" parameterType="com.yuzi.denture.domain.hj.Customer">
@@ -59,59 +51,56 @@
         <if test="name!=null">
             , name=#{name}
         </if>
-        <if test="telephone!=null">
-            , telephone=#{telephone}
+        <if test="property!=null">
+            , property=#{property}
         </if>
-        <if test="contact!=null">
-            , contact=#{contact}
+        <if test="bank_account!=null">
+            , bank_account=#{bank_account}
         </if>
-        <if test="contact_position!=null">
-            , contact_position=#{contact_position}
-        </if>
-        <if test="contact_phone!=null">
-            , contact_phone=#{contact_phone}
-        </if>
-        <if test="contact_is_shareholder!=null">
-            , contact_is_shareholder=#{contact_is_shareholder}
-        </if>
-        <if test="contact_other!=null">
-            , contact_other=#{contact_other}
-        </if>
-        <if test="region!=null">
-            , region=#{region}
+        <if test="city!=null">
+            , city=#{city}
         </if>
         <if test="address!=null">
             , address=#{address}
         </if>
-        <if test="source!=null">
-            , source=#{source}
+        <if test="delivery!=null">
+            , delivery=#{delivery}
         </if>
-        <if test="type!=null">
-            , type=#{type}
+        <if test="equipment!=null">
+            , equipment=#{equipment}
         </if>
-        <if test="state_owned!=null">
-            , state_owned=#{state_owned}
+        <if test="product!=null">
+            , product=#{product}
         </if>
-        <if test="scale!=null">
-            , scale=#{scale}
+        <if test="production!=null">
+            , production=#{production}
         </if>
-        <if test="furnace_number!=null">
-            , furnace_number=#{furnace_number}
+        <if test="work_status!=null">
+            , work_status=#{work_status}
         </if>
-        <if test="start_date!=null">
-            , start_date=#{start_date}
+        <if test="purchase_manager!=null">
+            , purchase_manager=#{purchase_manager}
         </if>
-        <if test="customer_manager!=null">
-            , customer_manager=#{customer_manager}
+        <if test="purchase_contact!=null">
+            , purchase_contact=#{purchase_contact}
         </if>
-        <if test="product_type!=null">
-            , product_type=#{product_type}
+        <if test="is_trusted_manager!=null">
+            , is_trusted_manager=#{is_trusted_manager}
         </if>
-        <if test="comment!=null">
-            , comment=#{comment}
+        <if test="purchase_style!=null">
+            , purchase_style=#{purchase_style}
+        </if>
+        <if test="is_long_term!=null">
+            , is_long_term=#{is_long_term}
+        </if>
+        <if test="is_visit_company!=null">
+            , is_visit_company=#{is_visit_company}
         </if>
         <if test="total_unpaid_amount!=null">
             , total_unpaid_amount=#{total_unpaid_amount}
+        </if>
+        <if test="is_customer!=null">
+            , is_customer=#{is_customer}
         </if>
         where id=#{id}
     </update>
@@ -119,23 +108,25 @@
     <resultMap id="baseRM" type="com.yuzi.denture.domain.hj.Customer">
         <result column="id" property="id" />
         <result column="name" property="name" />
-        <result column="telephone" property="telephone" />
-        <result column="contact_position" property="contact_position" />
-        <result column="contact_phone" property="contact_phone" />
-        <result column="contact_is_shareholder" property="contact_is_shareholder" />
-        <result column="contact_other" property="contact_other" />
-        <result column="region" property="region" />
+        <result column="property" property="property" />
+        <result column="bank_account" property="bank_account" />
+        <result column="city" property="city" />
         <result column="address" property="address" />
-        <result column="source" property="source" />
-        <result column="type" property="type" />
-        <result column="state_owned" property="state_owned" />
-        <result column="scale" property="scale" />
-        <result column="furnace_number" property="furnace_number" />
-        <result column="start_date" property="start_date" />
-        <result column="customer_manager" property="customer_manager" />
-        <result column="product_type" property="product_type" />
+        <result column="delivery" property="delivery" />
+        <result column="equipment" property="equipment" />
+        <result column="product" property="product" />
+        <result column="production" property="production" />
+        <result column="work_status" property="work_status" />
+        <result column="purchase_manager" property="purchase_manager" />
+        <result column="purchase_contact" property="purchase_contact" />
+        <result column="is_trusted_manager" property="is_trusted_manager" />
+        <result column="purchase_style" property="purchase_style" />
+        <result column="is_long_term" property="is_long_term" />
+        <result column="is_visit_company" property="is_visit_company" />
         <result column="total_unpaid_amount" property="total_unpaid_amount" />
+        <result column="is_customer" property="is_customer" />
         <collection property="orders" resultMap="orderRM" />
+        <collection property="visits" resultMap="visitRM" />
     </resultMap>
     <resultMap id="orderRM" type="com.yuzi.denture.domain.hj.Order">
         <result column="o_id" property="id" />
@@ -154,18 +145,31 @@
         <result column="o_comment" property="comment" />
         <result column="delivery_date" property="delivery_date" />
     </resultMap>
+    <resultMap id="visitRM" type="com.yuzi.denture.domain.hj.Visit">
+        <result column="v_id" property="id" />
+        <result column="customer_id" property="customer_id" />
+        <result column="visit_date" property="visit_date" />
+        <result column="interview" property="interview" />
+        <result column="expansion_plan" property="expansion_plan" />
+        <result column="rebuild_plan" property="rebuild_plan" />
+        <result column="purchase_intended" property="purchase_intended" />
+        <result column="feedback" property="feedback" />
+        <result column="atitude" property="atitude" />
+    </resultMap>
 
     <select id="findCustomers" resultMap="baseRM">
-        select * from hj_customer;
+        select * from hj_customer where is_customer=1;
     </select>
 
     <sql id="orderSQL">
-        o.id o_id, customer_id, customer_name, created_date, deadline, salesman, paid_type, paid_amount, paid_date,
-        unpaid_amount, prepaid_amount, prepaid_date, recycled_cu, o.comment o_comment, delivery_date
+        o.id o_id, c.id customer_id, customer_name, created_date, deadline, salesman, paid_type, paid_amount, paid_date,
+        unpaid_amount, prepaid_amount, prepaid_date, recycled_cu, o.comment o_comment, delivery_date,
+        v.id v_id, visit_date, interview, expansion_plan, rebuild_plan, purchase_intended, feedback, atitude
     </sql>
     <select id="findCustomer" parameterType="Long" resultMap="baseRM">
         select c.*, <include refid="orderSQL"/> from hj_customer c
         left join hj_order o on c.id=o.customer_id
+        left join hj_visit v on c.id=v.customer_id
         where c.id=#{id}
         order by o.created_date desc
     </select>

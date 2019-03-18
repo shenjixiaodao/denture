@@ -18,6 +18,8 @@ public class HJRepositoryImpl implements HJRepository {
     PublicCustomerMapper publicCustomerMapper;
     @Autowired
     OrderMapper orderMapper;
+    @Autowired
+    VisitMapper visitMapper;
 
     @Override
     public void store(Customer customer) {
@@ -45,6 +47,11 @@ public class HJRepositoryImpl implements HJRepository {
     @Override
     public Customer findCustomer(Long id) {
         return customerMapper.findCustomer(id);
+    }
+
+    @Override
+    public Customer findCustomerByName(String name) {
+        return customerMapper.findCustomerByName(name);
     }
 
     @Override
@@ -113,5 +120,10 @@ public class HJRepositoryImpl implements HJRepository {
     @Override
     public Long countPublicCustomers(PublicCustomerCriteria criteria) {
         return publicCustomerMapper.countPublicCustomers(criteria);
+    }
+
+    @Override
+    public void store(Visit visit) {
+        visitMapper.save(visit);
     }
 }

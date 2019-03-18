@@ -10,6 +10,7 @@ public interface HJRepository {
     void update(Customer customer);
     List<Customer> findCustomers();
     Customer findCustomer(Long id);
+    Customer findCustomerByName(String name);
 
     void store(Order order);
     void update(Order order);
@@ -23,4 +24,6 @@ public interface HJRepository {
     void store(PublicCustomer customer);
     List<PublicCustomer> findPublicCustomers(PublicCustomerCriteria criteria);
     Long countPublicCustomers(PublicCustomerCriteria criteria);
+
+    void store(Visit visit);
 }

@@ -23,13 +23,31 @@ public class Customer implements Serializable {
     String is_long_term;
     String is_visit_company;
     BigDecimal total_unpaid_amount;
+    Integer is_customer;
     List<Order> orders;
+    List<Visit> visits;
 
     public Customer(String name) {
         this.name = name;
     }
 
     public Customer() {
+    }
+
+    public List<Visit> getVisits() {
+        return visits;
+    }
+
+    public void setVisits(List<Visit> visits) {
+        this.visits = visits;
+    }
+
+    public Integer getIs_customer() {
+        return is_customer;
+    }
+
+    public void setIs_customer(Integer is_customer) {
+        this.is_customer = is_customer;
     }
 
     public Long getId() {
