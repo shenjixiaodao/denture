@@ -290,7 +290,7 @@ public class ManufactureController {
             DentureCriteria criteria = new DentureCriteria();
             BeanUtils.copyProperties(criteriaVo, criteria);
             criteria.setFactoryId(factoryId);
-            dentures = repository.findDoneDentures(criteria);
+            dentures = repository.findDentures(criteria);
             List<DentureVo> vos = DentureAssembler.toVos(dentures);
             res.setData(vos);
         }, "查询订单错误", logger);
