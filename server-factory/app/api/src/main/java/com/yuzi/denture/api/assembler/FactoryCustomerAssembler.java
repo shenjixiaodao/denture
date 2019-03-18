@@ -27,6 +27,7 @@ public class FactoryCustomerAssembler {
         FactoryCustomerVo vo = new FactoryCustomerVo();
         BeanUtils.copyProperties(customer, vo);
         vo.setClinic(ClinicAssembler.toVo(customer.getClinic()));
+        vo.setPriceSheet(customer.getPriceSheet());
         return vo;
     }
 }

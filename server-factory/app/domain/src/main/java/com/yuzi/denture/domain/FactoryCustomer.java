@@ -2,6 +2,7 @@ package com.yuzi.denture.domain;
 
 
 import java.util.Date;
+import java.util.List;
 
 public class FactoryCustomer {
     
@@ -11,6 +12,8 @@ public class FactoryCustomer {
     Long factoryId;
     //clinic
     Clinic clinic;
+    //price sheet
+    List<PriceSheet> priceSheet;
     //salesmanId: Long
     Long salesmanId;
     //createdDate: Date
@@ -37,6 +40,15 @@ public class FactoryCustomer {
 
     public FactoryCustomer() {
     }
+
+    public List<PriceSheet> getPriceSheet() {
+        return priceSheet;
+    }
+
+    public void setPriceSheet(List<PriceSheet> priceSheet) {
+        this.priceSheet = priceSheet;
+    }
+
     public Integer getFixedGuarantee() {
         return fixedGuarantee;
     }

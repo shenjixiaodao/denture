@@ -55,6 +55,7 @@ public interface FactoryRepository {
     List<Denture> findWaitingDentures(DentureCriteria criteria);
     List<Denture> findDoingDentures(DentureCriteria criteria);
     List<Denture> findDoneDentures(DentureCriteria criteria);
+    List<Denture> findDentures(DentureCriteria criteria);
 
     /**
      * 综合管理人员可以通过{@param factoryId} 查询所有工厂的订单
@@ -81,4 +82,6 @@ public interface FactoryRepository {
 
     void add(ProductType type);
     void deleteProductType(Long id);
+
+    void add(PriceSheet price);
 }

@@ -277,6 +277,26 @@ public class ManufactureController {
         return result;
     }
 
+    @ApiOperation(value = "义齿查询", response = DentureVo.class, httpMethod = "POST")
+    @ResponseBody
+    @RequestMapping(value = "/queryDentures", method = POST)
+    public WebResult<List<DentureVo>> queryDentures(@RequestBody DentureCriteriaVo criteriaVo,
+                                                              HttpServletRequest request) {
+        FactoryUser user = SessionManager.Instance().user(request);
+        Long factoryId = user.getFactoryId();
+        logger.info("查询订单:criteriaVo={}", criteriaVo);
+        WebResult<List<DentureVo>> result = WebResult.execute(res -> {
+            List<Denture> dentures;
+            DentureCriteria criteria = new DentureCriteria();
+            BeanUtils.copyProperties(criteriaVo, criteria);
+            criteria.setFactoryId(factoryId);
+            dentures = repository.findDoneDentures(criteria);
+            List<DentureVo> vos = DentureAssembler.toVos(dentures);
+            res.setData(vos);
+        }, "查询订单错误", logger);
+        return result;
+    }
+
     @ApiOperation(value = "根据快递单号查询义齿信息", response = DentureVo.class, httpMethod = "GET")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "deliveryId", dataType = "String", required = true, value = "快递单号"),
@@ -582,6 +602,19 @@ public class ManufactureController {
             type.setFactoryId(factoryId);
             type.setGmtCreated(new Date());
             service.addProductType(type);
+        }, "添加产品类别异常", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "添加价目", response = WebResult.class, httpMethod = "POST")
+    @ResponseBody
+    @RequestMapping(value = "/addPriceSheet", method = POST)
+    public WebResult addPriceSheet(@RequestBody PriceSheet price, HttpServletRequest request) {
+        FactoryUser user = SessionManager.Instance().user(request);
+        Long factoryId = user.getFactoryId();
+        WebResult result = WebResult.execute(res -> {
+            price.setFactory(new Factory(factoryId));
+            service.addPriceSheet(price);
         }, "添加产品类别异常", logger);
         return result;
     }

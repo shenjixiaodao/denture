@@ -38,8 +38,9 @@ public class HJRepositoryTest {
 
     @Test
     public void parsePublicCustomer() {
-        String[] files = new String[]{ "全国黄磷生产公司.csv", "工业硅(宁夏).csv", "工业硅(青海).csv",
-                "硅铁(内蒙古).csv", "硅铁(宁夏).csv", "硅铁(甘肃).csv", "铁合金厂(新疆宁夏甘肃青海).csv"};
+        /*String[] files = new String[]{ "全国黄磷生产公司.csv", "工业硅(宁夏).csv", "工业硅(青海).csv",
+                "硅铁(内蒙古).csv", "硅铁(宁夏).csv", "硅铁(甘肃).csv", "铁合金厂(新疆宁夏甘肃青海).csv"};*/
+        String[] files = new String[]{ "铁合金厂(新疆宁夏甘肃青海).csv"};
         for(String file: files ) {
             try (BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/"+file))) {
                 String line = reader.readLine();
@@ -98,7 +99,7 @@ public class HJRepositoryTest {
     @Test
     public void parse() throws ParseException {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        try(BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/orders.csv"))) {
+        try(BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/order(2019).csv"))) {
             String line = reader.readLine();
             while ((line=reader.readLine())!=null) {
                 if(StringUtils.isEmpty(line))

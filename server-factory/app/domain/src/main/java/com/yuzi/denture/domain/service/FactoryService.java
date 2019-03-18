@@ -57,4 +57,6 @@ public interface FactoryService {
                          String comment, Long factoryId);
 
     void addProductType(ProductType type);
+
+    void addPriceSheet(PriceSheet price);
 }

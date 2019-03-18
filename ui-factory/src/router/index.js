@@ -77,6 +77,7 @@ export const asyncRouterMap = [
   comprehensiveRouter,
   {
     path: '/worker',
+    hidden: true,
     component: Layout,
     children: [
       {

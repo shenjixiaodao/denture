@@ -2,6 +2,7 @@ package com.yuzi.denture.domain.repository;
 
 import com.yuzi.denture.domain.Clinic;
 import com.yuzi.denture.domain.Denture;
+import com.yuzi.denture.domain.PriceSheet;
 import com.yuzi.denture.domain.ProductType;
 import com.yuzi.denture.domain.aggregate.*;
 import com.yuzi.denture.domain.criteria.AggregateOrderCriteria;

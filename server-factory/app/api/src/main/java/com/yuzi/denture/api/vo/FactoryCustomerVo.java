@@ -2,7 +2,10 @@ package com.yuzi.denture.api.vo;
 
 
 
+import com.yuzi.denture.domain.PriceSheet;
+
 import java.util.Date;
+import java.util.List;
 
 public class FactoryCustomerVo {
 
@@ -12,6 +15,8 @@ public class FactoryCustomerVo {
     Long factoryId;
     //clinic
     ClinicVo clinic;
+    //
+    List<PriceSheet> priceSheet;
     //salesmanId: Long
     Long salesmanId;
     //createdDate: Date
@@ -22,6 +27,14 @@ public class FactoryCustomerVo {
     Integer fixedGuarantee;
 
     public FactoryCustomerVo() {
+    }
+
+    public List<PriceSheet> getPriceSheet() {
+        return priceSheet;
+    }
+
+    public void setPriceSheet(List<PriceSheet> priceSheet) {
+        this.priceSheet = priceSheet;
     }
 
     public Long getId() {

@@ -117,7 +117,7 @@
           <el-input v-model="procedure.name" style="width: 70%;"/>
         </el-form-item>
         <el-form-item label="备注">
-          <el-input :autosize="{ minRows: 2, maxRows: 4}" v-model="procedure.comment" type="textarea" placeholder="请输入" style="width: 70%;"/>
+          <el-input :autosize="{ minRows: 2, maxs: 4}" v-model="procedure.comment" type="textarea" placeholder="请输入" style="width: 70%;"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

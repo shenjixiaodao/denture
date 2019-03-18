@@ -27,7 +27,7 @@
         </el-table-column>
         <el-table-column label="义齿详情" align="center">
           <template slot-scope="scope">
-            <router-link :to="'denture/'+scope.row.id" class="link-type">
+            <router-link :to="'/comprehensive/denture/'+scope.row.id" class="link-type">
               <span>详情</span>
             </router-link>
           </template>

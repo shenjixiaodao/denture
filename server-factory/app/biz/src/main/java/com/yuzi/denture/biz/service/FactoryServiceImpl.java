@@ -219,4 +219,9 @@ public class FactoryServiceImpl implements FactoryService {
             throw new CodeException(ResponseCode.Duplicate_Code);
         }
     }
+
+    @Override
+    public void addPriceSheet(PriceSheet price) {
+        repository.add(price);
+    }
 }

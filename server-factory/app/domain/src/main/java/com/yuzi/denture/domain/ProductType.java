@@ -1,13 +1,23 @@
 package com.yuzi.denture.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class ProductType {
     Long id;
     String name;
     String code;
+    BigDecimal basePrice;
     Long factoryId;
     Date gmtCreated;
+
+    public BigDecimal getBasePrice() {
+        return basePrice;
+    }
+
+    public void setBasePrice(BigDecimal basePrice) {
+        this.basePrice = basePrice;
+    }
 
     public Long getId() {
         return id;
