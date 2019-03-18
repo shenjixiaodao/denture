@@ -5,6 +5,7 @@ import Layout from '@/views/layout/Layout'
 const salesmanRouter = {
   path: '/salesman',
   component: Layout,
+  hidden: true,
   redirect: '/salesman/order-list',
   name: 'Salesman',
   meta: {

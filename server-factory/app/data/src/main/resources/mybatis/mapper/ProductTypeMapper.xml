@@ -8,6 +8,7 @@
         `name`,
         `code`,
         `factory_id`,
+        `base_price`,
         `gmt_created`
         )
         VALUES
@@ -15,6 +16,7 @@
         #{name},
         #{code},
         #{factoryId},
+        #{basePrice},
         #{gmtCreated}
         );
     </insert>
@@ -27,6 +29,7 @@
         <result column="id" property="id" />
         <result column="name" property="name" />
         <result column="code" property="code" />
+        <result column="base_price" property="basePrice" />
         <result column="factory_id" property="factoryId" />
         <result column="gmt_created" property="gmtCreated" />
     </resultMap>

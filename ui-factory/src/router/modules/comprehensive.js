@@ -5,15 +5,16 @@ import Layout from '@/views/layout/Layout'
 const comprehensiveRouter = {
   path: '/comprehensive',
   component: Layout,
-  redirect: '/comprehensive/dentures/wait',
+  redirect: '/comprehensive/dentures',
   name: 'Comprehensive',
   meta: {
-    title: '综合人员管理',
+    title: '综合管理',
     icon: 'table'
   },
   children: [
     {
-      path: 'dentures',
+      path: 'denture/status',
+      hidden: true,
       component: () => import('@/views/manufacture/comprehensive/wait'),
       name: 'Dentures',
       meta: { title: '义齿管理' },
@@ -57,6 +58,18 @@ const comprehensiveRouter = {
       meta: { title: '已完成义齿' }
     },*/
     {
+      path: 'dentures',
+      component: () => import('@/views/manufacture/comprehensive/dentures'),
+      name: 'Dentures',
+      meta: { title: '义齿列印', noCache: true }
+    },
+    {
+      path: 'denture/add',
+      component: () => import('@/views/manufacture/comprehensive/components/AddOrder'),
+      name: 'AddOrder',
+      meta: { title: '义齿建档', noCache: true }
+    },
+    {
       path: 'denture/:id(\\d+)',
       component: () => import('@/views/manufacture/comprehensive/components/DentureDetail'),
       name: 'ComprehensiveDentureDetail',
@@ -67,7 +80,7 @@ const comprehensiveRouter = {
       path: 'users',
       component: () => import('@/views/manufacture/comprehensive/users'),
       name: 'User',
-      meta: { title: '员工管理' }
+      meta: { title: '员工列印' }
     },
     {
       path: 'user/:id(\\d+)',
@@ -80,7 +93,7 @@ const comprehensiveRouter = {
       path: 'ingredients',
       component: () => import('@/views/manufacture/comprehensive/ingredients'),
       name: 'Ingredients',
-      meta: { title: '物料管理' }
+      meta: { title: '物料明细列印' }
     },
     {
       path: 'ingredient/:id(\\d+)',
@@ -93,7 +106,7 @@ const comprehensiveRouter = {
       path: 'customers',
       component: () => import('@/views/manufacture/comprehensive/customers'),
       name: 'Customers',
-      meta: { title: '客户列表', noCache: true }
+      meta: { title: '客户档案', noCache: true }
     },
     {
       path: 'customer/:id(\\d+)',
@@ -106,7 +119,7 @@ const comprehensiveRouter = {
       path: 'dashboard',
       component: () => import('@/views/manufacture/comprehensive/dashboard'),
       name: 'Dashboard',
-      meta: { title: '综合统计', noCache: true }
+      meta: { title: '统计表列印', noCache: true }
     },
     {
       path: 'procedure/:id(\\d+)',
@@ -119,7 +132,7 @@ const comprehensiveRouter = {
       path: 'products',
       component: () => import('@/views/manufacture/comprehensive/products'),
       name: 'Products',
-      meta: { title: '产品管理', noCache: true }
+      meta: { title: '齿类项目档案', noCache: true }
     }
   ]
 }

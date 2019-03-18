@@ -33,6 +33,8 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     private IngredientMapper ingredientMapper;
     @Autowired
     private ProductTypeMapper productTypeMapper;
+    @Autowired
+    PriceSheetMapper priceSheetMapper;
 
     @Override
     public void add(DentureOrder order) {
@@ -121,7 +123,10 @@ public class FactoryRepositoryImpl implements FactoryRepository {
 
     @Override
     public FactoryCustomer findCustomerDetail(Long id) {
-        return userMapper.findCustomerDetailById(id);
+        FactoryCustomer customer = userMapper.findCustomerDetailById(id);
+        List<PriceSheet> prices = priceSheetMapper.findPricesByCustomerId(customer.getId());
+        customer.setPriceSheet(prices);
+        return customer;
     }
 
     @Override
@@ -200,6 +205,12 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     }
 
     @Override
+    public List<Denture> findDentures(DentureCriteria criteria) {
+        List<Denture> dentures = dentureMapper.findDentures(criteria);
+        return dentures;
+    }
+
+    @Override
     public List<DentureOrder> findOrders(Long factoryId) {
         return dentureOrderMapper.findOrdersByFactoryId(factoryId);
     }
@@ -269,5 +280,10 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     @Override
     public void deleteProductType(Long id) {
         productTypeMapper.delete(id);
+    }
+
+    @Override
+    public void add(PriceSheet price) {
+        priceSheetMapper.save(price);
     }
 }

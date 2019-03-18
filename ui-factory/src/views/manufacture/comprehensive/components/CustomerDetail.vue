@@ -47,6 +47,46 @@
             </el-table-column>
           </el-table>
         </el-tab-pane>
+        <el-tab-pane label="价目表" name="PriceSheet">
+          <el-button type="primary" @click="dialogAddVisible = true">新增价目</el-button>
+          <el-table :data="customer.priceSheet" style="width: 100%;padding-top: 15px;">
+            <el-table-column label="品类代码">
+              <template slot-scope="scope">
+                {{ scope.row.productType.code }}
+              </template>
+            </el-table-column>
+            <el-table-column label="品类名称" align="center">
+              <template slot-scope="scope">
+                {{ scope.row.productType.name }}
+              </template>
+            </el-table-column>
+            <el-table-column label="应收价" align="center">
+              <template slot-scope="scope">
+                {{ scope.row.basePrice }}
+              </template>
+            </el-table-column>
+            <el-table-column label="出货价" align="center">
+              <template slot-scope="scope">
+                {{ scope.row.factoryPrice }}
+              </template>
+            </el-table-column>
+            <el-table-column label="代工价" align="center">
+              <template slot-scope="scope">
+                {{ scope.row.OEMPrice }}
+              </template>
+            </el-table-column>
+            <el-table-column label="备注" align="center">
+              <template slot-scope="scope">
+                {{ scope.row.comment }}
+              </template>
+            </el-table-column>
+            <el-table-column label="要求" align="center">
+              <template slot-scope="scope">
+                {{ scope.row.requirement }}
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
         <el-tab-pane label="业务统计" name="AggregateBusiness">
           <el-table :data="dentures" style="width: 100%;padding-top: 15px;">
             <el-table-column label="订单日期">
@@ -74,17 +114,43 @@
           </el-table>
         </el-tab-pane>
       </el-tabs>
-      <el-tab-pane label="价目表" name="PriceList">
-        价目表
-      </el-tab-pane>
     </el-row>
 
+    <el-dialog :visible.sync="dialogAddVisible" title="增加价目">
+      <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 100%;">
+        <el-form-item label="品类" prop="title">
+          <el-select v-model="priceSheet.productType.id" placeholder="请选择" clearable style="width: 90px" class="filter-item">
+            <el-option v-for="type in productType" :key="type.id" :label="type.name" :value="type.id"/>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="应收价" prop="title">
+          <el-input v-model="priceSheet.basePrice" style="width: 70%;"/>
+        </el-form-item>
+        <el-form-item label="出货价" prop="title">
+          <el-input v-model="priceSheet.factoryPrice" style="width: 70%;"/>
+        </el-form-item>
+        <el-form-item label="代工价" prop="title">
+          <el-input v-model="priceSheet.OEMPrice" style="width: 70%;"/>
+        </el-form-item>
+        <el-form-item label="备注">
+          <el-input :autosize="{ minRows: 2, maxs: 4}" v-model="priceSheet.comment" type="textarea" placeholder="请输入" style="width: 70%;"/>
+        </el-form-item>
+        <el-form-item label="要求">
+          <el-input :autosize="{ minRows: 2, maxs: 4}" v-model="priceSheet.requirement" type="textarea" placeholder="请输入" style="width: 70%;"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogAddVisible = false">取消</el-button>
+        <el-button type="primary" @click="submitPriceSheet">提交</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { customer } from '@/api/common'
-import { user, findDenturesByCustomer } from '@/api/comprehensive'
+import { Message } from 'element-ui'
+import { user, findDenturesByCustomer, addPriceSheet, findProductTypes } from '@/api/comprehensive'
 
 export default {
   data() {
@@ -92,7 +158,20 @@ export default {
       salesman: null,
       customer: null,
       activeName: 'StaffList',
-      dentures: null
+      dentures: null,
+      dialogAddVisible: false,
+      priceSheet: {
+        productType: {
+          id: null
+        },
+        customerId: null,
+        basePrice: null,
+        factoryPrice: null,
+        OEMPrice: null,
+        comment: null,
+        requirement: null
+      },
+      productType: null
     }
   },
   created() {
@@ -110,6 +189,10 @@ export default {
           this.salesman = data
         })
       })
+      findProductTypes().then(response => {
+        var data = response.data
+        this.productType = data
+      })
     },
     handleClick(tab, event) {
       if (this.activeName === 'AggregateBusiness') {
@@ -119,6 +202,27 @@ export default {
           this.dentures = response.data
         })
       }
+    },
+    submitPriceSheet() {
+      if (!this.priceSheet.productType.id) {
+        return Message({
+          message: '未选择产品类别',
+          type: 'error',
+          duration: 2 * 1000
+        })
+      }
+      this.priceSheet.customerId = this.customer.id
+      addPriceSheet(this.priceSheet).then(resp => {
+        customer(this.customer.id).then(response => {
+          var data = response.data
+          this.customer = data
+          user(this.customer.salesmanId).then(response1 => {
+            var data = response1.data
+            this.salesman = data
+          })
+          this.dialogAddVisible = false
+        })
+      })
     }
   }
 }

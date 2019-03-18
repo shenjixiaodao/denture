@@ -31,6 +31,8 @@ public class InfoRepositoryImpl implements InfoRepository {
     private DentureMapper dentureMapper;
     @Autowired
     private ProductTypeMapper productTypeMapper;
+    @Autowired
+    PriceSheetMapper priceSheetMapper;
 
     @Override
     public List<Denture> findDenturesByCriteria(DentureCriteria criteria) {

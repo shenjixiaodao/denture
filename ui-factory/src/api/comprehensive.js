@@ -8,6 +8,14 @@ export function queryDenturesByCriteria(criteria) {
   })
 }
 
+export function queryDentures(criteria) {
+  return request({
+    url: '/manufacture/queryDentures',
+    method: 'post',
+    data: criteria
+  })
+}
+
 export function queryByDeliveryId(params) {
   return request({
     url: '/manufacture/queryByDeliveryId',
@@ -191,6 +199,14 @@ export function deleteProductType(data) {
 export function salaryList(data) {
   return request({
     url: '/aggregate/salaryList',
+    method: 'post',
+    data
+  })
+}
+
+export function addPriceSheet(data) {
+  return request({
+    url: '/manufacture/addPriceSheet',
     method: 'post',
     data
   })
