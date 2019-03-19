@@ -66,6 +66,10 @@ public class Denture {
     BigDecimal basePrice;
     BigDecimal factoryPrice;
     Double estimatedDuration;
+    String patientName;
+    String deliveryId;
+    String deliveryDate;
+    String deliveryPerson;
 
     public Denture(DentureType type, String specification, Long clinicId, String comment,
                    Long factoryId, String positions, Integer number, String colorNo) {
@@ -169,6 +173,30 @@ public class Denture {
     public Denture() {
     }
 
+    public String getDeliveryId() {
+        return deliveryId;
+    }
+
+    public void setDeliveryId(String deliveryId) {
+        this.deliveryId = deliveryId;
+    }
+
+    public String getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(String deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
+    public String getDeliveryPerson() {
+        return deliveryPerson;
+    }
+
+    public void setDeliveryPerson(String deliveryPerson) {
+        this.deliveryPerson = deliveryPerson;
+    }
+
     public BigDecimal getBasePrice() {
         return basePrice;
     }
@@ -192,6 +220,14 @@ public class Denture {
     public void setFactoryPrice(String factoryPrice) {
         if (!StringUtils.isEmpty(factoryPrice))
             this.basePrice = new BigDecimal(factoryPrice);
+    }
+
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
     }
 
     public Double getEstimatedDuration() {

@@ -30,7 +30,7 @@ public class FactoryServiceImpl implements FactoryService {
                                          String positions, Denture.DentureType type, String specification, Integer number,
                                          String colorNo, FieldType fieldType, BiteLevel biteLevel,
                                          BorderType borderType, NeckType neckType, InnerCrownType innerCrowType,
-                                         PaddingType paddingType, OuterCrownType outerCrowType, String requirement) {
+                                         PaddingType paddingType, OuterCrownType outerCrowType, String requirement, String patientName) {
         //1, create denture
         Denture denture = new Denture(type, specification, clinicId, comment,
                 factoryId, positions, number, colorNo);
@@ -43,6 +43,7 @@ public class FactoryServiceImpl implements FactoryService {
         denture.setPaddingType(paddingType);
         denture.setOuterCrownType(outerCrowType);
         denture.setRequirement(requirement);
+        denture.setPatientName(patientName);
         //初始创建denture时，生成加工所需要的所有工序
         List<ProcedureGroup> groups = denture.generateProcedureGroups();
         repository.batchAddProcedureGroups(groups);
@@ -223,5 +224,15 @@ public class FactoryServiceImpl implements FactoryService {
     @Override
     public void addPriceSheet(PriceSheet price) {
         repository.add(price);
+    }
+
+    @Override
+    public void addDeliveryInfo(String dentureId, String deliveryDate, String deliveryPerson) {
+        Denture denture = new Denture();
+        denture.setId(dentureId);
+        denture.setDeliveryDate(deliveryDate);
+        denture.setDeliveryPerson(deliveryPerson);
+        denture.setDeliveryId(""+new Date().getTime());
+        repository.update(denture);
     }
 }

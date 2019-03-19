@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:5px;">
       <table style="text-align: right">
         <tbody>
           <tr>
@@ -96,9 +96,9 @@
       </table>
     </el-row>
 
-    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <el-button type="primary" @click="applyIngredient">申请用料</el-button>
-      <el-table :data="appliedIngredients" style="width: 100%;padding-top: 15px;">
+    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:15px;">
+      <div style="font-size: 15px;font-weight: bold;">物料申请列表:</div>
+      <el-table :data="appliedIngredients" style="width: 100%;">
         <el-table-column label="物料名">
           <template slot-scope="scope">
             {{ scope.row.ingredient.name }}
@@ -115,6 +115,9 @@
           </template>
         </el-table-column>
       </el-table>
+    </el-row>
+    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:15px;">
+      <el-button type="primary" @click="applyIngredient">申请用料</el-button>
     </el-row>
 
     <el-row v-if="isShow" style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
@@ -148,13 +151,28 @@
       </div>
     </el-dialog>
 
+    <el-dialog :visible.sync="dialogAddDeliveryVisible" title="记录出货信息">
+      <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 100%;">
+        <el-form-item label="出货日" prop="title">
+          <el-date-picker v-model="deliveryInfo.number" type="date" value-format="yyyy-MM-dd" />
+        </el-form-item>
+        <el-form-item label="收送员" prop="title">
+          <el-input v-model="deliveryInfo.deliveryPerson" />
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogAddDeliveryVisible = false">取消</el-button>
+        <el-button type="primary" @click="delivery">添加</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 
 </template>
 
 <script>
 import { queryByDentureId } from '@/api/common'
-import { queryIngredients, applyIngredient, review } from '@/api/comprehensive'
+import { queryIngredients, applyIngredient, review, delivery } from '@/api/comprehensive'
 
 export default {
   data() {
@@ -171,7 +189,13 @@ export default {
       appliedIngredients: [],
       isShow: false,
       dialogAddVisible: false,
-      denture: null
+      dialogAddDeliveryVisible: false,
+      denture: null,
+      deliveryInfo: {
+        dentureId: null,
+        deliveryDate: null,
+        deliveryPerson: null
+      }
     }
   },
   created() {
@@ -191,6 +215,10 @@ export default {
     review(result) {
       this.denture['reviewResult'] = result
       review(this.denture)
+      this.fetchData()
+    },
+    delivery() {
+      delivery(this.deliveryInfo)
       this.fetchData()
     },
     applyIngredient() {

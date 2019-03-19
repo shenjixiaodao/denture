@@ -211,3 +211,14 @@ export function addPriceSheet(data) {
     data
   })
 }
+
+export function delivery(data) {
+  return request({
+    url: '/manufacture/delivery',
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data
+  })
+}

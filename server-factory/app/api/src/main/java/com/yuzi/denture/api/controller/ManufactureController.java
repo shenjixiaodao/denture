@@ -76,6 +76,8 @@ public class ManufactureController {
                     required = true, value = "医生ID"),
             @ApiImplicitParam(paramType = "form", name = "comment", dataType = "string",
                     required = true, value = "医生备注"),
+            @ApiImplicitParam(paramType = "form", name = "patientName", dataType = "string",
+                    required = true, value = "患者姓名"),
             @ApiImplicitParam(paramType = "form", name = "positions", dataType = "string",
                     required = true, value = "牙位[牙位号格式: 半位[a|b|c|d]-编号[1-8], eg: a-2（表示左上半第2号）;多个使用\",\"分隔各个牙位号]"),
             @ApiImplicitParam(paramType = "form", name = "number", dataType = "Integer",
@@ -127,7 +129,7 @@ public class ManufactureController {
     })
     @ResponseBody
     @RequestMapping(value = "/recordOrder", method = POST)
-    public WebResult<DentureVo> recordOrder(Long clinicId, Long dentistId, String comment,
+    public WebResult<DentureVo> recordOrder(Long clinicId, Long dentistId, String comment, String patientName,
                                             String positions, String type, String specification, Integer number,
                                             String colorNo, String fieldType, String biteLevel, String borderType,
                                             String neckType, String innerCrownType, String paddingType,
@@ -142,11 +144,33 @@ public class ManufactureController {
                     Denture.DentureType.typeOf(type), specification, number, colorNo,
                     FieldType.typeOf(fieldType), BiteLevel.typeOf(biteLevel), BorderType.typeOf(borderType),
                     NeckType.typeOf(neckType), InnerCrownType.typeOf(innerCrownType), PaddingType.typeOf(paddingType),
-                    OuterCrownType.typeOf(outerCrownType), requirement);
+                    OuterCrownType.typeOf(outerCrownType), requirement, patientName);
             DentureVo vo = DentureAssembler.toVo(denture);
             res.setData(vo);
             logger.info("录入订单成功");
         }, "录入订单错误", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "出货", response = WebResult.class, httpMethod = "POST")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "form", name = "dentureId", dataType = "String",
+                    required = true),
+            @ApiImplicitParam(paramType = "form", name = "deliveryDate", dataType = "String",
+                    required = true),
+            @ApiImplicitParam(paramType = "form", name = "deliveryPerson", dataType = "String",
+                    required = true)
+    })
+    @ResponseBody
+    @RequestMapping(value = "/delivery", method = POST)
+    public WebResult delivery(String dentureId, String deliveryDate, String deliveryPerson,
+                                    HttpServletRequest request) {
+        FactoryUser user = SessionManager.Instance().user(request);
+        Long factoryId = user.getFactoryId();
+        Long uid = user.getId();
+        WebResult result = WebResult.execute(res -> {
+            service.addDeliveryInfo(dentureId, deliveryDate, deliveryPerson);
+        }, "录入诊所客户", logger);
         return result;
     }
 

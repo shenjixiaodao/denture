@@ -5,6 +5,9 @@
         <el-form-item label="下单方" prop="title">
           <el-cascader :options="clinics" v-model="selectedClinic" :props="props" placeholder="诊所/医生" filterable @change="handleChange"/>
         </el-form-item>
+        <el-form-item label="患者姓名" prop="title">
+          <el-input v-model="order.patientName" style="width: 70%;"/>
+        </el-form-item>
         <el-form-item label="牙位" />
         <section style="background:#fff;padding:0px 5px 10px;">
           <section class="hongbo">
@@ -189,6 +192,7 @@ export default {
       order: {
         clinicId: null,
         dentistId: null,
+        patientName: null,
         type: null,
         colorNo: null,
         specification: null,

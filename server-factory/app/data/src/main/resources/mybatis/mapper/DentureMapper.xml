@@ -25,7 +25,8 @@
         `requirement`,
         `base_price`,
         `factory_price`,
-        `estimated_duration`
+        `estimated_duration`,
+        `patient_name`
         )
         VALUES
         (
@@ -49,7 +50,8 @@
         #{requirement},
         #{basePrice},
         #{factoryPrice},
-        #{estimatedDuration}
+        #{estimatedDuration},
+        #{patientName},
         );
     </insert>
     <update id="update" parameterType="com.yuzi.denture.domain.Denture">
@@ -116,6 +118,15 @@
         <if test="estimatedDuration!=null">
             ,`estimated_duration` = #{estimatedDuration}
         </if>
+        <if test="deliveryId!=null">
+            ,`delivery_id` = #{deliveryId}
+        </if>
+        <if test="deliveryDate!=null">
+            ,`delivery_date` = #{deliveryDate}
+        </if>
+        <if test="deliveryPerson!=null">
+            ,`delivery_person` = #{deliveryPerson}
+        </if>
         WHERE `id` = #{id};
     </update>
     <resultMap id="detailRM" type="com.yuzi.denture.domain.Denture">
@@ -146,6 +157,10 @@
         <result column="base_price" property="basePrice" />
         <result column="factory_price" property="factoryPrice" />
         <result column="estimated_duration" property="estimatedDuration" />
+        <result column="patient_name" property="patientName" />
+        <result column="delivery_id" property="deliveryId" />
+        <result column="delivery_date" property="deliveryDate" />
+        <result column="delivery_person" property="deliveryPerson" />
         <association property="clinic" javaType="com.yuzi.denture.domain.Clinic">
             <result column="clinic_id" property="id" />
             <result column="clinic_name" property="name" />

@@ -23,7 +23,7 @@ public interface FactoryService {
                                   String positions, Denture.DentureType type, String specification, Integer number,
                                   String colorNo, FieldType fieldType, BiteLevel biteLevel,
                                   BorderType borderType, NeckType neckType, InnerCrownType innerCrowType,
-                                  PaddingType paddingType, OuterCrownType outerCrowType, String requirement);
+                                  PaddingType paddingType, OuterCrownType outerCrowType, String requirement, String patientName);
     /**
      * 牙模查验, {@param inspector}
      * 生产部和质量部负负责人review，后台自动根据根据工厂信息指派负责人
@@ -59,4 +59,6 @@ public interface FactoryService {
     void addProductType(ProductType type);
 
     void addPriceSheet(PriceSheet price);
+
+    void addDeliveryInfo(String dentureId, String deliveryDate, String deliveryPerson);
 }
