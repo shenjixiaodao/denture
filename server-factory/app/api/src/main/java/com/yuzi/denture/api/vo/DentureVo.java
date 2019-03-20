@@ -83,6 +83,69 @@ public class DentureVo {
     BigDecimal basePrice;
     BigDecimal factoryPrice;
     Date estimatedDuration;
+    String patientName;
+    String deliveryId;
+    String deliveryDate;
+    String deliveryPerson;
+    Long salesmanId;
+    String salesman;
+    String stage;
+
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
+    }
+
+    public String getDeliveryId() {
+        return deliveryId;
+    }
+
+    public void setDeliveryId(String deliveryId) {
+        this.deliveryId = deliveryId;
+    }
+
+    public String getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(String deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
+    public String getDeliveryPerson() {
+        return deliveryPerson;
+    }
+
+    public void setDeliveryPerson(String deliveryPerson) {
+        this.deliveryPerson = deliveryPerson;
+    }
+
+    public Long getSalesmanId() {
+        return salesmanId;
+    }
+
+    public void setSalesmanId(Long salesmanId) {
+        this.salesmanId = salesmanId;
+    }
+
+    public String getSalesman() {
+        return salesman;
+    }
+
+    public void setSalesman(String salesman) {
+        this.salesman = salesman;
+    }
+
+    public String getStage() {
+        return stage;
+    }
+
+    public void setStage(String stage) {
+        this.stage = stage;
+    }
 
     public Date getEstimatedDuration() {
         return estimatedDuration;

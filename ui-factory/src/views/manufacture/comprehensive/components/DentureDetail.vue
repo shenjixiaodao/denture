@@ -22,6 +22,18 @@
             <td class="td_title_prop">医生备注:</td><td class="td_content_prop">{{ denture.comment }}</td>
           </tr>
           <tr>
+            <td class="td_title_prop">患者姓名:</td><td class="td_content_prop">{{ denture.patientName }}</td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">业务员编号:</td><td class="td_content_prop">{{ denture.salesmanId }}</td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">业务员:</td><td class="td_content_prop">{{ denture.salesman }}</td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">阶段:</td><td class="td_content_prop">{{ denture.stage }}</td>
+          </tr>
+          <tr>
             <td class="td_title_prop">数量:</td><td class="td_content_prop">{{ denture.number }}</td>
           </tr>
           <tr>
@@ -86,11 +98,20 @@
               </router-link>
             </td>
           </tr>
-          <tr>
+          <!--<tr>
             <td class="td_title_prop">生产开始日期:</td><td class="td_content_prop"><span v-if="denture.startDate">{{ denture.startDate.split(' ',2)[0] }}</span></td>
           </tr>
           <tr>
             <td class="td_title_prop">生产结束日期:</td><td class="td_content_prop"><span v-if="denture.endDate">{{ denture.endDate.split(' ',2)[0] }}</span></td>
+          </tr>-->
+          <tr v-if="denture.deliveryId">
+            <td class="td_title_prop">出货单号:</td><td class="td_content_prop">{{ denture.deliveryId }}</td>
+          </tr>
+          <tr v-if="denture.deliveryId">
+            <td class="td_title_prop">业务员编号:</td><td class="td_content_prop">{{ denture.deliveryDate }}</td>
+          </tr>
+          <tr v-if="denture.deliveryId">
+            <td class="td_title_prop">业务员:</td><td class="td_content_prop">{{ denture.deliveryPerson }}</td>
           </tr>
         </tbody>
       </table>
@@ -118,6 +139,8 @@
     </el-row>
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:15px;">
       <el-button type="primary" @click="applyIngredient">申请用料</el-button>
+      <el-button v-if="!denture.deliveryId" type="primary" @click="dialogAddDeliveryVisible=true">出货</el-button>
+      <el-button v-if="denture.deliveryId" type="primary" @click="printDeliveryInfo">打印出货单</el-button>
     </el-row>
 
     <el-row v-if="isShow" style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
@@ -153,7 +176,7 @@
 
     <el-dialog :visible.sync="dialogAddDeliveryVisible" title="记录出货信息">
       <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 100%;">
-        <el-form-item label="出货日" prop="title">
+        <el-form-item label="出货日期" prop="title">
           <el-date-picker v-model="deliveryInfo.number" type="date" value-format="yyyy-MM-dd" />
         </el-form-item>
         <el-form-item label="收送员" prop="title">
@@ -236,6 +259,9 @@ export default {
         this.fetchData()
         this.dialogAddVisible = false
       })
+    },
+    printDeliveryInfo() {
+      //
     }
   }
 }

@@ -70,6 +70,9 @@ public class Denture {
     String deliveryId;
     String deliveryDate;
     String deliveryPerson;
+    Long salesmanId;
+    String salesman;
+    String stage;
 
     public Denture(DentureType type, String specification, Long clinicId, String comment,
                    Long factoryId, String positions, Integer number, String colorNo) {
@@ -171,6 +174,30 @@ public class Denture {
     }
 
     public Denture() {
+    }
+
+    public String getStage() {
+        return stage;
+    }
+
+    public void setStage(String stage) {
+        this.stage = stage;
+    }
+
+    public Long getSalesmanId() {
+        return salesmanId;
+    }
+
+    public void setSalesmanId(Long salesmanId) {
+        this.salesmanId = salesmanId;
+    }
+
+    public String getSalesman() {
+        return salesman;
+    }
+
+    public void setSalesman(String salesman) {
+        this.salesman = salesman;
     }
 
     public String getDeliveryId() {

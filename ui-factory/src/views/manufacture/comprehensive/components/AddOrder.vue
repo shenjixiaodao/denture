@@ -8,6 +8,17 @@
         <el-form-item label="患者姓名" prop="title">
           <el-input v-model="order.patientName" style="width: 70%;"/>
         </el-form-item>
+        <el-form-item label="业务员" prop="title">
+          <el-select v-model="order.salesmanId" filterable placeholder="业务员" class="filter-item">
+            <el-option v-for="item in users" :key="item.id" :label="item.name" :value="item.id"/>
+          </el-select>
+          <router-link :to="'/comprehensive/users'" class="link-type">
+            <span>详情</span>
+          </router-link>
+        </el-form-item>
+        <el-form-item label="阶段" prop="title">
+          <el-input v-model="order.stage" style="width: 70%;"/>
+        </el-form-item>
         <el-form-item label="牙位" />
         <section style="background:#fff;padding:0px 5px 10px;">
           <section class="hongbo">
@@ -155,7 +166,7 @@
 
 <script>
 import { addOrder, queryClinics } from '@/api/salesman'
-import { findProductTypes } from '@/api/comprehensive'
+import { findProductTypes, users } from '@/api/comprehensive'
 
 export default {
   name: 'AddUser',
@@ -193,6 +204,9 @@ export default {
         clinicId: null,
         dentistId: null,
         patientName: null,
+        salesman: null,
+        salesmanId: null,
+        stage: null,
         type: null,
         colorNo: null,
         specification: null,
@@ -215,7 +229,8 @@ export default {
         label: 'name',
         children: 'users'
       },
-      position_group: []
+      position_group: [],
+      users: null
     }
   },
   created() {
@@ -244,12 +259,24 @@ export default {
         this.specifications = data
         this.specificationOptions = data
       })
+      users().then(response => {
+        var data = response.data
+        this.users = data
+      })
     },
     addOrder() {
       // todo check console.log(this.position_group.join(','))
+      if (this.order.salesmanId) {
+        for (var item in this.users) {
+          if (item.id === this.order.salesmanId) {
+            this.order.salesman = item.name
+            break
+          }
+        }
+      }
       this.order.positions = this.position_group.join(',')
       addOrder(this.order).then(response => {
-        this.$router.push({ path: '/salesman/order-list' })
+        this.$router.push({ path: '/comprehensive/dentures' })
       })
     },
     handleChange(value) {

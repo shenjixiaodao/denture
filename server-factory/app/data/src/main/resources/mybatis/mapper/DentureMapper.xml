@@ -26,7 +26,10 @@
         `base_price`,
         `factory_price`,
         `estimated_duration`,
-        `patient_name`
+        `patient_name`,
+        `salesman_id`,
+        `salesman`,
+        `stage`
         )
         VALUES
         (
@@ -52,6 +55,9 @@
         #{factoryPrice},
         #{estimatedDuration},
         #{patientName},
+        #{salesmanId},
+        #{salesman},
+        #{stage}
         );
     </insert>
     <update id="update" parameterType="com.yuzi.denture.domain.Denture">
@@ -161,6 +167,9 @@
         <result column="delivery_id" property="deliveryId" />
         <result column="delivery_date" property="deliveryDate" />
         <result column="delivery_person" property="deliveryPerson" />
+        <result column="salesman_id" property="salesmanId" />
+        <result column="salesman" property="salesman" />
+        <result column="stage" property="stage" />
         <association property="clinic" javaType="com.yuzi.denture.domain.Clinic">
             <result column="clinic_id" property="id" />
             <result column="clinic_name" property="name" />
@@ -312,6 +321,7 @@
         )
         inner join clinic c on (d.clinic_id=c.id)
         <include refid="criteriaWhere" />
+        order by d.created_date desc
     </select>
 
     <select id="findWaitingDentures" parameterType="com.yuzi.denture.domain.criteria.DentureCriteria" resultMap="detailRM">

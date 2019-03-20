@@ -125,7 +125,13 @@ public class ManufactureController {
                             "JinBelow(金属颌侧)\n" +
                             "AllCi(舌侧全瓷边)\n"),
             @ApiImplicitParam(paramType = "form", name = "requirement", dataType = "string",
-                    required = true, value = "制作要求")
+                    required = true, value = "制作要求"),
+            @ApiImplicitParam(paramType = "form", name = "salesmanId", dataType = "long",
+                    required = true, value = "业务员ID"),
+            @ApiImplicitParam(paramType = "form", name = "salesman", dataType = "string",
+                    required = true, value = "业务员名"),
+            @ApiImplicitParam(paramType = "form", name = "stage", dataType = "string",
+                    required = true, value = "阶段")
     })
     @ResponseBody
     @RequestMapping(value = "/recordOrder", method = POST)
@@ -133,7 +139,9 @@ public class ManufactureController {
                                             String positions, String type, String specification, Integer number,
                                             String colorNo, String fieldType, String biteLevel, String borderType,
                                             String neckType, String innerCrownType, String paddingType,
-                                            String outerCrownType, String requirement, HttpServletRequest request) {
+                                            String outerCrownType, String requirement, Long salesmanId, String salesman,
+                                            String stage,
+                                            HttpServletRequest request) {
         FactoryUser user = SessionManager.Instance().user(request);
         Long factoryId = user.getFactoryId();
         logger.info("录入订单:clinicId={}, dentistId={}, comment={}, positions={}, " +
@@ -144,7 +152,7 @@ public class ManufactureController {
                     Denture.DentureType.typeOf(type), specification, number, colorNo,
                     FieldType.typeOf(fieldType), BiteLevel.typeOf(biteLevel), BorderType.typeOf(borderType),
                     NeckType.typeOf(neckType), InnerCrownType.typeOf(innerCrownType), PaddingType.typeOf(paddingType),
-                    OuterCrownType.typeOf(outerCrownType), requirement, patientName);
+                    OuterCrownType.typeOf(outerCrownType), requirement, patientName, salesmanId, salesman, stage);
             DentureVo vo = DentureAssembler.toVo(denture);
             res.setData(vo);
             logger.info("录入订单成功");
