@@ -19,7 +19,16 @@ public class ClinicVo {
     //联系方式(contact):
     @ApiModelProperty(value="诊所联系方式")
     private String contact;
+    String region;
     List<ClinicUserVo> users;
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
 
     public Long getId() {
         return id;

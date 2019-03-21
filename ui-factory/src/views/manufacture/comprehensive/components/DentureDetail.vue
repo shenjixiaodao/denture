@@ -148,13 +148,66 @@
       <el-button type="primary" @click="review('Accept')">确认生产</el-button>
     </el-row>
     <div style="visibility: hidden">
-      <table id="PrintingTable" style="text-align: right">
-        <tbody>
-          <tr>
-            <td class="td_title_prop">编号:</td><td class="td_content_prop">{{ denture.id }}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div id="PrintingTable">
+        <table style="text-align: right">
+          <tbody>
+            <tr>
+              <td class="td_title_prop">NO:</td><td class="td_content_prop">{{ denture.deliveryId }}</td>
+              <td class="td_title_prop">地区:</td><td class="td_content_prop">{{ denture.clinic.region }}</td>
+              <td class="td_title_prop">付款方式:</td><td class="td_content_prop">{{ '      ' }}</td>
+              <td class="td_title_prop">付款方式:</td><td class="td_content_prop">{{ denture.deliveryDate }}</td>
+            </tr>
+            <tr>
+              <td class="td_title_prop">客户名称:</td><td class="td_content_prop">{{ '('+denture.clinic.id+')'+denture.clinic.name }}</td>
+              <td class="td_title_prop">医生:</td><td class="td_content_prop">{{ denture.clinic.name }}</td>
+              <td class="td_title_prop">业务员:</td><td class="td_content_prop">{{ '('+denture.salesmanId+')'+denture.salesman }}</td>
+              <td class="td_title_prop">患者:</td><td class="td_content_prop">{{ denture.patientName }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <table style="text-align: right">
+          <tbody>
+            <tr>
+              <td class="td_title_prop">牙模编号</td><td class="td_title_prop">品名</td>
+              <td class="td_title_prop">数量</td><td class="td_title_prop">单价</td>
+              <td class="td_title_prop">金额</td><td class="td_title_prop">附件</td>
+              <td class="td_title_prop">说明</td>
+            </tr>
+            <tr>
+              <td class="td_title_prop">{{ denture.id }}</td><td class="td_title_prop">{{ denture.specification }}</td>
+              <td class="td_title_prop">{{ denture.number }}</td><td class="td_title_prop">{{ denture.basePrice }}</td>
+              <td class="td_title_prop">{{ '' }}</td><td class="td_title_prop">{{ '' }}</td>
+              <td class="td_title_prop">{{ '' }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <table style="text-align: right">
+          <tbody>
+            <tr>
+              <td class="td_title_prop">牙位</td><td class="td_title_prop">金额合计</td>
+              <td class="td_title_prop">会计</td><td class="td_title_prop">业务</td>
+              <td class="td_title_prop">终检</td><td class="td_title_prop">客户签收</td>
+            </tr>
+            <tr>
+              <td class="td_title_prop">{{ denture.positions }}</td><td class="td_title_prop">{{ ' ' }}</td>
+              <td class="td_title_prop">{{ '' }}</td><td class="td_title_prop">{{ '' }}</td>
+              <td class="td_title_prop">{{ '' }}</td><td class="td_title_prop">{{ '' }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <table style="text-align: right">
+          <tbody>
+            <tr>
+              <td class="td_title_prop">注册证号:</td><td class="td_title_prop">{{ denture.certification }}</td>
+            </tr>
+            <tr>
+              <td class="td_title_prop">{{ denture.positions }}</td><td class="td_title_prop">{{ ' ' }}</td>
+              <td class="td_title_prop">{{ '' }}</td><td class="td_title_prop">{{ '' }}</td>
+              <td class="td_title_prop">{{ '' }}</td><td class="td_title_prop">{{ '' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <el-dialog :visible.sync="dialogAddVisible" title="申请生产用料">

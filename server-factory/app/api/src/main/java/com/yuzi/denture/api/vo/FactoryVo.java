@@ -16,6 +16,7 @@ public class FactoryVo {
     //地址(address):
     @ApiModelProperty(value="工厂地址")
     private String address;
+    String certification;
 
     public Long getId() {
         return id;
@@ -23,6 +24,14 @@ public class FactoryVo {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCertification() {
+        return certification;
+    }
+
+    public void setCertification(String certification) {
+        this.certification = certification;
     }
 
     public String getName() {

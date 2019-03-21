@@ -10,12 +10,21 @@ public class Factory {
     private String contact;
     //地址(address):
     private String address;
+    String certification;
 
     public Factory(Long id) {
         this.id = id;
     }
 
     public Factory() {
+    }
+
+    public String getCertification() {
+        return certification;
+    }
+
+    public void setCertification(String certification) {
+        this.certification = certification;
     }
 
     public Long getId() {
