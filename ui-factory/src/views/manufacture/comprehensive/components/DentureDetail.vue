@@ -108,7 +108,7 @@
             <td class="td_title_prop">出货单号:</td><td class="td_content_prop">{{ denture.deliveryId }}</td>
           </tr>
           <tr v-if="denture.deliveryId">
-            <td class="td_title_prop">业务员编号:</td><td class="td_content_prop">{{ denture.deliveryDate }}</td>
+            <td class="td_title_prop">出货日期:</td><td class="td_content_prop">{{ denture.deliveryDate }}</td>
           </tr>
           <tr v-if="denture.deliveryId">
             <td class="td_title_prop">业务员:</td><td class="td_content_prop">{{ denture.deliveryPerson }}</td>
@@ -139,14 +139,23 @@
     </el-row>
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:15px;">
       <el-button type="primary" @click="applyIngredient">申请用料</el-button>
-      <el-button v-if="!denture.deliveryId" type="primary" @click="dialogAddDeliveryVisible=true">出货</el-button>
-      <el-button v-if="denture.deliveryId" type="primary" @click="printDeliveryInfo">打印出货单</el-button>
+      <el-button v-if="!isShow&&!denture.deliveryId" type="primary" @click="dialogAddDeliveryVisible=true">出货</el-button>
+      <el-button v-if="!isShow&&denture.deliveryId" type="primary" @click="printDeliveryInfo">打印出货单</el-button>
     </el-row>
 
     <el-row v-if="isShow" style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <el-button @click="review('Reject')">拒绝生产</el-button>
-      <el-button type="primary" @click="review('Accept')">同意生产</el-button>
+      <el-button @click="review('Reject')">废弃订单</el-button>
+      <el-button type="primary" @click="review('Accept')">确认生产</el-button>
     </el-row>
+    <div style="visibility: hidden">
+      <table id="PrintingTable" style="text-align: right">
+        <tbody>
+          <tr>
+            <td class="td_title_prop">编号:</td><td class="td_content_prop">{{ denture.id }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <el-dialog :visible.sync="dialogAddVisible" title="申请生产用料">
       <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 100%;">
@@ -177,7 +186,7 @@
     <el-dialog :visible.sync="dialogAddDeliveryVisible" title="记录出货信息">
       <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 100%;">
         <el-form-item label="出货日期" prop="title">
-          <el-date-picker v-model="deliveryInfo.number" type="date" value-format="yyyy-MM-dd" />
+          <el-date-picker v-model="deliveryInfo.deliveryDate" type="date" value-format="yyyy-MM-dd" />
         </el-form-item>
         <el-form-item label="收送员" prop="title">
           <el-input v-model="deliveryInfo.deliveryPerson" />
@@ -241,7 +250,10 @@ export default {
       this.fetchData()
     },
     delivery() {
-      delivery(this.deliveryInfo)
+      this.deliveryInfo.dentureId = this.denture.id
+      delivery(this.deliveryInfo).then(() => {
+        this.dialogAddDeliveryVisible = false
+      })
       this.fetchData()
     },
     applyIngredient() {
@@ -261,7 +273,12 @@ export default {
       })
     },
     printDeliveryInfo() {
-      //
+      var printingTable = document.getElementById('PrintingTable').innerHTML
+      var oldPage = document.body.innerHTML
+      document.body.innerHTML = printingTable
+      window.print()
+      document.body.innerHTML = oldPage
+      return false
     }
   }
 }
