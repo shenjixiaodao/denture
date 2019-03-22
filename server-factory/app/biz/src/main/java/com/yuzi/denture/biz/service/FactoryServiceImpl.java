@@ -48,6 +48,7 @@ public class FactoryServiceImpl implements FactoryService {
         denture.setSalesman(salesman);
         denture.setSalesmanId(salesmanId);
         denture.setStage(stage);
+
         //初始创建denture时，生成加工所需要的所有工序
         List<ProcedureGroup> groups = denture.generateProcedureGroups();
         repository.batchAddProcedureGroups(groups);

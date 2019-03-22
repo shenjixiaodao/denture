@@ -73,6 +73,8 @@ public class Denture {
     Long salesmanId;
     String salesman;
     String stage;
+    Long dentistId;
+    String dentist;
 
     public Denture(DentureType type, String specification, Long clinicId, String comment,
                    Long factoryId, String positions, Integer number, String colorNo) {
@@ -174,6 +176,22 @@ public class Denture {
     }
 
     public Denture() {
+    }
+
+    public Long getDentistId() {
+        return dentistId;
+    }
+
+    public void setDentistId(Long dentistId) {
+        this.dentistId = dentistId;
+    }
+
+    public String getDentist() {
+        return dentist;
+    }
+
+    public void setDentist(String dentist) {
+        this.dentist = dentist;
     }
 
     public String getStage() {

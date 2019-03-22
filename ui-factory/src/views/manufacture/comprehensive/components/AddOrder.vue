@@ -203,6 +203,7 @@ export default {
       order: {
         clinicId: null,
         dentistId: null,
+        dentist: null,
         patientName: null,
         salesman: null,
         salesmanId: null,
@@ -267,10 +268,21 @@ export default {
     addOrder() {
       // todo check console.log(this.position_group.join(','))
       if (this.order.salesmanId) {
-        for (var item in this.users) {
+        for (const item in this.users) {
           if (item.id === this.order.salesmanId) {
             this.order.salesman = item.name
             break
+          }
+        }
+      }
+      if (this.order.clinicId) {
+        for (const c in this.clinics) {
+          if (c.id === this.order.clinicId) {
+            for (const cu in this.clinics.users) {
+              if (cu.id === this.order.dentistId) {
+                this.order.dentist = cu.name
+              }
+            }
           }
         }
       }

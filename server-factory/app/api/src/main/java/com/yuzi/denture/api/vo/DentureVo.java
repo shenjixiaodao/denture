@@ -90,16 +90,23 @@ public class DentureVo {
     Long salesmanId;
     String salesman;
     String stage;
-    String certification;
     Long dentistId;
     String dentist;
 
-    public String getCertification() {
-        return certification;
+    public Long getDentistId() {
+        return dentistId;
     }
 
-    public void setCertification(String certification) {
-        this.certification = certification;
+    public void setDentistId(Long dentistId) {
+        this.dentistId = dentistId;
+    }
+
+    public String getDentist() {
+        return dentist;
+    }
+
+    public void setDentist(String dentist) {
+        this.dentist = dentist;
     }
 
     public String getPatientName() {
