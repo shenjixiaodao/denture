@@ -235,6 +235,24 @@
             <tr>
               <td class="td_title_prop">牙位:</td><td class="td_content_prop" colspan="3">{{ denture.positions }}</td>
             </tr>
+            <tr>
+              <td class="td_title_prop">种类:</td><td class="td_content_prop">{{ denture.specification }}</td>
+              <td class="td_title_prop">数量:</td><td class="td_content_prop">{{ denture.number }}</td>
+            </tr>
+            <tr>
+              <td class="td_title_prop">制造要求</td>
+            </tr>
+            <tr>
+              <td class="td_content_prop" colspan="3">{{ denture.requirement }}</td>
+            </tr>
+            <tr>
+              <td class="td_title_prop">咬合</td><td class="td_title_prop">领接</td>
+              <td class="td_title_prop">缺牙区</td><td class="td_title_prop">内冠</td>
+            </tr>
+            <tr>
+              <td class="td_title_prop">颈缘</td><td class="td_title_prop">牙冠</td>
+              <td class="td_title_prop">如空间不够</td>
+            </tr>
           </tbody>
         </table>
       </div>
