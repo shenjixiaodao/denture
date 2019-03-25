@@ -28,6 +28,14 @@ public class Clinic {
     public Clinic() {
     }
 
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
     public Long getId() {
         return id;
     }

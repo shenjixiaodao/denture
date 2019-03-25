@@ -111,7 +111,7 @@
             <td class="td_title_prop">出货日期:</td><td class="td_content_prop">{{ denture.deliveryDate }}</td>
           </tr>
           <tr v-if="denture.deliveryId">
-            <td class="td_title_prop">业务员:</td><td class="td_content_prop">{{ denture.deliveryPerson }}</td>
+            <td class="td_title_prop">收送员:</td><td class="td_content_prop">{{ denture.deliveryPerson }}</td>
           </tr>
         </tbody>
       </table>
@@ -149,14 +149,19 @@
     </el-row>
     <div style="visibility: hidden">
       <div id="PrintingTable">
+        <div style="text-align:center;font-size: 20px;font-weight: bold;">{{ denture.factory.name }}</div>
         <table style="text-align: right">
           <tbody>
             <tr>
               <td class="td_title_prop">NO:</td><td class="td_content_prop">{{ denture.deliveryId }}</td>
               <td class="td_title_prop">地区:</td><td class="td_content_prop">{{ denture.clinic.region }}</td>
               <td class="td_title_prop">付款方式:</td><td class="td_content_prop">{{ '      ' }}</td>
-              <td class="td_title_prop">付款方式:</td><td class="td_content_prop">{{ denture.deliveryDate }}</td>
+              <td class="td_title_prop">出货日期:</td><td class="td_content_prop">{{ denture.deliveryDate }}</td>
             </tr>
+          </tbody>
+        </table>
+        <table style="text-align: right">
+          <tbody>
             <tr>
               <td class="td_title_prop">客户名称:</td><td class="td_content_prop">{{ '('+denture.clinic.id+')'+denture.clinic.name }}</td>
               <td class="td_title_prop">医生:</td><td class="td_content_prop">{{ denture.clinic.name }}</td>
@@ -198,12 +203,7 @@
         <table style="text-align: right">
           <tbody>
             <tr>
-              <td class="td_title_prop">注册证号:</td><td class="td_title_prop">{{ denture.certification }}</td>
-            </tr>
-            <tr>
-              <td class="td_title_prop">{{ denture.positions }}</td><td class="td_title_prop">{{ ' ' }}</td>
-              <td class="td_title_prop">{{ '' }}</td><td class="td_title_prop">{{ '' }}</td>
-              <td class="td_title_prop">{{ '' }}</td><td class="td_title_prop">{{ '' }}</td>
+              <td class="td_title_prop">注册证号:</td><td class="td_title_prop">{{ denture.factory.certification }}</td>
             </tr>
           </tbody>
         </table>

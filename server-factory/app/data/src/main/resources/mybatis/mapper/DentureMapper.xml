@@ -297,9 +297,10 @@
     <select id="findByDentureId" parameterType="String" resultMap="detailRM">
         SELECT <include refid="baseSQL" />, <include refid="clinicSQL" />,
         <include refid="procedureGroupSQL" />, <include refid="appliedIngredientSQL" />,
-        <include refid="procedureSQL" />
+        <include refid="procedureSQL" />, <include refid="factorySQL" />
         FROM denture d inner join clinic c on (d.id=#{dentureId} and d.clinic_id=c.id)
         INNER JOIN procedure_group pg ON (pg.denture_id=#{dentureId} and d.id=pg.denture_id)
+        inner join factory f on (d.factory_id=f.id)
         LEFT JOIN `procedure` proc on pg.id=proc.pg_id
         left join applied_ingredient ai on d.id=ai.denture_id
         left join ingredient aii on ai.ingredient_id=aii.id
