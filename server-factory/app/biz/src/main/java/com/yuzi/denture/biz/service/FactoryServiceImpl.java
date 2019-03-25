@@ -24,6 +24,8 @@ public class FactoryServiceImpl implements FactoryService {
     @Autowired
     private ClinicRepository clinicRepository;
 
+    private final long DayLong = 24*60*60*1000L;
+
     @Transactional
     @Override
     public Denture createOrderAndDenture(Long clinicId, Long dentistId, Long factoryId, String comment,
@@ -31,7 +33,8 @@ public class FactoryServiceImpl implements FactoryService {
                                          String colorNo, FieldType fieldType, BiteLevel biteLevel,
                                          BorderType borderType, NeckType neckType, InnerCrownType innerCrowType,
                                          PaddingType paddingType, OuterCrownType outerCrowType, String requirement,
-                                         String patientName, Long salesmanId, String salesman, String stage) {
+                                         String patientName, Long salesmanId, String salesman, String stage,
+                                         Date receivedDate) {
         //1, create denture
         Denture denture = new Denture(type, specification, clinicId, comment,
                 factoryId, positions, number, colorNo);
@@ -47,8 +50,10 @@ public class FactoryServiceImpl implements FactoryService {
         denture.setPatientName(patientName);
         denture.setSalesman(salesman);
         denture.setSalesmanId(salesmanId);
-        denture.setStage(stage);
-
+        denture.setStage(stage+"阶段");
+        denture.setStatus(Denture.Status.Created.name());
+        denture.setReceivedDate(receivedDate);
+        denture.setEstimatedDuration(new Date(receivedDate.getTime()+Integer.parseInt(stage)*DayLong));
         //初始创建denture时，生成加工所需要的所有工序
         List<ProcedureGroup> groups = denture.generateProcedureGroups();
         repository.batchAddProcedureGroups(groups);
@@ -62,7 +67,7 @@ public class FactoryServiceImpl implements FactoryService {
 
     @Override
     @Transactional
-    public Denture inspectReviewAndStart(String dentureId, Double estimatedDuration, String basePrice,
+    public Denture inspectReviewAndStart(String dentureId, Date estimatedDuration, String basePrice,
                                          String factoryPrice, String requirement, Long inspectorId,
                                          ReviewResult reviewResult) {
         Denture denture = repository.findDenture(dentureId);
@@ -78,14 +83,20 @@ public class FactoryServiceImpl implements FactoryService {
         denture.setProReviewDate(new Date());
         denture.setQuaReview(reviewResult);
         denture.setQuaReviewDate(new Date());
+        if(reviewResult == ReviewResult.Accept) {
+            denture.setStatus(Denture.Status.Producing.name());
+        } else {
+            denture.setStatus(Denture.Status.Invalid.name());
+        }
         repository.update(denture);
         //order
         DentureOrder order = repository.findOrderByDentureId(dentureId);
         order.setReceivedDate(new Date());
-        if(reviewResult == ReviewResult.Accept)
+        if(reviewResult == ReviewResult.Accept) {
             order.setStatus(DentureOrder.Status.Accepted);
-        else
+        } else {
             order.setStatus(DentureOrder.Status.Rejected);
+        }
         repository.update(order);
         return denture;
     }
@@ -238,6 +249,7 @@ public class FactoryServiceImpl implements FactoryService {
         denture.setDeliveryDate(deliveryDate);
         denture.setDeliveryPerson(deliveryPerson);
         denture.setDeliveryId(""+new Date().getTime());
+        denture.setStatus(Denture.Status.Delivered.name());
         repository.update(denture);
     }
 }

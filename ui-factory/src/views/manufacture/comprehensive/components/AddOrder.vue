@@ -17,7 +17,12 @@
           </router-link>
         </el-form-item>
         <el-form-item label="阶段" prop="title">
-          <el-input v-model="order.stage" style="width: 70%;"/>
+          <el-select v-model="order.stage" filterable placeholder="阶段" class="filter-item">
+            <el-option v-for="item in stages" :key="item.code" :label="item.name" :value="item.code"/>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="收件时间" prop="title">
+          <el-date-picker v-model="denture.receivedDate" type="date" style="width: 200px;" placeholder="收件时间" value-format="yyyy-MM-dd" />
         </el-form-item>
         <el-form-item label="牙位" />
         <section style="background:#fff;padding:0px 5px 10px;">
@@ -208,6 +213,7 @@ export default {
         salesman: null,
         salesmanId: null,
         stage: null,
+        receivedDate: null,
         type: null,
         colorNo: null,
         specification: null,
@@ -231,7 +237,14 @@ export default {
         children: 'users'
       },
       position_group: [],
-      users: null
+      users: null,
+      stages: [
+        { code: '1', name: '1阶段' },
+        { code: '2', name: '2阶段' },
+        { code: '3', name: '3阶段' },
+        { code: '4', name: '4阶段' },
+        { code: '5', name: '5阶段' }
+      ]
     }
   },
   created() {

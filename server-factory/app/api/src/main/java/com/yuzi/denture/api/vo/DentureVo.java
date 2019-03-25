@@ -92,6 +92,24 @@ public class DentureVo {
     String stage;
     Long dentistId;
     String dentist;
+    String status;
+    Date receivedDate;
+
+    public Date getReceivedDate() {
+        return receivedDate;
+    }
+
+    public void setReceivedDate(Date receivedDate) {
+        this.receivedDate = receivedDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public Long getDentistId() {
         return dentistId;

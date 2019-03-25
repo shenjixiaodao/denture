@@ -2,7 +2,9 @@
   <div class="app-container">
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <el-input v-model="queryParams.dentureId" placeholder="产品编号" style="width: 200px;" class="filter-item" />
-      <!--<el-input v-model="queryParams.region" placeholder="区域" style="width: 200px;" class="filter-item" />-->
+      <el-select v-model="queryParams.status" filterable placeholder="入检状态" class="filter-item">
+        <el-option v-for="item in status" :key="item.code" :label="item.name" :value="item.code"/>
+      </el-select>
       <el-cascader :options="cities" :props="props" placeholder="省/市" style="width: 200px;" @change="handleChange"/>
       <el-date-picker v-model="queryParams.createdDate" type="date" style="width: 200px;" placeholder="订单创建日" value-format="yyyy-MM-dd" />
       <!--<el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" >扫描</el-button>-->
@@ -24,6 +26,11 @@
         <el-table-column label="规格">
           <template slot-scope="scope">
             {{ scope.row.specification }}
+          </template>
+        </el-table-column>
+        <el-table-column label="入检状态">
+          <template slot-scope="scope">
+            {{ scope.row.status }}
           </template>
         </el-table-column>
         <el-table-column label="义齿详情" align="center">
@@ -55,12 +62,20 @@ export default {
         label: 'name',
         children: 'sub'
       },
+      status: [
+        { code: 'Invalid', name: '无效' },
+        { code: 'Created', name: '新建' },
+        { code: 'Producing', name: '在加工' },
+        { code: 'Delivered', name: '已出货' },
+        { code: 'Remaking', name: '返厂' }
+      ],
       queryParams: {
         dentureId: null,
         patientName: null,
         createdDate: null,
         region: null,
-        clinicName: null
+        clinicName: null,
+        status: null
       }
     }
   },

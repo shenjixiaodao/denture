@@ -131,6 +131,8 @@ public class ManufactureController {
             @ApiImplicitParam(paramType = "form", name = "salesman", dataType = "string",
                     required = true, value = "业务员名"),
             @ApiImplicitParam(paramType = "form", name = "stage", dataType = "string",
+                    required = true, value = "阶段"),
+            @ApiImplicitParam(paramType = "form", name = "receivedDate", dataType = "Date",
                     required = true, value = "阶段")
     })
     @ResponseBody
@@ -140,7 +142,7 @@ public class ManufactureController {
                                             String colorNo, String fieldType, String biteLevel, String borderType,
                                             String neckType, String innerCrownType, String paddingType,
                                             String outerCrownType, String requirement, Long salesmanId, String salesman,
-                                            String stage,
+                                            String stage, Date receivedDate,
                                             HttpServletRequest request) {
         FactoryUser user = SessionManager.Instance().user(request);
         Long factoryId = user.getFactoryId();
@@ -152,7 +154,7 @@ public class ManufactureController {
                     Denture.DentureType.typeOf(type), specification, number, colorNo,
                     FieldType.typeOf(fieldType), BiteLevel.typeOf(biteLevel), BorderType.typeOf(borderType),
                     NeckType.typeOf(neckType), InnerCrownType.typeOf(innerCrownType), PaddingType.typeOf(paddingType),
-                    OuterCrownType.typeOf(outerCrownType), requirement, patientName, salesmanId, salesman, stage);
+                    OuterCrownType.typeOf(outerCrownType), requirement, patientName, salesmanId, salesman, stage, receivedDate);
             DentureVo vo = DentureAssembler.toVo(denture);
             res.setData(vo);
             logger.info("录入订单成功");
@@ -290,21 +292,22 @@ public class ManufactureController {
         FactoryUser user = SessionManager.Instance().user(request);
         Long factoryId = user.getFactoryId();
         logger.info("查询订单:criteriaVo={}", criteriaVo);
-        Denture.ComprehensiveStatus s = Denture.ComprehensiveStatus.typeOf(criteriaVo.getStatus());
+        Denture.Status s = Denture.Status.typeOf(criteriaVo.getStatus());
         WebResult<List<DentureVo>> result = WebResult.execute(res -> {
             List<Denture> dentures;
             DentureCriteria criteria = new DentureCriteria();
             BeanUtils.copyProperties(criteriaVo, criteria);
             criteria.setFactoryId(factoryId);
-            if(s==Denture.ComprehensiveStatus.Waiting) {
+            // todo
+            /*if(s==Denture.Status.Waiting) {
                 dentures = repository.findWaitingDentures(criteria);
-            } else if(s==Denture.ComprehensiveStatus.Doing) {
+            } else if(s==Denture.Status.Doing) {
                 dentures = repository.findDoingDentures(criteria);
             } else {
                 dentures = repository.findDoneDentures(criteria);
-            }
-            List<DentureVo> vos = DentureAssembler.toVos(dentures);
-            res.setData(vos);
+            }*/
+            // List<DentureVo> vos = DentureAssembler.toVos(dentures);
+            // res.setData(vos);
         }, "查询订单错误", logger);
         return result;
     }
@@ -356,7 +359,7 @@ public class ManufactureController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "form", name = "id", dataType = "string",
                     required = true, value = "义齿ID"),
-            @ApiImplicitParam(paramType = "form", name = "estimatedDuration", dataType = "double",
+            @ApiImplicitParam(paramType = "form", name = "estimatedDuration", dataType = "Date",
                     required = true, value = "预计加工时长"),
             @ApiImplicitParam(paramType = "form", name = "basePrice", dataType = "string",
                     required = true, value = "应收单价"),
@@ -369,7 +372,7 @@ public class ManufactureController {
     })
     @ResponseBody
     @RequestMapping(value = "/review", method = POST)
-    public WebResult<DentureVo> review(String id, Double estimatedDuration, String basePrice,
+    public WebResult<DentureVo> review(String id, Date estimatedDuration, String basePrice,
                                        String factoryPrice, String requirement, String reviewResult,
                                        HttpServletRequest request) {
         FactoryUser user = SessionManager.Instance().user(request);

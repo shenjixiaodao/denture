@@ -29,7 +29,8 @@
         `patient_name`,
         `salesman_id`,
         `salesman`,
-        `stage`
+        `stage`,
+        `status`
         )
         VALUES
         (
@@ -57,13 +58,17 @@
         #{patientName},
         #{salesmanId},
         #{salesman},
-        #{stage}
+        #{stage},
+        #{status}
         );
     </insert>
     <update id="update" parameterType="com.yuzi.denture.domain.Denture">
         UPDATE denture
         SET
         `id` = id
+        <if test="status!=null">
+            ,`status` = #{status}
+        </if>
         <if test="clinic!=null">
             ,`clinic_id` = #{clinic.id}
         </if>
@@ -172,6 +177,7 @@
         <result column="salesman_id" property="salesmanId" />
         <result column="salesman" property="salesman" />
         <result column="stage" property="stage" />
+        <result column="status" property="status" />
         <association property="clinic" javaType="com.yuzi.denture.domain.Clinic">
             <result column="clinic_id" property="id" />
             <result column="clinic_name" property="name" />
@@ -212,36 +218,6 @@
             <result column="ai_comment" property="comment" />
         </collection>
     </resultMap>
-
-    <!--<resultMap id="baseRM" type="com.yuzi.denture.domain.Denture">
-        <result column="id" property="id" />
-        <result column="type" property="type" />
-        <result column="specification" property="specification" />
-        <result column="factory_id" property="factory.id" />
-        <result column="number" property="number" />
-        <result column="positions" property="positions" />
-        <result column="color_no" property="colorNo" />
-        <result column="created_date" property="createdDate" />
-        <result column="model_inspector_id" property="modelInspector.id" />
-        <result column="model_inspection_date" property="modelInspectionDate" />
-        <result column="start_date" property="startDate" />
-        <result column="end_date" property="endDate" />
-        <result column="pro_review" property="proReview" />
-        <result column="pro_review_date" property="proReviewDate" />
-        <result column="qua_review" property="quaReview" />
-        <result column="qua_review_date" property="quaReviewDate" />
-        <result column="requirement" property="requirement" />
-        <result column="base_price" property="basePrice" />
-        <result column="factory_price" property="factoryPrice" />
-        <result column="estimated_duration" property="estimatedDuration" />
-        <association property="clinic" javaType="com.yuzi.denture.domain.Clinic">
-            <result column="clinic_id" property="id" />
-            <result column="clinic_name" property="name" />
-            <result column="clinic_region" property="region" />
-            <result column="clinic_address" property="address" />
-            <result column="clinic_contact" property="contact" />
-        </association>
-    </resultMap>-->
 
     <sql id="baseSQL">
         d.*
@@ -291,6 +267,9 @@
         </if>
         <if test="clinicName!=null">
             and c.name=#{clinicName}
+        </if>
+        <if test="status!=null">
+            and d.status=#{status}
         </if>
     </sql>
 

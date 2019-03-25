@@ -4,6 +4,8 @@ package com.yuzi.denture.domain.service;
 import com.yuzi.denture.domain.*;
 import com.yuzi.denture.domain.type.*;
 
+import java.util.Date;
+
 public interface FactoryService {
 
     /**
@@ -24,12 +26,13 @@ public interface FactoryService {
                                   String colorNo, FieldType fieldType, BiteLevel biteLevel,
                                   BorderType borderType, NeckType neckType, InnerCrownType innerCrowType,
                                   PaddingType paddingType, OuterCrownType outerCrowType, String requirement,
-                                  String patientName, Long salesmanId, String salesman,String stage);
+                                  String patientName, Long salesmanId, String salesman,String stage,
+                                  Date receivedDate);
     /**
      * 牙模查验, {@param inspector}
      * 生产部和质量部负负责人review，后台自动根据根据工厂信息指派负责人
      */
-    Denture inspectReviewAndStart(String dentureId, Double estimatedDuration, String basePrice,
+    Denture inspectReviewAndStart(String dentureId, Date estimatedDuration, String basePrice,
                                   String factoryPrice, String requirement, Long inspector, ReviewResult reviewResult);
 
     /**

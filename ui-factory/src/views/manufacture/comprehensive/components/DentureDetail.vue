@@ -37,9 +37,9 @@
             <td class="td_title_prop">数量:</td><td class="td_content_prop">{{ denture.number }}</td>
           </tr>
           <tr>
-            <td class="td_title_prop">加工时长:</td>
+            <td class="td_title_prop">预交时间:</td>
             <td class="td_content_prop">
-              <el-input v-model="denture.estimatedDuration" class="filter-item" />
+              <el-date-picker v-model="denture.estimatedDuration" type="date" style="width: 200px;" placeholder="预计交货日" value-format="yyyy-MM-dd" />
             </td>
           </tr>
           <tr>
@@ -148,7 +148,7 @@
       <el-button type="primary" @click="review('Accept')">确认生产</el-button>
     </el-row>
     <div style="visibility: hidden">
-      <div id="PrintingTable">
+      <div id="DeliveryTable">
         <div style="text-align:center;font-size: 20px;font-weight: bold;">{{ denture.factory.name }}</div>
         <table style="text-align: right">
           <tbody>
@@ -180,7 +180,7 @@
             </tr>
             <tr>
               <td class="td_title_prop">{{ denture.id }}</td><td class="td_title_prop">{{ denture.specification }}</td>
-              <td class="td_title_prop">{{ denture.number }}</td><td class="td_title_prop">{{ denture.basePrice }}</td>
+              <td class="td_title_prop">{{ denture.number }}</td><td class="td_title_prop">{{ '    ' }}</td>
               <td class="td_title_prop">{{ '' }}</td><td class="td_title_prop">{{ '' }}</td>
               <td class="td_title_prop">{{ '' }}</td>
             </tr>
@@ -204,6 +204,36 @@
           <tbody>
             <tr>
               <td class="td_title_prop">注册证号:</td><td class="td_title_prop">{{ denture.factory.certification }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="DentureTable">
+        <div style="text-align:center;font-size: 20px;font-weight: bold;">{{ denture.factory.name }}</div>
+        <table style="text-align: right;">
+          <tbody>
+            <tr>
+              <td class="td_title_prop">模号:</td><td class="td_content_prop">{{ denture.id }}</td>
+              <td class="td_title_prop">收件:</td><td class="td_content_prop">{{ denture.receivedDate }}</td>
+            </tr>
+            <tr>
+              <td class="td_title_prop">客户:</td><td class="td_content_prop">{{ '('+denture.clinic.id+')'+denture.clinic.name }}</td>
+              <td class="td_title_prop">预定:</td><td class="td_content_prop">{{ denture.estimatedDuration }}</td>
+            </tr>
+            <tr>
+              <td class="td_title_prop">业务员:</td><td class="td_content_prop">{{ '('+denture.salesmanId+')'+denture.salesman }}</td>
+              <td class="td_title_prop">患者:</td><td class="td_content_prop">{{ denture.patientName }}</td>
+            </tr>
+            <tr>
+              <td class="td_title_prop">阶段:</td><td class="td_content_prop">{{ denture.stage }}</td>
+              <td class="td_title_prop">色号:</td><td class="td_content_prop">{{ denture.colorNo }}</td>
+            </tr>
+            <tr>
+              <td class="td_title_prop" colspan="4"><barcode :value="denture.id" format="barcode-format" /></td>
+            </tr>
+            <tr>
+              <td class="td_title_prop">牙位:</td><td class="td_content_prop" colspan="3">{{ denture.positions }}</td>
             </tr>
           </tbody>
         </table>
@@ -258,8 +288,12 @@
 <script>
 import { queryByDentureId } from '@/api/common'
 import { queryIngredients, applyIngredient, review, delivery } from '@/api/comprehensive'
+import barcode from 'vue-barcode'
 
 export default {
+  components: {
+    'barcode': barcode
+  },
   data() {
     return {
       ingredient: {
@@ -299,8 +333,9 @@ export default {
     },
     review(result) {
       this.denture['reviewResult'] = result
-      review(this.denture)
-      this.fetchData()
+      review(this.denture).then(() => {
+        this.fetchData()
+      })
     },
     delivery() {
       this.deliveryInfo.dentureId = this.denture.id
@@ -326,9 +361,9 @@ export default {
       })
     },
     printDeliveryInfo() {
-      var printingTable = document.getElementById('PrintingTable').innerHTML
+      var deliveryTable = document.getElementById('DeliveryTable').innerHTML
       var oldPage = document.body.innerHTML
-      document.body.innerHTML = printingTable
+      document.body.innerHTML = deliveryTable
       window.print()
       document.body.innerHTML = oldPage
       return false

@@ -6,7 +6,6 @@ import org.springframework.util.StringUtils;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class Denture {
@@ -65,7 +64,7 @@ public class Denture {
     String requirement;
     BigDecimal basePrice;
     BigDecimal factoryPrice;
-    Double estimatedDuration;
+    Date estimatedDuration;
     String patientName;
     String deliveryId;
     String deliveryDate;
@@ -75,6 +74,8 @@ public class Denture {
     String stage;
     Long dentistId;
     String dentist;
+    String status;
+    Date receivedDate;
 
     public Denture(DentureType type, String specification, Long clinicId, String comment,
                    Long factoryId, String positions, Integer number, String colorNo) {
@@ -134,17 +135,17 @@ public class Denture {
         }
     }
 
-    public enum ComprehensiveStatus {
-        Waiting("待审核"), Doing("处理中"), Done("已结束");
+    public enum Status {
+        Invalid("无效"), Created("新建"), Producing("正在加工"), Delivered("已出货"), Remaking("返厂");
         private String text;
-        ComprehensiveStatus(String text) {
+        Status(String text) {
             this.text = text;
         }
         public String text() {
             return this.text;
         }
-        public static ComprehensiveStatus typeOf(String type) {
-            for(ComprehensiveStatus result : ComprehensiveStatus.values()){
+        public static Status typeOf(String type) {
+            for(Status result : Status.values()){
                 if(result.name().toLowerCase().equals(type.toLowerCase()))
                     return result;
             }
@@ -176,6 +177,22 @@ public class Denture {
     }
 
     public Denture() {
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Date getReceivedDate() {
+        return receivedDate;
+    }
+
+    public void setReceivedDate(Date receivedDate) {
+        this.receivedDate = receivedDate;
     }
 
     public Long getDentistId() {
@@ -275,11 +292,11 @@ public class Denture {
         this.patientName = patientName;
     }
 
-    public Double getEstimatedDuration() {
+    public Date getEstimatedDuration() {
         return estimatedDuration;
     }
 
-    public void setEstimatedDuration(Double estimatedDuration) {
+    public void setEstimatedDuration(Date estimatedDuration) {
         this.estimatedDuration = estimatedDuration;
     }
 

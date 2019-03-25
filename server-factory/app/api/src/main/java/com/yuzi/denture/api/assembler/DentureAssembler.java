@@ -57,6 +57,8 @@ public class DentureAssembler {
         vo.setModelInspector(FactoryUserAssembler.toVo(denture.getModelInspector()));
         vo.setAppliedIngredients(AppliedIngredientAssembler.toVos(denture.getAppliedIngredients()));
         vo.setProcedureGroups(ProcedureGroupAssembler.toVos(denture.getProcedureGroups()));
+        if(!StringUtils.isEmpty(denture.getStatus()))
+            vo.setStatus(Denture.Status.typeOf(denture.getStatus()).text());
         return vo;
     }
 
