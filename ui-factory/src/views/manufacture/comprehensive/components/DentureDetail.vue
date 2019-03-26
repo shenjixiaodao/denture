@@ -212,7 +212,7 @@
 
       <div id="DentureTable">
         <div style="text-align:center;font-size: 20px;font-weight: bold;">{{ denture.factory.name }}</div>
-        <table style="text-align: right;">
+        <table border="1" bordercolor="#000000" style="border-collapse:collapse;" class="print_table" align="center">
           <tbody>
             <tr>
               <td class="td_title_prop">模号:</td><td class="td_content_prop">{{ denture.id }}</td>
@@ -393,7 +393,7 @@ export default {
       document.body.innerHTML = deliveryTable
       window.print()
       document.body.innerHTML = oldPage
-      return false
+      return true
     },
     printDentureInfo() {
       const dentureTable = document.getElementById('DentureTable').innerHTML
@@ -401,7 +401,7 @@ export default {
       document.body.innerHTML = dentureTable
       window.print()
       document.body.innerHTML = oldPage
-      return false
+      return true
     }
   }
 }
