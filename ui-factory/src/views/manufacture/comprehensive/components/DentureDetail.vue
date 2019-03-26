@@ -139,13 +139,14 @@
     </el-row>
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:15px;">
       <el-button type="primary" @click="applyIngredient">申请用料</el-button>
+      <el-button type="primary" @click="printDentureInfo">打印入检单</el-button>
       <el-button v-if="!isShow&&!denture.deliveryId" type="primary" @click="dialogAddDeliveryVisible=true">出货</el-button>
       <el-button v-if="!isShow&&denture.deliveryId" type="primary" @click="printDeliveryInfo">打印出货单</el-button>
     </el-row>
 
     <el-row v-if="isShow" style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <el-button @click="review('Reject')">废弃订单</el-button>
-      <el-button type="primary" @click="review('Accept')">确认生产</el-button>
+      <el-button type="primary" @click="review('Accept')">入检确认</el-button>
     </el-row>
     <div style="visibility: hidden">
       <div id="DeliveryTable">
@@ -230,7 +231,7 @@
               <td class="td_title_prop">色号:</td><td class="td_content_prop">{{ denture.colorNo }}</td>
             </tr>
             <tr>
-              <td class="td_title_prop" colspan="4"><barcode :value="denture.id" format="barcode-format" /></td>
+              <td class="td_title_prop" colspan="4"><barcode :value="denture.id" height="35px" font-size="15px"/></td>
             </tr>
             <tr>
               <td class="td_title_prop">牙位:</td><td class="td_content_prop" colspan="3">{{ denture.positions }}</td>
@@ -240,18 +241,26 @@
               <td class="td_title_prop">数量:</td><td class="td_content_prop">{{ denture.number }}</td>
             </tr>
             <tr>
-              <td class="td_title_prop">制造要求</td>
+              <td class="td_title_prop" colspan="4">制造要求</td>
             </tr>
             <tr>
-              <td class="td_content_prop" colspan="3">{{ denture.requirement }}</td>
+              <td class="td_content_prop" colspan="4">{{ denture.requirement }}</td>
             </tr>
             <tr>
               <td class="td_title_prop">咬合</td><td class="td_title_prop">领接</td>
-              <td class="td_title_prop">缺牙区</td><td class="td_title_prop">内冠</td>
+              <td class="td_title_prop">内冠</td><td class="td_title_prop">牙冠</td>
             </tr>
             <tr>
-              <td class="td_title_prop">颈缘</td><td class="td_title_prop">牙冠</td>
-              <td class="td_title_prop">如空间不够</td>
+              <td class="td_title_prop">{{ denture.biteLevel }}</td><td class="td_title_prop">{{ denture.borderType }}</td>
+              <td class="td_title_prop">{{ denture.innerCrownType }}</td><td class="td_title_prop">{{ denture.outerCrownType }}</td>
+            </tr>
+            <tr>
+              <td class="td_title_prop">颈缘</td><td class="td_title_prop">缺牙区</td>
+              <td class="td_title_prop" colspan="2">如空间不够</td>
+            </tr>
+            <tr>
+              <td class="td_title_prop">{{ denture.neckType }}</td><td class="td_title_prop">{{ denture.fieldType }}</td>
+              <td class="td_title_prop" colspan="2">{{ denture.paddingType }}</td>
             </tr>
           </tbody>
         </table>
@@ -379,9 +388,17 @@ export default {
       })
     },
     printDeliveryInfo() {
-      var deliveryTable = document.getElementById('DeliveryTable').innerHTML
-      var oldPage = document.body.innerHTML
+      const deliveryTable = document.getElementById('DeliveryTable').innerHTML
+      const oldPage = document.body.innerHTML
       document.body.innerHTML = deliveryTable
+      window.print()
+      document.body.innerHTML = oldPage
+      return false
+    },
+    printDentureInfo() {
+      const dentureTable = document.getElementById('DentureTable').innerHTML
+      const oldPage = document.body.innerHTML
+      document.body.innerHTML = dentureTable
       window.print()
       document.body.innerHTML = oldPage
       return false
