@@ -154,7 +154,8 @@ public class ManufactureController {
                     Denture.DentureType.typeOf(type), specification, number, colorNo,
                     FieldType.typeOf(fieldType), BiteLevel.typeOf(biteLevel), BorderType.typeOf(borderType),
                     NeckType.typeOf(neckType), InnerCrownType.typeOf(innerCrownType), PaddingType.typeOf(paddingType),
-                    OuterCrownType.typeOf(outerCrownType), requirement, patientName, salesmanId, salesman, stage, receivedDate);
+                    OuterCrownType.typeOf(outerCrownType), requirement, patientName, salesmanId, salesman, stage,
+                    receivedDate, user.getId(), user.getName());
             DentureVo vo = DentureAssembler.toVo(denture);
             res.setData(vo);
             logger.info("录入订单成功");

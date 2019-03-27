@@ -73,7 +73,7 @@
         </table>
       </div>
     </el-row>
-    <el-row style="background:#fff;padding:5px 5px 0;margin-bottom:32px;">
+    <!--<el-row style="background:#fff;padding:5px 5px 0;margin-bottom:32px;">
       <span>权限:</span>
       <table cellspacing="15">
         <tr>
@@ -107,7 +107,7 @@
           </td>
         </tr>
       </table>
-    </el-row>
+    </el-row>-->
     <el-row style="background:#fff;padding:5px 5px 0;margin-bottom:32px;">
       <el-button :loading="loading" type="primary" @click="modifyUser">修改</el-button>
     </el-row>

@@ -151,7 +151,7 @@
     <div style="visibility: hidden">
       <div id="DeliveryTable">
         <div style="text-align:center;font-size: 20px;font-weight: bold;">{{ denture.factory.name }}</div>
-        <table style="text-align: right">
+        <table align="center">
           <tbody>
             <tr>
               <td class="td_title_prop">NO:</td><td class="td_content_prop">{{ denture.deliveryId }}</td>
@@ -161,7 +161,7 @@
             </tr>
           </tbody>
         </table>
-        <table style="text-align: right">
+        <table border="1" bordercolor="#000000" style="border-collapse:collapse;" class="print_table" align="center">
           <tbody>
             <tr>
               <td class="td_title_prop">客户名称:</td><td class="td_content_prop">{{ '('+denture.clinic.id+')'+denture.clinic.name }}</td>
@@ -169,25 +169,21 @@
               <td class="td_title_prop">业务员:</td><td class="td_content_prop">{{ '('+denture.salesmanId+')'+denture.salesman }}</td>
               <td class="td_title_prop">患者:</td><td class="td_content_prop">{{ denture.patientName }}</td>
             </tr>
-          </tbody>
-        </table>
-        <table style="text-align: right">
-          <tbody>
             <tr>
-              <td class="td_title_prop">牙模编号</td><td class="td_title_prop">品名</td>
+              <td class="td_title_prop" colspan="2">牙模编号</td><td class="td_title_prop">品名</td>
               <td class="td_title_prop">数量</td><td class="td_title_prop">单价</td>
               <td class="td_title_prop">金额</td><td class="td_title_prop">附件</td>
               <td class="td_title_prop">说明</td>
             </tr>
             <tr>
-              <td class="td_title_prop">{{ denture.id }}</td><td class="td_title_prop">{{ denture.specification }}</td>
+              <td class="td_title_prop" colspan="2">{{ denture.id }}</td><td class="td_title_prop">{{ denture.specification }}</td>
               <td class="td_title_prop">{{ denture.number }}</td><td class="td_title_prop">{{ '    ' }}</td>
               <td class="td_title_prop">{{ '' }}</td><td class="td_title_prop">{{ '' }}</td>
               <td class="td_title_prop">{{ '' }}</td>
             </tr>
           </tbody>
         </table>
-        <table style="text-align: right">
+        <table border="1" bordercolor="#000000" style="border-collapse:collapse;" class="print_table" align="center">
           <tbody>
             <tr>
               <td class="td_title_prop">牙位</td><td class="td_title_prop">金额合计</td>
@@ -201,7 +197,7 @@
             </tr>
           </tbody>
         </table>
-        <table style="text-align: right">
+        <table align="center">
           <tbody>
             <tr>
               <td class="td_title_prop">注册证号:</td><td class="td_title_prop">{{ denture.factory.certification }}</td>
@@ -231,7 +227,7 @@
               <td class="td_title_prop">色号:</td><td class="td_content_prop">{{ denture.colorNo }}</td>
             </tr>
             <tr>
-              <td class="td_title_prop" colspan="4"><barcode :value="denture.id" height="35px" font-size="15px"/></td>
+              <td style="text-align: center" colspan="4"><barcode :value="denture.id" height="35px" font-size="15px"/></td>
             </tr>
             <tr>
               <td class="td_title_prop">牙位:</td><td class="td_content_prop" colspan="3">{{ denture.positions }}</td>
@@ -241,26 +237,37 @@
               <td class="td_title_prop">数量:</td><td class="td_content_prop">{{ denture.number }}</td>
             </tr>
             <tr>
-              <td class="td_title_prop" colspan="4">制造要求</td>
+              <td class="td_title_prop">制造要求</td>
+              <td class="td_content_prop" colspan="3">{{ denture.requirement }}</td>
             </tr>
             <tr>
-              <td class="td_content_prop" colspan="4">{{ denture.requirement }}</td>
+              <td class="td_title_prop">咬合</td><td class="td_content_prop">{{ denture.biteLevel }}</td>
+              <td class="td_title_prop">领接</td><td class="td_content_prop">{{ denture.borderType }}</td>
             </tr>
             <tr>
-              <td class="td_title_prop">咬合</td><td class="td_title_prop">领接</td>
-              <td class="td_title_prop">内冠</td><td class="td_title_prop">牙冠</td>
+              <td class="td_title_prop">内冠</td><td class="td_content_prop">{{ denture.innerCrownType }}</td>
+              <td class="td_title_prop">牙冠</td><td class="td_content_prop">{{ denture.outerCrownType }}</td>
             </tr>
             <tr>
-              <td class="td_title_prop">{{ denture.biteLevel }}</td><td class="td_title_prop">{{ denture.borderType }}</td>
-              <td class="td_title_prop">{{ denture.innerCrownType }}</td><td class="td_title_prop">{{ denture.outerCrownType }}</td>
+              <td class="td_title_prop">颈缘</td><td class="td_content_prop">{{ denture.neckType }}</td>
+              <td class="td_title_prop">缺牙区</td><td class="td_content_prop">{{ denture.fieldType }}</td>
             </tr>
             <tr>
-              <td class="td_title_prop">颈缘</td><td class="td_title_prop">缺牙区</td>
-              <td class="td_title_prop" colspan="2">如空间不够</td>
+              <td class="td_title_prop">如空间不够</td>
+              <td class="td_content_prop" colspan="3">{{ denture.paddingType }}</td>
             </tr>
             <tr>
-              <td class="td_title_prop">{{ denture.neckType }}</td><td class="td_title_prop">{{ denture.fieldType }}</td>
-              <td class="td_title_prop" colspan="2">{{ denture.paddingType }}</td>
+              <td style="color: #999;font-size: 14px;font-weight: bold;text-align: center">备注</td>
+              <td style="height:200px;" colspan="3" />
+            </tr>
+          </tbody>
+        </table>
+        <table align="center">
+          <tbody>
+            <tr>
+              <td class="td_title_prop">入检员:</td><td class="td_content_prop">{{ denture.creator }}</td>
+              <td class="td_title_prop">印表日期:</td><td class="td_content_prop">{{ new Date().Format("yyyy/MM/dd hh:mm") }}</td>
+              <td class="td_title_prop">确认:</td><td class="td_content_prop">{{ '      ' }}</td>
             </tr>
           </tbody>
         </table>

@@ -89,8 +89,8 @@ export default {
       },
       status: [
         { code: 'Invalid', name: '无效' },
-        { code: 'Created', name: '新建' },
-        { code: 'Producing', name: '在加工' },
+        { code: 'Created', name: '新入检' },
+        { code: 'Producing', name: '待出货' },
         { code: 'Delivered', name: '已出货' },
         { code: 'Remaking', name: '返厂' }
       ],

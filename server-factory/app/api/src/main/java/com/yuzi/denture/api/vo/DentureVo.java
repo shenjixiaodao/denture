@@ -94,6 +94,24 @@ public class DentureVo {
     String dentist;
     String status;
     Date receivedDate;
+    Long creatorId;
+    String creator;
+
+    public Long getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(Long creatorId) {
+        this.creatorId = creatorId;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
 
     public Date getReceivedDate() {
         return receivedDate;

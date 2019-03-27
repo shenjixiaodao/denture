@@ -76,6 +76,8 @@ public class Denture {
     String dentist;
     String status;
     Date receivedDate;
+    Long creatorId;
+    String creator;
 
     public Denture(DentureType type, String specification, Long clinicId, String comment,
                    Long factoryId, String positions, Integer number, String colorNo) {
@@ -136,7 +138,7 @@ public class Denture {
     }
 
     public enum Status {
-        Invalid("无效"), Created("新建"), Producing("正在加工"), Delivered("已出货"), Remaking("返厂");
+        Invalid("无效"), Created("新入检"), Producing("待出货"), Delivered("已出货"), Remaking("返厂");
         private String text;
         Status(String text) {
             this.text = text;
@@ -177,6 +179,22 @@ public class Denture {
     }
 
     public Denture() {
+    }
+
+    public Long getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(Long creatorId) {
+        this.creatorId = creatorId;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 
     public String getStatus() {

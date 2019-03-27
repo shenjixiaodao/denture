@@ -34,7 +34,7 @@ public class FactoryServiceImpl implements FactoryService {
                                          BorderType borderType, NeckType neckType, InnerCrownType innerCrowType,
                                          PaddingType paddingType, OuterCrownType outerCrowType, String requirement,
                                          String patientName, Long salesmanId, String salesman, String stage,
-                                         Date receivedDate) {
+                                         Date receivedDate, Long creatorId, String creator) {
         //1, create denture
         Denture denture = new Denture(type, specification, clinicId, comment,
                 factoryId, positions, number, colorNo);
@@ -54,6 +54,8 @@ public class FactoryServiceImpl implements FactoryService {
         denture.setStatus(Denture.Status.Created.name());
         denture.setReceivedDate(receivedDate);
         denture.setEstimatedDuration(new Date(receivedDate.getTime()+Integer.parseInt(stage)*DayLong));
+        denture.setCreator(creator);
+        denture.setCreatorId(creatorId);
         //初始创建denture时，生成加工所需要的所有工序
         List<ProcedureGroup> groups = denture.generateProcedureGroups();
         repository.batchAddProcedureGroups(groups);
