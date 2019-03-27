@@ -401,7 +401,6 @@ export default {
       document.body.innerHTML = dentureTable
       window.print()
       document.body.innerHTML = oldPage
-      return false
     }
   }
 }

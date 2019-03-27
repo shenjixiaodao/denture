@@ -22,7 +22,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="收件时间" prop="title">
-          <el-date-picker v-model="denture.receivedDate" type="date" style="width: 200px;" placeholder="收件时间" value-format="yyyy-MM-dd" />
+          <el-date-picker v-model="order.receivedDate" type="date" style="width: 200px;" placeholder="收件时间" value-format="yyyy-MM-dd" />
         </el-form-item>
         <el-form-item label="牙位" />
         <section style="background:#fff;padding:0px 5px 10px;">
