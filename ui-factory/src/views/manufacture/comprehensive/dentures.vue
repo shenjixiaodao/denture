@@ -2,10 +2,10 @@
   <div class="app-container">
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <el-input v-model="queryParams.dentureId" placeholder="产品编号" style="width: 200px;" class="filter-item" />
-      <el-select v-model="queryParams.status" filterable placeholder="入检状态" class="filter-item">
+      <el-select v-model="queryParams.status" filterable clearable placeholder="入检状态" class="filter-item">
         <el-option v-for="item in status" :key="item.code" :label="item.name" :value="item.code"/>
       </el-select>
-      <el-cascader :options="cities" :props="props" placeholder="省/市" style="width: 200px;" @change="handleChange"/>
+      <el-cascader :options="cities" :props="props" filterable clearable placeholder="省/市" style="width: 200px;" @change="handleChange"/>
       <el-date-picker v-model="queryParams.createdDate" type="date" style="width: 200px;" placeholder="订单创建日" value-format="yyyy-MM-dd" />
       <!--<el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" >扫描</el-button>-->
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="search()" >搜索</el-button>
@@ -13,9 +13,9 @@
     </el-row>
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <el-table :data="list" style="width: 100%;padding-top: 15px;">
-        <el-table-column label="订单日期">
+        <el-table-column label="义齿编号">
           <template slot-scope="scope">
-            {{ scope.row.createdDate.split(' ',2)[0] }}
+            {{ scope.row.id }}
           </template>
         </el-table-column>
         <el-table-column label="类型">
@@ -23,14 +23,39 @@
             {{ scope.row.type }}
           </template>
         </el-table-column>
-        <el-table-column label="规格">
+        <el-table-column label="品类">
           <template slot-scope="scope">
             {{ scope.row.specification }}
+          </template>
+        </el-table-column>
+        <el-table-column label="定制方">
+          <template slot-scope="scope">
+            {{ scope.row.clinic.name }}
+          </template>
+        </el-table-column>
+        <el-table-column label="入检日期">
+          <template slot-scope="scope">
+            {{ scope.row.createdDate | time2DateStr }}
           </template>
         </el-table-column>
         <el-table-column label="入检状态">
           <template slot-scope="scope">
             {{ scope.row.status }}
+          </template>
+        </el-table-column>
+        <el-table-column label="阶段">
+          <template slot-scope="scope">
+            {{ scope.row.stage }}
+          </template>
+        </el-table-column>
+        <el-table-column label="医生">
+          <template slot-scope="scope">
+            {{ scope.row.dentist }}
+          </template>
+        </el-table-column>
+        <el-table-column label="患者">
+          <template slot-scope="scope">
+            {{ scope.row.patientName }}
           </template>
         </el-table-column>
         <el-table-column label="义齿详情" align="center">

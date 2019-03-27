@@ -238,8 +238,13 @@ public class FactoryServiceImpl implements FactoryService {
     }
 
     @Override
+    @Transactional
     public void addPriceSheet(PriceSheet price) {
-        repository.add(price);
+        try {
+            repository.add(price);
+        } catch (DuplicateKeyException dke) {
+            throw new CodeException(ResponseCode.Duplicate_PriceSheet);
+        }
     }
 
     @Override
