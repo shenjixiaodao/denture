@@ -33,6 +33,7 @@ public interface FactoryRepository {
     FactoryCustomer findCustomerDetail(Long id);
     List<FactoryCustomer> findCustomersByUid(Long uid);
     List<FactoryCustomer> findCustomers(CustomerCriteria criteria);
+    Integer countCustomers(CustomerCriteria criteria);
     FactoryUser findUser(String contact);
     FactoryUser findUser(Long uid);
     List<FactoryUser> findUsers(Long factoryId);

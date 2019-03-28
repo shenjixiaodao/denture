@@ -141,6 +141,11 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     }
 
     @Override
+    public Integer countCustomers(CustomerCriteria criteria) {
+        return userMapper.countCustomers(criteria);
+    }
+
+    @Override
     public FactoryUser findUser(String contact) {
         return userMapper.findUserByContact(contact);
     }

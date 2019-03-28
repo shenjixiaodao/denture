@@ -275,16 +275,16 @@ public class ManufactureController {
     @ApiOperation(value = "查询工厂所有客户列表", response = FactoryCustomerVo.class, httpMethod = "POST")
     @ResponseBody
     @RequestMapping(value = "/customers", method = POST)
-    public WebResult<List<FactoryCustomer>> customers(@RequestBody CustomerCriteria criteria, HttpServletRequest request) {
+    public WebPageResult<List<FactoryCustomer>> customers(@RequestBody CustomerCriteria criteria, HttpServletRequest request) {
         FactoryUser user = SessionManager.Instance().user(request);
         Long factoryId = user.getFactoryId();
-        WebResult<List<FactoryCustomer>> result = WebResult.execute(res -> {
-            List<FactoryCustomer> customers = repository.findCustomers(criteria);
-            List<FactoryCustomerVo> vos = FactoryCustomerAssembler.toVos(customers);
-            res.setData(vos);
-            logger.info("查询客户列表成功");
-        }, "查询客户列表错误", logger);
-        return result;
+        criteria.setFactoryId(factoryId);
+        WebPageResult<List<FactoryCustomer>> res = new WebPageResult<>();
+        List<FactoryCustomer> customers = repository.findCustomers(criteria);
+        Integer total = repository.countCustomers(criteria);
+        res.setData(customers);
+        res.setTotalSize(total);
+        return res;
     }
 
     @ApiOperation(value = "义齿综合管理查询", response = DentureVo.class, httpMethod = "POST")
