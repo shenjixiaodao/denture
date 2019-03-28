@@ -132,7 +132,7 @@ const comprehensiveRouter = {
       path: 'products',
       component: () => import('@/views/manufacture/comprehensive/products'),
       name: 'Products',
-      meta: { title: '齿类项目档案', noCache: true }
+      meta: { title: '品类档案', noCache: true }
     }
   ]
 }

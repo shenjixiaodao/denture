@@ -194,7 +194,7 @@ public class FactoryRepositoryImpl implements FactoryRepository {
 
     @Override
     public Integer countDentures(DentureCriteria criteria) {
-        return null;
+        return dentureMapper.countDentures(criteria);
     }
 
     @Override

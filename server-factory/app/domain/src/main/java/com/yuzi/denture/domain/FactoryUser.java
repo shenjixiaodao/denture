@@ -55,6 +55,7 @@ public class FactoryUser {
      GroupType groupType;
     //joinDate:
      Date joinDate;
+    Date expiredDate;
     List<FactoryRole> roles;
     String avatar;
     Boolean marital;
@@ -123,6 +124,14 @@ public class FactoryUser {
         for(String role:strs) {
             this.roles.add(new FactoryRole(this.id, FactoryRole.Role.typeOf(role)));
         }
+    }
+
+    public Date getExpiredDate() {
+        return expiredDate;
+    }
+
+    public void setExpiredDate(Date expiredDate) {
+        this.expiredDate = expiredDate;
     }
 
     public Boolean getMarital() {

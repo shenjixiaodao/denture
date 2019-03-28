@@ -20,8 +20,13 @@
               <td class="td_title_prop">所在组:</td><td class="td_content_prop">{{ user.groupType }}</td>
             </tr>
             <tr>
-              <td class="td_title_prop">入职时间:</td><td class="td_content_prop">
+              <td class="td_title_prop">到岗时间:</td><td class="td_content_prop">
                 <el-date-picker v-model="user.joinDate" type="date" value-format="yyyy-MM-dd" placeholder="选择日期时间" style="width: 70%;"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="td_title_prop">合同到期:</td><td class="td_content_prop">
+                <el-date-picker v-model="user.expiredDate" type="date" value-format="yyyy-MM-dd" placeholder="选择日期时间" style="width: 70%;"/>
               </td>
             </tr>
             <tr>
@@ -73,7 +78,7 @@
         </table>
       </div>
     </el-row>
-    <!--<el-row style="background:#fff;padding:5px 5px 0;margin-bottom:32px;">
+    <el-row style="background:#fff;padding:5px 5px 0;margin-bottom:32px;">
       <span>权限:</span>
       <table cellspacing="15">
         <tr>
@@ -107,7 +112,7 @@
           </td>
         </tr>
       </table>
-    </el-row>-->
+    </el-row>
     <el-row style="background:#fff;padding:5px 5px 0;margin-bottom:32px;">
       <el-button :loading="loading" type="primary" @click="modifyUser">修改</el-button>
     </el-row>

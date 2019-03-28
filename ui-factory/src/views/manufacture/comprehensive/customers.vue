@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-row style="background:#fff;margin-bottom:20px;">
-      <el-button type="primary" @click="dialogAddVisible = true">新增客户</el-button>
+      <el-button type="primary" @click="dialogAddVisible = true">客户建档</el-button>
       <el-table :data="list" style="width: 100%;padding-top: 15px;">
         <el-table-column label="编号">
           <template slot-scope="scope">
@@ -61,7 +61,8 @@
 </template>
 
 <script>
-import { customers, recordCustomer } from '@/api/comprehensive'
+import { customers } from '@/api/comprehensive'
+import { recordCustomer } from '@/api/salesman'
 import { cities } from '@/utils/allCities'
 import Pagination from '@/components/Pagination'
 
@@ -97,11 +98,9 @@ export default {
   },
   methods: {
     fetchData() {
-      customers().then(response => {
-        var data = response.data
-        console.log(data)
-        this.total = data.totalSize
-        this.list = data
+      customers(this.queryParams).then(response => {
+        this.total = response.totalSize
+        this.list = response.data
       })
     },
     addCustomer() {

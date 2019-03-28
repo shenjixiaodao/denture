@@ -87,11 +87,15 @@ public class FactoryUserController {
                     "        Management(\"管理层\")]"),
             @ApiImplicitParam(paramType = "form", name = "joinDate", dataType = "string",
                     value = "加入公司时间，格式=[YYYY-mm-dd]")
+            ,
+            @ApiImplicitParam(paramType = "form", name = "expiredDate", dataType = "string",
+                    value = "合同到期，格式=[YYYY-mm-dd]")
     })
     @ResponseBody
     @RequestMapping(value = "/add", method = POST)
     public WebResult add(String name, String contact, String cardId, String role,
-                         String joinDate, String position, String address, HttpServletRequest request) {
+                         String joinDate, String position, String address, String expiredDate,
+                         HttpServletRequest request) {
         FactoryUser user = SessionManager.Instance().user(request);
         Long factoryId = user.getFactoryId();
         logger.info("审核义齿:name={}, contact={}, role={}, joinDate={}",name, contact,

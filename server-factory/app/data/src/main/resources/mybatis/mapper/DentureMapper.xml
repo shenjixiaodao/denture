@@ -306,7 +306,7 @@
     </select>
 
     <select id="countDentures" parameterType="com.yuzi.denture.domain.criteria.DentureCriteria" resultType="Integer">
-        select count(*) from
+        select count(*)
         FROM denture d inner join denture_order do on (
             d.factory_id=#{factoryId} and
             do.factory_id=#{factoryId} and

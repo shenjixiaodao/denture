@@ -54,6 +54,9 @@
         <el-form-item label="入职时间" class="postInfo-container-item">
           <el-date-picker v-model="user.joinDate" type="date" value-format="yyyy-MM-dd" placeholder="选择日期时间" style="width: 70%;"/>
         </el-form-item>
+        <el-form-item label="合同到期" class="postInfo-container-item">
+          <el-date-picker v-model="user.expiredDate" type="date" value-format="yyyy-MM-dd" placeholder="选择日期时间" style="width: 70%;"/>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogAddVisible = false">取消</el-button>
@@ -78,7 +81,8 @@ export default {
         role: null,
         cardId: null,
         position: null,
-        joinDate: null
+        joinDate: null,
+        expiredDate: null
       },
       roles: [
         { code: 'ShiGao', name: '石膏技师' },

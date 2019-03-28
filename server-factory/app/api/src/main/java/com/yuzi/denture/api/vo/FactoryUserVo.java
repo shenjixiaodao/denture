@@ -37,6 +37,7 @@ public class FactoryUserVo implements Serializable{
     //joinDate:
     @ApiModelProperty(value="加入公司时间")
     private Date joinDate;
+    Date expiredDate;
     private List<String> roles;
     @ApiModelProperty(value="登录成功后的token")
     private String token;
@@ -52,6 +53,14 @@ public class FactoryUserVo implements Serializable{
     BigDecimal trafficSubsidy;
     BigDecimal accommodationSubsidy;
     Double commissionRate;
+
+    public Date getExpiredDate() {
+        return expiredDate;
+    }
+
+    public void setExpiredDate(Date expiredDate) {
+        this.expiredDate = expiredDate;
+    }
 
     public BigDecimal getBaseSalary() {
         return baseSalary;

@@ -116,10 +116,8 @@ export default {
   methods: {
     fetchData() {
       queryDentures(this.queryParams).then(response => {
-        var data = response.data
-        console.log(data)
-        this.total = data.totalSize
-        this.list = data
+        this.total = response.totalSize
+        this.list = response.data
       })
     },
     search() {

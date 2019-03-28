@@ -318,14 +318,12 @@ public class ManufactureController {
     @ApiOperation(value = "义齿查询", response = DentureVo.class, httpMethod = "POST")
     @ResponseBody
     @RequestMapping(value = "/queryDentures", method = POST)
-    public WebPageResult<List<DentureVo>> queryDentures(@RequestBody DentureCriteriaVo criteriaVo,
+    public WebPageResult<List<DentureVo>> queryDentures(@RequestBody DentureCriteria criteria,
                                                         HttpServletRequest request) {
         FactoryUser user = SessionManager.Instance().user(request);
         Long factoryId = user.getFactoryId();
-        logger.info("查询订单:criteriaVo={}", criteriaVo);
+        logger.info("查询订单:criteria={}", criteria);
         WebPageResult<List<DentureVo>> res = new WebPageResult<>();
-        DentureCriteria criteria = new DentureCriteria();
-        BeanUtils.copyProperties(criteriaVo, criteria);
         criteria.setFactoryId(factoryId);
         Integer total = repository.countDentures(criteria);
         List<Denture> dentures = repository.findDentures(criteria);
