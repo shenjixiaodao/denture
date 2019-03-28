@@ -139,10 +139,11 @@ export function querySuppliers() {
   })
 }
 
-export function customers() {
+export function customers(criteria) {
   return request({
     url: '/manufacture/customers',
-    method: 'get'
+    method: 'post',
+    data: criteria
   })
 }
 

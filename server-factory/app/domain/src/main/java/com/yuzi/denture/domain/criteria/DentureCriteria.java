@@ -1,6 +1,8 @@
 package com.yuzi.denture.domain.criteria;
 
-public class DentureCriteria {
+import com.yuzi.denture.domain.common.PageCriteria;
+
+public class DentureCriteria extends PageCriteria {
     Long factoryId;
     Long clinicId;
     String dentureId;

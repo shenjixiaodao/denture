@@ -1,9 +1,6 @@
 package com.yuzi.denture.api.vo;
 
-import io.swagger.annotations.ApiModelProperty;
-
 public class DentureCriteriaVo {
-    @ApiModelProperty(value="status=[Waiting(\"待审核\"), Doing(\"处理中\"), Done(\"已结束\")]", required = true)
     String status;
     Long factoryId;
     String dentureId;

@@ -31,6 +31,7 @@
           </template>
         </el-table-column>
       </el-table>
+      <pagination :total="total" :page.sync="queryParams.page" :limit.sync="queryParams.limit" @pagination="fetchData" />
     </el-row>
 
     <el-dialog :visible.sync="dialogAddVisible" title="新增客户">
@@ -60,10 +61,12 @@
 </template>
 
 <script>
-import { customers, recordCustomer } from '@/api/salesman'
+import { customers, recordCustomer } from '@/api/comprehensive'
 import { cities } from '@/utils/allCities'
+import Pagination from '@/components/Pagination'
 
 export default {
+  components: { Pagination },
   data() {
     return {
       list: null,
@@ -81,7 +84,12 @@ export default {
         label: 'name',
         children: 'sub'
       },
-      selectedCity: []
+      selectedCity: [],
+      queryParams: {
+        page: 1,
+        limit: 20
+      },
+      total: 0
     }
   },
   created() {
@@ -92,6 +100,7 @@ export default {
       customers().then(response => {
         var data = response.data
         console.log(data)
+        this.total = data.totalSize
         this.list = data
       })
     },

@@ -19,6 +19,7 @@ public interface DentureMapper {
     List<Denture> findDoingDentures(DentureCriteria criteria);
     List<Denture> findDoneDentures(DentureCriteria criteria);
 
+    Integer countDentures(DentureCriteria criteria);
     List<Denture> findDenturesByCriteria(DentureCriteria criteria);
     List<Denture> findDentures(DentureCriteria criteria);
 }

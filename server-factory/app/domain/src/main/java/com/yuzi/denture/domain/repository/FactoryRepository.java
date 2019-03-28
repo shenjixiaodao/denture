@@ -1,6 +1,7 @@
 package com.yuzi.denture.domain.repository;
 
 import com.yuzi.denture.domain.*;
+import com.yuzi.denture.domain.criteria.CustomerCriteria;
 import com.yuzi.denture.domain.criteria.DentureCriteria;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public interface FactoryRepository {
     FactoryCustomer findCustomer(Long id);
     FactoryCustomer findCustomerDetail(Long id);
     List<FactoryCustomer> findCustomersByUid(Long uid);
-    List<FactoryCustomer> findCustomersByFactoryId(Long factoryId);
+    List<FactoryCustomer> findCustomers(CustomerCriteria criteria);
     FactoryUser findUser(String contact);
     FactoryUser findUser(Long uid);
     List<FactoryUser> findUsers(Long factoryId);
@@ -52,6 +53,7 @@ public interface FactoryRepository {
      * 等待审核, 正在制作，已完成
      * 的义齿
      */
+    Integer countDentures(DentureCriteria criteria);
     List<Denture> findWaitingDentures(DentureCriteria criteria);
     List<Denture> findDoingDentures(DentureCriteria criteria);
     List<Denture> findDoneDentures(DentureCriteria criteria);

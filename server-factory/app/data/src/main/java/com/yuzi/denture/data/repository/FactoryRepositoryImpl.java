@@ -4,6 +4,7 @@ package com.yuzi.denture.data.repository;
 
 import com.yuzi.denture.data.mapper.*;
 import com.yuzi.denture.domain.*;
+import com.yuzi.denture.domain.criteria.CustomerCriteria;
 import com.yuzi.denture.domain.criteria.DentureCriteria;
 import com.yuzi.denture.domain.repository.FactoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -135,8 +136,8 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     }
 
     @Override
-    public List<FactoryCustomer> findCustomersByFactoryId(Long factoryId) {
-        return userMapper.findCustomersByFactoryId(factoryId);
+    public List<FactoryCustomer> findCustomers(CustomerCriteria criteria) {
+        return userMapper.findCustomers(criteria);
     }
 
     @Override
@@ -184,6 +185,11 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     @Override
     public List<Denture> findDentures(Long factoryId) {
         return dentureMapper.findDenturesByFactoryId(factoryId);
+    }
+
+    @Override
+    public Integer countDentures(DentureCriteria criteria) {
+        return null;
     }
 
     @Override

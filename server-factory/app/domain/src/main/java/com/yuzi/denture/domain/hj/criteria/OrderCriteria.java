@@ -1,5 +1,7 @@
 package com.yuzi.denture.domain.hj.criteria;
 
+import com.yuzi.denture.domain.common.PageCriteria;
+
 public class OrderCriteria extends PageCriteria {
     String customer_name;
     String order_month;

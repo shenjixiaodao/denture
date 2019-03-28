@@ -305,6 +305,18 @@
         INNER JOIN delivery_info di ON (delivery_id=#{deliveryId} AND company=#{company} AND d.id=di.denture_id)
     </select>
 
+    <select id="countDentures" parameterType="com.yuzi.denture.domain.criteria.DentureCriteria" resultType="Integer">
+        select count(*) from
+        FROM denture d inner join denture_order do on (
+            d.factory_id=#{factoryId} and
+            do.factory_id=#{factoryId} and
+            d.id=do.denture_id
+        )
+        inner join clinic c on (d.clinic_id=c.id)
+        inner join factory f on (d.factory_id=f.id)
+        <include refid="criteriaWhere" />
+    </select>
+
     <select id="findDentures" parameterType="com.yuzi.denture.domain.criteria.DentureCriteria" resultMap="detailRM">
         SELECT <include refid="baseSQL" />, <include refid="clinicSQL" />, <include refid="factorySQL" />
         FROM denture d inner join denture_order do on (
@@ -316,6 +328,7 @@
         inner join factory f on (d.factory_id=f.id)
         <include refid="criteriaWhere" />
         order by d.created_date desc
+        limit ${offset}, ${limit}
     </select>
 
     <select id="findWaitingDentures" parameterType="com.yuzi.denture.domain.criteria.DentureCriteria" resultMap="detailRM">

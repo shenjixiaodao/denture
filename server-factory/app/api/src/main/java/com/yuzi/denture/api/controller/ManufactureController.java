@@ -4,9 +4,11 @@ import com.yuzi.denture.api.assembler.*;
 import com.yuzi.denture.api.session.SessionManager;
 import com.yuzi.denture.api.vo.*;
 import com.yuzi.denture.api.vo.base.DentureVo;
+import com.yuzi.denture.api.vo.base.WebPageResult;
 import com.yuzi.denture.api.vo.base.WebResult;
 import com.yuzi.denture.domain.*;
 import com.yuzi.denture.domain.GroupType;
+import com.yuzi.denture.domain.criteria.CustomerCriteria;
 import com.yuzi.denture.domain.criteria.DentureCriteria;
 import com.yuzi.denture.domain.repository.FactoryRepository;
 import com.yuzi.denture.domain.service.FactoryService;
@@ -270,14 +272,14 @@ public class ManufactureController {
     }
 
     //comprehensive user api
-    @ApiOperation(value = "查询工厂所有客户列表", response = FactoryCustomerVo.class, httpMethod = "GET")
+    @ApiOperation(value = "查询工厂所有客户列表", response = FactoryCustomerVo.class, httpMethod = "POST")
     @ResponseBody
-    @RequestMapping(value = "/customers", method = GET)
-    public WebResult<List<FactoryCustomer>> customers(HttpServletRequest request) {
+    @RequestMapping(value = "/customers", method = POST)
+    public WebResult<List<FactoryCustomer>> customers(@RequestBody CustomerCriteria criteria, HttpServletRequest request) {
         FactoryUser user = SessionManager.Instance().user(request);
         Long factoryId = user.getFactoryId();
         WebResult<List<FactoryCustomer>> result = WebResult.execute(res -> {
-            List<FactoryCustomer> customers = repository.findCustomersByFactoryId(factoryId);
+            List<FactoryCustomer> customers = repository.findCustomers(criteria);
             List<FactoryCustomerVo> vos = FactoryCustomerAssembler.toVos(customers);
             res.setData(vos);
             logger.info("查询客户列表成功");
@@ -316,21 +318,21 @@ public class ManufactureController {
     @ApiOperation(value = "义齿查询", response = DentureVo.class, httpMethod = "POST")
     @ResponseBody
     @RequestMapping(value = "/queryDentures", method = POST)
-    public WebResult<List<DentureVo>> queryDentures(@RequestBody DentureCriteriaVo criteriaVo,
-                                                              HttpServletRequest request) {
+    public WebPageResult<List<DentureVo>> queryDentures(@RequestBody DentureCriteriaVo criteriaVo,
+                                                        HttpServletRequest request) {
         FactoryUser user = SessionManager.Instance().user(request);
         Long factoryId = user.getFactoryId();
         logger.info("查询订单:criteriaVo={}", criteriaVo);
-        WebResult<List<DentureVo>> result = WebResult.execute(res -> {
-            List<Denture> dentures;
-            DentureCriteria criteria = new DentureCriteria();
-            BeanUtils.copyProperties(criteriaVo, criteria);
-            criteria.setFactoryId(factoryId);
-            dentures = repository.findDentures(criteria);
-            List<DentureVo> vos = DentureAssembler.toVos(dentures);
-            res.setData(vos);
-        }, "查询订单错误", logger);
-        return result;
+        WebPageResult<List<DentureVo>> res = new WebPageResult<>();
+        DentureCriteria criteria = new DentureCriteria();
+        BeanUtils.copyProperties(criteriaVo, criteria);
+        criteria.setFactoryId(factoryId);
+        Integer total = repository.countDentures(criteria);
+        List<Denture> dentures = repository.findDentures(criteria);
+        List<DentureVo> vos = DentureAssembler.toVos(dentures);
+        res.setData(vos);
+        res.setTotalSize(total);
+        return res;
     }
 
     @ApiOperation(value = "根据快递单号查询义齿信息", response = DentureVo.class, httpMethod = "GET")

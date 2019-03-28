@@ -66,6 +66,7 @@
           </template>
         </el-table-column>
       </el-table>
+      <pagination :total="total" :page.sync="queryParams.page" :limit.sync="queryParams.limit" @pagination="fetchData" />
     </el-row>
   </div>
 </template>
@@ -75,9 +76,11 @@ import { queryDentures } from '@/api/comprehensive'
 // import { isvalidDentureId } from '@/utils/validate'
 // import { Message } from 'element-ui'
 import { cities } from '@/utils/allCities'
+import Pagination from '@/components/Pagination'
 
 export default {
   name: 'Dentures',
+  components: { Pagination },
   data() {
     return {
       list: null,
@@ -95,13 +98,16 @@ export default {
         { code: 'Remaking', name: '返厂' }
       ],
       queryParams: {
+        page: 1,
+        limit: 20,
         dentureId: null,
         patientName: null,
         createdDate: null,
         region: null,
         clinicName: null,
         status: null
-      }
+      },
+      total: 0
     }
   },
   created() {
@@ -112,6 +118,7 @@ export default {
       queryDentures(this.queryParams).then(response => {
         var data = response.data
         console.log(data)
+        this.total = data.totalSize
         this.list = data
       })
     },

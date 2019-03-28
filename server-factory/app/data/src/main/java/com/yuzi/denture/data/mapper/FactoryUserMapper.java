@@ -3,6 +3,7 @@ package com.yuzi.denture.data.mapper;
 import com.yuzi.denture.domain.FactoryCustomer;
 import com.yuzi.denture.domain.FactoryRole;
 import com.yuzi.denture.domain.FactoryUser;
+import com.yuzi.denture.domain.criteria.CustomerCriteria;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -23,7 +24,8 @@ public interface FactoryUserMapper {
     FactoryCustomer findCustomerById(Long id);
     FactoryCustomer findCustomerDetailById(Long id);
     List<FactoryCustomer> findCustomersByUid(Long uid);
-    List<FactoryCustomer> findCustomersByFactoryId(Long factoryId);
+    Integer countCustomers(CustomerCriteria criteria);
+    List<FactoryCustomer> findCustomers(CustomerCriteria criteria);
     FactoryUser findUserByContact(String contact);
     FactoryUser findUserById(Long id);
 

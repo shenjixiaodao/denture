@@ -1,4 +1,4 @@
-package com.yuzi.denture.domain.hj.criteria;
+package com.yuzi.denture.domain.common;
 
 public class PageCriteria {
     Integer page;
