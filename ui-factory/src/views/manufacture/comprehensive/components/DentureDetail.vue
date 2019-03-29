@@ -161,7 +161,7 @@
             </tr>
           </tbody>
         </table>
-        <table border="1" bordercolor="#000000" style="border-collapse:collapse;" class="print_table" align="center">
+        <table width="530" border="1" bordercolor="#000000" style="border-collapse:collapse;" class="print_table" align="center">
           <tbody>
             <tr>
               <td class="td_title_prop">客户名称:</td><td class="td_content_prop">{{ '('+denture.clinic.id+')'+denture.clinic.name }}</td>
@@ -175,32 +175,43 @@
               <td class="td_title_prop">金额</td><td class="td_title_prop">附件</td>
               <td class="td_title_prop">说明</td>
             </tr>
-            <tr>
+            <tr style="border-color: #ffffff">
               <td class="td_title_prop" colspan="2">{{ denture.id }}</td><td class="td_title_prop">{{ denture.specification }}</td>
               <td class="td_title_prop">{{ denture.number }}</td><td class="td_title_prop">{{ '    ' }}</td>
               <td class="td_title_prop">{{ '' }}</td><td class="td_title_prop">{{ '' }}</td>
               <td class="td_title_prop">{{ '' }}</td>
             </tr>
+            <tr><td style="border-left-color: #ffffff;border-right-color: #ffffff;" colspan="8"/> </tr>
+            <tr>
+              <td class="td_title_prop" colspan="2">牙位</td><td class="td_title_prop">金额合计</td>
+              <td class="td_title_prop">会计</td><td class="td_title_prop">业务</td>
+              <td class="td_title_prop">终检</td><td class="td_title_prop" colspan="2">客户签收</td>
+            </tr>
+            <tr>
+              <td class="td_content_prop" colspan="2">{{ denture.positions }}</td><td class="td_content_prop">{{ ' ' }}</td>
+              <td class="td_content_prop">{{ '' }}</td><td class="td_content_prop">{{ '' }}</td>
+              <td class="td_content_prop">{{ '' }}</td><td class="td_content_prop" colspan="2">{{ '' }}</td>
+            </tr>
           </tbody>
         </table>
-        <table border="1" bordercolor="#000000" style="border-collapse:collapse;" class="print_table" align="center">
+        <!--<table width="530" border="1" bordercolor="#000000" style="border-collapse:collapse;" class="print_table" align="center">
           <tbody>
             <tr>
-              <td class="td_title_prop">牙位</td><td class="td_title_prop">金额合计</td>
+              <td class="td_title_prop" colspan="2">牙位</td><td class="td_title_prop">金额合计</td>
               <td class="td_title_prop">会计</td><td class="td_title_prop">业务</td>
-              <td class="td_title_prop">终检</td><td class="td_title_prop">客户签收</td>
+              <td class="td_title_prop">终检</td><td class="td_title_prop" colspan="2">客户签收</td>
             </tr>
             <tr>
-              <td class="td_title_prop">{{ denture.positions }}</td><td class="td_title_prop">{{ ' ' }}</td>
-              <td class="td_title_prop">{{ '' }}</td><td class="td_title_prop">{{ '' }}</td>
-              <td class="td_title_prop">{{ '' }}</td><td class="td_title_prop">{{ '' }}</td>
+              <td class="td_content_prop" colspan="2">{{ denture.positions }}</td><td class="td_content_prop">{{ ' ' }}</td>
+              <td class="td_content_prop">{{ '' }}</td><td class="td_content_prop">{{ '' }}</td>
+              <td class="td_content_prop">{{ '' }}</td><td class="td_content_prop" colspan="2">{{ '' }}</td>
             </tr>
           </tbody>
-        </table>
+        </table>-->
         <table align="center">
           <tbody>
             <tr>
-              <td class="td_title_prop">注册证号:</td><td class="td_title_prop">{{ denture.factory.certification }}</td>
+              <td class="td_title_prop">注册证号:</td><td class="td_content_prop">{{ denture.factory.certification }}</td>
             </tr>
           </tbody>
         </table>
