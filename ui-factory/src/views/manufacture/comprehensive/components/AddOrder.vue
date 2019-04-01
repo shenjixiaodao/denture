@@ -22,7 +22,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="收件时间" prop="title">
-          <el-date-picker v-model="order.receivedDate" type="date" style="width: 200px;" placeholder="收件时间" value-format="yyyy-MM-dd" />
+          <el-date-picker v-model="order.receivedDate" :placeholder="now" type="date" style="width: 200px;" value-format="yyyy-MM-dd" />
         </el-form-item>
         <el-form-item label="牙位" />
         <section style="background:#fff;padding:0px 5px 10px;">
@@ -171,12 +171,13 @@
 
 <script>
 import { addOrder, queryClinics } from '@/api/salesman'
-import { findProductTypes, users } from '@/api/comprehensive'
+import { findProductTypes, users, customers } from '@/api/comprehensive'
 
 export default {
-  name: 'AddUser',
+  name: 'AddOrder',
   data() {
     return {
+      now: new Date().Format('yyyy-MM-dd'),
       types: [
         { code: 'Fixed', name: '定制式固定义齿' }, { code: 'Mobilizable', name: '定制式活动义齿' }
       ],
@@ -231,6 +232,7 @@ export default {
       },
       clinics: null,
       selectedClinic: [],
+      customers: null,
       props: {
         value: 'id',
         label: 'name',
@@ -277,11 +279,17 @@ export default {
         var data = response.data
         this.users = data
       })
+      customers({
+        page: 1,
+        limit: 1000
+      }).then(response => {
+        this.customers = response.data
+      })
     },
     addOrder() {
       // todo check console.log(this.position_group.join(','))
       if (this.order.salesmanId) {
-        for (const item in this.users) {
+        for (const item of this.users) {
           if (item.id === this.order.salesmanId) {
             this.order.salesman = item.name
             break
@@ -289,9 +297,10 @@ export default {
         }
       }
       if (this.order.clinicId) {
-        for (const c in this.clinics) {
+        console.log(this.clinics)
+        for (const c of this.clinics) {
           if (c.id === this.order.clinicId) {
-            for (const cu in this.clinics.users) {
+            for (const cu of c.users) {
               if (cu.id === this.order.dentistId) {
                 this.order.dentist = cu.name
               }
@@ -301,12 +310,20 @@ export default {
       }
       this.order.positions = this.position_group.join(',')
       addOrder(this.order).then(response => {
-        this.$router.push({ path: '/comprehensive/dentures' })
+        const data = response.data
+        this.$router.push({ path: '/comprehensive/denture/' + data.id })
       })
     },
     handleChange(value) {
+      console.log(value)
       this.order.clinicId = value[0]
       this.order.dentistId = value[1]
+      for (const c of this.customers) {
+        if (c.clinic.id === this.order.clinicId) {
+          this.order.salesmanId = c.salesmanId
+          break
+        }
+      }
     },
     handleSelect() {
       this.order.number = this.position_group.length

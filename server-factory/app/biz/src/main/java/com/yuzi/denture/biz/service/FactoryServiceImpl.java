@@ -8,6 +8,7 @@ import com.yuzi.denture.domain.repository.FactoryRepository;
 import com.yuzi.denture.domain.response.ResponseCode;
 import com.yuzi.denture.domain.service.FactoryService;
 import com.yuzi.denture.domain.type.*;
+import com.yuzi.denture.domain.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class FactoryServiceImpl implements FactoryService {
                                          BorderType borderType, NeckType neckType, InnerCrownType innerCrowType,
                                          PaddingType paddingType, OuterCrownType outerCrowType, String requirement,
                                          String patientName, Long salesmanId, String salesman, String stage,
-                                         Date receivedDate, Long creatorId, String creator) {
+                                         Date receivedDate, Long creatorId, String creator, String dentist) {
         //1, create denture
         Denture denture = new Denture(type, specification, clinicId, comment,
                 factoryId, positions, number, colorNo);
@@ -56,6 +57,8 @@ public class FactoryServiceImpl implements FactoryService {
         denture.setEstimatedDuration(new Date(receivedDate.getTime()+Integer.parseInt(stage)*DayLong));
         denture.setCreator(creator);
         denture.setCreatorId(creatorId);
+        denture.setDentistId(dentistId);
+        denture.setDentist(dentist);
         //初始创建denture时，生成加工所需要的所有工序
         List<ProcedureGroup> groups = denture.generateProcedureGroups();
         repository.batchAddProcedureGroups(groups);
@@ -255,7 +258,7 @@ public class FactoryServiceImpl implements FactoryService {
         denture.setId(dentureId);
         denture.setDeliveryDate(deliveryDate);
         denture.setDeliveryPerson(deliveryPerson);
-        denture.setDeliveryId(""+new Date().getTime());
+        denture.setDeliveryId(CommonUtil.dateToLongFormat(new Date()));
         denture.setStatus(Denture.Status.Delivered.name());
         repository.update(denture);
     }

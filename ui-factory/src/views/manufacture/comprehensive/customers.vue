@@ -107,9 +107,9 @@ export default {
       this.dialogAddVisible = false
       this.customer.region = this.selectedCity.join('/')
       recordCustomer(this.customer).then(resp => {
-        customers().then(response => {
-          var data = response.data
-          this.list = data
+        customers(this.queryParams).then(response => {
+          this.total = response.totalSize
+          this.list = response.data
         })
       })
     },

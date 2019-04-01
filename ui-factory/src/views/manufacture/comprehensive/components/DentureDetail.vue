@@ -4,7 +4,10 @@
       <table style="text-align: right">
         <tbody>
           <tr>
-            <td class="td_title_prop">编号:</td><td class="td_content_prop">{{ denture.id }}</td>
+            <td class="td_title_prop">编号:</td><td class="td_content_prop">{{ denture.id | id2Short }}</td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">牙盒编号:</td><td class="td_content_prop">{{ denture.boxNo }}</td>
           </tr>
           <tr>
             <td class="td_title_prop">类型:</td><td class="td_content_prop">{{ denture.type }}</td>
@@ -31,10 +34,16 @@
             <td class="td_title_prop">业务员:</td><td class="td_content_prop">{{ denture.salesman }}</td>
           </tr>
           <tr>
+            <td class="td_title_prop">数量:</td><td class="td_content_prop">{{ denture.number }}</td>
+          </tr>
+          <tr>
             <td class="td_title_prop">阶段:</td><td class="td_content_prop">{{ denture.stage }}</td>
           </tr>
           <tr>
-            <td class="td_title_prop">数量:</td><td class="td_content_prop">{{ denture.number }}</td>
+            <td class="td_title_prop">收件时间:</td>
+            <td class="td_content_prop">
+              <el-date-picker v-model="denture.receivedDate" type="date" style="width: 200px;" placeholder="收件日" value-format="yyyy-MM-dd" />
+            </td>
           </tr>
           <tr>
             <td class="td_title_prop">预交时间:</td>
@@ -161,53 +170,67 @@
             </tr>
           </tbody>
         </table>
-        <table width="530" border="1" bordercolor="#000000" style="border-collapse:collapse;" class="print_table" align="center">
+        <table border="1" bordercolor="#000000" style="border-collapse:collapse;" class="print_table" align="center">
           <tbody>
             <tr>
-              <td class="td_title_prop">客户名称:</td><td class="td_content_prop">{{ '('+denture.clinic.id+')'+denture.clinic.name }}</td>
-              <td class="td_title_prop">医生:</td><td class="td_content_prop">{{ denture.clinic.name }}</td>
-              <td class="td_title_prop">业务员:</td><td class="td_content_prop">{{ '('+denture.salesmanId+')'+denture.salesman }}</td>
-              <td class="td_title_prop">患者:</td><td class="td_content_prop">{{ denture.patientName }}</td>
+              <td class="td_title_prop">客户名称</td><td class="td_content_prop">{{ denture.clinic.name }}</td>
+              <td class="td_title_prop">医生</td><td class="td_content_prop">{{ denture.clinic.name }}</td>
+              <td class="td_title_prop">业务员</td><td class="td_content_prop">{{ denture.salesman }}</td>
+              <td class="td_title_prop">患者</td><td class="td_content_prop">{{ denture.patientName }}</td>
             </tr>
             <tr>
-              <td class="td_title_prop" colspan="2">牙模编号</td><td class="td_title_prop">品名</td>
-              <td class="td_title_prop">数量</td><td class="td_title_prop">单价</td>
-              <td class="td_title_prop">金额</td><td class="td_title_prop">附件</td>
-              <td class="td_title_prop">说明</td>
+              <td style="text-align: center" colspan="8"><barcode :value="denture.id | id2Short" height="35px" font-size="15px"/></td>
             </tr>
-            <tr style="border-color: #ffffff">
-              <td class="td_title_prop" colspan="2">{{ denture.id }}</td><td class="td_title_prop">{{ denture.specification }}</td>
-              <td class="td_title_prop">{{ denture.number }}</td><td class="td_title_prop">{{ '    ' }}</td>
-              <td class="td_title_prop">{{ '' }}</td><td class="td_title_prop">{{ '' }}</td>
-              <td class="td_title_prop">{{ '' }}</td>
+            <tr >
+              <td class="td_title_print_table">品名</td>
+              <td class="td_title_print_table" colspan="2">牙位</td>
+              <td class="td_title_print_table">数量</td>
+              <td class="td_title_print_table">单价</td>
+              <td class="td_title_print_table">金额</td>
+              <td class="td_title_print_table" colspan="2">客户签收</td>
             </tr>
-            <tr><td style="border-left-color: #ffffff;border-right-color: #ffffff;" colspan="8"/> </tr>
+            <tr style="border-bottom-style: hidden; ">
+              <td style="border-right-style: hidden" class="td_content_print_table">{{ denture.specification }}</td>
+              <td style="border-right-style: hidden" colspan="2">
+                <table border="1" bordercolor="darkgrey" style="border-collapse:collapse;margin: 15px;" align="center" class="denture_position_table_mini">
+                  <tr style="border-top-color: #ffffff;">
+                    <td style="border-left-style: hidden;">{{ positions[0] }}</td><td>{{ positions[1] }}</td><td>{{ positions[2] }}</td><td>{{ positions[3] }}</td><td>{{ positions[4] }}</td>
+                    <td>{{ positions[5] }}</td><td>{{ positions[6] }}</td><td style="border-right-color: #000000;border-right-width: 5px">{{ positions[7] }}</td>
+                    <td style="border-left-color: #000000;border-left-width: 5px">{{ positions[8] }}</td><td>{{ positions[9] }}</td><td>{{ positions[10] }}</td><td>{{ positions[11] }}</td>
+                    <td>{{ positions[12] }}</td><td>{{ positions[13] }}</td><td>{{ positions[14] }}</td><td style="border-right-style: hidden;">{{ positions[15] }}</td>
+                  </tr>
+                  <tr style="border-bottom-color: #ffffff;">
+                    <td style="border-left-style: hidden">{{ positions[16] }}</td><td>{{ positions[17] }}</td><td>{{ positions[18] }}</td><td>{{ positions[19] }}</td>
+                    <td>{{ positions[20] }}</td><td>{{ positions[21] }}</td><td>{{ positions[22] }}</td><td style="border-right-color: #000000;border-right-width: 5px">{{ positions[23] }}</td>
+                    <td style="border-left-color: #000000;border-left-width: 5px">{{ positions[24] }}</td><td>{{ positions[25] }}</td><td>{{ positions[26] }}</td><td>{{ positions[27] }}</td>
+                    <td>{{ positions[28] }}</td><td>{{ positions[29] }}</td><td>{{ positions[30] }}</td><td style="border-right-style: hidden">{{ positions[31] }}</td>
+                  </tr>
+                </table>
+              </td>
+              <td style="border-right-style: hidden" class="td_content_print_table">{{ denture.number }}</td>
+              <td style="border-right-style: hidden" class="td_content_print_table">{{ '' }}</td>
+              <td class="td_content_prop">{{ '' }}</td>
+              <td colspan="2" rowspan="2" />
+            </tr>
             <tr>
-              <td class="td_title_prop" colspan="2">牙位</td><td class="td_title_prop">金额合计</td>
-              <td class="td_title_prop">会计</td><td class="td_title_prop">业务</td>
-              <td class="td_title_prop">终检</td><td class="td_title_prop" colspan="2">客户签收</td>
+              <td style="border-top-style: hidden" colspan="6" />
             </tr>
             <tr>
-              <td class="td_content_prop" colspan="2">{{ denture.positions }}</td><td class="td_content_prop">{{ ' ' }}</td>
-              <td class="td_content_prop">{{ '' }}</td><td class="td_content_prop">{{ '' }}</td>
-              <td class="td_content_prop">{{ '' }}</td><td class="td_content_prop" colspan="2">{{ '' }}</td>
+              <td class="td_title_prop">备注</td>
+              <td class="td_content_prop" colspan="7" />
+            </tr>
+            <tr>
+              <td style="text-align: left" colspan="8">
+                合计:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                大写:
+              </td>
+            </tr>
+            <tr>
+              <td class="td_title_prop">地址</td><td class="td_content_prop" colspan="3"> {{ denture.clinic.region + ' ' + denture.clinic.address }} </td>
+              <td class="td_title_prop">联系方式</td><td class="td_content_prop" colspan="3">{{ denture.clinic.contact }}</td>
             </tr>
           </tbody>
         </table>
-        <!--<table width="530" border="1" bordercolor="#000000" style="border-collapse:collapse;" class="print_table" align="center">
-          <tbody>
-            <tr>
-              <td class="td_title_prop" colspan="2">牙位</td><td class="td_title_prop">金额合计</td>
-              <td class="td_title_prop">会计</td><td class="td_title_prop">业务</td>
-              <td class="td_title_prop">终检</td><td class="td_title_prop" colspan="2">客户签收</td>
-            </tr>
-            <tr>
-              <td class="td_content_prop" colspan="2">{{ denture.positions }}</td><td class="td_content_prop">{{ ' ' }}</td>
-              <td class="td_content_prop">{{ '' }}</td><td class="td_content_prop">{{ '' }}</td>
-              <td class="td_content_prop">{{ '' }}</td><td class="td_content_prop" colspan="2">{{ '' }}</td>
-            </tr>
-          </tbody>
-        </table>-->
         <table align="center">
           <tbody>
             <tr>
@@ -222,7 +245,7 @@
         <table border="1" bordercolor="#000000" style="border-collapse:collapse;" class="print_table" align="center">
           <tbody>
             <tr>
-              <td class="td_title_prop">模号:</td><td class="td_content_prop">{{ denture.id }}</td>
+              <td class="td_title_prop">模号:</td><td class="td_content_prop">{{ denture.id | id2Short }}</td>
               <td class="td_title_prop">收件:</td><td class="td_content_prop">{{ denture.receivedDate }}</td>
             </tr>
             <tr>
@@ -238,10 +261,26 @@
               <td class="td_title_prop">色号:</td><td class="td_content_prop">{{ denture.colorNo }}</td>
             </tr>
             <tr>
-              <td style="text-align: center" colspan="4"><barcode :value="denture.id" height="35px" font-size="15px"/></td>
+              <td style="text-align: center" colspan="4"><barcode :value="denture.id | id2Short" height="35px" font-size="15px"/></td>
             </tr>
             <tr>
-              <td class="td_title_prop">牙位:</td><td class="td_content_prop" colspan="3">{{ denture.positions }}</td>
+              <td class="td_title_prop">牙位:</td>
+              <td colspan="3">
+                <table border="1" bordercolor="darkgrey" style="border-collapse:collapse;margin: 15px;" align="center" class="denture_position_table">
+                  <tr style="border-top-color: #ffffff;">
+                    <td style="border-left-style: hidden;">{{ positions[0] }}</td><td>{{ positions[1] }}</td><td>{{ positions[2] }}</td><td>{{ positions[3] }}</td><td>{{ positions[4] }}</td>
+                    <td>{{ positions[5] }}</td><td>{{ positions[6] }}</td><td style="border-right-color: #000000;border-right-width: 5px">{{ positions[7] }}</td>
+                    <td style="border-left-color: #000000;border-left-width: 5px">{{ positions[8] }}</td><td>{{ positions[9] }}</td><td>{{ positions[10] }}</td><td>{{ positions[11] }}</td>
+                    <td>{{ positions[12] }}</td><td>{{ positions[13] }}</td><td>{{ positions[14] }}</td><td style="border-right-style: hidden;">{{ positions[15] }}</td>
+                  </tr>
+                  <tr style="border-bottom-color: #ffffff;">
+                    <td style="border-left-style: hidden">{{ positions[16] }}</td><td>{{ positions[17] }}</td><td>{{ positions[18] }}</td><td>{{ positions[19] }}</td>
+                    <td>{{ positions[20] }}</td><td>{{ positions[21] }}</td><td>{{ positions[22] }}</td><td style="border-right-color: #000000;border-right-width: 5px">{{ positions[23] }}</td>
+                    <td style="border-left-color: #000000;border-left-width: 5px">{{ positions[24] }}</td><td>{{ positions[25] }}</td><td>{{ positions[26] }}</td><td>{{ positions[27] }}</td>
+                    <td>{{ positions[28] }}</td><td>{{ positions[29] }}</td><td>{{ positions[30] }}</td><td style="border-right-style: hidden">{{ positions[31] }}</td>
+                  </tr>
+                </table>
+              </td>
             </tr>
             <tr>
               <td class="td_title_prop">种类:</td><td class="td_content_prop">{{ denture.specification }}</td>
@@ -341,6 +380,7 @@ export default {
   },
   data() {
     return {
+      now: new Date().Format('yyyy-MM-dd'),
       ingredient: {
         dentureId: null,
         ingredientId: null,
@@ -357,9 +397,15 @@ export default {
       denture: null,
       deliveryInfo: {
         dentureId: null,
-        deliveryDate: null,
+        deliveryDate: new Date().Format('yyyy-MM-dd'),
         deliveryPerson: null
-      }
+      },
+      positions: [
+        '', '', '', '', '', '', '', '',
+        '', '', '', '', '', '', '', '',
+        '', '', '', '', '', '', '', '',
+        '', '', '', '', '', '', '', ''
+      ]
     }
   },
   created() {
@@ -374,6 +420,11 @@ export default {
         this.denture = data
         this.isShow = !data.startDate
         this.appliedIngredients = this.denture.appliedIngredients
+        for (const p of this.denture.positions.split(',')) {
+          const index = (p.charCodeAt(0) - 'a'.charCodeAt()) * 8 + (p.charCodeAt(1) - '1'.charCodeAt())
+          console.log(index)
+          this.positions[index] = p
+        }
       })
     },
     review(result) {
@@ -411,7 +462,7 @@ export default {
       document.body.innerHTML = deliveryTable
       window.print()
       document.body.innerHTML = oldPage
-      return true
+      window.location.reload()
     },
     printDentureInfo() {
       const dentureTable = document.getElementById('DentureTable').innerHTML
@@ -419,7 +470,7 @@ export default {
       document.body.innerHTML = dentureTable
       window.print()
       document.body.innerHTML = oldPage
-      return true
+      window.location.reload()
     }
   }
 }

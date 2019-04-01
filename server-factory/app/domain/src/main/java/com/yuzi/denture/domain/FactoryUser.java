@@ -3,6 +3,7 @@ package com.yuzi.denture.domain;
 import com.yuzi.denture.domain.exception.CodeException;
 import com.yuzi.denture.domain.response.ResponseCode;
 import com.yuzi.denture.domain.type.Educational;
+import com.yuzi.denture.domain.util.CommonUtil;
 import com.yuzi.denture.domain.util.RSAUtil;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
@@ -258,12 +259,7 @@ public class FactoryUser {
     }
 
     public void setJoinDate(String joinDate) {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            this.joinDate = df.parse(joinDate);
-        } catch (ParseException e) {
-            throw new CodeException(ResponseCode.DateFormat_Error);
-        }
+        this.joinDate = CommonUtil.parseDate(joinDate);
     }
 
     public FactoryUser(Long id) {

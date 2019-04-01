@@ -32,7 +32,9 @@
         `stage`,
         `status`,
         `creator_id`,
-        `creator`
+        `creator`,
+        `received_date`,
+        `dentist`
         )
         VALUES
         (
@@ -63,7 +65,9 @@
         #{stage},
         #{status},
         #{creatorId},
-        #{creator}
+        #{creator},
+        #{receivedDate},
+        #{dentist}
         );
     </insert>
     <update id="update" parameterType="com.yuzi.denture.domain.Denture">
@@ -142,6 +146,12 @@
         <if test="deliveryPerson!=null">
             ,`delivery_person` = #{deliveryPerson}
         </if>
+        <if test="receivedDate!=null">
+            ,`received_date` = #{receivedDate}
+        </if>
+        <if test="boxNo!=null">
+            ,`box_no` = #{boxNo}
+        </if>
         WHERE `id` = #{id};
     </update>
     <resultMap id="detailRM" type="com.yuzi.denture.domain.Denture">
@@ -184,6 +194,9 @@
         <result column="status" property="status" />
         <result column="creator_id" property="creatorId" />
         <result column="creator" property="creator" />
+        <result column="received_date" property="receivedDate" />
+        <result column="dentist" property="dentist" />
+        <result column="box_no" property="boxNo" />
         <association property="clinic" javaType="com.yuzi.denture.domain.Clinic">
             <result column="clinic_id" property="id" />
             <result column="clinic_name" property="name" />

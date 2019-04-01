@@ -1,6 +1,13 @@
 // set function parseTime,formatTime to filter
 export { parseTime, formatTime } from '@/utils'
 
+export function id2Short(dentureId) {
+  if (dentureId) {
+    return dentureId.substring(6)
+  }
+  return null
+}
+
 export function time2DateStr(time) {
   if (time) {
     return time.split(' ', 2)[0]

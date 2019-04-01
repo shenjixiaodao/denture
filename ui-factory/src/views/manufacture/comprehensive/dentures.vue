@@ -15,7 +15,7 @@
       <el-table :data="list" style="width: 100%;padding-top: 15px;">
         <el-table-column label="义齿编号">
           <template slot-scope="scope">
-            {{ scope.row.id }}
+            {{ scope.row.id | id2Short }}
           </template>
         </el-table-column>
         <el-table-column label="类型">

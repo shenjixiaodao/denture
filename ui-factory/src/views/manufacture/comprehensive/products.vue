@@ -18,11 +18,11 @@
             {{ scope.row.gmtCreated | time2DateStr }}
           </template>
         </el-table-column>
-        <el-table-column label="操作" align="center">
+        <!--<el-table-column label="操作" align="center">
           <template slot-scope="scope">
             <el-button size="mini" type="danger" @click="deleteProductType(scope.row.id)">删除</el-button>
           </template>
-        </el-table-column>
+        </el-table-column>-->
       </el-table>
     </el-row>
 

@@ -73,6 +73,20 @@ public class DentureCriteria extends PageCriteria {
         return clinicName;
     }
 
+    @Override
+    public String toString() {
+        return "DentureCriteria{" +
+                "factoryId=" + factoryId +
+                ", clinicId=" + clinicId +
+                ", dentureId='" + dentureId + '\'' +
+                ", patientName='" + patientName + '\'' +
+                ", createdDate='" + createdDate + '\'' +
+                ", region='" + region + '\'' +
+                ", clinicName='" + clinicName + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
+
     public void setClinicName(String clinicName) {
         this.clinicName = clinicName;
     }

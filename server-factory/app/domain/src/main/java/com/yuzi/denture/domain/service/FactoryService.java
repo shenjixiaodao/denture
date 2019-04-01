@@ -27,7 +27,7 @@ public interface FactoryService {
                                   BorderType borderType, NeckType neckType, InnerCrownType innerCrowType,
                                   PaddingType paddingType, OuterCrownType outerCrowType, String requirement,
                                   String patientName, Long salesmanId, String salesman,String stage,
-                                  Date receivedDate, Long creatorId, String creator);
+                                  Date receivedDate, Long creatorId, String creator, String dentist);
     /**
      * 牙模查验, {@param inspector}
      * 生产部和质量部负负责人review，后台自动根据根据工厂信息指派负责人

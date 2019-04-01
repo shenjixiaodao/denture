@@ -78,6 +78,7 @@ public class Denture {
     Date receivedDate;
     Long creatorId;
     String creator;
+    String boxNo;
 
     public Denture(DentureType type, String specification, Long clinicId, String comment,
                    Long factoryId, String positions, Integer number, String colorNo) {
@@ -179,6 +180,14 @@ public class Denture {
     }
 
     public Denture() {
+    }
+
+    public String getBoxNo() {
+        return boxNo;
+    }
+
+    public void setBoxNo(String boxNo) {
+        this.boxNo = boxNo;
     }
 
     public Long getCreatorId() {
