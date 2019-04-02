@@ -109,6 +109,8 @@ public class InfoRepositoryImpl implements InfoRepository {
                 appliedUsed.setAppliedNumber(ai.getAppliedNumber());
                 appliedUsed.setIngredientId(ai.getIngredient().getId());
                 appliedUsed.setIngredientName(ai.getIngredient().getName());
+                appliedUsed.setIngredientType(ai.getIngredient().getType());
+                appliedUsed.setEqualityRateRange(ai.getIngredient().getEqualityRateRange());
                 appliedUsedMap.put(ai.getIngredient().getId(), appliedUsed);
             } else {
                 appliedUsed.addAppliedNumber(ai.getAppliedNumber());
@@ -117,6 +119,7 @@ public class InfoRepositoryImpl implements InfoRepository {
         for(UsedIngredient ui: used) {
             AppliedUsedIngredient appliedUsed = appliedUsedMap.get(ui.getIngredient().getId());
             appliedUsed.addUsedNumber(ui.getUsedNumber());
+            appliedUsed.addWastedNumber(ui.getWastedNumber());
         }
         return new ArrayList<>(appliedUsedMap.values());
     }

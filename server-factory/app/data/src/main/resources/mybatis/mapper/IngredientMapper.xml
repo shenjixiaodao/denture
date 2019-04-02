@@ -9,7 +9,8 @@
         `balance`,
         `factory_id`,
         `type`,
-        `factory_id`
+        `factory_id`,
+        `equality_rate_range`
         )
         VALUES
         (
@@ -17,7 +18,8 @@
         #{balance},
         #{factoryId},
         #{type},
-        #{factoryId}
+        #{factoryId},
+        #{equalityRateRange}
         );
     </insert>
 
@@ -132,6 +134,8 @@
     <resultMap id="appliedIngredientRM" type="com.yuzi.denture.domain.AppliedIngredient">
         <result column="id" property="ingredient.id" />
         <result column="name" property="ingredient.name" />
+        <result column="equality_rate_range" property="ingredient.equalityRateRange" />
+        <result column="type" property="ingredient.type" />
         <result column="ai_denture_id" property="dentureId" />
         <result column="ai_no" property="no" />
         <result column="ai_applicant_id" property="applicant.id" />
@@ -155,7 +159,9 @@
     </select>
 
     <sql id="IngredientSQL">
-        i.*,
+        i.*
+    </sql>
+    <sql id="PurchaseRecordSQL">
         pr.id pr_id, pr.ingredient_id pr_ingredient_id, pr.supplier_id pr_supplier_id,
         pr.number pr_number, pr.gmt_created pr_gmt_created, pr.gmt_modified pr_gmt_modified,
         bill_no, price
@@ -169,28 +175,28 @@
     </sql>
 
     <select id="findUsedIngredient" parameterType="String" resultMap="usedIngredientRM">
-        SELECT i.id id, i.name name, <include refid="usedIngredientSQL"/> FROM used_ingredient ui
+        SELECT <include refid="IngredientSQL" />, <include refid="usedIngredientSQL"/> FROM used_ingredient ui
         inner join `ingredient` i on(ui.denture_id=#{dentureId} and i.id=ui.ingredient_id)
     </select>
 
     <select id="findAppliedIngredient" parameterType="String" resultMap="appliedIngredientRM">
-        SELECT i.id id, i.name name, <include refid="appliedIngredientSQL"/> FROM applied_ingredient ai
+        SELECT <include refid="IngredientSQL" />, <include refid="appliedIngredientSQL"/> FROM applied_ingredient ai
         inner join `ingredient` i on(ai.denture_id=#{dentureId} and i.id=ai.ingredient_id)
     </select>
 
     <select id="findUsedIngredientByFactoryId" parameterType="com.yuzi.denture.domain.criteria.IngredientCriteria" resultMap="usedIngredientRM">
-        SELECT i.id id, i.name name, <include refid="usedIngredientSQL"/> FROM used_ingredient ui
+        SELECT <include refid="IngredientSQL" />, <include refid="usedIngredientSQL"/> FROM used_ingredient ui
         inner join `ingredient` i on(ui.factory_id=#{factoryId} and i.id=ui.ingredient_id)
         where used_time <![CDATA[ >= ]]> #{startTime} and used_time <![CDATA[ <= ]]> #{endTime}
     </select>
     <select id="findAppliedIngredientByFactoryId" parameterType="com.yuzi.denture.domain.criteria.IngredientCriteria" resultMap="appliedIngredientRM">
-        SELECT i.id id, i.name name, <include refid="appliedIngredientSQL"/> FROM applied_ingredient ai
+        SELECT <include refid="IngredientSQL" />, <include refid="appliedIngredientSQL"/> FROM applied_ingredient ai
         inner join `ingredient` i on(ai.factory_id=#{factoryId} and i.id=ai.ingredient_id)
         where applied_date <![CDATA[ >= ]]> #{startTime} and applied_date <![CDATA[ <= ]]> #{endTime}
     </select>
 
     <select id="findIngredientById" parameterType="Long" resultMap="baseRM">
-        SELECT <include refid="IngredientSQL"/>, <include refid="appliedIngredientSQL"/> FROM `ingredient` i
+        SELECT <include refid="IngredientSQL"/>, <include refid="PurchaseRecordSQL"/>, <include refid="appliedIngredientSQL"/> FROM `ingredient` i
         LEFT JOIN ingredient_purchase_record pr ON i.id=pr.ingredient_id
         left join applied_ingredient ai on i.id=ai.ingredient_id
         where i.id=#{id}
@@ -227,7 +233,8 @@
         `comment`,
         `factory_id`,
         `equipment`,
-        `denture_id`
+        `denture_id`,
+        `wasted_number`
         )
         VALUES
         (
@@ -238,7 +245,8 @@
         #{comment},
         #{factoryId},
         #{equipment},
-        #{dentureId}
+        #{dentureId},
+        #{wastedNumber}
         );
     </insert>
 

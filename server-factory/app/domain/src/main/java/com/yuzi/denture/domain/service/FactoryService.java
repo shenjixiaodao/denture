@@ -55,7 +55,7 @@ public interface FactoryService {
     void addClinicUser(ClinicUser user);
 
     //ingredient
-    void newIngredient(String name, Long factoryId, String type);
+    void newIngredient(String name, Long factoryId, String type, String equalityRateRange);
     void newIngredientPurchaseRecord(String billNo, String price, Long ingredientId, Long supplierId, Double number);
     void applyIngredient(Long uid, String dentureId, Long ingredientId, Double number,
                          String comment, Long factoryId);

@@ -67,6 +67,46 @@
       </table>
     </el-row>
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+      <div style="font-size: 15px;padding-top: 10px;font-weight: bold;">物料平衡记录表:</div>
+      <el-table :data="appliedUsedIngredient" style="width: 100%;">
+        <el-table-column label="物料名">
+          <template slot-scope="scope">
+            {{ scope.row.ingredientName }}
+          </template>
+        </el-table-column>
+        <el-table-column label="型号">
+          <template slot-scope="scope">
+            {{ scope.row.ingredientType }}
+          </template>
+        </el-table-column>
+        <el-table-column label="偏差范围">
+          <template slot-scope="scope">
+            {{ scope.row.equalityRateRange }}
+          </template>
+        </el-table-column>
+        <el-table-column label="领取数量">
+          <template slot-scope="scope">
+            {{ scope.row.appliedNumber }}
+          </template>
+        </el-table-column>
+        <el-table-column label="实际使用量">
+          <template slot-scope="scope">
+            {{ scope.row.usedNumber }}
+          </template>
+        </el-table-column>
+        <el-table-column label="剩余量">
+          <template slot-scope="scope">
+            {{ scope.row.balance }}
+          </template>
+        </el-table-column>
+        <el-table-column label="废料量">
+          <template slot-scope="scope">
+            {{ scope.row.wastedNumber }}
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-row>
+    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="dialogSubmitVisible=true">
         提交工序
       </el-button>
@@ -86,24 +126,56 @@
           </td>
         </tr>
       </table>
-      <div style="font-size: 15px;padding-top: 10px;font-weight: bold;">工序列表:</div>
-      <el-table :data="group.procedures" style="width: 100%;">
-        <el-table-column label="工序名">
-          <template slot-scope="scope">
-            {{ scope.row.name }}
-          </template>
-        </el-table-column>
-        <el-table-column label="完成时间">
-          <template slot-scope="scope">
-            {{ scope.row.completedDate | time2DateStr }}
-          </template>
-        </el-table-column>
-        <el-table-column label="备注">
-          <template slot-scope="scope">
-            {{ scope.row.comment }}
-          </template>
-        </el-table-column>
-      </el-table>
+      <el-tabs active-name="procedures" type="card">
+        <el-tab-pane label="工序列表" name="procedures">
+          <el-table :data="group.procedures" style="width: 100%;">
+            <el-table-column label="工序名">
+              <template slot-scope="scope">
+                {{ scope.row.name }}
+              </template>
+            </el-table-column>
+            <el-table-column label="完成时间">
+              <template slot-scope="scope">
+                {{ scope.row.completedDate | time2DateStr }}
+              </template>
+            </el-table-column>
+            <el-table-column label="备注">
+              <template slot-scope="scope">
+                {{ scope.row.comment }}
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="物料使用列表" name="ingredients">
+          <el-table :data="group.usedIngredients" style="width: 100%;">
+            <el-table-column label="物料名">
+              <template slot-scope="scope">
+                {{ scope.row.ingredient.name }}
+              </template>
+            </el-table-column>
+            <el-table-column label="使用设备">
+              <template slot-scope="scope">
+                {{ scope.row.equipment }}
+              </template>
+            </el-table-column>
+            <el-table-column label="使用量">
+              <template slot-scope="scope">
+                {{ scope.row.usedNumber }}
+              </template>
+            </el-table-column>
+            <el-table-column label="使用时间">
+              <template slot-scope="scope">
+                {{ scope.row.usedTime | time2DateStr }}
+              </template>
+            </el-table-column>
+            <el-table-column label="备注">
+              <template slot-scope="scope">
+                {{ scope.row.comment }}
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+      </el-tabs>
     </el-row>
 
     <el-dialog :visible.sync="dialogSubmitVisible" title="提交工序">
@@ -143,6 +215,9 @@
         </el-form-item>
         <el-form-item label="使用量" prop="title">
           <el-input v-model="usedIngredient.usedNumber" :placeholder="'剩余可用:'+selectedBalance" style="width: 70%;"/>
+        </el-form-item>
+        <el-form-item label="废料量" prop="title">
+          <el-input v-model="usedIngredient.wastedNumber" style="width: 70%;"/>
         </el-form-item>
         <el-form-item label="备注">
           <el-input :autosize="{ minRows: 2, maxRows: 4}" v-model="usedIngredient.comment" type="textarea" placeholder="请输入" style="width: 70%;"/>
@@ -187,6 +262,7 @@ export default {
           id: null
         },
         usedNumber: null,
+        wastedNumber: null,
         comment: null
       }
     }

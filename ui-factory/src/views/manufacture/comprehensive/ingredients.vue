@@ -94,6 +94,9 @@
         <el-form-item label="型号" prop="title">
           <el-input v-model="ingredient.type" style="width: 70%;"/>
         </el-form-item>
+        <el-form-item label="平衡偏差范围" prop="title">
+          <el-input v-model="ingredient.equalityRateRange" style="width: 70%;"/>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogAddVisible = false">取消</el-button>
@@ -121,7 +124,8 @@ export default {
       dialogAddVisible: false,
       ingredient: {
         name: null,
-        type: null
+        type: null,
+        equalityRateRange: null
       },
       supplier: {
         name: null,

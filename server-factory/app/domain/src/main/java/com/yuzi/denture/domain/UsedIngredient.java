@@ -14,9 +14,18 @@ public class UsedIngredient {
     private Ingredient ingredient;
     //使用量(usedNumber):
     private Double usedNumber;
+    Double wastedNumber;
     //备注(comment):
     private String comment;
     private Date usedTime;
+
+    public Double getWastedNumber() {
+        return wastedNumber;
+    }
+
+    public void setWastedNumber(Double wastedNumber) {
+        this.wastedNumber = wastedNumber;
+    }
 
     public Date getUsedTime() {
         return usedTime;

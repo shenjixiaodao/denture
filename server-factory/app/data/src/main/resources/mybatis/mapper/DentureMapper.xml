@@ -197,6 +197,21 @@
         <result column="received_date" property="receivedDate" />
         <result column="dentist" property="dentist" />
         <result column="box_no" property="boxNo" />
+        <association property="inspection" javaType="com.yuzi.denture.domain.InspectionReport">
+            <result column="id" property="dentureId" />
+            <result column="sampleDate" property="sampleDate" />
+            <result column="ir_start_date" property="startDate" />
+            <result column="ir_end_date" property="endDate" />
+            <result column="ir_conclusion" property="conclusion" />
+            <result column="ir_comment" property="comment" />
+            <collection property="items" ofType="com.yuzi.denture.domain.InspectionItem">
+                <result column="ii_name" property="name" />
+                <result column="ii_terms" property="terms" />
+                <result column="ii_requirement" property="requirement" />
+                <result column="ii_result" property="result" />
+                <result column="ii_conclusion" property="conclusion" />
+            </collection>
+        </association>
         <association property="clinic" javaType="com.yuzi.denture.domain.Clinic">
             <result column="clinic_id" property="id" />
             <result column="clinic_name" property="name" />

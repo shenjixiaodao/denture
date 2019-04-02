@@ -198,9 +198,10 @@ public class FactoryServiceImpl implements FactoryService {
     }
 
     @Override
-    public void newIngredient(String name, Long factoryId, String type) {
+    public void newIngredient(String name, Long factoryId, String type, String equalityRateRange) {
         Ingredient ingredient = new Ingredient(name, factoryId);
         ingredient.setType(type);
+        ingredient.setEqualityRateRange(equalityRateRange);
         repository.newIngredient(ingredient);
     }
 

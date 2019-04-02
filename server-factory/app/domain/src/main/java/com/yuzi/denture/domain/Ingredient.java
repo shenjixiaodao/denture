@@ -9,6 +9,7 @@ public class Ingredient {
     private Double balance;
     private Long factoryId;
     String type;
+    String equalityRateRange;
     private List<IngredientPurchaseRecord> purchaseRecords;
     List<AppliedIngredient> appliedIngredients;
 
@@ -23,6 +24,14 @@ public class Ingredient {
     }
 
     public Ingredient() {
+    }
+
+    public String getEqualityRateRange() {
+        return equalityRateRange;
+    }
+
+    public void setEqualityRateRange(String equalityRateRange) {
+        this.equalityRateRange = equalityRateRange;
     }
 
     public String getType() {

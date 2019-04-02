@@ -79,6 +79,7 @@ public class Denture {
     Long creatorId;
     String creator;
     String boxNo;
+    InspectionReport inspection;
 
     public Denture(DentureType type, String specification, Long clinicId, String comment,
                    Long factoryId, String positions, Integer number, String colorNo) {
@@ -180,6 +181,14 @@ public class Denture {
     }
 
     public Denture() {
+    }
+
+    public InspectionReport getInspection() {
+        return inspection;
+    }
+
+    public void setInspection(InspectionReport inspection) {
+        this.inspection = inspection;
     }
 
     public String getBoxNo() {

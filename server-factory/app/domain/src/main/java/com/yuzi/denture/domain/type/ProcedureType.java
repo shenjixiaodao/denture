@@ -6,7 +6,8 @@ public enum ProcedureType {
     CheJin("车金组"),
     ChongJiao("充胶组"),
     ShangCi("上瓷组"),
-    CheCi("车瓷组");
+    CheCi("车瓷组"),
+    PackAndClr("包装与消毒");
     private String text;
     ProcedureType(String text) {
         this.text = text;

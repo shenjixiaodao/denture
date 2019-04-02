@@ -1,11 +1,14 @@
 package com.yuzi.denture.domain.aggregate;
 
+
 public class AppliedUsedIngredient {
     Long ingredientId;
     String ingredientName;
     String ingredientType;
+    String equalityRateRange;
     Double appliedNumber;
     Double usedNumber = 0.0;
+    Double wastedNumber = 0.0;
     Double balance = 0.0;
 
     public void addAppliedNumber(Double number) {
@@ -16,6 +19,26 @@ public class AppliedUsedIngredient {
     public void addUsedNumber(Double number) {
         usedNumber += number;
         balance -= number;
+    }
+
+    public void addWastedNumber(Double number) {
+        wastedNumber += number;
+    }
+
+    public String getEqualityRateRange() {
+        return equalityRateRange;
+    }
+
+    public void setEqualityRateRange(String equalityRateRange) {
+        this.equalityRateRange = equalityRateRange;
+    }
+
+    public Double getWastedNumber() {
+        return wastedNumber;
+    }
+
+    public void setWastedNumber(Double wastedNumber) {
+        this.wastedNumber = wastedNumber;
     }
 
     public String getIngredientType() {

@@ -407,11 +407,13 @@ public class ManufactureController {
             @ApiImplicitParam(paramType = "form", name = "name", dataType = "string",
                     required = true, value = "物料名称"),
             @ApiImplicitParam(paramType = "form", name = "type", dataType = "string",
-                    required = true, value = "型号")
+                    required = true, value = "型号"),
+            @ApiImplicitParam(paramType = "form", name = "equalityRateRange", dataType = "string",
+                    required = true, value = "平衡偏差范围")
     })
     @ResponseBody
     @RequestMapping(value = "/newIngredient", method = POST)
-    public WebResult newIngredient(String name, String type, HttpServletRequest request) {
+    public WebResult newIngredient(String name, String type, String equalityRateRange, HttpServletRequest request) {
         FactoryUser user = SessionManager.Instance().user(request);
         Long factoryId = user.getFactoryId();
         logger.info("新增物料:name={}", name);
