@@ -1,6 +1,7 @@
 package com.yuzi.denture.data.mapper;
 
 import com.yuzi.denture.domain.Denture;
+import com.yuzi.denture.domain.InspectionReport;
 import com.yuzi.denture.domain.criteria.DentureCriteria;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -22,4 +23,7 @@ public interface DentureMapper {
     Integer countDentures(DentureCriteria criteria);
     List<Denture> findDenturesByCriteria(DentureCriteria criteria);
     List<Denture> findDentures(DentureCriteria criteria);
+
+    void saveInspectionReport(InspectionReport report);
+    InspectionReport findInspectionByDentureId(String dentureId);
 }

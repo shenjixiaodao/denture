@@ -184,6 +184,10 @@ public class FactoryRepositoryImpl implements FactoryRepository {
                 }
             }
         }
+        List<AppliedIngredient> appliedIngredients = ingredientMapper.findAppliedIngredient(dentureId);
+        denture.setAppliedIngredients(appliedIngredients);
+        InspectionReport inspection = dentureMapper.findInspectionByDentureId(dentureId);
+        denture.setInspection(inspection);
         return denture;
     }
 
@@ -296,5 +300,10 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     @Override
     public void add(PriceSheet price) {
         priceSheetMapper.save(price);
+    }
+
+    @Override
+    public void add(InspectionReport report) {
+        dentureMapper.saveInspectionReport(report);
     }
 }

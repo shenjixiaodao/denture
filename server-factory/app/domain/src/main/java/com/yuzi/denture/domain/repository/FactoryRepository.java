@@ -87,4 +87,6 @@ public interface FactoryRepository {
     void deleteProductType(Long id);
 
     void add(PriceSheet price);
+
+    void add(InspectionReport report);
 }

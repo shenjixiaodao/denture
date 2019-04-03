@@ -113,6 +113,9 @@
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="useIngredient">
         使用物料
       </el-button>
+      <el-button v-if="!denture.inspection" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="dialogInspectVisible=true">
+        生成检验报告
+      </el-button>
     </el-row>
     <el-row v-for="group in procedureGroups" :key="group.id" style="background:#fff;margin-bottom:25px;">
       <hr style="filter: progid:DXImageTransform.Microsoft.Glow(color=#987cb9,strength=10)" width="100%" color="#987cb9" SIZE="1">
@@ -178,6 +181,29 @@
       </el-tabs>
     </el-row>
 
+    <el-dialog :visible.sync="dialogInspectVisible" title="新建检验结论">
+      <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 100%;">
+        <el-form-item label="取样时间" prop="title">
+          <el-date-picker v-model="newInspectionReport.sampleDate" type="date" value-format="yyyy-MM-dd" />
+        </el-form-item>
+        <el-form-item label="开始时间" prop="title">
+          <el-date-picker v-model="newInspectionReport.startDate" type="date" value-format="yyyy-MM-dd" />
+        </el-form-item>
+        <el-form-item label="结束时间" prop="title">
+          <el-date-picker v-model="newInspectionReport.endDate" type="date" value-format="yyyy-MM-dd" />
+        </el-form-item>
+        <el-form-item label="检验结论">
+          <el-input :autosize="{ minRows: 2, maxs: 4}" v-model="newInspectionReport.conclusion" type="textarea" placeholder="请输入" style="width: 70%;"/>
+        </el-form-item>
+        <el-form-item label="备注">
+          <el-input :autosize="{ minRows: 2, maxs: 4}" v-model="newInspectionReport.comment" type="textarea" placeholder="请输入" style="width: 70%;"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogInspectVisible = false">取消</el-button>
+        <el-button type="primary" @click="addInspectionReport">提交</el-button>
+      </div>
+    </el-dialog>
     <el-dialog :visible.sync="dialogSubmitVisible" title="提交工序">
       <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 100%;">
         <el-form-item label="工序组" prop="title">
@@ -233,7 +259,7 @@
 
 <script>
 import { queryByDentureId, findAppliedUsedIngredient } from '@/api/common'
-import { completeProcedure, useIngredient } from '@/api/worker'
+import { completeProcedure, useIngredient, addInspectionReport } from '@/api/worker'
 import { isvalidDentureId, isNotNull, isNull } from '@/utils/validate'
 import { Message } from 'element-ui'
 
@@ -243,6 +269,7 @@ export default {
     return {
       dialogSubmitVisible: false,
       dialogUseIngredient: false,
+      dialogInspectVisible: false,
       dentureId: null,
       denture: {},
       procedureGroups: null,
@@ -263,6 +290,14 @@ export default {
         },
         usedNumber: null,
         wastedNumber: null,
+        comment: null
+      },
+      newInspectionReport: {
+        dentureId: null,
+        sampleDate: new Date().Format('yyyy-MM-dd'),
+        startDate: new Date().Format('yyyy-MM-dd'),
+        endDate: null,
+        conclusion: null,
         comment: null
       }
     }
@@ -331,6 +366,13 @@ export default {
           }
         }
       }
+    },
+    addInspectionReport() {
+      this.newInspectionReport.dentureId = this.dentureId
+      addInspectionReport(this.newInspectionReport).then(response => {
+        this.search()
+        this.dialogUseIngredient = false
+      })
     }
   }
 }

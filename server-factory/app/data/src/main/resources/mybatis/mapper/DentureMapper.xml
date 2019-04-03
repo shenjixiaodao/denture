@@ -70,6 +70,26 @@
         #{dentist}
         );
     </insert>
+    <insert id="saveInspectionReport" useGeneratedKeys="true" keyProperty="id" parameterType="com.yuzi.denture.domain.InspectionReport">
+        INSERT INTO `inspection_report`
+        (
+        `denture_id`,
+        `sample_date`,
+        `start_date`,
+        `end_date`,
+        `conclusion`,
+        `comment`
+        )
+        VALUES
+        (
+        #{dentureId},
+        #{sampleDate},
+        #{startDate},
+        #{endDate},
+        #{conclusion},
+        #{comment}
+        );
+    </insert>
     <update id="update" parameterType="com.yuzi.denture.domain.Denture">
         UPDATE denture
         SET
@@ -197,21 +217,6 @@
         <result column="received_date" property="receivedDate" />
         <result column="dentist" property="dentist" />
         <result column="box_no" property="boxNo" />
-        <association property="inspection" javaType="com.yuzi.denture.domain.InspectionReport">
-            <result column="id" property="dentureId" />
-            <result column="sampleDate" property="sampleDate" />
-            <result column="ir_start_date" property="startDate" />
-            <result column="ir_end_date" property="endDate" />
-            <result column="ir_conclusion" property="conclusion" />
-            <result column="ir_comment" property="comment" />
-            <collection property="items" ofType="com.yuzi.denture.domain.InspectionItem">
-                <result column="ii_name" property="name" />
-                <result column="ii_terms" property="terms" />
-                <result column="ii_requirement" property="requirement" />
-                <result column="ii_result" property="result" />
-                <result column="ii_conclusion" property="conclusion" />
-            </collection>
-        </association>
         <association property="clinic" javaType="com.yuzi.denture.domain.Clinic">
             <result column="clinic_id" property="id" />
             <result column="clinic_name" property="name" />
@@ -241,7 +246,7 @@
                 <result column="proc_modified_date" property="modifiedDate" />
             </collection>
         </collection>
-        <collection property="appliedIngredients" ofType="com.yuzi.denture.domain.AppliedIngredient">
+        <!--<collection property="appliedIngredients" ofType="com.yuzi.denture.domain.AppliedIngredient">
             <result column="ai_ingredient_id" property="ingredient.id" />
             <result column="aii_name" property="ingredient.name" />
             <result column="ai_denture_id" property="dentureId" />
@@ -250,8 +255,36 @@
             <result column="ai_applied_number" property="appliedNumber" />
             <result column="ai_applied_date" property="appliedDate" />
             <result column="ai_comment" property="comment" />
+        </collection>-->
+    </resultMap>
+
+    <resultMap id="inspectionRM" type="com.yuzi.denture.domain.InspectionReport">
+        <result column="denture_id" property="dentureId" />
+        <result column="sampleDate" property="sampleDate" />
+        <result column="start_date" property="startDate" />
+        <result column="end_date" property="endDate" />
+        <result column="conclusion" property="conclusion" />
+        <result column="comment" property="comment" />
+        <collection property="items" ofType="com.yuzi.denture.domain.InspectionItem">
+            <result column="ii_name" property="name" />
+            <result column="ii_terms" property="terms" />
+            <result column="ii_requirement" property="requirement" />
+            <result column="ii_result" property="result" />
+            <result column="ii_conclusion" property="conclusion" />
         </collection>
     </resultMap>
+    <sql id="inspectionReportSQL">
+        ir.*
+    </sql>
+    <sql id="inspectionItemSQL">
+        ii.name ii_name, ii.terms ii_terms, ii.requirement ii_requirement, ii.result ii_result, ii.conclusion ii_conclusion
+    </sql>
+    <select id="findInspectionByDentureId" parameterType="String" resultMap="inspectionRM">
+        select <include refid="inspectionReportSQL" />, <include refid="inspectionItemSQL" />
+        from inspection_report ir
+        left join inspection_item ii on (ir.id=ii.inspection_id)
+        where ir.denture_id=#{dentureId}
+    </select>
 
     <sql id="baseSQL">
         d.*
@@ -274,10 +307,6 @@
         proc.id proc_id, proc.name proc_name, proc.specification proc_specification, proc.operation_record proc_operation_record,
         proc.comment proc_comment, proc.operator_id proc_operator_id, proc.completed_date proc_completed_date,
         proc.modified_date proc_modified_date
-    </sql>
-    <sql id="appliedIngredientSQL">
-        ai.ingredient_id ai_ingredient_id, aii.name aii_name, ai.denture_id ai_denture_id, ai.no ai_no, ai.applied_number ai_applied_number,
-        ai.applicant_id ai_applicant_id, ai.applied_date ai_applied_date, ai.comment ai_comment
     </sql>
     <sql id="criteriaWhere">
         where 1=1
@@ -309,8 +338,8 @@
 
     <select id="findByDentureId" parameterType="String" resultMap="detailRM">
         SELECT <include refid="baseSQL" />, <include refid="clinicSQL" />,
-        <include refid="procedureGroupSQL" />, <include refid="appliedIngredientSQL" />,
-        <include refid="procedureSQL" />, <include refid="factorySQL" />
+        <include refid="procedureGroupSQL" />, <include refid="procedureSQL" />,
+        <include refid="factorySQL" />
         FROM denture d inner join clinic c on (d.id=#{dentureId} and d.clinic_id=c.id)
         INNER JOIN procedure_group pg ON (pg.denture_id=#{dentureId} and d.id=pg.denture_id)
         inner join factory f on (d.factory_id=f.id)

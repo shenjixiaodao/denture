@@ -26,3 +26,12 @@ export function useIngredient(data) {
     data
   })
 }
+
+export function addInspectionReport(data) {
+  return request({
+    url: '/manufacture/newInspectionReport',
+    method: 'post',
+    data
+  })
+}
+

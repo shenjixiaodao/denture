@@ -419,7 +419,7 @@ public class ManufactureController {
         logger.info("新增物料:name={}", name);
         WebResult result = new WebResult<>();
         try {
-            service.newIngredient(name, factoryId, type);
+            service.newIngredient(name, factoryId, type, equalityRateRange);
         } catch (Exception ex) {
             logger.warn("审核义齿异常: {}", ex);
             return WebResult.failure(ex.getMessage());
@@ -662,6 +662,19 @@ public class ManufactureController {
             price.setFactory(new Factory(factoryId));
             service.addPriceSheet(price);
         }, "添加产品类别异常", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "新建检验报告", response = InspectionReport.class, httpMethod = "POST")
+    @ResponseBody
+    @RequestMapping(value = "/newInspectionReport", method = POST)
+    public WebResult newInspectionReport(@RequestBody InspectionReport report, HttpServletRequest request) {
+        // FactoryUser user = SessionManager.Instance().user(request);
+        // Long factoryId = user.getFactoryId();
+        WebResult result = WebResult.execute(res -> {
+            service.addInspectionReport(report);
+            res.setData(report);
+        }, "新建检验报告异常", logger);
         return result;
     }
 

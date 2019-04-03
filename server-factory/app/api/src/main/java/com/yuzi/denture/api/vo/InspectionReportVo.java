@@ -1,24 +1,15 @@
-package com.yuzi.denture.domain;
+package com.yuzi.denture.api.vo;
 
 import java.util.List;
 
-public class InspectionReport {
-    Long id;
+public class InspectionReportVo {
     String dentureId;
     String sampleDate;
     String startDate;
     String endDate;
     String conclusion;
     String comment;
-    List<InspectionItem> items;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    List<InspectionItemVo> items;
 
     public String getDentureId() {
         return dentureId;
@@ -68,11 +59,11 @@ public class InspectionReport {
         this.comment = comment;
     }
 
-    public List<InspectionItem> getItems() {
+    public List<InspectionItemVo> getItems() {
         return items;
     }
 
-    public void setItems(List<InspectionItem> items) {
+    public void setItems(List<InspectionItemVo> items) {
         this.items = items;
     }
 }

@@ -96,6 +96,15 @@ public class DentureVo {
     Date receivedDate;
     Long creatorId;
     String creator;
+    InspectionReportVo inspection;
+
+    public InspectionReportVo getInspection() {
+        return inspection;
+    }
+
+    public void setInspection(InspectionReportVo inspection) {
+        this.inspection = inspection;
+    }
 
     public Long getCreatorId() {
         return creatorId;

@@ -65,4 +65,6 @@ public interface FactoryService {
     void addPriceSheet(PriceSheet price);
 
     void addDeliveryInfo(String dentureId, String deliveryDate, String deliveryPerson);
+
+    void addInspectionReport(InspectionReport report);
 }

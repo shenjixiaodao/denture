@@ -263,4 +263,9 @@ public class FactoryServiceImpl implements FactoryService {
         denture.setStatus(Denture.Status.Delivered.name());
         repository.update(denture);
     }
+
+    @Override
+    public void addInspectionReport(InspectionReport inspection) {
+        repository.add(inspection);
+    }
 }

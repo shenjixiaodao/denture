@@ -134,6 +134,16 @@
             {{ scope.row.ingredient.name }}
           </template>
         </el-table-column>
+        <el-table-column label="型号">
+          <template slot-scope="scope">
+            {{ scope.row.ingredient.type }}
+          </template>
+        </el-table-column>
+        <el-table-column label="物料名">
+          <template slot-scope="scope">
+            {{ scope.row.appliedDate | time2DateStr }}
+          </template>
+        </el-table-column>
         <el-table-column label="申请数量" align="center">
           <template slot-scope="scope">
             {{ scope.row.appliedNumber }}
