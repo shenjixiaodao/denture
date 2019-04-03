@@ -35,3 +35,11 @@ export function addInspectionReport(data) {
   })
 }
 
+export function addInspectionItem(data) {
+  return request({
+    url: '/manufacture/newInspectionItem',
+    method: 'post',
+    data
+  })
+}
+

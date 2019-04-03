@@ -67,44 +67,87 @@
       </table>
     </el-row>
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <div style="font-size: 15px;padding-top: 10px;font-weight: bold;">物料平衡记录表:</div>
-      <el-table :data="appliedUsedIngredient" style="width: 100%;">
-        <el-table-column label="物料名">
-          <template slot-scope="scope">
-            {{ scope.row.ingredientName }}
-          </template>
-        </el-table-column>
-        <el-table-column label="型号">
-          <template slot-scope="scope">
-            {{ scope.row.ingredientType }}
-          </template>
-        </el-table-column>
-        <el-table-column label="偏差范围">
-          <template slot-scope="scope">
-            {{ scope.row.equalityRateRange }}
-          </template>
-        </el-table-column>
-        <el-table-column label="领取数量">
-          <template slot-scope="scope">
-            {{ scope.row.appliedNumber }}
-          </template>
-        </el-table-column>
-        <el-table-column label="实际使用量">
-          <template slot-scope="scope">
-            {{ scope.row.usedNumber }}
-          </template>
-        </el-table-column>
-        <el-table-column label="剩余量">
-          <template slot-scope="scope">
-            {{ scope.row.balance }}
-          </template>
-        </el-table-column>
-        <el-table-column label="废料量">
-          <template slot-scope="scope">
-            {{ scope.row.wastedNumber }}
-          </template>
-        </el-table-column>
-      </el-table>
+      <el-tabs active-name="IngredientEqualityRecord" type="card">
+        <el-tab-pane label="物料平衡记录表" name="IngredientEqualityRecord">
+          <el-table :data="appliedUsedIngredient" style="width: 100%;">
+            <el-table-column label="物料名">
+              <template slot-scope="scope">
+                {{ scope.row.ingredientName }}
+              </template>
+            </el-table-column>
+            <el-table-column label="型号">
+              <template slot-scope="scope">
+                {{ scope.row.ingredientType }}
+              </template>
+            </el-table-column>
+            <el-table-column label="偏差范围">
+              <template slot-scope="scope">
+                {{ scope.row.equalityRateRange }}
+              </template>
+            </el-table-column>
+            <el-table-column label="领取数量">
+              <template slot-scope="scope">
+                {{ scope.row.appliedNumber }}
+              </template>
+            </el-table-column>
+            <el-table-column label="实际使用量">
+              <template slot-scope="scope">
+                {{ scope.row.usedNumber }}
+              </template>
+            </el-table-column>
+            <el-table-column label="剩余量">
+              <template slot-scope="scope">
+                {{ scope.row.balance }}
+              </template>
+            </el-table-column>
+            <el-table-column label="废料量">
+              <template slot-scope="scope">
+                {{ scope.row.wastedNumber }}
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+        <el-tab-pane v-if="denture.inspection" label="检验报告" name="InspectionReport">
+          <table style="text-align: right">
+            <tr>
+              <td class="td_title_prop">取样时间:</td><td class="td_content_prop">{{ denture.inspection.sampleDate | time2DateStr }}</td>
+              <td class="td_title_prop">检验日期:</td><td class="td_content_prop">{{ denture.inspection.startDate + '至' + denture.inspection.endDate }}</td>
+            </tr>
+            <tr><td class="td_title_prop">检验依据:</td><td class="td_content_prop">{{ denture.inspection.theory }}</td></tr>
+            <tr>
+              <td class="td_title_prop">检验结论:</td><td class="td_content_prop">{{ denture.inspection.conclusion }}</td>
+            </tr>
+            <tr><td class="td_title_prop">备注:</td><td class="td_content_prop">{{ denture.inspection.comment }}</td></tr>
+          </table>
+          <el-table :data="denture.inspection.items" style="width: 100%;">
+            <el-table-column label="项目名">
+              <template slot-scope="scope">
+                {{ scope.row.name }}
+              </template>
+            </el-table-column>
+            <el-table-column label="标准条款">
+              <template slot-scope="scope">
+                {{ scope.row.terms }}
+              </template>
+            </el-table-column>
+            <el-table-column label="标准要求">
+              <template slot-scope="scope">
+                {{ scope.row.requirement }}
+              </template>
+            </el-table-column>
+            <el-table-column label="检查结果">
+              <template slot-scope="scope">
+                {{ scope.row.result }}
+              </template>
+            </el-table-column>
+            <el-table-column label="单项结论">
+              <template slot-scope="scope">
+                {{ scope.row.conclusion }}
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+      </el-tabs>
     </el-row>
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="dialogSubmitVisible=true">
@@ -115,6 +158,9 @@
       </el-button>
       <el-button v-if="!denture.inspection" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="dialogInspectVisible=true">
         生成检验报告
+      </el-button>
+      <el-button v-else class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="dialogInspectionItemVisible=true">
+        提交检验项
       </el-button>
     </el-row>
     <el-row v-for="group in procedureGroups" :key="group.id" style="background:#fff;margin-bottom:25px;">
@@ -181,7 +227,7 @@
       </el-tabs>
     </el-row>
 
-    <el-dialog :visible.sync="dialogInspectVisible" title="新建检验结论">
+    <el-dialog :visible.sync="dialogInspectVisible" title="新建检验报告">
       <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 100%;">
         <el-form-item label="取样时间" prop="title">
           <el-date-picker v-model="newInspectionReport.sampleDate" type="date" value-format="yyyy-MM-dd" />
@@ -191,6 +237,9 @@
         </el-form-item>
         <el-form-item label="结束时间" prop="title">
           <el-date-picker v-model="newInspectionReport.endDate" type="date" value-format="yyyy-MM-dd" />
+        </el-form-item>
+        <el-form-item label="检验依据" prop="title">
+          <el-input v-model="newInspectionItem.theory"/>
         </el-form-item>
         <el-form-item label="检验结论">
           <el-input :autosize="{ minRows: 2, maxs: 4}" v-model="newInspectionReport.conclusion" type="textarea" placeholder="请输入" style="width: 70%;"/>
@@ -202,6 +251,29 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogInspectVisible = false">取消</el-button>
         <el-button type="primary" @click="addInspectionReport">提交</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog :visible.sync="dialogInspectionItemVisible" title="添加检验项">
+      <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 100%;">
+        <el-form-item label="项目名" prop="title">
+          <el-input v-model="newInspectionItem.name"/>
+        </el-form-item>
+        <el-form-item label="标准条款" prop="title">
+          <el-input v-model="newInspectionItem.terms"/>
+        </el-form-item>
+        <el-form-item label="标准要求" prop="title">
+          <el-input v-model="newInspectionItem.requirement"/>
+        </el-form-item>
+        <el-form-item label="检验结果">
+          <el-input :autosize="{ minRows: 2, maxs: 4}" v-model="newInspectionItem.result" type="textarea" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="单项结论">
+          <el-input :autosize="{ minRows: 2, maxs: 4}" v-model="newInspectionItem.conclusion" type="textarea" placeholder="请输入"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogInspectionItemVisible = false">取消</el-button>
+        <el-button type="primary" @click="addInspectionItem">提交</el-button>
       </div>
     </el-dialog>
     <el-dialog :visible.sync="dialogSubmitVisible" title="提交工序">
@@ -259,7 +331,7 @@
 
 <script>
 import { queryByDentureId, findAppliedUsedIngredient } from '@/api/common'
-import { completeProcedure, useIngredient, addInspectionReport } from '@/api/worker'
+import { completeProcedure, useIngredient, addInspectionReport, addInspectionItem } from '@/api/worker'
 import { isvalidDentureId, isNotNull, isNull } from '@/utils/validate'
 import { Message } from 'element-ui'
 
@@ -270,6 +342,7 @@ export default {
       dialogSubmitVisible: false,
       dialogUseIngredient: false,
       dialogInspectVisible: false,
+      dialogInspectionItemVisible: false,
       dentureId: null,
       denture: {},
       procedureGroups: null,
@@ -299,6 +372,15 @@ export default {
         endDate: null,
         conclusion: null,
         comment: null
+      },
+      newInspectionItem: {
+        inspectionId: null,
+        name: null,
+        terms: null,
+        requirement: null,
+        result: null,
+        conclusion: null,
+        theory: null
       }
     }
   },
@@ -371,7 +453,14 @@ export default {
       this.newInspectionReport.dentureId = this.dentureId
       addInspectionReport(this.newInspectionReport).then(response => {
         this.search()
-        this.dialogUseIngredient = false
+        this.dialogInspectVisible = false
+      })
+    },
+    addInspectionItem() {
+      this.newInspectionItem.inspectionId = this.denture.inspection.id
+      addInspectionItem(this.newInspectionItem).then(response => {
+        this.search()
+        this.dialogInspectionItemVisible = false
       })
     }
   }

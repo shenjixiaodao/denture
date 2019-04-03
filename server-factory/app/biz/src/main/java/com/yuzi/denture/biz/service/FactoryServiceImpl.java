@@ -268,4 +268,9 @@ public class FactoryServiceImpl implements FactoryService {
     public void addInspectionReport(InspectionReport inspection) {
         repository.add(inspection);
     }
+
+    @Override
+    public void addInspectionItem(InspectionItem item) {
+        repository.add(item);
+    }
 }

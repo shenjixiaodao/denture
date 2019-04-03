@@ -89,4 +89,5 @@ public interface FactoryRepository {
     void add(PriceSheet price);
 
     void add(InspectionReport report);
+    void add(InspectionItem item);
 }

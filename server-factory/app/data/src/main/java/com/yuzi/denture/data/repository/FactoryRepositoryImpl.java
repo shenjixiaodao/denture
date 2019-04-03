@@ -306,4 +306,9 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     public void add(InspectionReport report) {
         dentureMapper.saveInspectionReport(report);
     }
+
+    @Override
+    public void add(InspectionItem item) {
+        dentureMapper.saveInspectionItem(item);
+    }
 }

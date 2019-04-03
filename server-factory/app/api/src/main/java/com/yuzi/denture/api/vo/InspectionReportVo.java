@@ -3,6 +3,7 @@ package com.yuzi.denture.api.vo;
 import java.util.List;
 
 public class InspectionReportVo {
+    Long id;
     String dentureId;
     String sampleDate;
     String startDate;
@@ -10,6 +11,14 @@ public class InspectionReportVo {
     String conclusion;
     String comment;
     List<InspectionItemVo> items;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getDentureId() {
         return dentureId;

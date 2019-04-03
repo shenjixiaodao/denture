@@ -78,7 +78,8 @@
         `start_date`,
         `end_date`,
         `conclusion`,
-        `comment`
+        `comment`,
+        `theory`
         )
         VALUES
         (
@@ -87,7 +88,28 @@
         #{startDate},
         #{endDate},
         #{conclusion},
-        #{comment}
+        #{comment},
+        #{theory}
+        );
+    </insert>
+    <insert id="saveInspectionItem" parameterType="com.yuzi.denture.domain.InspectionItem">
+        INSERT INTO `inspection_item`
+        (
+        `inspection_id`,
+        `name`,
+        `terms`,
+        `requirement`,
+        `result`,
+        `conclusion`
+        )
+        VALUES
+        (
+        #{inspectionId},
+        #{name},
+        #{terms},
+        #{requirement},
+        #{result},
+        #{conclusion}
         );
     </insert>
     <update id="update" parameterType="com.yuzi.denture.domain.Denture">
@@ -259,12 +281,14 @@
     </resultMap>
 
     <resultMap id="inspectionRM" type="com.yuzi.denture.domain.InspectionReport">
+        <result column="id" property="id" />
         <result column="denture_id" property="dentureId" />
-        <result column="sampleDate" property="sampleDate" />
+        <result column="sample_date" property="sampleDate" />
         <result column="start_date" property="startDate" />
         <result column="end_date" property="endDate" />
         <result column="conclusion" property="conclusion" />
         <result column="comment" property="comment" />
+        <result column="theory" property="theory" />
         <collection property="items" ofType="com.yuzi.denture.domain.InspectionItem">
             <result column="ii_name" property="name" />
             <result column="ii_terms" property="terms" />

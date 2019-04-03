@@ -10,7 +10,16 @@ public class InspectionReport {
     String endDate;
     String conclusion;
     String comment;
+    String theory;
     List<InspectionItem> items;
+
+    public String getTheory() {
+        return theory;
+    }
+
+    public void setTheory(String theory) {
+        this.theory = theory;
+    }
 
     public Long getId() {
         return id;

@@ -678,6 +678,19 @@ public class ManufactureController {
         return result;
     }
 
+    @ApiOperation(value = "添加检验项", response = InspectionItem.class, httpMethod = "POST")
+    @ResponseBody
+    @RequestMapping(value = "/newInspectionItem", method = POST)
+    public WebResult newInspectionItem(@RequestBody InspectionItem item, HttpServletRequest request) {
+        // FactoryUser user = SessionManager.Instance().user(request);
+        // Long factoryId = user.getFactoryId();
+        WebResult result = WebResult.execute(res -> {
+            service.addInspectionItem(item);
+            res.setData(item);
+        }, "新建检验报告异常", logger);
+        return result;
+    }
+
     @ApiOperation(value = "删除产品类别", response = WebResult.class, httpMethod = "POST")
     @ResponseBody
     @RequestMapping(value = "/deleteProductType", method = POST)
