@@ -5,6 +5,9 @@
         <el-form-item label="下单方" prop="title">
           <el-cascader :options="clinics" v-model="selectedClinic" :props="props" placeholder="诊所/医生" filterable @change="handleChange"/>
         </el-form-item>
+        <el-form-item label="联系电话" prop="title">
+          <el-select v-model="contact" disabled class="filter-item" />
+        </el-form-item>
         <el-form-item label="患者姓名" prop="title">
           <el-input v-model="order.patientName" style="width: 70%;"/>
         </el-form-item>
@@ -17,12 +20,15 @@
           </router-link>
         </el-form-item>
         <el-form-item label="阶段" prop="title">
-          <el-select v-model="order.stage" filterable placeholder="阶段" class="filter-item">
+          <el-select v-model="order.stage" filterable placeholder="阶段" class="filter-item" @change="handleStageChange">
             <el-option v-for="item in stages" :key="item.code" :label="item.name" :value="item.code"/>
           </el-select>
         </el-form-item>
         <el-form-item label="收件时间" prop="title">
           <el-date-picker v-model="order.receivedDate" :placeholder="now" type="date" style="width: 200px;" value-format="yyyy-MM-dd" />
+        </el-form-item>
+        <el-form-item label="预交日期" prop="title">
+          <el-date-picker v-model="estimatedDate" disabled type="date" style="width: 200px;" value-format="yyyy-MM-dd" />
         </el-form-item>
         <el-form-item label="牙位" />
         <section style="background:#fff;padding:0px 5px 10px;">
@@ -114,9 +120,6 @@
         <el-form-item label="制作要求" prop="title">
           <el-input v-model="order.requirement" style="width: 70%;"/>
         </el-form-item>
-        <el-form-item label="备注">
-          <el-input :autosize="{ minRows: 2, maxRows: 4}" v-model="order.comment" type="textarea" placeholder="请输入" style="width: 70%;"/>
-        </el-form-item>
         <el-form-item label="缺牙区" prop="title">
           <el-select v-model="order.fieldType" placeholder="类型" clearable style="width: 90px" class="filter-item">
             <el-option v-for="item in fieldTypes" :key="item.code" :label="item.name" :value="item.code"/>
@@ -127,6 +130,7 @@
             <el-radio label="YaoMi">咬密(接触)</el-radio>
             <el-radio label="QingYao">轻咬合(离开0.2)</el-radio>
             <el-radio label="BuYao">不咬合(离开0.4)</el-radio>
+            <el-radio label="Normal">正常</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="领接" prop="title">
@@ -160,6 +164,9 @@
             <el-option v-for="item in paddingType" :key="item.code" :label="item.name" :value="item.code"/>
           </el-select>
         </el-form-item>
+        <el-form-item label="备注">
+          <el-input :autosize="{ minRows: 2, maxRows: 4}" v-model="order.comment" type="textarea" placeholder="请输入" style="width: 70%;"/>
+        </el-form-item>
       </el-form>
     </el-row>
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
@@ -178,6 +185,8 @@ export default {
   data() {
     return {
       now: new Date().Format('yyyy-MM-dd'),
+      estimatedDate: new Date().Format('yyyy-MM-dd'),
+      contact: null,
       types: [
         { code: 'Fixed', name: '定制式固定义齿' }, { code: 'Mobilizable', name: '定制式活动义齿' }
       ],
@@ -315,13 +324,23 @@ export default {
       })
     },
     handleChange(value) {
-      console.log(value)
       this.order.clinicId = value[0]
       this.order.dentistId = value[1]
       for (const c of this.customers) {
         if (c.clinic.id === this.order.clinicId) {
           this.order.salesmanId = c.salesmanId
           break
+        }
+      }
+      for (const c of this.clinics) {
+        if (c.id === this.order.clinicId) {
+          for (const cu of c.users) {
+            console.log(cu)
+            if (cu.id === this.order.dentistId) {
+              this.contact = cu.contact
+              break
+            }
+          }
         }
       }
     },
@@ -338,6 +357,10 @@ export default {
       } else {
         this.specificationOptions = []
       }
+    },
+    handleStageChange(value) {
+      const time = new Date().getTime() + parseInt(value) * 24 * 60 * 60 * 1000
+      this.estimatedDate = new Date(time).Format('yyyy-MM-dd')
     }
   }
 }

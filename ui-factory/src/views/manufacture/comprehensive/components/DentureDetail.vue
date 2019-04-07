@@ -159,7 +159,7 @@
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:15px;">
       <el-button type="primary" @click="applyIngredient">申请用料</el-button>
       <el-button type="primary" @click="printDentureInfo">打印入检单</el-button>
-      <el-button v-if="!isShow&&!denture.deliveryId" type="primary" @click="dialogAddDeliveryVisible=true">出货</el-button>
+      <el-button v-if="!isShow&&!denture.deliveryId&&denture.status !== '无效'" type="primary" @click="dialogAddDeliveryVisible=true">出货</el-button>
       <el-button v-if="!isShow&&denture.deliveryId" type="primary" @click="printDeliveryInfo">打印出货单</el-button>
     </el-row>
 

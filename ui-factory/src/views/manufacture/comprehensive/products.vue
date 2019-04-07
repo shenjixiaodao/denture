@@ -34,6 +34,11 @@
         <el-form-item label="代码" prop="title">
           <el-input v-model="productType.code" style="width: 70%;"/>
         </el-form-item>
+        <el-form-item label="材质规格" prop="title">
+          <el-select v-model="productType.type" placeholder="类型" clearable class="filter-item">
+            <el-option v-for="item in types" :key="item.code" :label="item.name" :value="item.code"/>
+          </el-select>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogAddProductVisible = false">取消</el-button>
@@ -53,8 +58,12 @@ export default {
       dialogAddProductVisible: false,
       productType: {
         name: null,
-        code: null
-      }
+        code: null,
+        type: null
+      },
+      types: [
+        { code: 'Fixed', name: '定制式固定义齿' }, { code: 'Mobilizable', name: '定制式活动义齿' }
+      ]
     }
   },
   created() {

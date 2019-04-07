@@ -5,7 +5,8 @@ import org.springframework.util.StringUtils;
 public enum BiteLevel {
     YaoMi("咬密"),
     QingYao("轻咬"),
-    BuYao("不咬");
+    BuYao("不咬"),
+    Normal("正常");
 
     private String text;
     BiteLevel(String text) {
