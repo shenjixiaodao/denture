@@ -35,7 +35,7 @@ public class FactoryServiceImpl implements FactoryService {
                                          BorderType borderType, NeckType neckType, InnerCrownType innerCrowType,
                                          PaddingType paddingType, OuterCrownType outerCrowType, String requirement,
                                          String patientName, Long salesmanId, String salesman, String stage,
-                                         Date receivedDate, Long creatorId, String creator, String dentist) {
+                                         Date receivedDate, Long creatorId, String creator, String dentist, String boxNo) {
         //1, create denture
         Denture denture = new Denture(type, specification, clinicId, comment,
                 factoryId, positions, number, colorNo);
@@ -59,6 +59,7 @@ public class FactoryServiceImpl implements FactoryService {
         denture.setCreatorId(creatorId);
         denture.setDentistId(dentistId);
         denture.setDentist(dentist);
+        denture.setBoxNo(boxNo);
         //初始创建denture时，生成加工所需要的所有工序
         List<ProcedureGroup> groups = denture.generateProcedureGroups();
         repository.batchAddProcedureGroups(groups);
@@ -107,8 +108,7 @@ public class FactoryServiceImpl implements FactoryService {
     }
 
     @Override
-    public Procedure completeProcedure(Long pgId, Long operatorId, String procedureName, String comment) {
-        Procedure procedure = new Procedure(pgId, procedureName, operatorId);
+    public Procedure completeProcedure(Procedure procedure) {
         repository.add(procedure);
         return procedure;
     }
@@ -180,14 +180,7 @@ public class FactoryServiceImpl implements FactoryService {
     }
 
     @Override
-    public void modifyCustomer(Long customerId, Long clinicId, Long salesmanId) {
-        FactoryCustomer customer = repository.findCustomer(customerId);
-        if(clinicId!=null) {
-            customer.setClinic(new Clinic(clinicId));
-        }
-        if(salesmanId != null) {
-            customer.setSalesmanId(salesmanId);
-        }
+    public void modifyCustomer(FactoryCustomer customer) {
         repository.updateCustomer(customer);
     }
 

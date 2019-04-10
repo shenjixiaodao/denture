@@ -10,6 +10,15 @@ public class ProductType {
     BigDecimal basePrice;
     Long factoryId;
     Date gmtCreated;
+    String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public BigDecimal getBasePrice() {
         return basePrice;

@@ -140,7 +140,9 @@ public class ManufactureController {
             @ApiImplicitParam(paramType = "form", name = "receivedDate", dataType = "string",
                     required = true, value = "收件时间"),
             @ApiImplicitParam(paramType = "form", name = "dentist", dataType = "string",
-                    required = true, value = "医生")
+                    required = true, value = "医生"),
+            @ApiImplicitParam(paramType = "form", name = "boxNo", dataType = "string",
+                    required = true, value = "牙盒编号")
     })
     @ResponseBody
     @RequestMapping(value = "/recordOrder", method = POST)
@@ -149,7 +151,7 @@ public class ManufactureController {
                                             String colorNo, String fieldType, String biteLevel, String borderType,
                                             String neckType, String innerCrownType, String paddingType,
                                             String outerCrownType, String requirement, Long salesmanId, String salesman,
-                                            String stage, String receivedDate, String dentist,
+                                            String stage, String receivedDate, String dentist, String boxNo,
                                             HttpServletRequest request) {
         FactoryUser user = SessionManager.Instance().user(request);
         Long factoryId = user.getFactoryId();
@@ -162,7 +164,7 @@ public class ManufactureController {
                     FieldType.typeOf(fieldType), BiteLevel.typeOf(biteLevel), BorderType.typeOf(borderType),
                     NeckType.typeOf(neckType), InnerCrownType.typeOf(innerCrownType), PaddingType.typeOf(paddingType),
                     OuterCrownType.typeOf(outerCrownType), requirement, patientName, salesmanId, salesman, stage,
-                    CommonUtil.parseDate(receivedDate), user.getId(), user.getName(), dentist);
+                    CommonUtil.parseDate(receivedDate), user.getId(), user.getName(), dentist, boxNo);
             DentureVo vo = DentureAssembler.toVo(denture);
             res.setData(vo);
             logger.info("录入订单成功");
@@ -584,7 +586,9 @@ public class ManufactureController {
                 name, comment);
         WebResult<ProcedureVo> result = new WebResult<>();
         try {
-            Procedure procedure = service.completeProcedure(pgId, operatorId, name, comment);
+            Procedure procedure = new Procedure(pgId, name, operatorId);
+            procedure.setComment(comment);
+            service.completeProcedure(procedure);
             ProcedureVo vo = ProcedureAssembler.toVo(procedure);
             result.setData(vo);
         } catch (Exception ex) {
@@ -688,6 +692,19 @@ public class ManufactureController {
             service.addInspectionItem(item);
             res.setData(item);
         }, "新建检验报告异常", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "修改客户信息", response = FactoryCustomer.class, httpMethod = "POST")
+    @ResponseBody
+    @RequestMapping(value = "/modifyCustomer", method = POST)
+    public WebResult modifyCustomer(@RequestBody FactoryCustomer customer, HttpServletRequest request) {
+        // FactoryUser user = SessionManager.Instance().user(request);
+        // Long factoryId = user.getFactoryId();
+        WebResult result = WebResult.execute(res -> {
+            service.modifyCustomer(customer);
+            res.setData(customer);
+        }, "修改客户信息异常", logger);
         return result;
     }
 

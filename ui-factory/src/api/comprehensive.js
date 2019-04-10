@@ -223,3 +223,11 @@ export function delivery(data) {
     data
   })
 }
+
+export function modifyCustomer(data) {
+  return request({
+    url: '/manufacture/modifyCustomer',
+    method: 'post',
+    data
+  })
+}

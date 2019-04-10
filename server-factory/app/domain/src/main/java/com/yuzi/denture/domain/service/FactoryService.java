@@ -27,7 +27,7 @@ public interface FactoryService {
                                   BorderType borderType, NeckType neckType, InnerCrownType innerCrowType,
                                   PaddingType paddingType, OuterCrownType outerCrowType, String requirement,
                                   String patientName, Long salesmanId, String salesman,String stage,
-                                  Date receivedDate, Long creatorId, String creator, String dentist);
+                                  Date receivedDate, Long creatorId, String creator, String dentist, String boxNo);
     /**
      * 牙模查验, {@param inspector}
      * 生产部和质量部负负责人review，后台自动根据根据工厂信息指派负责人
@@ -39,7 +39,7 @@ public interface FactoryService {
      * 后台自动完成，时间等信息补充
      * @param pgId 完成工序所属的工序组ID
      */
-    Procedure completeProcedure(Long pgId, Long operatorId, String procedureName, String comment);
+    Procedure completeProcedure(Procedure procedure);
 
     //user
     void addFactoryUser(FactoryUser user);
@@ -49,7 +49,7 @@ public interface FactoryService {
     void inviteCustomer(Long factoryId, Long clinicId, Long salesmanId);
     void addCustomer(Long factoryId, Long salesmanId, String name, String contact, String region, String address,
                         String dentistName);
-    void modifyCustomer(Long customerId, Long clinicId, Long salesmanId);
+    void modifyCustomer(FactoryCustomer customer);
 
     //clinic
     void addClinicUser(ClinicUser user);

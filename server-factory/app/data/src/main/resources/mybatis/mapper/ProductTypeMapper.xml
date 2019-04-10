@@ -32,6 +32,7 @@
         <result column="base_price" property="basePrice" />
         <result column="factory_id" property="factoryId" />
         <result column="gmt_created" property="gmtCreated" />
+        <result column="type" property="type" />
     </resultMap>
 
     <select id="findTypesByFactoryId" parameterType="Long" resultMap="baseRM">
