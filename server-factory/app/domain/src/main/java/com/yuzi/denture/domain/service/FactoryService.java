@@ -39,7 +39,7 @@ public interface FactoryService {
      * 后台自动完成，时间等信息补充
      * @param pgId 完成工序所属的工序组ID
      */
-    Procedure completeProcedure(Long pgId, Long operatorId, String procedureName, String comment);
+    Procedure completeProcedure(Procedure procedure);
 
     //user
     void addFactoryUser(FactoryUser user);

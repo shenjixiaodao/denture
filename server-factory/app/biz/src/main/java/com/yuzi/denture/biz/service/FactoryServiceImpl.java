@@ -108,8 +108,7 @@ public class FactoryServiceImpl implements FactoryService {
     }
 
     @Override
-    public Procedure completeProcedure(Long pgId, Long operatorId, String procedureName, String comment) {
-        Procedure procedure = new Procedure(pgId, procedureName, operatorId);
+    public Procedure completeProcedure(Procedure procedure) {
         repository.add(procedure);
         return procedure;
     }

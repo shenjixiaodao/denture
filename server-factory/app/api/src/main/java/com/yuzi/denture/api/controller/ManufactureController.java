@@ -586,7 +586,9 @@ public class ManufactureController {
                 name, comment);
         WebResult<ProcedureVo> result = new WebResult<>();
         try {
-            Procedure procedure = service.completeProcedure(pgId, operatorId, name, comment);
+            Procedure procedure = new Procedure(pgId, name, operatorId);
+            procedure.setComment(comment);
+            service.completeProcedure(procedure);
             ProcedureVo vo = ProcedureAssembler.toVo(procedure);
             result.setData(vo);
         } catch (Exception ex) {
