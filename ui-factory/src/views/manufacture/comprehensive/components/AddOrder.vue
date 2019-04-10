@@ -11,6 +11,9 @@
         <el-form-item label="患者姓名" prop="title">
           <el-input v-model="order.patientName" style="width: 70%;"/>
         </el-form-item>
+        <el-form-item label="牙盒编号" prop="title">
+          <el-input v-model="order.boxNo" style="width: 70%;"/>
+        </el-form-item>
         <el-form-item label="业务员" prop="title">
           <el-select v-model="order.salesmanId" filterable placeholder="业务员" class="filter-item">
             <el-option v-for="item in users" :key="item.id" :label="item.name" :value="item.id"/>
@@ -99,9 +102,9 @@
         <el-form-item label="数量" prop="title">
           <el-input v-model="order.number" style="width: 70%;"/>
         </el-form-item>
-        <el-form-item label="种类名称" prop="title">
+        <el-form-item label="种类" prop="title">
           <!--<el-input v-model="order.specification" style="width: 70%;"/>-->
-          <el-select v-model="order.specification" :filter-method="filterMethod" filterable placeholder="类型" class="filter-item">
+          <el-select v-model="order.specification" :filter-method="filterMethod" filterable placeholder="类型" class="filter-item" @change="handleTypeChange">
             <el-option v-for="item in specificationOptions" :key="item.code" :label="item.name" :value="item.code"/>
           </el-select>
           <router-link :to="'/comprehensive/products'" class="link-type">
@@ -237,7 +240,8 @@ export default {
         innerCrownType: null,
         neckType: null,
         outerCrownType: null,
-        paddingType: null
+        paddingType: null,
+        boxNo: null
       },
       clinics: null,
       selectedClinic: [],
@@ -361,6 +365,14 @@ export default {
     handleStageChange(value) {
       const time = new Date().getTime() + parseInt(value) * 24 * 60 * 60 * 1000
       this.estimatedDate = new Date(time).Format('yyyy-MM-dd')
+    },
+    handleTypeChange(value) {
+      for (const s of this.specifications) {
+        if (s.code === value) {
+          this.order.type = s.type
+          break
+        }
+      }
     }
   }
 }

@@ -24,11 +24,13 @@
           </tr>
         </tbody>
       </table>
+      <el-button type="primary" @click="modifyCustomer">确认修改</el-button>
     </el-row>
 
     <el-row style="background:#fff;margin-bottom:20px;">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="成员列表" name="StaffList">
+          <el-button type="primary" @click="dialogAddMemberVisible = true">添加成员</el-button>
           <el-table :data="customer.clinic.users" style="width: 100%;padding-top: 15px;">
             <el-table-column label="姓名">
               <template slot-scope="scope">
@@ -94,12 +96,12 @@
                 {{ scope.row.createdDate.split(' ',2)[0] }}
               </template>
             </el-table-column>
-            <el-table-column label="类型">
+            <el-table-column label="材质规格">
               <template slot-scope="scope">
                 {{ scope.row.type }}
               </template>
             </el-table-column>
-            <el-table-column label="规格">
+            <el-table-column label="品类">
               <template slot-scope="scope">
                 {{ scope.row.specification }}
               </template>
@@ -144,13 +146,33 @@
         <el-button type="primary" @click="submitPriceSheet">提交</el-button>
       </div>
     </el-dialog>
+    <el-dialog :visible.sync="dialogAddMemberVisible" title="添加成员">
+      <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 100%;">
+        <el-form-item label="姓名" prop="title">
+          <el-input v-model="member.name" style="width: 70%;"/>
+        </el-form-item>
+        <el-form-item label="职称" prop="title">
+          <el-select v-model="member.role" placeholder="请选择" clearable style="width: 70px" class="filter-item">
+            <el-option v-for="role in roles" :key="role.code" :label="role.name" :value="role.code"/>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="联系方式" prop="title">
+          <el-input v-model="member.contact" style="width: 70%;"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogAddMemberVisible = false">取消</el-button>
+        <el-button type="primary" @click="addMember">保存</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { customer } from '@/api/common'
 import { Message } from 'element-ui'
-import { user, findDenturesByCustomer, addPriceSheet, findProductTypes } from '@/api/comprehensive'
+import { user, findDenturesByCustomer, addPriceSheet, findProductTypes, modifyCustomer } from '@/api/comprehensive'
+import { addClinicUser } from '@/api/salesman'
 
 export default {
   data() {
@@ -160,6 +182,18 @@ export default {
       activeName: 'StaffList',
       dentures: null,
       dialogAddVisible: false,
+      dialogAddMemberVisible: false,
+      member: {
+        clinicId: null,
+        name: null,
+        role: null,
+        contact: null
+      },
+      roles: [
+        { code: 'Dentist', name: '医生' },
+        { code: 'Nurse', name: '护士' },
+        { code: 'Other', name: '其它' }
+      ],
       priceSheet: {
         productType: {
           id: null
@@ -222,6 +256,29 @@ export default {
           })
           this.dialogAddVisible = false
         })
+      })
+    },
+    modifyCustomer() {
+      this.$confirm('确定修改?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        modifyCustomer(this.customer).then(() => {
+          Message({
+            message: '修改成功',
+            type: 'success',
+            duration: 2 * 1000
+          })
+        })
+      })
+    },
+    addMember() {
+      this.member.clinicId = this.customer.id
+      addClinicUser(this.member).then(response => {
+        var data = response.data
+        this.customer.clinic.users.push(data)
+        this.dialogAddMemberVisible = false
       })
     }
   }
