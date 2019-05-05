@@ -151,6 +151,8 @@
         <result column="equipment" property="equipment" />
         <result column="pg_id" property="pgId" />
         <result column="used_number" property="usedNumber" />
+        <result column="wasted_number" property="wastedNumber" />
+        <result column="used_time" property="usedTime" />
         <result column="comment" property="comment" />
     </resultMap>
 
@@ -171,7 +173,7 @@
         ai.applicant_id ai_applicant_id, ai.applied_date ai_applied_date, ai.comment ai_comment
     </sql>
     <sql id="usedIngredientSQL">
-        ui.pg_id, ui.used_number, ui.comment, ui.factory_id, ui.equipment, ui.denture_id, ui.used_time
+        ui.pg_id, ui.used_number, ui.comment, ui.factory_id, ui.equipment, ui.denture_id, ui.used_time, ui.wasted_number
     </sql>
 
     <select id="findUsedIngredient" parameterType="String" resultMap="usedIngredientRM">
@@ -226,7 +228,7 @@
     <insert id="saveUsedIngredient" parameterType="com.yuzi.denture.domain.UsedIngredient">
         INSERT INTO used_ingredient
         (
-        `applied_id`,
+        `id`,
         `pg_id`,
         `ingredient_id`,
         `used_number`,
@@ -234,19 +236,21 @@
         `factory_id`,
         `equipment`,
         `denture_id`,
-        `wasted_number`
+        `wasted_number`,
+        `used_time`
         )
         VALUES
         (
         #{id},
         #{pgId},
-        #{ingredientId},
+        #{ingredient.id},
         #{usedNumber},
         #{comment},
         #{factoryId},
         #{equipment},
         #{dentureId},
-        #{wastedNumber}
+        #{wastedNumber},
+        #{usedTime}
         );
     </insert>
 

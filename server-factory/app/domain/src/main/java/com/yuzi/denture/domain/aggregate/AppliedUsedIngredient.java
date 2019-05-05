@@ -22,6 +22,8 @@ public class AppliedUsedIngredient {
     }
 
     public void addWastedNumber(Double number) {
+        if(number == null)
+            return;
         wastedNumber += number;
     }
 

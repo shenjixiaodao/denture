@@ -1,30 +1,45 @@
 <template>
   <div class="app-container">
-    <el-row style="background:#fff;margin-bottom:20px;">
-      <el-button type="primary" @click="dialogAddProductVisible = true">新增</el-button>
-      <el-table :data="list" style="width: 100%;padding-top: 15px;">
-        <el-table-column label="名称">
-          <template slot-scope="scope">
-            {{ scope.row.name }}
-          </template>
-        </el-table-column>
-        <el-table-column label="代码">
-          <template slot-scope="scope">
-            {{ scope.row.code }}
-          </template>
-        </el-table-column>
-        <el-table-column label="创建时间" align="center">
-          <template slot-scope="scope">
-            {{ scope.row.gmtCreated | time2DateStr }}
-          </template>
-        </el-table-column>
-        <!--<el-table-column label="操作" align="center">
-          <template slot-scope="scope">
-            <el-button size="mini" type="danger" @click="deleteProductType(scope.row.id)">删除</el-button>
-          </template>
-        </el-table-column>-->
-      </el-table>
-    </el-row>
+    <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+      <el-tab-pane label="品类建档" name="ProductList">
+        <el-row style="background:#fff;margin-bottom:20px;">
+          <el-button type="primary" @click="dialogAddProductVisible = true">新增</el-button>
+          <el-table :data="list" style="width: 100%;padding-top: 15px;">
+            <el-table-column label="名称">
+              <template slot-scope="scope">
+                {{ scope.row.name }}
+              </template>
+            </el-table-column>
+            <el-table-column label="代码">
+              <template slot-scope="scope">
+                {{ scope.row.code }}
+              </template>
+            </el-table-column>
+            <el-table-column label="材质规格">
+              <template slot-scope="scope">
+                {{ scope.row.type | code2Name(types) }}
+              </template>
+            </el-table-column>
+            <el-table-column label="创建时间" align="center">
+              <template slot-scope="scope">
+                {{ scope.row.gmtCreated | time2DateStr }}
+              </template>
+            </el-table-column>
+            <!--<el-table-column label="操作" align="center">
+              <template slot-scope="scope">
+                <el-button size="mini" type="danger" @click="deleteProductType(scope.row.id)">删除</el-button>
+              </template>
+            </el-table-column>-->
+          </el-table>
+        </el-row>
+      </el-tab-pane>
+      <el-tab-pane label="付款方式建档" name="PayTypeList">
+        付款方式建档
+      </el-tab-pane>
+      <el-tab-pane label="注册证号建档" name="CertificateList">
+        注册证号建档
+      </el-tab-pane>
+    </el-tabs>
 
     <el-dialog :visible.sync="dialogAddProductVisible" title="添加产品类别">
       <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 100%;">
@@ -53,6 +68,7 @@ export default {
   data() {
     return {
       list: null,
+      activeName: 'ProductList',
       dialogAddProductVisible: false,
       productType: {
         name: null,
@@ -110,6 +126,9 @@ export default {
           message: '已取消删除'
         })
       })
+    },
+    handleClick(tab, event) {
+      //
     }
   }
 }

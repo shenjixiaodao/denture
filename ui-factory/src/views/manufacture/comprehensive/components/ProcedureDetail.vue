@@ -317,6 +317,9 @@
         <el-form-item label="废料量" prop="title">
           <el-input v-model="usedIngredient.wastedNumber" style="width: 70%;"/>
         </el-form-item>
+        <el-form-item label="使用日期" prop="title">
+          <el-date-picker v-model="usedIngredient.usedTime" type="date" value-format="yyyy-MM-dd" />
+        </el-form-item>
         <el-form-item label="备注">
           <el-input :autosize="{ minRows: 2, maxRows: 4}" v-model="usedIngredient.comment" type="textarea" placeholder="请输入" style="width: 70%;"/>
         </el-form-item>
@@ -347,7 +350,7 @@ export default {
       denture: {},
       procedureGroups: null,
       selectedBalance: 0,
-      appliedUsedIngredient: null,
+      appliedUsedIngredient: [],
       pgId: null,
       procedure: {
         pgId: null,
@@ -363,6 +366,7 @@ export default {
         },
         usedNumber: null,
         wastedNumber: null,
+        usedTime: new Date().Format('yyyy-MM-dd'),
         comment: null
       },
       newInspectionReport: {
@@ -419,20 +423,28 @@ export default {
     },
     submitProcedure() {
       completeProcedure(this.procedure).then(response1 => {
+        this.procedure.comment = null
+        this.procedure.name = null
         // 刷新工序列表
         this.search()
         this.dialogSubmitVisible = false
       })
     },
     useIngredient() {
-      if (!this.appliedUsedIngredient) {
+      if (this.appliedUsedIngredient.length === 0) {
         findAppliedUsedIngredient(this.dentureId).then(response => {
-          var data = response.data
-          console.log(data)
+          const data = response.data
           this.appliedUsedIngredient = data
+          if (this.appliedUsedIngredient.length === 0) {
+            return Message({
+              message: '还未申请物料',
+              type: 'warning',
+              duration: 2 * 1000
+            })
+          }
+          this.dialogUseIngredient = true
         })
       }
-      this.dialogUseIngredient = true
     },
     submitUsedIngredient() {
       this.usedIngredient.dentureId = this.dentureId

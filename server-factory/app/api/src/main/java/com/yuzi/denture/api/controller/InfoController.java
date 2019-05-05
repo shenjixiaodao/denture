@@ -5,12 +5,14 @@ import com.yuzi.denture.api.assembler.DentureAssembler;
 import com.yuzi.denture.api.session.SessionManager;
 import com.yuzi.denture.api.vo.ClinicVo;
 import com.yuzi.denture.api.vo.base.DentureVo;
+import com.yuzi.denture.api.vo.base.WebPageResult;
 import com.yuzi.denture.api.vo.base.WebResult;
 import com.yuzi.denture.domain.*;
 import com.yuzi.denture.domain.aggregate.AppliedUsedIngredient;
 import com.yuzi.denture.domain.aggregate.IngredientStatistic;
 import com.yuzi.denture.domain.aggregate.TotalIngredientStatistic;
 import com.yuzi.denture.domain.criteria.DentureCriteria;
+import com.yuzi.denture.domain.repository.FactoryRepository;
 import com.yuzi.denture.domain.repository.InfoRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -44,6 +46,8 @@ public class InfoController {
     private String AvatarLocation;
     @Autowired
     private InfoRepository infoRepository;
+    @Autowired
+    private FactoryRepository repository;
 
     @ApiOperation(value = "统计总物料信息", response = TotalIngredientStatistic.class, httpMethod = "GET")
     @ResponseBody
@@ -126,13 +130,15 @@ public class InfoController {
                                                              HttpServletRequest request) {
         FactoryUser user = SessionManager.Instance().user(request);
         Long factoryId = user.getFactoryId();
-        WebResult<List<DentureVo>> result = WebResult.execute(res -> {
-            criteria.setFactoryId(factoryId);
-            List<Denture> dentures = infoRepository.findDenturesByCriteria(criteria);
-            List<DentureVo> vos = DentureAssembler.toVos(dentures);
-            res.setData(vos);
-        }, "查询客户相关订单", logger);
-        return result;
+
+        WebPageResult<List<DentureVo>> res = new WebPageResult<>();
+        criteria.setFactoryId(factoryId);
+        List<Denture> dentures = infoRepository.findDenturesByCriteria(criteria);
+        Integer total = repository.countDentures(criteria);
+        List<DentureVo> vos = DentureAssembler.toVos(dentures);
+        res.setData(vos);
+        res.setTotalSize(total);
+        return res;
     }
 
     @ResponseBody

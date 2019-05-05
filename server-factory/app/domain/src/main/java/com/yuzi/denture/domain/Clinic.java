@@ -1,5 +1,7 @@
 package com.yuzi.denture.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 public class Clinic {
@@ -12,6 +14,7 @@ public class Clinic {
     private String address;
     //联系方式(contact):
     private String contact;
+    @JsonIgnore
     List<ClinicUser> users;
 
     public Clinic(String name, String region, String address, String contact) {

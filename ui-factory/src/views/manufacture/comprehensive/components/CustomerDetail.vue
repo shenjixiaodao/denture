@@ -4,10 +4,16 @@
       <table style="text-align: right">
         <tbody>
           <tr>
-            <td class="td_title_prop">名称:</td><td class="td_content_prop">{{ customer.clinic.name }}</td>
+            <td class="td_title_prop">名称:</td>
+            <td class="td_content_prop">
+              <el-input v-model="customer.clinic.name"/>
+            </td>
           </tr>
           <tr>
-            <td class="td_title_prop">地址:</td><td class="td_content_prop">{{ customer.clinic.address }}</td>
+            <td class="td_title_prop">地址:</td>
+            <td class="td_content_prop">
+              <el-input v-model="customer.clinic.address"/>
+            </td>
           </tr>
           <tr>
             <td class="td_title_prop">联系方式:</td><td class="td_content_prop">{{ customer.clinic.contact }}</td>
@@ -20,7 +26,12 @@
             </td>
           </tr>
           <tr>
-            <td class="td_title_prop">跟单员:</td><td class="td_content_prop">{{ salesman.name }}</td>
+            <td class="td_title_prop">跟单员:</td>
+            <td class="td_content_prop">
+              <el-select v-model="customer.salesmanId" filterable placeholder="业务员" class="filter-item">
+                <el-option v-for="item in users" :key="item.id" :label="item.name" :value="item.id"/>
+              </el-select>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -114,6 +125,7 @@
               </template>
             </el-table-column>
           </el-table>
+          <pagination :total="total" :page.sync="queryParams.page" :limit.sync="queryParams.limit" @pagination="findDentures" />
         </el-tab-pane>
       </el-tabs>
     </el-row>
@@ -171,13 +183,16 @@
 <script>
 import { customer } from '@/api/common'
 import { Message } from 'element-ui'
-import { user, findDenturesByCustomer, addPriceSheet, findProductTypes, modifyCustomer } from '@/api/comprehensive'
+import { user, users, findDenturesByCustomer, addPriceSheet, findProductTypes, modifyCustomer } from '@/api/comprehensive'
 import { addClinicUser } from '@/api/salesman'
+import Pagination from '@/components/Pagination'
 
 export default {
+  components: { Pagination },
   data() {
     return {
       salesman: null,
+      users: null,
       customer: null,
       activeName: 'StaffList',
       dentures: null,
@@ -205,7 +220,13 @@ export default {
         comment: null,
         requirement: null
       },
-      productType: null
+      productType: null,
+      queryParams: {
+        page: 1,
+        limit: 20,
+        clinicId: null
+      },
+      total: 0
     }
   },
   created() {
@@ -216,10 +237,11 @@ export default {
       const id = this.$route.params && this.$route.params.id
       console.log('customer detail ==> ' + id)
       customer(id).then(response => {
-        var data = response.data
+        const data = response.data
         this.customer = data
+        this.queryParams.clinicId = this.customer.clinic.id
         user(this.customer.salesmanId).then(response1 => {
-          var data = response1.data
+          const data = response1.data
           this.salesman = data
         })
       })
@@ -227,15 +249,21 @@ export default {
         var data = response.data
         this.productType = data
       })
+      users().then(response => {
+        const data = response.data
+        this.users = data
+      })
     },
     handleClick(tab, event) {
       if (this.activeName === 'AggregateBusiness') {
-        findDenturesByCustomer({
-          clinicId: this.customer.id
-        }).then(response => {
-          this.dentures = response.data
-        })
+        this.findDentures()
       }
+    },
+    findDentures() {
+      findDenturesByCustomer(this.queryParams).then(response => {
+        this.total = response.totalSize
+        this.dentures = response.data
+      })
     },
     submitPriceSheet() {
       if (!this.priceSheet.productType.id) {
@@ -274,7 +302,7 @@ export default {
       })
     },
     addMember() {
-      this.member.clinicId = this.customer.id
+      this.member.clinicId = this.customer.clinic.id
       addClinicUser(this.member).then(response => {
         var data = response.data
         this.customer.clinic.users.push(data)

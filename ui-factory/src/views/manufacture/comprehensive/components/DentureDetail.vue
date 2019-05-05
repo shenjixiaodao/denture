@@ -342,13 +342,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="领用数量" prop="title">
-          <el-input v-model="ingredient.number" style="width: 70%;"/> <!-- 可用数量 -->
-        </el-form-item>
-        <el-form-item label="使用数量" prop="title">
-          <el-input v-model="ingredient.usedNumber" style="width: 70%;"/> <!-- 可用数量 -->
-        </el-form-item>
-        <el-form-item label="应用设备" prop="title">
-          <el-input v-model="ingredient.equipment" style="width: 70%;"/>
+          <el-input v-model="ingredient.number" style="width: 70%;"/>
         </el-form-item>
         <el-form-item label="备注" prop="title">
           <el-input v-model="ingredient.comment" style="width: 70%;"/>
@@ -383,6 +377,7 @@
 import { queryByDentureId } from '@/api/common'
 import { queryIngredients, applyIngredient, review, delivery } from '@/api/comprehensive'
 import barcode from 'vue-barcode'
+import { Message } from 'element-ui'
 
 export default {
   components: {
@@ -394,9 +389,7 @@ export default {
       ingredient: {
         dentureId: null,
         ingredientId: null,
-        usedNumber: null,
         number: null,
-        equipment: null,
         comment: null
       },
       ingredients: null,
@@ -453,11 +446,25 @@ export default {
     applyIngredient() {
       this.dialogAddVisible = true
       queryIngredients().then(response => {
-        var data = response.data
+        const data = response.data
         this.ingredients = data
       })
     },
     addIngredient() {
+      if (!this.ingredient.ingredientId) {
+        return Message({
+          message: '请选择物料',
+          type: 'error',
+          duration: 2 * 1000
+        })
+      }
+      if (!this.ingredient.number) {
+        return Message({
+          message: '请输入领用量',
+          type: 'error',
+          duration: 2 * 1000
+        })
+      }
       this.ingredient.dentureId = this.denture.id
       applyIngredient(this.ingredient).then(response => {
         var data = response.data

@@ -14,21 +14,29 @@
         <result column="salesman" property="salesman" />
         <result column="customer_id" property="customerId" />
         <result column="customer" property="customer" />
+        <result column="delivery_date" property="deliveryDate" />
+        <result column="received_date" property="receivedDate" />
+        <result column="delivery_id" property="deliveryId" />
+        <result column="stage" property="stage" />
     </resultMap>
 
     <sql id="AggregateOrderSQL">
         do.id order_id, d.specification, d.id denture_id, d.end_date, d.number, d.base_price,
-        fc.salesman_id, fu.name salesman, d.clinic_id customer_id, c.name customer
+        d.salesman_id, fu.name salesman, d.clinic_id customer_id, c.name customer,
+        d.delivery_date, d.received_date, d.delivery_id, d.stage
     </sql>
     <select id="findAggregateOrders" parameterType="com.yuzi.denture.domain.criteria.AggregateOrderCriteria" resultMap="baseRM">
         SELECT <include refid="AggregateOrderSQL" /> FROM denture d
         INNER JOIN denture_order do ON (d.factory_id=#{factoryId} and d.id=do.denture_id)
         INNER JOIN clinic c on d.clinic_id=c.id
         INNER JOIN factory_customer fc ON (fc.factory_id=d.factory_id AND fc.clinic_id=d.clinic_id)
-        INNER JOIN factory_user fu ON (fu.factory_id=d.factory_id AND fu.id=fc.salesman_id)
-        where d.start_date <![CDATA[ >= ]]> #{startTime} and d.start_date <![CDATA[ <= ]]> #{endTime}
+        INNER JOIN factory_user fu ON (fu.factory_id=d.factory_id AND fu.id=d.salesman_id)
+        where d.delivery_date <![CDATA[ >= ]]> #{startTime} and d.delivery_date <![CDATA[ <= ]]> #{endTime}
         <if test="customer!=null">
             and customer like CONCAT('%',#{customer},'%')
+        </if>
+        <if test="salesmanId!=null">
+            and d.salesman_id = #{salesmanId}
         </if>
     </select>
 

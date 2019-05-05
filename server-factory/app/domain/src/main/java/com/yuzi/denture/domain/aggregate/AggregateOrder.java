@@ -2,6 +2,7 @@ package com.yuzi.denture.domain.aggregate;
 
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * Created by liyou on 2018/12/19.
@@ -19,6 +20,42 @@ public class AggregateOrder {
     String endDate;
     Integer number;
     BigDecimal basePrice;
+    String deliveryDate;
+    Date receivedDate;
+    String deliveryId;
+    String stage;
+
+    public String getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(String deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
+    public Date getReceivedDate() {
+        return receivedDate;
+    }
+
+    public void setReceivedDate(Date receivedDate) {
+        this.receivedDate = receivedDate;
+    }
+
+    public String getDeliveryId() {
+        return deliveryId;
+    }
+
+    public void setDeliveryId(String deliveryId) {
+        this.deliveryId = deliveryId;
+    }
+
+    public String getStage() {
+        return stage;
+    }
+
+    public void setStage(String stage) {
+        this.stage = stage;
+    }
 
     public Long getFactoryId() {
         return factoryId;

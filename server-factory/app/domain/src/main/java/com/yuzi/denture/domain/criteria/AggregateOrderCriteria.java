@@ -10,7 +10,16 @@ public class AggregateOrderCriteria {
     String startTime;
     String endTime;
     String salesman;
+    Long salesmanId;
     String customer;
+
+    public Long getSalesmanId() {
+        return salesmanId;
+    }
+
+    public void setSalesmanId(Long salesmanId) {
+        this.salesmanId = salesmanId;
+    }
 
     public String getCustomer() {
         return customer;

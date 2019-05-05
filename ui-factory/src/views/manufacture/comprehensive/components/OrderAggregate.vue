@@ -1,7 +1,12 @@
 <template>
   <div class="app-container">
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <span>开始时段: </span>
+      <el-form-item label="业务员" prop="title">
+        <el-select v-model="queryParams.salesmanId" filterable placeholder="业务员" class="filter-item">
+          <el-option v-for="item in users" :key="item.id" :label="item.name" :value="item.id"/>
+        </el-select>
+      </el-form-item>
+      <span>出货时段: </span>
       <el-date-picker v-model="queryParams.startTime" type="date" style="width: 200px;" placeholder="开始时间" value-format="yyyy-MM-dd" />
       <span style="font-size: 12px; color: #999">至</span>
       <el-date-picker v-model="queryParams.endTime" type="date" style="width: 200px;" placeholder="结束时间" value-format="yyyy-MM-dd" />
@@ -22,26 +27,31 @@
             {{ scope.row.customer }}
           </template>
         </el-table-column>
-        <el-table-column label="义齿编号">
+        <el-table-column label="出货单号">
           <template slot-scope="scope">
-            <router-link :to="'denture/'+scope.row.dentureId" class="link-type">
-              <span>{{ scope.row.dentureId }}</span>
-            </router-link>
+            {{ scope.row.deliveryId }}
           </template>
         </el-table-column>
         <el-table-column label="出货日期" align="center">
           <template slot-scope="scope">
-            {{ scope.row.endDate }}
+            {{ scope.row.deliveryDate }}
           </template>
         </el-table-column>
-        <el-table-column label="品名" align="center">
+        <el-table-column label="收件日期" align="center">
+          <template slot-scope="scope">
+            {{ scope.row.receivedDate | time2DateStr }}
+          </template>
+        </el-table-column>
+        <el-table-column label="义齿编号">
+          <template slot-scope="scope">
+            <router-link :to="'denture/'+scope.row.dentureId" class="link-type">
+              <span>{{ scope.row.dentureId | id2Short }}</span>
+            </router-link>
+          </template>
+        </el-table-column>
+        <el-table-column label="品类" align="center">
           <template slot-scope="scope">
             {{ scope.row.specification }}
-          </template>
-        </el-table-column>
-        <el-table-column label="订单号" align="center">
-          <template slot-scope="scope">
-            {{ scope.row.orderId }}
           </template>
         </el-table-column>
         <el-table-column label="数量" align="center">
@@ -49,7 +59,12 @@
             {{ scope.row.number }}
           </template>
         </el-table-column>
-        <el-table-column label="单价" align="center">
+        <el-table-column label="阶段" align="center">
+          <template slot-scope="scope">
+            {{ scope.row.stage }}
+          </template>
+        </el-table-column>
+        <!--<el-table-column label="单价" align="center">
           <template slot-scope="scope">
             {{ scope.row.basePrice }}
           </template>
@@ -58,30 +73,43 @@
           <template slot-scope="scope">
             {{ scope.row.basePrice * scope.row.number }}
           </template>
-        </el-table-column>
+        </el-table-column>-->
       </el-table>
     </el-row>
   </div>
 </template>
 
 <script>
-import { aggregateOrders } from '@/api/comprehensive'
+import { aggregateOrders, users } from '@/api/comprehensive'
 
 export default {
   name: 'OrderAggregate',
   data() {
     return {
+      now: new Date().Format('yyyy-MM-dd'),
+      users: null,
       list: null,
       queryParams: {
-        startTime: null,
-        endTime: null,
+        salesmanId: null,
+        startTime: new Date().Format('yyyy-MM-dd'),
+        endTime: new Date().Format('yyyy-MM-dd'),
         customer: null
       },
       exportLoading: false,
       filename: null
     }
   },
+  created() {
+    this.fetchData()
+  },
   methods: {
+    fetchData() {
+      this.search()
+      users().then(response => {
+        const data = response.data
+        this.users = data
+      })
+    },
     search() {
       aggregateOrders(this.queryParams).then(response => {
         var data = response.data

@@ -178,7 +178,7 @@ public class FactoryRepositoryImpl implements FactoryRepository {
                 break;
             while (iterator.hasNext()) {
                 UsedIngredient usedIngredient = iterator.next();
-                if(group.getId()==usedIngredient.getPgId()) {
+                if(group.getId().equals(usedIngredient.getPgId())) {
                     group.addUsedIngredient(usedIngredient);
                     iterator.remove();
                 }

@@ -1,5 +1,7 @@
 package com.yuzi.denture.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class UsedIngredient {
@@ -17,6 +19,7 @@ public class UsedIngredient {
     Double wastedNumber;
     //备注(comment):
     private String comment;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date usedTime;
 
     public Double getWastedNumber() {

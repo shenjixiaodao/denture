@@ -1,6 +1,8 @@
 package com.yuzi.denture.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +15,7 @@ public class FactoryCustomer {
     //clinic
     Clinic clinic;
     //price sheet
+    @JsonIgnore
     List<PriceSheet> priceSheet;
     //salesmanId: Long
     Long salesmanId;

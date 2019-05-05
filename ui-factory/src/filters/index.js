@@ -1,6 +1,15 @@
 // set function parseTime,formatTime to filter
 export { parseTime, formatTime } from '@/utils'
 
+export function code2Name(code, list) {
+  for (const l of list) {
+    if (l.code === code) {
+      return l.name
+    }
+  }
+  return 'Unknown'
+}
+
 export function id2Short(dentureId) {
   if (dentureId) {
     return dentureId.substring(6)
