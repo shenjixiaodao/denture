@@ -53,3 +53,17 @@ export function findAppliedUsedIngredient(id) {
     params: { dentureId: id }
   })
 }
+
+export function findSettlementTypes() {
+  return request({
+    url: '/management/findSettlementTypes',
+    method: 'get'
+  })
+}
+
+export function findCertifications() {
+  return request({
+    url: '/management/findCertifications',
+    method: 'get'
+  })
+}

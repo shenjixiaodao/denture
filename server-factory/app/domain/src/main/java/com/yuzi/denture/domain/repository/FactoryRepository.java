@@ -90,4 +90,10 @@ public interface FactoryRepository {
 
     void add(InspectionReport report);
     void add(InspectionItem item);
+
+    void add(SettlementType settlementType);
+    List<SettlementType> findSettlementTypes(Long factoryId);
+
+    void add(Certification certification);
+    List<Certification> findCertifications(Long factoryId);
 }

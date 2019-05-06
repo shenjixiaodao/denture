@@ -36,6 +36,10 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     private ProductTypeMapper productTypeMapper;
     @Autowired
     PriceSheetMapper priceSheetMapper;
+    @Autowired
+    SettlementTypeMapper settlementTypeMapper;
+    @Autowired
+    CertificationMapper certificationMapper;
 
     @Override
     public void add(DentureOrder order) {
@@ -310,5 +314,25 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     @Override
     public void add(InspectionItem item) {
         dentureMapper.saveInspectionItem(item);
+    }
+
+    @Override
+    public void add(SettlementType settlementType) {
+        settlementTypeMapper.save(settlementType);
+    }
+
+    @Override
+    public List<SettlementType> findSettlementTypes(Long factoryId) {
+        return settlementTypeMapper.findByFactoryId(factoryId);
+    }
+
+    @Override
+    public void add(Certification certification) {
+        certificationMapper.save(certification);
+    }
+
+    @Override
+    public List<Certification> findCertifications(Long factoryId) {
+        return certificationMapper.findByFactoryId(factoryId);
     }
 }

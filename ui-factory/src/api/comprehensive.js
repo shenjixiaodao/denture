@@ -231,3 +231,19 @@ export function modifyCustomer(data) {
     data
   })
 }
+
+export function addSettlement(data) {
+  return request({
+    url: '/management/addSettlement',
+    method: 'post',
+    data
+  })
+}
+
+export function addCertification(data) {
+  return request({
+    url: '/management/addCertification',
+    method: 'post',
+    data
+  })
+}

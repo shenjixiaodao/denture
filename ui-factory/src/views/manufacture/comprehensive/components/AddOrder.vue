@@ -226,7 +226,7 @@ export default {
         salesman: null,
         salesmanId: null,
         stage: null,
-        receivedDate: null,
+        receivedDate: new Date().Format('yyyy-MM-dd'),
         type: null,
         colorNo: null,
         specification: null,

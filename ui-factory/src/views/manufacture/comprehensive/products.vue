@@ -33,11 +33,59 @@
           </el-table>
         </el-row>
       </el-tab-pane>
-      <el-tab-pane label="付款方式建档" name="PayTypeList">
-        付款方式建档
+      <el-tab-pane label="付款方式建档" name="SettlementTypeList">
+        <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+          <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 40%;">
+            <el-form-item label="代号" prop="title">
+              <el-input v-model="settlementType.code"/>
+            </el-form-item>
+            <el-form-item label="名称" prop="title">
+              <el-input v-model="settlementType.name"/>
+            </el-form-item>
+            <el-button class="filter-item" type="primary" icon="el-icon-search" @click="addSettlementType()" >新建</el-button>
+          </el-form>
+        </el-row>
+        <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+          <el-table :data="settlementTypes" style="width: 100%;padding-top: 15px;">
+            <el-table-column label="代号">
+              <template slot-scope="scope">
+                {{ scope.row.code }}
+              </template>
+            </el-table-column>
+            <el-table-column label="名称" >
+              <template slot-scope="scope">
+                {{ scope.row.name }}
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-row>
       </el-tab-pane>
       <el-tab-pane label="注册证号建档" name="CertificateList">
-        注册证号建档
+        <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+          <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 40%;">
+            <el-form-item label="代号" prop="title">
+              <el-input v-model="certification.code"/>
+            </el-form-item>
+            <el-form-item label="名称" prop="title">
+              <el-input v-model="certification.name"/>
+            </el-form-item>
+            <el-button class="filter-item" type="primary" icon="el-icon-search" @click="addCertification()" >新建</el-button>
+          </el-form>
+        </el-row>
+        <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+          <el-table :data="certifications" style="width: 100%;padding-top: 15px;">
+            <el-table-column label="代号">
+              <template slot-scope="scope">
+                {{ scope.row.code }}
+              </template>
+            </el-table-column>
+            <el-table-column label="名称" >
+              <template slot-scope="scope">
+                {{ scope.row.name }}
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-row>
       </el-tab-pane>
     </el-tabs>
 
@@ -62,7 +110,9 @@
 </template>
 
 <script>
-import { findProductTypes, addProductType, deleteProductType } from '@/api/comprehensive'
+import { findProductTypes, addProductType, deleteProductType, addSettlement, addCertification } from '@/api/comprehensive'
+import { findSettlementTypes, findCertifications } from '@/api/common'
+import { Message } from 'element-ui'
 
 export default {
   data() {
@@ -77,7 +127,17 @@ export default {
       },
       types: [
         { code: 'Fixed', name: '定制式固定义齿' }, { code: 'Mobilizable', name: '定制式活动义齿' }
-      ]
+      ],
+      settlementTypes: null,
+      settlementType: {
+        code: null,
+        name: null
+      },
+      certifications: null,
+      certification: {
+        code: null,
+        name: null
+      }
     }
   },
   created() {
@@ -86,9 +146,62 @@ export default {
   methods: {
     fetchData() {
       findProductTypes().then(response => {
-        var data = response.data
-        console.log(data)
+        const data = response.data
         this.list = data
+      })
+      findSettlementTypes().then(response => {
+        const data = response.data
+        this.settlementTypes = data
+      })
+      findCertifications().then(response => {
+        const data = response.data
+        this.certifications = data
+      })
+    },
+    addCertification() {
+      if (!this.certification.code) {
+        return Message({
+          message: '证件代号不能为空',
+          type: 'error',
+          duration: 2 * 1000
+        })
+      }
+      if (!this.certification.name) {
+        return Message({
+          message: '证件名称不能为空',
+          type: 'error',
+          duration: 2 * 1000
+        })
+      }
+      addCertification(this.certification).then(() => {
+        // 刷新页面
+        findCertifications().then(response => {
+          const data = response.data
+          this.certifications = data
+        })
+      })
+    },
+    addSettlementType() {
+      if (!this.settlementType.code) {
+        return Message({
+          message: '付款代号不能为空',
+          type: 'error',
+          duration: 2 * 1000
+        })
+      }
+      if (!this.settlementType.name) {
+        return Message({
+          message: '付款名称不能为空',
+          type: 'error',
+          duration: 2 * 1000
+        })
+      }
+      addSettlement(this.settlementType).then(() => {
+        // 刷新页面
+        findSettlementTypes().then(response => {
+          const data = response.data
+          this.settlementTypes = data
+        })
       })
     },
     addProductType() {
