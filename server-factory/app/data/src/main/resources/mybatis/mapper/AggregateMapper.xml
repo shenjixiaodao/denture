@@ -74,11 +74,13 @@
         select <include refid="ProductTypeStatSQL" /> from product_type p
         inner join denture d on (
           p.factory_id=#{factoryId} and
-          year(d.created_date)=year(#{month}) and
-          month(d.created_date)=month(#{month}) and
+          DATE_FORMAT(d.created_date,'%Y-%m') = #{month} and
           p.code=d.specification
         )
-        where d.status=#{status}
+        where 1=1
+        <if test="status!=null">
+            and d.status=#{status}
+        </if>
     </select>
 
 </mapper>

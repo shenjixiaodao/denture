@@ -161,6 +161,7 @@
       <el-button type="primary" @click="printDentureInfo">打印入检单</el-button>
       <el-button v-if="!isShow&&!denture.deliveryId&&denture.status !== '无效'" type="primary" @click="dialogAddDeliveryVisible=true">出货</el-button>
       <el-button v-if="!isShow&&denture.deliveryId" type="primary" @click="printDeliveryInfo">打印出货单</el-button>
+      <el-button v-if="!isShow&&denture.deliveryId" type="primary" @click="printDeliveryCard">打印出货卡</el-button>
     </el-row>
 
     <el-row v-if="isShow" style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
@@ -184,7 +185,7 @@
           <tbody>
             <tr>
               <td class="td_title_prop">客户名称</td><td class="td_content_prop">{{ denture.clinic.name }}</td>
-              <td class="td_title_prop">医生</td><td class="td_content_prop">{{ denture.clinic.name }}</td>
+              <td class="td_title_prop">医生</td><td class="td_content_prop">{{ denture.dentist }}</td>
               <td class="td_title_prop">业务员</td><td class="td_content_prop">{{ denture.salesman }}</td>
               <td class="td_title_prop">患者</td><td class="td_content_prop">{{ denture.patientName }}</td>
             </tr>
@@ -328,6 +329,51 @@
               <td class="td_title_prop">入检员:</td><td class="td_content_prop">{{ denture.creator }}</td>
               <td class="td_title_prop">印表日期:</td><td class="td_content_prop">{{ new Date().Format("yyyy/MM/dd hh:mm") }}</td>
               <td class="td_title_prop">确认:</td><td class="td_content_prop">{{ '      ' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="DeliveryCardTable">
+        <table border="1" bordercolor="#ffffff" style="border-collapse:collapse;" class="print_table" align="center">
+          <tbody>
+            <tr>
+              <td class="td_title_prop">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              <td class="td_content_prop">{{ denture.clinic.name }}</td>
+              <td class="td_title_prop">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              <td class="td_content_prop">{{ denture.patientName }}</td>
+            </tr>
+            <tr>
+              <td class="td_title_prop">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              <td class="td_content_prop">{{ denture.specification }}</td>
+              <td class="td_title_prop">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              <td class="td_content_prop">{{ denture.colorNo }}</td>
+            </tr>
+            <tr>
+              <td class="td_title_prop">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              <td class="td_content_prop">{{ denture.id | id2Short }}</td>
+              <td class="td_title_prop">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              <td class="td_content_prop">{{ denture.number }}</td>
+            </tr>
+            <tr>
+              <td class="td_title_prop">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              <td colspan="2">
+                <table border="1" bordercolor="darkgrey" style="border-collapse:collapse;margin-right: 10px;" align="center" class="denture_card_table">
+                  <tr style="border-top-color: #ffffff;">
+                    <td style="border-left-style: hidden;">{{ positions[0] }}</td><td>{{ positions[1] }}</td><td>{{ positions[2] }}</td><td>{{ positions[3] }}</td><td>{{ positions[4] }}</td>
+                    <td>{{ positions[5] }}</td><td>{{ positions[6] }}</td><td style="border-right-color: #000000;border-right-width: 5px">{{ positions[7] }}</td>
+                    <td style="border-left-color: #000000;border-left-width: 5px">{{ positions[8] }}</td><td>{{ positions[9] }}</td><td>{{ positions[10] }}</td><td>{{ positions[11] }}</td>
+                    <td>{{ positions[12] }}</td><td>{{ positions[13] }}</td><td>{{ positions[14] }}</td><td style="border-right-style: hidden;">{{ positions[15] }}</td>
+                  </tr>
+                  <tr style="border-bottom-color: #ffffff;">
+                    <td style="border-left-style: hidden">{{ positions[16] }}</td><td>{{ positions[17] }}</td><td>{{ positions[18] }}</td><td>{{ positions[19] }}</td>
+                    <td>{{ positions[20] }}</td><td>{{ positions[21] }}</td><td>{{ positions[22] }}</td><td style="border-right-color: #000000;border-right-width: 5px">{{ positions[23] }}</td>
+                    <td style="border-left-color: #000000;border-left-width: 5px">{{ positions[24] }}</td><td>{{ positions[25] }}</td><td>{{ positions[26] }}</td><td>{{ positions[27] }}</td>
+                    <td>{{ positions[28] }}</td><td>{{ positions[29] }}</td><td>{{ positions[30] }}</td><td style="border-right-style: hidden">{{ positions[31] }}</td>
+                  </tr>
+                </table>
+              </td>
+              <td class="td_content_prop">{{ denture.dentist + '(医生)' }}</td>
             </tr>
           </tbody>
         </table>
@@ -477,6 +523,14 @@ export default {
       const deliveryTable = document.getElementById('DeliveryTable').innerHTML
       const oldPage = document.body.innerHTML
       document.body.innerHTML = deliveryTable
+      window.print()
+      document.body.innerHTML = oldPage
+      window.location.reload()
+    },
+    printDeliveryCard() {
+      const deliveryCardTable = document.getElementById('DeliveryCardTable').innerHTML
+      const oldPage = document.body.innerHTML
+      document.body.innerHTML = deliveryCardTable
       window.print()
       document.body.innerHTML = oldPage
       window.location.reload()

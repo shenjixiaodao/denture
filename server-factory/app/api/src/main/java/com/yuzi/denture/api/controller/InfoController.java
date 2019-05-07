@@ -184,7 +184,8 @@ public class InfoController {
             for(ProductTypeStatistic statistic:statistics) {
                 Map<String, Object> item = data.get(statistic.getProductCode());
                 int day = day(statistic.getDentureCreatedDate());
-                item.put(day+"", (int)item.get(day) + 1);
+                int size = (int)item.get(day+"");
+                item.put(day+"", size + 1);
             }
             res.setData(data.values());
         }, "按产品类型统计订单", logger);

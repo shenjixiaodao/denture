@@ -22,7 +22,7 @@
             {{ scope.row.name }}
           </template>
         </el-table-column>
-        <el-table-column v-for="day of scope.row.days" :key="day" :label="day">
+        <el-table-column v-for="day of list[0].days" :key="day" :label="day">
           <template slot-scope="scope">
             {{ scope.row[day] }}
           </template>
