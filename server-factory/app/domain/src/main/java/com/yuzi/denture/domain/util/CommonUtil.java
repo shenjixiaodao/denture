@@ -20,6 +20,15 @@ public class CommonUtil {
         }
     }
 
+    public static Date parseMonthDate(String joinDate) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM");
+        try {
+            return df.parse(joinDate);
+        } catch (ParseException e) {
+            throw new CodeException(ResponseCode.DateFormat_Error);
+        }
+    }
+
     public static String dateToLongFormat(Date date) {
         DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
         return df.format(date);

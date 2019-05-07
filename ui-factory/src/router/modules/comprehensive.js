@@ -129,9 +129,9 @@ const comprehensiveRouter = {
       hidden: true
     },
     {
-      path: 'products',
-      component: () => import('@/views/manufacture/comprehensive/products'),
-      name: 'Products',
+      path: 'management',
+      component: () => import('@/views/manufacture/comprehensive/management'),
+      name: 'Management',
       meta: { title: '信息建档', noCache: true }
     }
   ]

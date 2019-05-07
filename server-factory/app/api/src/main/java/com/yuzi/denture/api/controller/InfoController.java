@@ -10,10 +10,13 @@ import com.yuzi.denture.api.vo.base.WebResult;
 import com.yuzi.denture.domain.*;
 import com.yuzi.denture.domain.aggregate.AppliedUsedIngredient;
 import com.yuzi.denture.domain.aggregate.IngredientStatistic;
+import com.yuzi.denture.domain.aggregate.ProductTypeStatistic;
 import com.yuzi.denture.domain.aggregate.TotalIngredientStatistic;
 import com.yuzi.denture.domain.criteria.DentureCriteria;
+import com.yuzi.denture.domain.criteria.ProductTypeStatCriteria;
 import com.yuzi.denture.domain.repository.FactoryRepository;
 import com.yuzi.denture.domain.repository.InfoRepository;
+import com.yuzi.denture.domain.util.CommonUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -30,7 +33,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -153,6 +158,39 @@ public class InfoController {
         return result;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/productTypeStatistic", method = POST)
+    public WebResult productTypeStatistic(@RequestBody ProductTypeStatCriteria criteria,
+                                                                      HttpServletRequest request) {
+        WebResult result = WebResult.execute(res -> {
+            FactoryUser user = SessionManager.Instance().user(request);
+            Long factoryId = user.getFactoryId();
+            criteria.setFactoryId(factoryId);
+            List<ProductTypeStatistic> statistics = infoRepository.productTypeStatistic(criteria);
+            List<ProductType> types = infoRepository.findProductTypesByFactoryId(factoryId);
+            int days = days(CommonUtil.parseMonthDate(criteria.getMonth()));
+            Map<String, Map<String, Object>> data = new HashMap();
+            for(ProductType type:types) {
+                Map<String, Object> item = new HashMap<>();
+                for(int day=0;day<days;day++) {
+                    item.put((day+1)+"", 0);
+                }
+                item.put("days", days);
+                item.put("code", type.getCode());
+                item.put("name", type.getName());
+                item.put("type", type.getType());
+                data.put(type.getCode(), item);
+            }
+            for(ProductTypeStatistic statistic:statistics) {
+                Map<String, Object> item = data.get(statistic.getProductCode());
+                int day = day(statistic.getDentureCreatedDate());
+                item.put(day+"", (int)item.get(day) + 1);
+            }
+            res.setData(data.values());
+        }, "按产品类型统计订单", logger);
+        return result;
+    }
+
     @RequestMapping("/avatar/{uid}/{suffix}")
     @ApiOperation(value = "用户头像", response = String.class, httpMethod = "GET")
     public void avatar(@PathVariable Long uid, @PathVariable String suffix, HttpServletResponse resp) {
@@ -182,4 +220,22 @@ public class InfoController {
     public WebResult expired() {
         return WebResult.expired();
     }
+
+    private static int days(Date monthDate) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(monthDate);
+        return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+    }
+
+    private static int day(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.DAY_OF_MONTH);
+    }
+
+    /*public static void main(String[] strs) {
+        Calendar calendar = Calendar.getInstance();
+        System.out.println(calendar.getTime());
+        System.out.println(calendar.get(Calendar.DAY_OF_MONTH));
+    }*/
 }

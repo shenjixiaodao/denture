@@ -247,3 +247,11 @@ export function addCertification(data) {
     data
   })
 }
+
+export function productTypeStatistic(data) {
+  return request({
+    url: '/info/productTypeStatistic',
+    method: 'post',
+    data
+  })
+}

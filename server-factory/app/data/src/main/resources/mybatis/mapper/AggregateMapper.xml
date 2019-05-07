@@ -58,5 +58,27 @@
         inner join factory_user fu on(s.factory_id=#{factoryId} and s.month=#{month} and s.uid=fu.id)
     </select>
 
+    <resultMap id="baseProductTypeStatRM" type="com.yuzi.denture.domain.aggregate.ProductTypeStatistic">
+        <result column="name" property="productName" />
+        <result column="code" property="productCode" />
+        <result column="type" property="productType" />
+        <result column="factory_id" property="factoryId" />
+        <result column="created_date" property="dentureCreatedDate" />
+        <result column="month" property="dentureStatus" />
+    </resultMap>
+    <sql id="ProductTypeStatSQL">
+        p.name, p.code, p.type, p.factory_id, d.created_date, d.status
+    </sql>
+    <select id="productTypeStatistic" parameterType="com.yuzi.denture.domain.criteria.ProductTypeStatCriteria"
+            resultMap="baseProductTypeStatRM">
+        select <include refid="ProductTypeStatSQL" /> from product_type p
+        inner join denture d on (
+          p.factory_id=#{factoryId} and
+          year(d.created_date)=year(#{month}) and
+          month(d.created_date)=month(#{month}) and
+          p.code=d.specification
+        )
+        where d.status=#{status}
+    </select>
 
 </mapper>
