@@ -162,6 +162,51 @@
         WHERE `id` = #{id};
     </update>
 
+    <insert id="saveFactory" useGeneratedKeys="true" keyProperty="id" parameterType="com.yuzi.denture.domain.Factory">
+        INSERT INTO factory
+        (
+        `name`,
+        `contact`,
+        `address`,
+        `certification`
+        )
+        VALUES
+        (
+        #{name},
+        #{contact},
+        #{address},
+        #{certification}
+        );
+    </insert>
+    <update id="updateFactory" parameterType="com.yuzi.denture.domain.Factory">
+        UPDATE factory
+        SET
+        `id` = id
+        <if test="name!=null">
+            ,`name` = #{name}
+        </if>
+        <if test="contact!=null">
+            ,`contact` = #{contact}
+        </if>
+        <if test="address!=null">
+            ,`address` = #{address}
+        </if>
+        <if test="certification!=null">
+            ,`certification` = #{certification}
+        </if>
+        WHERE `id` = #{id};
+    </update>
+    <resultMap id="baseFactoryRM" type="com.yuzi.denture.domain.Factory">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="contact" property="contact" />
+        <result column="address" property="address" />
+        <result column="certification" property="certification" />
+    </resultMap>
+    <select id="findFactoryById" resultMap="baseFactoryRM">
+        select * from factory where id = #{factoryId}
+    </select>
+
     <resultMap id="baseRM" type="com.yuzi.denture.domain.FactoryUser">
         <result column="id" property="id" />
         <result column="factory_id" property="factoryId" />

@@ -96,4 +96,7 @@ public interface FactoryRepository {
 
     void add(Certification certification);
     List<Certification> findCertifications(Long factoryId);
+
+    void modifyFactory(Factory factory);
+    Factory findFactoryById(Long factoryId);
 }

@@ -268,12 +268,13 @@ export default {
   },
   methods: {
     loadShortcuts() {
+      const _this = this
       document.onkeydown = function(event) {
         var e = event || window.event
         console.log(e.code)
         console.log(e)
         if (e && e.code === 'KeyS' && e.altKey) {
-          addOrder()
+          _this.addOrder()
         }
       }
     },

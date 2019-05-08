@@ -45,8 +45,6 @@ public class ManagementController {
     @Autowired
     private FactoryRepository repository;
 
-
-
     @ApiOperation(value = "添加结算方式", response = WebResult.class, httpMethod = "POST")
     @ResponseBody
     @RequestMapping(value = "/addSettlement", method = POST)
@@ -94,6 +92,31 @@ public class ManagementController {
             List<Certification> types = repository.findCertifications(factoryId);
             res.setData(types);
         }, "查询注册证号", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "修改工厂信息", response = WebResult.class, httpMethod = "POST")
+    @ResponseBody
+    @RequestMapping(value = "/modifyFactory", method = POST)
+    public WebResult modifyFactory(@RequestBody Factory factory, HttpServletRequest request) {
+        WebResult result = WebResult.execute(res -> {
+            FactoryUser user = SessionManager.Instance().user(request);
+            Long factoryId = user.getFactoryId();
+            factory.setId(factoryId);
+            repository.modifyFactory(factory);
+        }, "修改工厂信息错误", logger);
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/findFactory", method = GET)
+    public WebResult<Factory> findFactory(HttpServletRequest request) {
+        FactoryUser user = SessionManager.Instance().user(request);
+        Long factoryId = user.getFactoryId();
+        WebResult<Factory> result = WebResult.execute(res -> {
+            Factory factory = repository.findFactoryById(factoryId);
+            res.setData(factory);
+        }, "查询工程信息", logger);
         return result;
     }
 

@@ -1,5 +1,6 @@
 package com.yuzi.denture.data.mapper;
 
+import com.yuzi.denture.domain.Factory;
 import com.yuzi.denture.domain.FactoryCustomer;
 import com.yuzi.denture.domain.FactoryRole;
 import com.yuzi.denture.domain.FactoryUser;
@@ -29,6 +30,10 @@ public interface FactoryUserMapper {
     FactoryUser findUserByContact(String contact);
     FactoryUser findUserById(Long id);
 
-    //factory
     List<FactoryUser> findUsersByFactoryId(Long factoryId);
+
+    //factory
+    void saveFactory(Factory factory);
+    void updateFactory(Factory factory);
+    Factory findFactoryById(Long factoryId);
 }

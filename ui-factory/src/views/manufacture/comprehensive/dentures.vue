@@ -91,6 +91,7 @@ export default {
         children: 'sub'
       },
       status: [
+        { code: null, name: '全部' },
         { code: 'Invalid', name: '无效' },
         { code: 'Created', name: '新入检' },
         { code: 'Producing', name: '待出货' },

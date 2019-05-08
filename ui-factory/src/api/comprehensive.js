@@ -255,3 +255,18 @@ export function productTypeStatistic(data) {
     data
   })
 }
+
+export function modifyFactory(data) {
+  return request({
+    url: '/management/modifyFactory',
+    method: 'post',
+    data
+  })
+}
+
+export function findFactory() {
+  return request({
+    url: '/management/findFactory',
+    method: 'get'
+  })
+}

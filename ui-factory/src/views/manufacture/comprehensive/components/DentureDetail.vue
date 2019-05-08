@@ -158,10 +158,10 @@
     </el-row>
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:15px;">
       <el-button type="primary" @click="applyIngredient">申请用料</el-button>
-      <el-button type="primary" @click="printDentureInfo">打印入检单</el-button>
+      <el-button type="primary" @click="printDentureInfo">打印入检单(Alt+P)</el-button>
       <el-button v-if="!isShow&&!denture.deliveryId&&denture.status !== '无效'" type="primary" @click="dialogAddDeliveryVisible=true">出货</el-button>
-      <el-button v-if="!isShow&&denture.deliveryId" type="primary" @click="printDeliveryInfo">打印出货单</el-button>
-      <el-button v-if="!isShow&&denture.deliveryId" type="primary" @click="printDeliveryCard">打印出货卡</el-button>
+      <el-button v-if="!isShow&&denture.deliveryId" type="primary" @click="printDeliveryInfo">打印出货单(Alt+D)</el-button>
+      <el-button v-if="!isShow&&denture.deliveryId" type="primary" @click="printDeliveryCard">打印出货卡(Alt+C)</el-button>
     </el-row>
 
     <el-row v-if="isShow" style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
@@ -459,8 +459,24 @@ export default {
   },
   created() {
     this.fetchData()
+    this.loadShortcuts()
   },
   methods: {
+    loadShortcuts() {
+      const _this = this
+      document.onkeydown = function(event) {
+        var e = event || window.event
+        console.log(e.code)
+        console.log(e)
+        if (e.code === 'KeyP' && e.altKey) {
+          _this.printDentureInfo()
+        } else if (!_this.isShow && _this.denture.deliveryId && e && e.code === 'KeyD' && e.altKey) {
+          _this.printDeliveryInfo()
+        } else if (!_this.isShow && _this.denture.deliveryId && e && e.code === 'KeyC' && e.altKey) {
+          _this.printDeliveryCard()
+        }
+      }
+    },
     fetchData() {
       const id = this.$route.params && this.$route.params.id
       console.log('denture detail ==> ' + id)

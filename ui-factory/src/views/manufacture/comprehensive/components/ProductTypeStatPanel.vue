@@ -11,7 +11,7 @@
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <el-input v-model="filename" style="width: 200px;" placeholder="导出数据文件名"/>
       <el-button :loading="exportLoading" type="primary" icon="document" @click="handleExport">导出数据</el-button>
-      <el-table :data="list" style="width: 100%;padding-top: 15px;">
+      <el-table :data="list" style="width: 100%;padding-top: 5px;">
         <el-table-column label="品类代码">
           <template slot-scope="scope">
             {{ scope.row.code }}
@@ -22,7 +22,12 @@
             {{ scope.row.name }}
           </template>
         </el-table-column>
-        <el-table-column v-for="day of list[0].days" :key="day" :label="day">
+        <el-table-column label="合计">
+          <template slot-scope="scope">
+            {{ scope.row.total }}
+          </template>
+        </el-table-column>
+        <el-table-column v-for="day of list[0].days" :key="day" :label="day+''">
           <template slot-scope="scope">
             {{ scope.row[day] }}
           </template>
@@ -46,6 +51,7 @@ export default {
         status: null
       },
       status: [
+        { code: null, name: '全部' },
         { code: 'Invalid', name: '无效' },
         { code: 'Created', name: '新入检' },
         { code: 'Delivered', name: '已出货' },
@@ -71,9 +77,9 @@ export default {
     handleExport() {
       this.exportLoading = true
       import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['品类代码', '品类名称']
-        const filterVal = ['code', 'name']
-        for (const day of this.list[0]['days']) {
+        const tHeader = ['品类代码', '品类名称', '合计']
+        const filterVal = ['code', 'name', 'total']
+        for (var day = 1; day <= this.list[0].days; day++) {
           tHeader.push(day)
           filterVal.push(day)
         }

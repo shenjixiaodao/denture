@@ -40,6 +40,8 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     SettlementTypeMapper settlementTypeMapper;
     @Autowired
     CertificationMapper certificationMapper;
+    @Autowired
+    FactoryUserMapper factoryUserMapper;
 
     @Override
     public void add(DentureOrder order) {
@@ -334,5 +336,15 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     @Override
     public List<Certification> findCertifications(Long factoryId) {
         return certificationMapper.findByFactoryId(factoryId);
+    }
+
+    @Override
+    public void modifyFactory(Factory factory) {
+        factoryUserMapper.updateFactory(factory);
+    }
+
+    @Override
+    public Factory findFactoryById(Long factoryId) {
+        return factoryUserMapper.findFactoryById(factoryId);
     }
 }

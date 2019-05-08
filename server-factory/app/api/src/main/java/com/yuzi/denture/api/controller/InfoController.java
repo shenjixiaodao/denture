@@ -176,6 +176,7 @@ public class InfoController {
                     item.put((day+1)+"", 0);
                 }
                 item.put("days", days);
+                item.put("total", 0);
                 item.put("code", type.getCode());
                 item.put("name", type.getName());
                 item.put("type", type.getType());
@@ -186,6 +187,8 @@ public class InfoController {
                 int day = day(statistic.getDentureCreatedDate());
                 int size = (int)item.get(day+"");
                 item.put(day+"", size + 1);
+                int total = (int)item.get("total");
+                item.put("total", total+1);
             }
             res.setData(data.values());
         }, "按产品类型统计订单", logger);
