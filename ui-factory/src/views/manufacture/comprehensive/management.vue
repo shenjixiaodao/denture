@@ -49,7 +49,7 @@
           <el-table :data="settlementTypes" highlight-current-row style="width: 100%;padding-top: 15px;" @current-change="handleSelectedSettlement">
             <el-table-column label="选中项">
               <template slot-scope="scope">
-                <input v-model="selectedSettlement" :value="scope.row.code" name="certification" type="radio">
+                <input v-model="selectedSettlement" :value="scope.row.code" name="settlement" type="radio">
               </template>
             </el-table-column>
             <el-table-column label="代号">
@@ -239,6 +239,8 @@ export default {
           const data = response.data
           this.certifications = data
         })
+        this.certification.code = null
+        this.certifications.name = null
       })
     },
     addSettlementType() {
@@ -262,6 +264,8 @@ export default {
           const data = response.data
           this.settlementTypes = data
         })
+        this.settlementType.code = null
+        this.settlementType.name = null
       })
     },
     addProductType() {
@@ -289,7 +293,7 @@ export default {
         })
         // 刷新页面
         findProductTypes().then(response => {
-          var data = response.data
+          const data = response.data
           console.log(data)
           this.list = data
         })
