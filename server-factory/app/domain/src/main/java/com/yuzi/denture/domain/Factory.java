@@ -11,12 +11,30 @@ public class Factory {
     //地址(address):
     private String address;
     String certification;
+    String settlement;
+    String settlementCode;
 
     public Factory(Long id) {
         this.id = id;
     }
 
     public Factory() {
+    }
+
+    public String getSettlement() {
+        return settlement;
+    }
+
+    public void setSettlement(String settlement) {
+        this.settlement = settlement;
+    }
+
+    public String getSettlementCode() {
+        return settlementCode;
+    }
+
+    public void setSettlementCode(String settlementCode) {
+        this.settlementCode = settlementCode;
     }
 
     public String getCertification() {

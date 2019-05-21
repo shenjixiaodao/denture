@@ -7,7 +7,7 @@ export function code2Name(code, list) {
       return l.name
     }
   }
-  return 'Unknown'
+  return '未知'
 }
 
 export function id2Short(dentureId) {
