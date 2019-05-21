@@ -14,6 +14,14 @@
               <td class="td_title_prop">职位:</td><td class="td_content_prop"><el-input v-model="user.position" class="filter-item" /></td>
             </tr>
             <tr>
+              <td class="td_title_prop">在职状态:</td>
+              <td class="td_content_prop">
+                <el-select v-model="user.status" filterable placeholder="状态" class="filter-item">
+                  <el-option v-for="item in status" :key="item.code" :label="item.name" :value="item.code"/>
+                </el-select>
+              </td>
+            </tr>
+            <tr>
               <td class="td_title_prop">联系方式:</td><td class="td_content_prop">{{ user.contact }}</td>
             </tr>
             <tr>
@@ -145,7 +153,12 @@ export default {
         { code: 'Market', name: '市场人员' },
         { code: 'MarketLeader', name: '市场主管' }
       ],
-      loading: false
+      loading: false,
+      status: [
+        { code: 'On', name: '在职' },
+        { code: 'Leave', name: '离职' },
+        { code: 'Vacation', name: '休假' }
+      ]
     }
   },
   created() {

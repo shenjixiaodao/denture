@@ -46,7 +46,7 @@
           </el-form>
         </el-row>
         <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-          <el-table :data="settlementTypes" highlight-current-row style="width: 100%;padding-top: 15px;" @current-change="handleSelectedSettlement">
+          <el-table ref="settlementTypeTable" :data="settlementTypes" highlight-current-row style="width: 100%;padding-top: 15px;" @current-change="handleSelectedSettlement">
             <el-table-column label="选中项">
               <template slot-scope="scope">
                 <input v-model="selectedSettlement" :value="scope.row.code" name="settlement" type="radio">
@@ -330,7 +330,26 @@ export default {
       })
     },
     handleSelectedSettlement(row) {
-      this.selectedSettlement = row.code
+      if (!row) {
+        return
+      }
+      this.$confirm('确定切换付款方式?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.factory.settlement = row.name
+        this.factory.settlementCode = row.code
+        modifyFactory(this.factory).then(() => {
+          return Message({
+            message: '修改成功',
+            type: 'success',
+            duration: 2 * 1000
+          })
+        })
+      }).catch(() => {
+        this.$refs.settlementTypeTable.setCurrentRow()
+      })
     }
   }
 }

@@ -53,6 +53,15 @@ public class FactoryUserVo implements Serializable{
     BigDecimal trafficSubsidy;
     BigDecimal accommodationSubsidy;
     Double commissionRate;
+    String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public Date getExpiredDate() {
         return expiredDate;

@@ -46,7 +46,7 @@
               <input v-model="position_group" type="checkbox" value="a3" @change="handleSelect">
               <input v-model="position_group" type="checkbox" value="a2" @change="handleSelect">
               <input v-model="position_group" type="checkbox" value="a1" @change="handleSelect">
-              <b>|</b>
+              <el-divider direction="vertical" />
               <input v-model="position_group" type="checkbox" value="b1" @change="handleSelect">
               <input v-model="position_group" type="checkbox" value="b2" @change="handleSelect">
               <input v-model="position_group" type="checkbox" value="b3" @change="handleSelect">
@@ -87,7 +87,7 @@
               <input v-model="position_group" type="checkbox" value="c3" @change="handleSelect">
               <input v-model="position_group" type="checkbox" value="c2" @change="handleSelect">
               <input v-model="position_group" type="checkbox" value="c1" @change="handleSelect">
-              <b>|</b>
+              <el-divider direction="vertical" />
               <input v-model="position_group" type="checkbox" value="d1" @change="handleSelect">
               <input v-model="position_group" type="checkbox" value="d2" @change="handleSelect">
               <input v-model="position_group" type="checkbox" value="d3" @change="handleSelect">

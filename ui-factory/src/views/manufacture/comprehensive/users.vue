@@ -2,6 +2,11 @@
   <div class="app-container">
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <el-table :data="list" style="width: 100%;padding-top: 15px;">
+        <el-table-column label="编号">
+          <template slot-scope="scope">
+            {{ scope.row.no }}
+          </template>
+        </el-table-column>
         <el-table-column label="姓名">
           <template slot-scope="scope">
             {{ scope.row.name }}
@@ -15,6 +20,11 @@
         <el-table-column label="职位" >
           <template slot-scope="scope">
             {{ scope.row.position }}
+          </template>
+        </el-table-column>
+        <el-table-column label="在职状态" >
+          <template slot-scope="scope">
+            {{ scope.row.status | code2Name(status) }}
           </template>
         </el-table-column>
         <el-table-column label="详情">
@@ -34,6 +44,9 @@
 
     <el-dialog :visible.sync="dialogAddVisible" title="添加员工">
       <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 100%;">
+        <el-form-item label="编号" prop="title">
+          <el-input v-model="user.no" style="width: 70%;"/>
+        </el-form-item>
         <el-form-item label="名字" prop="title">
           <el-input v-model="user.name" style="width: 70%;"/>
         </el-form-item>
@@ -76,6 +89,7 @@ export default {
       list: null,
       dialogAddVisible: false,
       user: {
+        no: null,
         name: null,
         contact: null,
         role: null,
@@ -102,6 +116,11 @@ export default {
         { code: 'Market', name: '市场人员' },
         { code: 'MarketLeader', name: '市场主管' },
         { code: 'Management', name: '管理层' }
+      ],
+      status: [
+        { code: 'On', name: '在职' },
+        { code: 'Leave', name: '离职' },
+        { code: 'Vacation', name: '休假' }
       ]
     }
   },

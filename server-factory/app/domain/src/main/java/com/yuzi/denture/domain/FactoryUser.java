@@ -45,6 +45,7 @@ public class FactoryUser {
 
     //id:
      Long id;
+     String no;
     //factoryId
      Long factoryId;
     //name:
@@ -70,6 +71,7 @@ public class FactoryUser {
     BigDecimal trafficSubsidy;
     BigDecimal accommodationSubsidy;
     Double commissionRate;
+    String status;
 
     public FactoryUser(Long factoryId, String name, String contact, String cardId, FactoryRole.Role role) {
         this.factoryId = factoryId;
@@ -80,7 +82,32 @@ public class FactoryUser {
         roles = new ArrayList<>();
         roles.add(new FactoryRole(role));
         this.groupType = role.group();
+        this.status = Status.On.name();
     }
+
+    public enum Status {
+        On("在职"),
+        Leave("离职"),
+        Vacation("休假");
+
+        private String text;
+        Status(String text) {
+            this.text = text;
+        }
+        public String text() {
+            return this.text;
+        }
+        public static Status typeOf(String type) {
+            if(StringUtils.isEmpty(type))
+                return null;
+            for(Status result : Status.values()){
+                if(result.name().toLowerCase().equals(type.toLowerCase()))
+                    return result;
+            }
+            throw new IllegalArgumentException("未知状态");
+        }
+    }
+
     public static void main(String[] strs) throws Exception {
         /*System.out.println(DigestUtils.md5DigestAsHex("123456".getBytes()));
         KeyPair keyPair = RSAUtil.getKeyPair();
@@ -125,6 +152,22 @@ public class FactoryUser {
         for(String role:strs) {
             this.roles.add(new FactoryRole(this.id, FactoryRole.Role.typeOf(role)));
         }
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getNo() {
+        return no;
+    }
+
+    public void setNo(String no) {
+        this.no = no;
     }
 
     public Date getExpiredDate() {

@@ -56,6 +56,8 @@ public class FactoryUserController {
 
     @ApiOperation(value = "添加员工", response = WebResult.class, httpMethod = "POST")
     @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "form", name = "no", dataType = "string",
+                    required = true, value = "编号"),
             @ApiImplicitParam(paramType = "form", name = "name", dataType = "string",
                     required = true, value = "姓名"),
             @ApiImplicitParam(paramType = "form", name = "contact", dataType = "string",
@@ -93,7 +95,7 @@ public class FactoryUserController {
     })
     @ResponseBody
     @RequestMapping(value = "/add", method = POST)
-    public WebResult add(String name, String contact, String cardId, String role,
+    public WebResult add(String no, String name, String contact, String cardId, String role,
                          String joinDate, String position, String address, String expiredDate,
                          HttpServletRequest request) {
         FactoryUser user = SessionManager.Instance().user(request);
@@ -103,6 +105,7 @@ public class FactoryUserController {
         WebResult result = WebResult.success();
         try {
             user = new FactoryUser(factoryId, name, contact, cardId, FactoryRole.Role.typeOf(role));
+            user.setNo(no);
             user.setAddress(address);
             user.setPosition(position);
             if(!StringUtils.isEmpty(joinDate)) {
@@ -141,12 +144,14 @@ public class FactoryUserController {
             @ApiImplicitParam(paramType = "form", name = "trafficSubsidy", dataType = "String", value = "交通补"),
             @ApiImplicitParam(paramType = "form", name = "accommodationSubsidy", dataType = "String", value = "住宿补"),
             @ApiImplicitParam(paramType = "form", name = "commissionRate", dataType = "Double", value = "提成率"),
+            @ApiImplicitParam(paramType = "form", name = "status", dataType = "String", value = "在职状态"),
     })
     @ResponseBody
     @RequestMapping(value = "/modify", method = POST)
     public WebResult<FactoryUserVo> modify(Long uid, String roles, Boolean martial, String address, String educational,
                                            String cardId, String joinDate, String baseSalary, String mealSubsidy,
-                                           String trafficSubsidy, String accommodationSubsidy, Double commissionRate) {
+                                           String trafficSubsidy, String accommodationSubsidy, Double commissionRate,
+                                           String status) {
         logger.info("修改用户:roles={}",roles);
         WebResult<FactoryUserVo> result = WebResult.execute(res -> {
             FactoryUser user = repository.findUser(uid);
@@ -161,6 +166,7 @@ public class FactoryUserController {
             user.setTrafficSubsidy(new BigDecimal(trafficSubsidy));
             user.setAccommodationSubsidy(new BigDecimal(accommodationSubsidy));
             user.setCommissionRate(commissionRate);
+            user.setStatus(status);
             service.modifyUser(user);
             FactoryUserVo vo = FactoryUserAssembler.toVo(user);
             res.setData(vo);

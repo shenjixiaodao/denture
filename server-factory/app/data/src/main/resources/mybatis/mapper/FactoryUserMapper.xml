@@ -5,6 +5,7 @@
     <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.yuzi.denture.domain.FactoryUser">
         INSERT INTO factory_user
         (
+        `no`,
         `name`,
         `contact`,
         `password`,
@@ -18,10 +19,12 @@
         `card_id`,
         `address`,
         `educational`,
-        `position`
+        `position`,
+        `status`
         )
         VALUES
         (
+        #{no}
         #{name},
         #{contact},
         #{password},
@@ -35,7 +38,8 @@
         #{cardId},
         #{address},
         #{educational},
-        #{position}
+        #{position},
+        #{status}
         );
     </insert>
 
@@ -90,6 +94,9 @@
         </if>
         <if test="commissionRate!=null">
             ,`commission_rate` = #{commissionRate}
+        </if>
+        <if test="status!=null">
+            ,`status` = #{status}
         </if>
         WHERE `id` = #{id};
     </update>
@@ -194,6 +201,12 @@
         <if test="certification!=null">
             ,`certification` = #{certification}
         </if>
+        <if test="settlement!=null">
+            ,`settlement` = #{settlement}
+        </if>
+        <if test="settlementCode!=null">
+            ,`settlement_code` = #{settlementCode}
+        </if>
         WHERE `id` = #{id};
     </update>
     <resultMap id="baseFactoryRM" type="com.yuzi.denture.domain.Factory">
@@ -209,6 +222,7 @@
 
     <resultMap id="baseRM" type="com.yuzi.denture.domain.FactoryUser">
         <result column="id" property="id" />
+        <result column="no" property="no" />
         <result column="factory_id" property="factoryId" />
         <result column="name" property="name" />
         <result column="contact" property="contact" />
@@ -228,6 +242,7 @@
         <result column="traffic_subsidy" property="trafficSubsidy" />
         <result column="accommodation_subsidy" property="accommodationSubsidy" />
         <result column="commission_rate" property="commissionRate" />
+        <result column="status" property="status" />
         <collection property="roles" resultMap="baseRoleRM" />
     </resultMap>
     <resultMap id="baseRoleRM" type="com.yuzi.denture.domain.FactoryRole">
