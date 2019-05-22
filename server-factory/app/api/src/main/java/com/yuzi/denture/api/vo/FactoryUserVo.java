@@ -54,6 +54,15 @@ public class FactoryUserVo implements Serializable{
     BigDecimal accommodationSubsidy;
     Double commissionRate;
     String status;
+    String no;
+
+    public String getNo() {
+        return no;
+    }
+
+    public void setNo(String no) {
+        this.no = no;
+    }
 
     public String getStatus() {
         return status;

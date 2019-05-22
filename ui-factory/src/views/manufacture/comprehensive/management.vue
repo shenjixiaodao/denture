@@ -134,9 +134,11 @@
         <el-form-item label="代码" prop="title">
           <el-input v-model="productType.code" style="width: 70%;"/>
         </el-form-item>
-        <el-select v-model="productType.type" placeholder="材质规格" clearable class="filter-item">
-          <el-option v-for="item in types" :key="item.code" :label="item.name" :value="item.code"/>
-        </el-select>
+        <el-form-item label="规格" prop="title">
+          <el-select v-model="productType.type" placeholder="材质规格" clearable class="filter-item">
+            <el-option v-for="item in types" :key="item.code" :label="item.name" :value="item.code"/>
+          </el-select>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogAddProductVisible = false">取消</el-button>

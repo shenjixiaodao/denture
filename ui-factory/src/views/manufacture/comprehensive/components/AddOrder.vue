@@ -16,7 +16,10 @@
         </el-form-item>
         <el-form-item label="业务员" prop="title">
           <el-select v-model="order.salesmanId" filterable placeholder="业务员" class="filter-item">
-            <el-option v-for="item in users" :key="item.id" :label="item.name" :value="item.id"/>
+            <el-option v-for="item in users" :key="item.id" :label="item.name" :value="item.id">
+              <span style="float: left">{{ item.name }}</span>
+              <span style="float: right; color: #8492a6; font-size: 13px">{{ item.no }}</span>
+            </el-option>
           </el-select>
           <router-link :to="'/comprehensive/users'" class="link-type">
             <span>详情</span>
@@ -35,69 +38,128 @@
         </el-form-item>
         <el-form-item label="牙位" />
         <section style="background:#fff;padding:0px 5px 10px;">
-          <section class="hongbo">
-            <span style="font-size: 13px">上排:</span>
-            <span>
-              <input v-model="position_group" type="checkbox" value="a8" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="a7" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="a6" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="a5" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="a4" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="a3" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="a2" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="a1" @change="handleSelect">
-              <el-divider direction="vertical" />
-              <input v-model="position_group" type="checkbox" value="b1" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="b2" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="b3" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="b4" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="b5" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="b6" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="b7" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="b8" @change="handleSelect">
-            </span>
-          </section>
-          <section class="hongbo" style="padding-left: 30px">
-            <b style="padding-left: 6px">8</b>
-            <b style="padding-left: 4px">7</b>
-            <b style="padding-left: 4px">6</b>
-            <b style="padding-left: 4px">5</b>
-            <b style="padding-left: 4px">4</b>
-            <b style="padding-left: 4px">3</b>
-            <b style="padding-left: 4px">2</b>
-            <b style="padding-left: 4px">1</b>
-            <b style="padding-left: 3px">|</b>
-            <b style="padding-left: 2px">1</b>
-            <b style="padding-left: 4px">2</b>
-            <b style="padding-left: 4px">3</b>
-            <b style="padding-left: 4px">4</b>
-            <b style="padding-left: 4px">5</b>
-            <b style="padding-left: 4px">6</b>
-            <b style="padding-left: 4px">7</b>
-            <b style="padding-left: 4px">8</b>
-          </section>
-          <section class="hongbo" style="background:#fff;padding:0px 0px 16px;">
-            <span style="font-size: 13px">下排:</span>
-            <span>
-              <input v-model="position_group" type="checkbox" value="c8" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="c7" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="c6" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="c5" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="c4" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="c3" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="c2" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="c1" @change="handleSelect">
-              <el-divider direction="vertical" />
-              <input v-model="position_group" type="checkbox" value="d1" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="d2" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="d3" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="d4" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="d5" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="d6" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="d7" @change="handleSelect">
-              <input v-model="position_group" type="checkbox" value="d8" @change="handleSelect">
-            </span>
-          </section>
+          <table>
+            <tbody>
+              <tr>
+                <td style="font-size: 13px">上排:</td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="a8" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="a7" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="a6" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="a5" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="a4" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="a3" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="a2" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="a1" @change="handleSelect">
+                </td>
+                <td>
+                  <el-divider direction="vertical" />
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="b1" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="b2" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="b3" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="b4" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="b5" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="b6" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="b7" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="b8" @change="handleSelect">
+                </td>
+              </tr>
+              <tr>
+                <td />
+                <td>8</td><td>7</td><td>6</td><td>5</td>
+                <td>4</td><td>3</td><td>2</td><td>1</td>
+                <td>
+                  <el-divider direction="vertical" />
+                </td>
+                <td>1</td><td>2</td><td>3</td><td>4</td>
+                <td>5</td><td>6</td><td>7</td><td>8</td>
+              </tr>
+              <tr>
+                <td style="font-size: 13px">下排:</td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="c8" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="c7" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="c6" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="c5" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="c4" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="c3" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="c2" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="c1" @change="handleSelect">
+                </td>
+                <td>
+                  <el-divider direction="vertical" />
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="d1" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="d2" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="d3" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="d4" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="d5" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="d6" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="d7" @change="handleSelect">
+                </td>
+                <td>
+                  <input v-model="position_group" type="checkbox" value="d8" @change="handleSelect">
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </section>
         <el-form-item label="数量" prop="title">
           <el-input v-model="order.number" style="width: 70%;"/>
