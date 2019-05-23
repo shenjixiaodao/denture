@@ -18,7 +18,6 @@
 
     <div style="margin:0 0 5px 20px">采购记录</div>
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <el-button type="primary" @click="dialogAddIngredientVisible = true">添加物料</el-button>
       <el-table :data="purchaseRecords" style="width: 100%;padding-top: 15px;">
         <el-table-column label="采购时间">
           <template slot-scope="scope">
@@ -77,36 +76,11 @@
       </el-table>
     </el-row>
 
-    <el-dialog :visible.sync="dialogAddIngredientVisible" title="添加新材料">
-      <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 100%;">
-        <el-form-item label="供应商" prop="title">
-          <el-select v-model="ingredient.supplierId" placeholder="请选择" clearable style="width: 90px" class="filter-item">
-            <el-option v-for="item in suppliers" :key="item.id" :label="item.name" :value="item.id"/>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="采购单号" prop="title">
-          <el-input v-model="ingredient.billNo" style="width: 70%;"/>
-        </el-form-item>
-        <el-form-item label="购入数量" prop="title">
-          <el-input v-model="ingredient.number" style="width: 70%;"/>
-        </el-form-item>
-        <el-form-item label="购入单价" prop="title">
-          <el-input v-model="ingredient.price" style="width: 70%;"/>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogAddIngredientVisible = false">取消</el-button>
-        <el-button type="primary" @click="addIngredient">提交</el-button>
-      </div>
-    </el-dialog>
-
   </div>
 </template>
 
 <script>
-import { queryIngredientById, addIngredient, querySuppliers } from '@/api/comprehensive'
-import { Message } from 'element-ui'
-import { isNull } from '@/utils/validate'
+import { queryIngredientById, querySuppliers } from '@/api/comprehensive'
 import IngredientStatPanel from './IngredientStatPanel'
 
 export default {
@@ -120,13 +94,6 @@ export default {
       purchaseRecords: null,
       appliedRecords: null,
       dialogAddIngredientVisible: false,
-      ingredient: {
-        ingredientId: null,
-        supplierId: null,
-        billNo: null,
-        number: null,
-        price: null
-      },
       suppliers: null
     }
   },
@@ -141,29 +108,10 @@ export default {
         this.ingredientDetail = data
         this.purchaseRecords = this.ingredientDetail.records
         this.appliedRecords = this.ingredientDetail.appliedIngredients
-        this.ingredient.ingredientId = data.id
       })
       querySuppliers().then(response => {
-        var data = response.data
+        const data = response.data
         this.suppliers = data
-      })
-    },
-    addIngredient() {
-      if (isNull(this.suppliers)) {
-        return Message({
-          message: '请先添加供应商',
-          type: 'error',
-          duration: 1000
-        })
-      }
-      addIngredient(this.ingredient).then(response => {
-        this.dialogAddIngredientVisible = false
-        Message({
-          message: '更新成功',
-          type: 'success',
-          duration: 1000
-        })
-        this.fetchData()
       })
     }
   }

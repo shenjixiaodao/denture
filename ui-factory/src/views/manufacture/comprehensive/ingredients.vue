@@ -59,6 +59,11 @@
             </router-link>
           </template>
         </el-table-column>
+        <el-table-column label="操作" align="center">
+          <template slot-scope="scope">
+            <el-button type="primary" @click="buyIngredient(scope.row.id)">物料入库</el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </el-row>
 
@@ -103,12 +108,35 @@
         <el-button type="primary" @click="newIngredient">提交</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog :visible.sync="dialogAddIngredientVisible" title="入库新采购物料">
+      <el-form ref="dataForm" label-position="left" label-width="20%" style="width: 100%;">
+        <el-form-item label="供应商" prop="title">
+          <el-select v-model="boughtIngredient.supplierId" placeholder="请选择" clearable style="width: 90px" class="filter-item">
+            <el-option v-for="item in suppliers" :key="item.id" :label="item.name" :value="item.id"/>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="采购单号" prop="title">
+          <el-input v-model="boughtIngredient.billNo" style="width: 70%;"/>
+        </el-form-item>
+        <el-form-item label="购入数量" prop="title">
+          <el-input v-model="boughtIngredient.number" style="width: 70%;"/>
+        </el-form-item>
+        <el-form-item label="购入单价" prop="title">
+          <el-input v-model="boughtIngredient.price" style="width: 70%;"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogAddIngredientVisible = false">取消</el-button>
+        <el-button type="primary" @click="addIngredient">提交</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { queryIngredients, newIngredient, newSupplier, querySuppliers } from '@/api/comprehensive'
-import { isStringNull } from '@/utils/validate'
+import { queryIngredients, newIngredient, addIngredient, newSupplier, querySuppliers } from '@/api/comprehensive'
+import { isStringNull, isNull } from '@/utils/validate'
 import { Message } from 'element-ui'
 import TotalStatPanel from './components/TotalStatPanel'
 
@@ -122,6 +150,7 @@ export default {
       list: null,
       dialogAddSupplierVisible: false,
       dialogAddVisible: false,
+      dialogAddIngredientVisible: false,
       ingredient: {
         name: null,
         type: null,
@@ -134,7 +163,14 @@ export default {
         contacter: null,
         phone: null
       },
-      suppliers: null
+      suppliers: null,
+      boughtIngredient: {
+        ingredientId: null,
+        supplierId: null,
+        billNo: null,
+        number: null,
+        price: null
+      }
     }
   },
   created() {
@@ -143,7 +179,7 @@ export default {
   methods: {
     fetchData() {
       queryIngredients().then(response => {
-        var data = response.data
+        const data = response.data
         console.log(data)
         this.list = data
       })
@@ -182,6 +218,28 @@ export default {
           var data = response.data
           this.suppliers = data
         })
+      })
+    },
+    buyIngredient(id) {
+      this.boughtIngredient.ingredientId = id
+      this.dialogAddIngredientVisible = true
+    },
+    addIngredient() {
+      if (isNull(this.suppliers)) {
+        return Message({
+          message: '请先添加供应商',
+          type: 'error',
+          duration: 1000
+        })
+      }
+      addIngredient(this.boughtIngredient).then(response => {
+        this.dialogAddIngredientVisible = false
+        Message({
+          message: '录入成功',
+          type: 'success',
+          duration: 1000
+        })
+        this.fetchData()
       })
     }
   }
