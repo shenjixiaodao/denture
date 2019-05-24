@@ -1,9 +1,9 @@
 <template>
   <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
     <el-tab-pane label="入检统计" name="ProductTypeStatPanel"><ProductTypeStatPanel /></el-tab-pane>
-    <el-tab-pane label="出货记录" name="OrderAggregate"><order-aggregate /></el-tab-pane>
-    <el-tab-pane label="物料领用记录" name="IngredientAggregate"><IngredientAggregate /></el-tab-pane>
-    <el-tab-pane label="工资记录" name="SalaryAggregate"><salary-aggregate /></el-tab-pane>
+    <el-tab-pane label="出货统计" name="OrderAggregate"><order-aggregate /></el-tab-pane>
+    <el-tab-pane label="物料领用统计" name="IngredientAggregate"><IngredientAggregate /></el-tab-pane>
+    <el-tab-pane label="工资统计" name="SalaryAggregate"><salary-aggregate /></el-tab-pane>
   </el-tabs>
 </template>
 

@@ -1,9 +1,6 @@
 package com.yuzi.denture.domain.repository;
 
-import com.yuzi.denture.domain.Clinic;
-import com.yuzi.denture.domain.Denture;
-import com.yuzi.denture.domain.PriceSheet;
-import com.yuzi.denture.domain.ProductType;
+import com.yuzi.denture.domain.*;
 import com.yuzi.denture.domain.aggregate.*;
 import com.yuzi.denture.domain.criteria.*;
 
@@ -33,4 +30,6 @@ public interface InfoRepository {
     List<Salary> salaryList(SalaryCriteria criteria);
 
     List<ProductTypeStatistic> productTypeStatistic(ProductTypeStatCriteria criteria);
+
+    List<Function> findFunctions();
 }

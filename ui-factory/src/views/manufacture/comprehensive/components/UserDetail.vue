@@ -90,12 +90,18 @@
       <span>权限:</span>
       <table cellspacing="15">
         <tr>
-          <th style="text-align: center;font-size: 10px">生产人员角色</th>
+          <th v-for="item in functions" :key="item.module" style="text-align: center;font-size: 10px">{{ item.moduleName }}</th>
+          <!--<th style="text-align: center;font-size: 10px">生产人员角色</th>
           <th style="text-align: center;font-size: 10px">管理人员角色</th>
-          <th style="text-align: center;font-size: 10px">业务人员角色</th>
+          <th style="text-align: center;font-size: 10px">业务人员角色</th>-->
         </tr>
         <tr>
-          <td style="vertical-align: top">
+          <td v-for="item in functions" :key="item.function" style="vertical-align: top">
+            <span v-for="func in item.functions" :key="func.function">
+              <el-checkbox v-model="user.roles" :label="func.id">{{ func.functionName }}</el-checkbox><br>
+            </span>
+          </td>
+          <!--<td style="vertical-align: top">
             <el-checkbox v-model="user.roles" :label="roles[0].code">{{ roles[0].name }}</el-checkbox><br>
             <el-checkbox v-model="user.roles" :label="roles[1].code">{{ roles[1].name }}</el-checkbox><br>
             <el-checkbox v-model="user.roles" :label="roles[2].code">{{ roles[2].name }}</el-checkbox><br>
@@ -117,7 +123,7 @@
           </td>
           <td style="vertical-align: top">
             <el-checkbox v-model="user.roles" :label="roles[16].code">{{ roles[16].name }}</el-checkbox>
-          </td>
+          </td>-->
         </tr>
       </table>
     </el-row>
@@ -129,6 +135,7 @@
 
 <script>
 import { user, modifyUser } from '@/api/comprehensive'
+import { findFunctions } from '@/api/common'
 
 export default {
   data() {
@@ -158,7 +165,8 @@ export default {
         { code: 'On', name: '在职' },
         { code: 'Leave', name: '离职' },
         { code: 'Vacation', name: '休假' }
-      ]
+      ],
+      functions: null
     }
   },
   created() {
@@ -171,6 +179,10 @@ export default {
       user(id).then(response => {
         var data = response.data
         this.user = data
+      })
+      findFunctions().then(response => {
+        const data = response.data
+        this.functions = data
       })
     },
     modifyUser() {

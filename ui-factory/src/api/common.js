@@ -3,7 +3,7 @@ import { encryptPwd } from '@/utils/encrypt'
 
 export function queryByDentureId(dentureId) {
   return request({
-    url: '/manufacture/queryByDentureId',
+    url: '/denture/queryByDentureId',
     method: 'get',
     params: { dentureId: dentureId }
   })
@@ -64,6 +64,13 @@ export function findSettlementTypes() {
 export function findCertifications() {
   return request({
     url: '/management/findCertifications',
+    method: 'get'
+  })
+}
+
+export function findFunctions() {
+  return request({
+    url: '/info/findFunctions',
     method: 'get'
   })
 }

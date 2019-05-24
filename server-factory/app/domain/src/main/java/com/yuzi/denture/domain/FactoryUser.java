@@ -54,7 +54,7 @@ public class FactoryUser {
      String contact;
      String password;
     //groupType:
-     GroupType groupType;
+     String groupType;
     //joinDate:
      Date joinDate;
     Date expiredDate;
@@ -73,15 +73,15 @@ public class FactoryUser {
     Double commissionRate;
     String status;
 
-    public FactoryUser(Long factoryId, String name, String contact, String cardId, FactoryRole.Role role) {
+    public FactoryUser(Long factoryId, String name, String contact, String cardId) {
         this.factoryId = factoryId;
         this.name = name;
         this.contact = contact;
         this.setCardId(cardId);
         this.password = hashPWD(DefaultPWD(this.contact).getBytes());
-        roles = new ArrayList<>();
-        roles.add(new FactoryRole(role));
-        this.groupType = role.group();
+        //roles = new ArrayList<>();
+        //roles.add(new FactoryRole(role));
+        //this.groupType = role.group();
         this.status = Status.On.name();
     }
 
@@ -150,7 +150,7 @@ public class FactoryUser {
         String[] strs = roles.split(",");
         this.roles = new ArrayList<>(strs.length);
         for(String role:strs) {
-            this.roles.add(new FactoryRole(this.id, FactoryRole.Role.typeOf(role)));
+            this.roles.add(new FactoryRole(this.id, role));
         }
     }
 
@@ -285,11 +285,11 @@ public class FactoryUser {
         this.contact = contact;
     }
 
-    public GroupType getGroupType() {
+    public String getGroupType() {
         return groupType;
     }
 
-    public void setGroupType(GroupType groupType) {
+    public void setGroupType(String groupType) {
         this.groupType = groupType;
     }
 

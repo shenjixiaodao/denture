@@ -9,7 +9,7 @@ export function queryOrders() {
 
 export function queryOrderByDentureId(dentureId) {
   return request({
-    url: '/manufacture/queryOrderByDentureId',
+    url: '/denture/queryOrderByDentureId',
     method: 'get',
     params: { dentureId: dentureId }
   })
@@ -17,7 +17,7 @@ export function queryOrderByDentureId(dentureId) {
 
 export function addOrder(data) {
   return request({
-    url: '/manufacture/recordOrder',
+    url: '/denture/recordOrder',
     method: 'post',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -46,7 +46,7 @@ export function addCustomer(data) {
 
 export function recordCustomer(data) {
   return request({
-    url: '/manufacture/recordCustomer',
+    url: '/customer/recordCustomer',
     method: 'post',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -57,7 +57,7 @@ export function recordCustomer(data) {
 
 export function addClinicUser(data) {
   return request({
-    url: '/manufacture/addClinicUser',
+    url: '/customer/addClinicUser',
     method: 'post',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'

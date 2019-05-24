@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function queryDenturesByCriteria(criteria) {
   return request({
-    url: '/manufacture/queryDenturesByCriteria',
+    url: '/denture/queryDenturesByCriteria',
     method: 'post',
     data: criteria
   })
@@ -10,7 +10,7 @@ export function queryDenturesByCriteria(criteria) {
 
 export function queryDentures(criteria) {
   return request({
-    url: '/manufacture/queryDentures',
+    url: '/denture/queryDentures',
     method: 'post',
     data: criteria
   })
@@ -18,7 +18,7 @@ export function queryDentures(criteria) {
 
 export function queryByDeliveryId(params) {
   return request({
-    url: '/manufacture/queryByDeliveryId',
+    url: '/denture/queryByDeliveryId',
     method: 'get',
     params: params
   })
@@ -41,7 +41,7 @@ export function user(uid) {
 
 export function review(data) {
   return request({
-    url: '/manufacture/review',
+    url: '/denture/review',
     method: 'post',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -75,7 +75,7 @@ export function modifyUser(data) {
 // ingredient
 export function newIngredient(data) {
   return request({
-    url: '/manufacture/newIngredient',
+    url: '/ingredient/newIngredient',
     method: 'post',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -86,7 +86,7 @@ export function newIngredient(data) {
 
 export function addIngredient(data) {
   return request({
-    url: '/manufacture/recordIngredientPurchase',
+    url: '/ingredient/recordIngredientPurchase',
     method: 'post',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -97,7 +97,7 @@ export function addIngredient(data) {
 
 export function applyIngredient(data) {
   return request({
-    url: '/manufacture/applyIngredient',
+    url: '/ingredient/applyIngredient',
     method: 'post',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -108,14 +108,14 @@ export function applyIngredient(data) {
 
 export function queryIngredients() {
   return request({
-    url: '/manufacture/queryIngredients',
+    url: '/ingredient/queryIngredients',
     method: 'get'
   })
 }
 
 export function queryIngredientById(id) {
   return request({
-    url: '/manufacture/queryIngredientById',
+    url: '/ingredient/queryIngredientById',
     method: 'get',
     params: { id: id }
   })
@@ -123,7 +123,7 @@ export function queryIngredientById(id) {
 
 export function newSupplier(data) {
   return request({
-    url: '/manufacture/newSupplier',
+    url: '/ingredient/newSupplier',
     method: 'post',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -134,14 +134,14 @@ export function newSupplier(data) {
 
 export function querySuppliers() {
   return request({
-    url: '/manufacture/querySuppliers',
+    url: '/ingredient/querySuppliers',
     method: 'get'
   })
 }
 
 export function customers(criteria) {
   return request({
-    url: '/manufacture/customers',
+    url: '/customer/customers',
     method: 'post',
     data: criteria
   })
@@ -180,7 +180,7 @@ export function findProductTypes() {
 
 export function addProductType(data) {
   return request({
-    url: '/manufacture/addProductType',
+    url: '/management/addProductType',
     method: 'post',
     data
   })
@@ -188,7 +188,7 @@ export function addProductType(data) {
 
 export function deleteProductType(data) {
   return request({
-    url: '/manufacture/deleteProductType',
+    url: '/management/deleteProductType',
     method: 'post',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -207,7 +207,7 @@ export function salaryList(data) {
 
 export function addPriceSheet(data) {
   return request({
-    url: '/manufacture/addPriceSheet',
+    url: '/management/addPriceSheet',
     method: 'post',
     data
   })
@@ -215,7 +215,7 @@ export function addPriceSheet(data) {
 
 export function delivery(data) {
   return request({
-    url: '/manufacture/delivery',
+    url: '/denture/delivery',
     method: 'post',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -226,7 +226,7 @@ export function delivery(data) {
 
 export function modifyCustomer(data) {
   return request({
-    url: '/manufacture/modifyCustomer',
+    url: '/customer/modifyCustomer',
     method: 'post',
     data
   })

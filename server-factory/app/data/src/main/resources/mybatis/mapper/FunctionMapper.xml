@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuzi.denture.data.mapper.FunctionMapper" >
+
+
+    <resultMap id="baseRM" type="com.yuzi.denture.domain.Function">
+        <result column="id" property="id" />
+        <result column="module" property="module" />
+        <result column="module_name" property="moduleName" />
+        <result column="function" property="function" />
+        <result column="function_name" property="functionName" />
+        <result column="comment" property="comment" />
+    </resultMap>
+
+    <select id="findFunctions" resultMap="baseRM">
+        select * from function
+    </select>
+
+</mapper>

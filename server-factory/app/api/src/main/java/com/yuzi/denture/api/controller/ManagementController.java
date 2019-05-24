@@ -1,30 +1,16 @@
 package com.yuzi.denture.api.controller;
 
-import com.yuzi.denture.api.assembler.*;
 import com.yuzi.denture.api.session.SessionManager;
-import com.yuzi.denture.api.vo.*;
-import com.yuzi.denture.api.vo.base.DentureVo;
-import com.yuzi.denture.api.vo.base.WebPageResult;
 import com.yuzi.denture.api.vo.base.WebResult;
-import com.yuzi.denture.domain.GroupType;
 import com.yuzi.denture.domain.*;
-import com.yuzi.denture.domain.criteria.CustomerCriteria;
-import com.yuzi.denture.domain.criteria.DentureCriteria;
 import com.yuzi.denture.domain.repository.FactoryRepository;
 import com.yuzi.denture.domain.service.FactoryService;
-import com.yuzi.denture.domain.type.*;
-import com.yuzi.denture.domain.util.CommonUtil;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
@@ -44,6 +30,8 @@ public class ManagementController {
 
     @Autowired
     private FactoryRepository repository;
+    @Autowired
+    private FactoryService service;
 
     @ApiOperation(value = "添加结算方式", response = WebResult.class, httpMethod = "POST")
     @ResponseBody
@@ -117,6 +105,45 @@ public class ManagementController {
             Factory factory = repository.findFactoryById(factoryId);
             res.setData(factory);
         }, "查询工程信息", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "添加产品类别", response = WebResult.class, httpMethod = "POST")
+    @ResponseBody
+    @RequestMapping(value = "/addProductType", method = POST)
+    public WebResult addProductType(@RequestBody ProductType type, HttpServletRequest request) {
+        FactoryUser user = SessionManager.Instance().user(request);
+        Long factoryId = user.getFactoryId();
+        WebResult result = WebResult.execute(res -> {
+            type.setFactoryId(factoryId);
+            type.setGmtCreated(new Date());
+            service.addProductType(type);
+        }, "添加产品类别异常", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "添加价目", response = WebResult.class, httpMethod = "POST")
+    @ResponseBody
+    @RequestMapping(value = "/addPriceSheet", method = POST)
+    public WebResult addPriceSheet(@RequestBody PriceSheet price, HttpServletRequest request) {
+        FactoryUser user = SessionManager.Instance().user(request);
+        Long factoryId = user.getFactoryId();
+        WebResult result = WebResult.execute(res -> {
+            price.setFactory(new Factory(factoryId));
+            service.addPriceSheet(price);
+        }, "添加产品类别异常", logger);
+        return result;
+    }
+
+    @ApiOperation(value = "删除产品类别", response = WebResult.class, httpMethod = "POST")
+    @ResponseBody
+    @RequestMapping(value = "/deleteProductType", method = POST)
+    public WebResult deleteProductType(@RequestParam("id") Long id, HttpServletRequest request) {
+        FactoryUser user = SessionManager.Instance().user(request);
+        Long factoryId = user.getFactoryId();
+        WebResult result = WebResult.execute(res -> {
+            repository.deleteProductType(id);
+        }, "添加产品类别异常", logger);
         return result;
     }
 

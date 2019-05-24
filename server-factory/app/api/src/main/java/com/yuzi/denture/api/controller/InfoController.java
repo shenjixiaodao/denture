@@ -195,6 +195,32 @@ public class InfoController {
         return result;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/findFunctions", method = GET)
+    public WebResult<List<Function>> findFunctions() {
+        WebResult<List<Function>> result = WebResult.execute(res -> {
+            List<Function> functions = infoRepository.findFunctions();
+            Map<String, Map<String, Object>> data = new HashMap<>();
+            for(Function function: functions) {
+                Map<String, Object> item = data.get(function.getModule());
+                if(item==null) {
+                    item = new HashMap<>();
+                    item.put("module",function.getModule());
+                    item.put("moduleName", function.getModuleName());
+                    List<Function> funcs = new ArrayList<>();
+                    funcs.add(function);
+                    item.put("functions", funcs);
+                    data.put(function.getModule(), item);
+                } else {
+                    List<Function> funcs = (List<Function>) item.get("functions");
+                    funcs.add(function);
+                }
+            }
+            res.setData(data.values());
+        }, "查询功能列表", logger);
+        return result;
+    }
+
     @RequestMapping("/avatar/{uid}/{suffix}")
     @ApiOperation(value = "用户头像", response = String.class, httpMethod = "GET")
     public void avatar(@PathVariable Long uid, @PathVariable String suffix, HttpServletResponse resp) {

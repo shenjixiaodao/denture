@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function queryProcedures(pgId) {
   return request({
-    url: '/manufacture/queryProcedures',
+    url: '/denture/queryProcedures',
     method: 'get',
     params: { pgId: pgId }
   })
@@ -10,7 +10,7 @@ export function queryProcedures(pgId) {
 
 export function completeProcedure(data) {
   return request({
-    url: '/manufacture/completeProcedure',
+    url: '/denture/completeProcedure',
     method: 'post',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -21,7 +21,7 @@ export function completeProcedure(data) {
 
 export function useIngredient(data) {
   return request({
-    url: '/manufacture/useIngredient',
+    url: '/ingredient/useIngredient',
     method: 'post',
     data
   })
@@ -29,7 +29,7 @@ export function useIngredient(data) {
 
 export function addInspectionReport(data) {
   return request({
-    url: '/manufacture/newInspectionReport',
+    url: '/denture/newInspectionReport',
     method: 'post',
     data
   })
@@ -37,7 +37,7 @@ export function addInspectionReport(data) {
 
 export function addInspectionItem(data) {
   return request({
-    url: '/manufacture/newInspectionItem',
+    url: '/denture/newInspectionItem',
     method: 'post',
     data
   })

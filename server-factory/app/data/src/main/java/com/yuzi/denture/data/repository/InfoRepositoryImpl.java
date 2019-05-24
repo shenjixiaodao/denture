@@ -30,6 +30,8 @@ public class InfoRepositoryImpl implements InfoRepository {
     private ProductTypeMapper productTypeMapper;
     @Autowired
     PriceSheetMapper priceSheetMapper;
+    @Autowired
+    FunctionMapper functionMapper;
 
     @Override
     public List<Denture> findDenturesByCriteria(DentureCriteria criteria) {
@@ -99,6 +101,11 @@ public class InfoRepositoryImpl implements InfoRepository {
     @Override
     public List<ProductTypeStatistic> productTypeStatistic(ProductTypeStatCriteria criteria) {
         return aggregateMapper.productTypeStatistic(criteria);
+    }
+
+    @Override
+    public List<Function> findFunctions() {
+        return functionMapper.findFunctions();
     }
 
     private List<AppliedUsedIngredient> aggregateAppliedUsedIngredient(List<AppliedIngredient> applied,

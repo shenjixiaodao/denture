@@ -39,24 +39,6 @@ const comprehensiveRouter = {
         }
       ]
     },
-    /* {
-      path: 'wait',
-      component: () => import('@/views/manufacture/comprehensive/wait'),
-      name: 'Wait',
-      meta: { title: '待审核义齿' }
-    },
-    {
-      path: 'doing',
-      component: () => import('@/views/manufacture/comprehensive/doing'),
-      name: 'Doing',
-      meta: { title: '在加工义齿' }
-    },
-    {
-      path: 'done',
-      component: () => import('@/views/manufacture/comprehensive/done'),
-      name: 'Done',
-      meta: { title: '已完成义齿' }
-    },*/
     {
       path: 'dentures',
       component: () => import('@/views/manufacture/comprehensive/dentures'),
@@ -93,7 +75,7 @@ const comprehensiveRouter = {
       path: 'ingredients',
       component: () => import('@/views/manufacture/comprehensive/ingredients'),
       name: 'Ingredients',
-      meta: { title: '物料明细列印' }
+      meta: { title: '物料列印' }
     },
     {
       path: 'ingredient/:id(\\d+)',
