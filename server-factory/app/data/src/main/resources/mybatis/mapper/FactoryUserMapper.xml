@@ -119,6 +119,25 @@
         DELETE FROM factory_role WHERE factory_uid=#{uid}
     </delete>
 
+    <insert id="addFunction" parameterType="java.util.List">
+        INSERT INTO user_function
+        (
+        `factory_uid`,
+        `function_id`
+        )
+        VALUES
+        (
+        #{uid},
+        #{functionId}
+        )
+    </insert>
+    <delete id="deleteFunctions" parameterType="Long">
+        DELETE FROM user_function WHERE factory_uid=#{uid}
+    </delete>
+    <select id="findFunctionsByUid" resultType="Integer" parameterType="Long">
+        select function_id from user_function where factory_uid=#{uid}
+    </select>
+
     <insert id="addCustomer" parameterType="com.yuzi.denture.domain.FactoryCustomer">
         INSERT INTO factory_customer
         (

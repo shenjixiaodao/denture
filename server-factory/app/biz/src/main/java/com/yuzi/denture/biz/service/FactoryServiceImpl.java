@@ -133,6 +133,11 @@ public class FactoryServiceImpl implements FactoryService {
             repository.deleteRole(user.getId());
             repository.addRole(user.getRoles());
         }
+        if(user.getFunctions() != null) {
+            repository.deleteFunctions(user.getId());
+            for(Integer fid:user.getFunctions())
+                repository.addFunction(user.getId(), fid);
+        }
     }
 
     @Override

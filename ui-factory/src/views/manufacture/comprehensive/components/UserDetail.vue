@@ -98,7 +98,7 @@
         <tr>
           <td v-for="item in functions" :key="item.function" style="vertical-align: top">
             <span v-for="func in item.functions" :key="func.function">
-              <el-checkbox v-model="user.roles" :label="func.id">{{ func.functionName }}</el-checkbox><br>
+              <el-checkbox v-model="user.functions" :label="func.id">{{ func.functionName }}</el-checkbox><br>
             </span>
           </td>
           <!--<td style="vertical-align: top">
@@ -136,30 +136,12 @@
 <script>
 import { user, modifyUser } from '@/api/comprehensive'
 import { findFunctions } from '@/api/common'
+import { Message } from 'element-ui'
 
 export default {
   data() {
     return {
       user: null,
-      roles: [
-        { code: 'ShiGao', name: '石膏技师' },
-        { code: 'ShiGaoLeader', name: '石膏组长' },
-        { code: 'LaXing', name: '蜡型技师' },
-        { code: 'LaXingLeader', name: '蜡型组长' },
-        { code: 'CheJin', name: '车金技师' },
-        { code: 'ChejinLeader', name: '车金组长' },
-        { code: 'ChongJiao', name: '充胶技师' },
-        { code: 'ChongjiaoLeader', name: '充胶组长' },
-        { code: 'ShangCi', name: '上瓷技师' },
-        { code: 'ShangCiLeader', name: '上瓷组长' },
-        { code: 'CheCi', name: '车瓷技师' },
-        { code: 'CheCiLeader', name: '车瓷组长' },
-        { code: 'Comprehensive', name: '综合部人员' },
-        { code: 'ComprehensiveLeader', name: '综合部主管' },
-        { code: 'Management', name: '管理层' },
-        { code: 'Market', name: '市场人员' },
-        { code: 'MarketLeader', name: '市场主管' }
-      ],
       loading: false,
       status: [
         { code: 'On', name: '在职' },
@@ -177,7 +159,7 @@ export default {
       const id = this.$route.params && this.$route.params.id
       console.log('user detail ==> ' + id)
       user(id).then(response => {
-        var data = response.data
+        const data = response.data
         this.user = data
       })
       findFunctions().then(response => {
@@ -194,11 +176,22 @@ export default {
         address: this.user.address,
         educational: this.user.educational,
         cardId: this.user.cardId,
-        joinDate: this.user.joinDate
+        joinDate: this.user.joinDate,
+        baseSalary: this.user.baseSalary,
+        mealSubsidy: this.user.mealSubsidy,
+        trafficSubsidy: this.user.trafficSubsidy,
+        accommodationSubsidy: this.user.accommodationSubsidy,
+        commissionRate: this.user.commissionRate,
+        functions: this.user.functions.join(',')
       }).then(response => {
         this.loading = false
-        var data = response.data
+        const data = response.data
         this.user = data
+        Message({
+          message: '更改成功',
+          type: 'success',
+          duration: 1 * 1000
+        })
       }).catch(() => {
         this.loading = false
       })

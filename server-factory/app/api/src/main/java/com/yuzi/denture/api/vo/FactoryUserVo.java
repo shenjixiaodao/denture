@@ -23,16 +23,6 @@ public class FactoryUserVo implements Serializable{
     @ApiModelProperty(value="用户联系方式")
     private String contact;
     //groupType:
-    @ApiModelProperty(value="用户所属组\n" +
-            "   [ShiGao(\"石膏组\"),\n" +
-            "    LaXing(\"蜡型组\"),\n" +
-            "    CheJin(\"车金组\"),\n" +
-            "    ChongJiao(\"充胶组\"),\n" +
-            "    ShangCi(\"上瓷组\"),\n" +
-            "    CheCi(\"车瓷组\"),\n" +
-            "    Comprehensive(\"综合管理组\"),\n" +
-            "    Market(\"销售组\"),\n" +
-            "    Management(\"管理组\")]")
     private String groupType;
     //joinDate:
     @ApiModelProperty(value="加入公司时间")
@@ -55,6 +45,15 @@ public class FactoryUserVo implements Serializable{
     Double commissionRate;
     String status;
     String no;
+    List<Integer> functions;
+
+    public List<Integer> getFunctions() {
+        return functions;
+    }
+
+    public void setFunctions(List<Integer> functions) {
+        this.functions = functions;
+    }
 
     public String getNo() {
         return no;

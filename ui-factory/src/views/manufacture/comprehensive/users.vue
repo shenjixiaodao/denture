@@ -59,11 +59,11 @@
         <el-form-item label="职位" prop="title">
           <el-input v-model="user.position" style="width: 70%;"/>
         </el-form-item>
-        <el-form-item label="角色" prop="title">
+        <!--<el-form-item label="角色" prop="title">
           <el-select v-model="user.role" placeholder="角色" clearable style="width: 70%;" class="filter-item">
             <el-option v-for="item in roles" :key="item.code" :label="item.name" :value="item.code"/>
           </el-select>
-        </el-form-item>
+        </el-form-item>-->
         <el-form-item label="入职时间" class="postInfo-container-item">
           <el-date-picker v-model="user.joinDate" type="date" value-format="yyyy-MM-dd" placeholder="选择日期时间" style="width: 70%;"/>
         </el-form-item>

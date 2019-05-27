@@ -69,24 +69,7 @@ public class FactoryUserController {
             @ApiImplicitParam(paramType = "form", name = "address", dataType = "String",
                     required = true, value = "住址"),
             @ApiImplicitParam(paramType = "form", name = "role", dataType = "string",
-                    required = true, value = "角色\n" +
-                    "       [ShiGao(\"石膏技师\"),\n" +
-                    "        ShiGaoLeader(\"石膏组长\"),\n" +
-                    "        LaXing(\"蜡型技师\"),\n" +
-                    "        LaXingLeader(\"蜡型组长\"),\n" +
-                    "        CheJin(\"车金技师\"),\n" +
-                    "        ChejinLeader(\"车金组长\"),\n" +
-                    "        ChongJiao(\"充胶技师\"),\n" +
-                    "        ChongjiaoLeader(\"充胶组长\"),\n" +
-                    "        ShangCi(\"上瓷技师\"),\n" +
-                    "        ShangCiLeader(\"上瓷组长\"),\n" +
-                    "        CheCi(\"车瓷\"),\n" +
-                    "        CheCiLeader(\"车瓷组长\"),\n" +
-                    "        Comprehensive(\"综合管理人员\"),\n" +
-                    "        ComprehensiveLeader(\"综合部主管\"),\n" +
-                    "        Market(\"市场人员\"),\n" +
-                    "        MarketLeader(\"市场主管\"),\n" +
-                    "        Management(\"管理层\")]"),
+                    required = true, value = "角色"),
             @ApiImplicitParam(paramType = "form", name = "joinDate", dataType = "string",
                     value = "加入公司时间，格式=[YYYY-mm-dd]")
             ,
@@ -104,7 +87,7 @@ public class FactoryUserController {
                 role, joinDate);
         WebResult result = WebResult.success();
         try {
-            user = new FactoryUser(factoryId, name, contact, cardId, FactoryRole.Role.typeOf(role));
+            user = new FactoryUser(factoryId, name, contact, cardId);
             user.setNo(no);
             user.setAddress(address);
             user.setPosition(position);
@@ -151,7 +134,7 @@ public class FactoryUserController {
     public WebResult<FactoryUserVo> modify(Long uid, String roles, Boolean martial, String address, String educational,
                                            String cardId, String joinDate, String baseSalary, String mealSubsidy,
                                            String trafficSubsidy, String accommodationSubsidy, Double commissionRate,
-                                           String status) {
+                                           String status, String functions) {
         logger.info("修改用户:roles={}",roles);
         WebResult<FactoryUserVo> result = WebResult.execute(res -> {
             FactoryUser user = repository.findUser(uid);
@@ -161,12 +144,17 @@ public class FactoryUserController {
             user.setEducational(Educational.typeOf(educational));
             user.setCardId(cardId);
             user.setJoinDate(joinDate);
-            user.setBaseSalary(new BigDecimal(baseSalary));
-            user.setMealSubsidy(new BigDecimal(mealSubsidy));
-            user.setTrafficSubsidy(new BigDecimal(trafficSubsidy));
-            user.setAccommodationSubsidy(new BigDecimal(accommodationSubsidy));
+            if(!StringUtils.isEmpty(baseSalary))
+                user.setBaseSalary(new BigDecimal(baseSalary));
+            if(!StringUtils.isEmpty(mealSubsidy))
+                user.setMealSubsidy(new BigDecimal(mealSubsidy));
+            if(!StringUtils.isEmpty(trafficSubsidy))
+                user.setTrafficSubsidy(new BigDecimal(trafficSubsidy));
+            if(!StringUtils.isEmpty(accommodationSubsidy))
+                user.setAccommodationSubsidy(new BigDecimal(accommodationSubsidy));
             user.setCommissionRate(commissionRate);
             user.setStatus(status);
+            user.setFunctions(functions);
             service.modifyUser(user);
             FactoryUserVo vo = FactoryUserAssembler.toVo(user);
             res.setData(vo);

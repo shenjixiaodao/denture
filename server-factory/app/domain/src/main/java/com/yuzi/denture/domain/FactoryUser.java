@@ -72,6 +72,7 @@ public class FactoryUser {
     BigDecimal accommodationSubsidy;
     Double commissionRate;
     String status;
+    List<Integer> functions;
 
     public FactoryUser(Long factoryId, String name, String contact, String cardId) {
         this.factoryId = factoryId;
@@ -152,6 +153,23 @@ public class FactoryUser {
         for(String role:strs) {
             this.roles.add(new FactoryRole(this.id, role));
         }
+    }
+    public void setFunctions(String functions) {
+        if(StringUtils.isEmpty(functions))
+            throw new IllegalArgumentException("设置功能权限为空");
+        String[] strs = functions.split(",");
+        this.functions = new ArrayList<>(strs.length);
+        for(String function:strs) {
+            this.functions.add(Integer.parseInt(function));
+        }
+    }
+
+    public List<Integer> getFunctions() {
+        return functions;
+    }
+
+    public void setFunctions(List<Integer> functions) {
+        this.functions = functions;
     }
 
     public String getStatus() {
@@ -302,7 +320,8 @@ public class FactoryUser {
     }
 
     public void setJoinDate(String joinDate) {
-        this.joinDate = CommonUtil.parseDate(joinDate);
+        if(!StringUtils.isEmpty(joinDate))
+            this.joinDate = CommonUtil.parseDate(joinDate);
     }
 
     public FactoryUser(Long id) {

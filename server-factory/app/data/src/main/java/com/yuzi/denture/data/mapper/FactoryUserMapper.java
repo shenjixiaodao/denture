@@ -36,4 +36,9 @@ public interface FactoryUserMapper {
     void saveFactory(Factory factory);
     void updateFactory(Factory factory);
     Factory findFactoryById(Long factoryId);
+
+    //function
+    void addFunction(Map<String, Object> function);
+    void deleteFunctions(Long uid);
+    List<Integer> findFunctionsByUid(Long uid);
 }

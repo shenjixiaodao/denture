@@ -105,6 +105,19 @@ public class FactoryRepositoryImpl implements FactoryRepository {
     }
 
     @Override
+    public void addFunction(Long uid, Integer functionId) {
+        Map<String, Object> paras = new HashMap<>();
+        paras.put("uid", uid);
+        paras.put("functionId", functionId);
+        userMapper.addFunction(paras);
+    }
+
+    @Override
+    public void deleteFunctions(Long uid) {
+        userMapper.deleteFunctions(uid);
+    }
+
+    @Override
     public void update(FactoryUser user) {
         userMapper.update(user);
     }
@@ -158,7 +171,10 @@ public class FactoryRepositoryImpl implements FactoryRepository {
 
     @Override
     public FactoryUser findUser(Long uid) {
-        return userMapper.findUserById(uid);
+        FactoryUser user = userMapper.findUserById(uid);
+        List<Integer> fids = userMapper.findFunctionsByUid(uid);
+        user.setFunctions(fids);
+        return user;
     }
 
     @Override

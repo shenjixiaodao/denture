@@ -58,7 +58,7 @@ public class DentureController {
     public WebResult<DentureVo> queryByDentureId(String dentureId, HttpServletRequest request) {
         logger.info("查询义齿信息息:dentureId={}", dentureId);
         FactoryUser user = SessionManager.Instance().user(request);
-        GroupType group = user.getGroupType();
+        // String group = user.getGroupType();
         WebResult<DentureVo> result = new WebResult<>();
         try {
             Denture denture = repository.findDenture(dentureId);
