@@ -166,7 +166,10 @@ public class FactoryRepositoryImpl implements FactoryRepository {
 
     @Override
     public FactoryUser findUser(String contact) {
-        return userMapper.findUserByContact(contact);
+        FactoryUser user = userMapper.findUserByContact(contact);
+        List<Integer> fids = userMapper.findFunctionsByUid(user.getId());
+        user.setFunctions(fids);
+        return user;
     }
 
     @Override

@@ -77,9 +77,6 @@ export function newIngredient(data) {
   return request({
     url: '/ingredient/newIngredient',
     method: 'post',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
     data
   })
 }

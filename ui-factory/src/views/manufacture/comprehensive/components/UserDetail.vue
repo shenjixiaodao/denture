@@ -91,9 +91,6 @@
       <table cellspacing="15">
         <tr>
           <th v-for="item in functions" :key="item.module" style="text-align: center;font-size: 10px">{{ item.moduleName }}</th>
-          <!--<th style="text-align: center;font-size: 10px">生产人员角色</th>
-          <th style="text-align: center;font-size: 10px">管理人员角色</th>
-          <th style="text-align: center;font-size: 10px">业务人员角色</th>-->
         </tr>
         <tr>
           <td v-for="item in functions" :key="item.function" style="vertical-align: top">
@@ -101,29 +98,6 @@
               <el-checkbox v-model="user.functions" :label="func.id">{{ func.functionName }}</el-checkbox><br>
             </span>
           </td>
-          <!--<td style="vertical-align: top">
-            <el-checkbox v-model="user.roles" :label="roles[0].code">{{ roles[0].name }}</el-checkbox><br>
-            <el-checkbox v-model="user.roles" :label="roles[1].code">{{ roles[1].name }}</el-checkbox><br>
-            <el-checkbox v-model="user.roles" :label="roles[2].code">{{ roles[2].name }}</el-checkbox><br>
-            <el-checkbox v-model="user.roles" :label="roles[3].code">{{ roles[3].name }}</el-checkbox><br>
-            <el-checkbox v-model="user.roles" :label="roles[4].code">{{ roles[4].name }}</el-checkbox><br>
-            <el-checkbox v-model="user.roles" :label="roles[5].code">{{ roles[5].name }}</el-checkbox><br>
-            <el-checkbox v-model="user.roles" :label="roles[6].code">{{ roles[6].name }}</el-checkbox><br>
-            <el-checkbox v-model="user.roles" :label="roles[7].code">{{ roles[7].name }}</el-checkbox><br>
-            <el-checkbox v-model="user.roles" :label="roles[8].code">{{ roles[8].name }}</el-checkbox><br>
-            <el-checkbox v-model="user.roles" :label="roles[9].code">{{ roles[9].name }}</el-checkbox><br>
-            <el-checkbox v-model="user.roles" :label="roles[10].code">{{ roles[10].name }}</el-checkbox><br>
-            <el-checkbox v-model="user.roles" :label="roles[11].code">{{ roles[11].name }}</el-checkbox>
-          </td>
-          <td style="vertical-align: top">
-            <el-checkbox v-model="user.roles" :label="roles[12].code">{{ roles[12].name }}</el-checkbox><br>
-            <el-checkbox v-model="user.roles" :label="roles[13].code">{{ roles[13].name }}</el-checkbox><br>
-            <el-checkbox v-model="user.roles" :label="roles[14].code">{{ roles[14].name }}</el-checkbox><br>
-            <el-checkbox v-model="user.roles" :label="roles[15].code">{{ roles[15].name }}</el-checkbox>
-          </td>
-          <td style="vertical-align: top">
-            <el-checkbox v-model="user.roles" :label="roles[16].code">{{ roles[16].name }}</el-checkbox>
-          </td>-->
         </tr>
       </table>
     </el-row>

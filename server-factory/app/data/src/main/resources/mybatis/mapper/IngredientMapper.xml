@@ -10,7 +10,11 @@
         `factory_id`,
         `type`,
         `factory_id`,
-        `equality_rate_range`
+        `equality_rate_range`,
+        `code`,
+        `unit`,
+        `spec`,
+        `sub_spec`
         )
         VALUES
         (
@@ -19,7 +23,11 @@
         #{factoryId},
         #{type},
         #{factoryId},
-        #{equalityRateRange}
+        #{equalityRateRange},
+        #{code},
+        #{unit},
+        #{spec},
+        #{subSpec}
         );
     </insert>
 

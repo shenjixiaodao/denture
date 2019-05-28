@@ -96,8 +96,20 @@
         <el-form-item label="名称" prop="title">
           <el-input v-model="ingredient.name" style="width: 70%;"/>
         </el-form-item>
-        <el-form-item label="型号" prop="title">
+        <el-form-item label="类型" prop="title">
           <el-input v-model="ingredient.type" style="width: 70%;"/>
+        </el-form-item>
+        <el-form-item label="代号" prop="title">
+          <el-input v-model="ingredient.code" style="width: 70%;"/>
+        </el-form-item>
+        <el-form-item label="单位" prop="title">
+          <el-input v-model="ingredient.unit" style="width: 70%;"/>
+        </el-form-item>
+        <el-form-item label="规格" prop="title">
+          <el-input v-model="ingredient.spec" style="width: 70%;"/>
+        </el-form-item>
+        <el-form-item label="次规格" prop="title">
+          <el-input v-model="ingredient.subSpec" style="width: 70%;"/>
         </el-form-item>
         <el-form-item label="平衡偏差范围" prop="title">
           <el-input v-model="ingredient.equalityRateRange" style="width: 70%;"/>
@@ -154,7 +166,11 @@ export default {
       ingredient: {
         name: null,
         type: null,
-        equalityRateRange: null
+        equalityRateRange: null,
+        code: null,
+        unit: null,
+        spec: null,
+        subSpec: null
       },
       supplier: {
         name: null,

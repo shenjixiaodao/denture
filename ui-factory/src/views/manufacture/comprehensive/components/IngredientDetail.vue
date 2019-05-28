@@ -7,7 +7,19 @@
             <td class="td_title_prop">物料名:</td><td class="td_content_prop">{{ ingredientDetail.name }}</td>
           </tr>
           <tr>
-            <td class="td_title_prop">型号:</td><td class="td_content_prop">{{ ingredientDetail.type }}</td>
+            <td class="td_title_prop">类型:</td><td class="td_content_prop">{{ ingredientDetail.type }}</td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">代号:</td><td class="td_content_prop">{{ ingredientDetail.code }}</td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">单位:</td><td class="td_content_prop">{{ ingredientDetail.unit }}</td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">规格:</td><td class="td_content_prop">{{ ingredientDetail.spec }}</td>
+          </tr>
+          <tr>
+            <td class="td_title_prop">次规格:</td><td class="td_content_prop">{{ ingredientDetail.subSpec }}</td>
           </tr>
           <tr>
             <td class="td_title_prop">库存:</td><td class="td_content_prop">{{ ingredientDetail.balance }}</td>
