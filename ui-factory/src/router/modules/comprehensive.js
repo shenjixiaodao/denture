@@ -43,13 +43,13 @@ const comprehensiveRouter = {
       path: 'dentures',
       component: () => import('@/views/manufacture/comprehensive/dentures'),
       name: 'Dentures',
-      meta: { title: '义齿列印', noCache: true }
+      meta: { title: '义齿列印', noCache: true, roles: [1] }
     },
     {
       path: 'denture/add',
       component: () => import('@/views/manufacture/comprehensive/components/AddOrder'),
       name: 'AddOrder',
-      meta: { title: '义齿建档', noCache: true }
+      meta: { title: '义齿建档', noCache: true, roles: [2] }
     },
     {
       path: 'denture/:id(\\d+)',
@@ -62,7 +62,7 @@ const comprehensiveRouter = {
       path: 'users',
       component: () => import('@/views/manufacture/comprehensive/users'),
       name: 'User',
-      meta: { title: '员工列印' }
+      meta: { title: '员工列印', roles: [3] }
     },
     {
       path: 'user/:id(\\d+)',
@@ -75,7 +75,7 @@ const comprehensiveRouter = {
       path: 'ingredients',
       component: () => import('@/views/manufacture/comprehensive/ingredients'),
       name: 'Ingredients',
-      meta: { title: '物料列印' }
+      meta: { title: '物料列印', roles: [4] }
     },
     {
       path: 'ingredient/:id(\\d+)',
@@ -88,7 +88,7 @@ const comprehensiveRouter = {
       path: 'customers',
       component: () => import('@/views/manufacture/comprehensive/customers'),
       name: 'Customers',
-      meta: { title: '客户档案', noCache: true }
+      meta: { title: '客户档案', noCache: true, roles: [5] }
     },
     {
       path: 'customer/:id(\\d+)',
@@ -101,7 +101,7 @@ const comprehensiveRouter = {
       path: 'dashboard',
       component: () => import('@/views/manufacture/comprehensive/dashboard'),
       name: 'Dashboard',
-      meta: { title: '统计表列印', noCache: true }
+      meta: { title: '统计表列印', noCache: true, roles: [9, 10, 11, 12] }
     },
     {
       path: 'procedure/:id(\\d+)',
@@ -114,7 +114,7 @@ const comprehensiveRouter = {
       path: 'management',
       component: () => import('@/views/manufacture/comprehensive/management'),
       name: 'Management',
-      meta: { title: '信息建档', noCache: true }
+      meta: { title: '信息建档', noCache: true, roles: [6, 7, 8] }
     }
   ]
 }

@@ -86,7 +86,7 @@
         </table>
       </div>
     </el-row>
-    <el-row style="background:#fff;padding:5px 5px 0;margin-bottom:32px;">
+    <el-row v-if="isAdmin" style="background:#fff;padding:5px 5px 0;margin-bottom:32px;">
       <span>权限:</span>
       <table cellspacing="15">
         <tr>
@@ -110,11 +110,13 @@
 <script>
 import { user, modifyUser } from '@/api/comprehensive'
 import { findFunctions } from '@/api/common'
+// import { checkPermission } from '../../../../utils/permission'
 import { Message } from 'element-ui'
 
 export default {
   data() {
     return {
+      isAdmin: false, // checkPermission([0]),
       user: null,
       loading: false,
       status: [

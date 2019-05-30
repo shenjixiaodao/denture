@@ -28,7 +28,6 @@ public class FactoryUserVo implements Serializable{
     @ApiModelProperty(value="加入公司时间")
     private Date joinDate;
     Date expiredDate;
-    private List<String> roles;
     @ApiModelProperty(value="登录成功后的token")
     private String token;
     String avatar;
@@ -46,6 +45,7 @@ public class FactoryUserVo implements Serializable{
     String status;
     String no;
     List<Integer> functions;
+    private List<Integer> roles;
 
     public List<Integer> getFunctions() {
         return functions;
@@ -215,11 +215,11 @@ public class FactoryUserVo implements Serializable{
         this.joinDate = joinDate;
     }
 
-    public List<String> getRoles() {
+    public List<Integer> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<String> roles) {
+    public void setRoles(List<Integer> roles) {
         this.roles = roles;
     }
 

@@ -33,15 +33,16 @@ public class FactoryUserAssembler {
         BeanUtils.copyProperties(user, vo);
         if(user.getEducational()!=null)
             vo.setEducational(user.getEducational().text());
-        if(user.getRoles() != null) {
+        /*if(user.getRoles() != null) {
             List<String> rs = new ArrayList<>(user.getRoles().size());
             List<FactoryRole> roles = user.getRoles();
             for(FactoryRole role : roles)
                 rs.add(role.getRole());
             vo.setRoles(rs);
-        }
+        }*/
         if(user.getFunctions() != null) {
             vo.setFunctions(user.getFunctions());
+            vo.setRoles(user.getFunctions());
         } else
             vo.setFunctions(new ArrayList<>());
         return vo;
