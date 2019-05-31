@@ -3,7 +3,7 @@ import store from './store'
 // import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css'// progress bar style
-import { getToken } from '@/utils/auth' // getToken from cookie
+import { getToken, getRoles } from '@/utils/auth' // getToken from cookie
 
 NProgress.configure({ showSpinner: false })// NProgress Configuration
 
@@ -25,8 +25,7 @@ router.beforeEach((to, from, next) => {
       NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
     } else {
       if (!store.getters.hasInitRouters) {
-        console.log('init routers ====>')
-        const roles = store.getters.roles
+        const roles = getRoles()
         console.log(roles)
         store.dispatch('GenerateRoutes', { roles }).then(() => { // 根据roles权限生成可访问的路由表
           router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
@@ -34,7 +33,7 @@ router.beforeEach((to, from, next) => {
         })
       } else {
         // 没有动态改变权限的需求可直接next() 删除下方权限判断 ↓
-        if (hasPermission(store.getters.roles, to.meta.roles)) {
+        if (hasPermission(getRoles(), to.meta.roles)) {
           next()
         } else {
           next({ path: '/401', replace: true, query: { noGoBack: true }})

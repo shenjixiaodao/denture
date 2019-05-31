@@ -110,13 +110,13 @@
 <script>
 import { user, modifyUser } from '@/api/comprehensive'
 import { findFunctions } from '@/api/common'
-// import { checkPermission } from '../../../../utils/permission'
+import { checkPermission } from '@/utils/permission'
 import { Message } from 'element-ui'
 
 export default {
   data() {
     return {
-      isAdmin: false, // checkPermission([0]),
+      isAdmin: checkPermission([0]),
       user: null,
       loading: false,
       status: [

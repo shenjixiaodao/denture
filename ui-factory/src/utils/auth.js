@@ -18,6 +18,10 @@ export function getName() {
   const user = getUser()
   return user ? user.name : null
 }
+export function getRoles() {
+  const user = getUser()
+  return user ? user.roles : null
+}
 
 export function setUser(user) {
   return Cookies.set(UserKey, user)

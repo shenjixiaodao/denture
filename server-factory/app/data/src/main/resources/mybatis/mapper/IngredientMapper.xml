@@ -9,7 +9,6 @@
         `balance`,
         `factory_id`,
         `type`,
-        `factory_id`,
         `equality_rate_range`,
         `code`,
         `unit`,
@@ -22,7 +21,6 @@
         #{balance},
         #{factoryId},
         #{type},
-        #{factoryId},
         #{equalityRateRange},
         #{code},
         #{unit},
@@ -127,6 +125,10 @@
         <result column="balance" property="balance" />
         <result column="factoryId" property="factoryId" />
         <result column="type" property="type" />
+        <result column="code" property="code" />
+        <result column="unit" property="unit" />
+        <result column="spec" property="spec" />
+        <result column="sub_spec" property="subSpec" />
         <collection property="purchaseRecords" ofType="com.yuzi.denture.domain.IngredientPurchaseRecord">
             <result column="pr_id" property="id" />
             <result column="pr_ingredient_id" property="ingredientId" />

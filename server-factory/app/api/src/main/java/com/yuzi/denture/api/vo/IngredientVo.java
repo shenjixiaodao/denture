@@ -9,8 +9,44 @@ public class IngredientVo {
     private Double balance;
     private Long factoryId;
     String type;
+    String code;
+    String unit;
+    String spec;
+    String subSpec;
     private List<IngredientPurchaseRecordVo> records;
     List<AppliedIngredientVo> appliedIngredients;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getSpec() {
+        return spec;
+    }
+
+    public void setSpec(String spec) {
+        this.spec = spec;
+    }
+
+    public String getSubSpec() {
+        return subSpec;
+    }
+
+    public void setSubSpec(String subSpec) {
+        this.subSpec = subSpec;
+    }
 
     public String getType() {
         return type;
