@@ -22,7 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import java.math.BigDecimal;
+import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -46,7 +47,23 @@ public class AggregateController {
         WebResult<List<AggregateOrder>> result = WebResult.execute(res -> {
             criteria.setFactoryId(factoryId);
             List<AggregateOrder> statistic = infoRepository.aggregateOrders(criteria);
-            res.setData(statistic);
+            Map<String, Map<String, Object>> data = new TreeMap<>();
+            for(AggregateOrder order: statistic) {
+                String month = order.getDeliveryDate();
+                Map<String, Object> item = data.get(month);
+                if(item == null) {
+                    item = new HashMap<>();
+                    item.put("month", month);
+                    item.put("size", 0);
+                    item.put("amount", BigDecimal.ZERO);
+                    item.put("list", new ArrayList<>());
+                    data.put(month, item);
+                }
+                item.put("size", (int)item.get("size") + order.getNumber());
+                item.put("amount", ((BigDecimal)item.get("amount")).add(order.getBasePrice().multiply(new BigDecimal(order.getNumber()))));
+                ((List)item.get("list")).add(order);
+            }
+            res.setData(data.values());
         }, "查询聚合订单信息", logger);
         return result;
     }
@@ -77,6 +94,11 @@ public class AggregateController {
             res.setData(salaries);
         }, "查询工资单", logger);
         return result;
+    }
+
+    private static String month(String date) {
+        String[] strs = date.split("-");
+        return strs[0]+"-"+strs[1];
     }
 
 }

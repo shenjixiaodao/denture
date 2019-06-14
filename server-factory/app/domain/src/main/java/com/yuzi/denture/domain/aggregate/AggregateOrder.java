@@ -24,6 +24,33 @@ public class AggregateOrder {
     Date receivedDate;
     String deliveryId;
     String stage;
+    String patientName;
+    String dentist;
+    String boxNo;
+
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
+    }
+
+    public String getDentist() {
+        return dentist;
+    }
+
+    public void setDentist(String dentist) {
+        this.dentist = dentist;
+    }
+
+    public String getBoxNo() {
+        return boxNo;
+    }
+
+    public void setBoxNo(String boxNo) {
+        this.boxNo = boxNo;
+    }
 
     public String getDeliveryDate() {
         return deliveryDate;

@@ -13,10 +13,17 @@
       <span>客户名: </span><el-input v-model="queryParams.customer" style="width: 200px;" placeholder="客户名称"/>
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="search()" >搜索</el-button>
     </el-row>
-    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <el-input v-model="filename" style="width: 200px;" placeholder="导出数据文件名"/>
-      <el-button :loading="exportLoading" type="primary" icon="document" @click="handleExport">导出数据</el-button>
-      <el-table :data="list" style="width: 100%;padding-top: 15px;">
+    <el-row v-for="item in data" :key="item.month" style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+      <!--<el-input v-model="filename" style="width: 200px;" placeholder="导出数据文件名"/>
+      <el-button :loading="exportLoading" type="primary" icon="document" @click="handleExport">导出数据</el-button>-->
+      <table cellspacing="15" style="text-align: left">
+        <tr>
+          <td class="td_title_prop">月份:</td><td class="td_content_prop">{{ item.month }}</td>
+          <td class="td_title_prop">总数:</td><td class="td_content_prop">{{ item.size }}</td>
+          <td class="td_title_prop">总价:</td><td class="td_content_prop">{{ item.amount }}</td>
+        </tr>
+      </table>
+      <el-table :data="item.list" style="width: 100%;padding-top: 15px;">
         <el-table-column label="业务员">
           <template slot-scope="scope">
             {{ scope.row.salesman }}
@@ -64,7 +71,7 @@
             {{ scope.row.stage }}
           </template>
         </el-table-column>
-        <!--<el-table-column label="单价" align="center">
+        <el-table-column label="单价" align="center">
           <template slot-scope="scope">
             {{ scope.row.basePrice }}
           </template>
@@ -73,8 +80,9 @@
           <template slot-scope="scope">
             {{ scope.row.basePrice * scope.row.number }}
           </template>
-        </el-table-column>-->
+        </el-table-column>
       </el-table>
+      <hr style="filter: progid:DXImageTransform.Microsoft.Glow(color=#987cb9,strength=10)" width="100%" color="#987cb9" SIZE="1">
     </el-row>
   </div>
 </template>
@@ -88,7 +96,7 @@ export default {
     return {
       now: new Date().Format('yyyy-MM-dd'),
       users: null,
-      list: null,
+      data: null,
       queryParams: {
         salesmanId: null,
         startTime: new Date().Format('yyyy-MM-dd'),
@@ -113,7 +121,7 @@ export default {
     search() {
       aggregateOrders(this.queryParams).then(response => {
         var data = response.data
-        this.list = data
+        this.data = data
       })
     },
     handleExport() {
